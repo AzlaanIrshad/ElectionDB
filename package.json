@@ -6,17 +6,15 @@
         "node": "18"
     },
     "workspaces": [
-        "src/election-frontend",
-        "src/election-backend"
+        "src/*"
     ],
     "scripts": {
         "dev": "run-p dev:api dev:web",
-        "dev:api": "npm run start:api",
-        "start:api": "cd src/election-backend && mvn spring-boot:run",
+        "dev:api": "cd src/election-backend && mvn spring-boot:run",
         "dev:web": "npm run dev -w src/election-frontend",
-        "build": "run-p build:api build:web",
-        "build:api": "npm run build -w src/election-backend",
+        "build": "run-p build:web build:api",
         "build:web": "npm run build -w src/election-frontend",
+        "build:api": "cd src/election-backend && mvn clean install",
         "preview": "run-p preview:api preview:web",
         "preview:api": "npm run preview -w src/election-backend",
         "preview:web": "npm run preview -w src/election-frontend",

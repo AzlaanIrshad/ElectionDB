@@ -1,9 +1,11 @@
-# HIC Deployment Configuration
 hic:
     image: node:18.16.0
     before_script:
         - apt-get update
-        - apt-get install -y lftp wget
+        - apt-get install -y lftp
+        - apt-get install -y wget
+        # Install Maven
+        - apt-get install -y maven
     stage: deploy
     when: always
     tags:
@@ -15,10 +17,18 @@ hic:
             prefix: npm
         paths:
             - node_modules/
+            - src/election-backend/target/ # Cache backend builds (optional)
     script:
+        # Frontend build process
         - npm install
         # - npm run test
         - npm run build
+
+        # Backend build process
+        - cd src/election-backend # Navigate to backend directory
+        - mvn clean install # Build backend
+
+        # Deploying frontend
         - lftp -e "
             set net:max-retries 3;
             set ssl:verify-certificate no;
@@ -27,18 +37,21 @@ hic:
             open -u $HIC_SFTP_USERNAME,$HIC_SFTP_PASSWORD $HIC_SFTP_HOST;
             mirror --transfer-all -Rv dist/api/. ./$HIC_ENVIRONMENT/app/ --ignore-time --parallel=10;
             mirror --transfer-all -Rv dist/web/. ./$HIC_ENVIRONMENT/wwwroot/ --ignore-time --parallel=10;"
+
+        # Restart the application (if necessary)
         - 'wget --header="Authorization: $HIC_API_KEY" $HIC_API_URL/$HIC_ENVIRONMENT/Restart'
     artifacts:
         paths:
             - dist
+            - src/election-backend/target/*.jar # Include backend artifacts if needed
     rules:
         - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH && $DEPLOY_HIC == "true"
           variables:
-              HIC_ENVIRONMENT: "dev"
-        - if: $CI_COMMIT_BRANCH == "main" && $DEPLOY_HIC == "true"
-          variables:
               HIC_ENVIRONMENT: "live"
-        - if: $CI_COMMIT_BRANCH != $CI_DEFAULT_BRANCH && $CI_COMMIT_BRANCH != "main" && $DEPLOY_HIC == "true"
+        - if: $CI_COMMIT_BRANCH == "dev" && $DEPLOY_HIC == "true"
+          variables:
+              HIC_ENVIRONMENT: "dev"
+        - if: $CI_COMMIT_BRANCH != $CI_DEFAULT_BRANCH && $CI_COMMIT_BRANCH != "dev" && $DEPLOY_HIC == "true"
           when: manual
           variables:
               HIC_ENVIRONMENT: "dev"
