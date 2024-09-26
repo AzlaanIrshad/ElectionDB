@@ -6,8 +6,7 @@
         "node": "18"
     },
     "workspaces": [
-        "src/election-frontend",
-        "src/election-backend"
+        "src/election-frontend"
     ],
     "scripts": {
         "dev": "run-p dev:api dev:web",
