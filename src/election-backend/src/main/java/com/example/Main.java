@@ -6,7 +6,7 @@ import org.hibernate.Transaction;
 public class Main {
     public static void main(String[] args) {
         // Create a new user
-        User user = new User("john_doe", "password123", "john@example.com");
+        User user = new User("john_doe", "john@example.com", "password123");
 
         // Open a session and begin a transaction
         Session session = HibernateUtil.getSessionFactory().openSession();

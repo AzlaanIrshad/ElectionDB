@@ -1,9 +1,7 @@
 package entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import java.io.Serializable;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.Serializable;
@@ -14,10 +12,14 @@ public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String name;
+    @Column(name = "username", columnDefinition = "VARCHAR(255)")
+    private String username;
+    @Column(name = "email", columnDefinition = "VARCHAR(255)")
     private String email;
+    @Column(name = "password", columnDefinition = "VARCHAR(255)")
     private String password;
-    private boolean active = true;
+    @Column(name = "is_active")
+    private boolean is_active = true;
 
     public Long getId() {
         return id;
@@ -28,11 +30,11 @@ public class User implements Serializable {
     }
 
     public String getName() {
-        return name;
+        return username;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.username = name;
     }
 
     public String getEmail() {
@@ -52,15 +54,15 @@ public class User implements Serializable {
     }
 
     public boolean isActive() {
-        return active;
+        return is_active;
     }
 
-    public void setActive(boolean active) {
-        this.active = active;
+    public void setActive(boolean is_active) {
+        this.is_active = is_active;
     }
 
     public User(String name, String email, String password) {
-        this.name = name;
+        this.username = name;
         this.email = email;
         this.password = password;
     }
