@@ -1,6 +1,6 @@
 package service;
 
-import entity.UserEntity;
+import entity.User;
 import repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,20 +11,20 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public UserEntity saveUser(UserEntity user) {
+    public User saveUser(User user) {
         return userRepository.save(user);
     }
 
-    public UserEntity getUser(String email) {
+    public User getUser(String email) {
         return userRepository.findByEmail(email);
     }
 
-    public List<UserEntity> getUsers() {
+    public List<User> getUsers() {
         return userRepository.findAll();
     }
 
     public void deactivateUser(String email) {
-        UserEntity user = userRepository.findByEmail(email);
+        User user = userRepository.findByEmail(email);
         if (user != null) {
             user.setActive(false);
             userRepository.save(user);

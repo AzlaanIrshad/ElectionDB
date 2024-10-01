@@ -10,7 +10,7 @@ import java.io.Serializable;
 import java.util.List;
 
 @Entity
-public class UserEntity implements Serializable {
+public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -57,6 +57,15 @@ public class UserEntity implements Serializable {
 
     public void setActive(boolean active) {
         this.active = active;
+    }
+
+    public User(String name, String email, String password) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+    }
+
+    public User() {
     }
 }
 
