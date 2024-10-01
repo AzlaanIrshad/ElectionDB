@@ -1,24 +1,28 @@
 package main.java.com.example;
+
 import entity.User;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 public class Main {
     public static void main(String[] args) {
-        // Create a new user
-        User user = new User("john_doe", "john@example.com", "password123");
+        User user = createUser("john_doe", "john@example.com", "password123");
+        
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            Transaction transaction = session.beginTransaction();
+            saveUser(session, user);
+            transaction.commit();
+            System.out.println("User saved successfully!");
+        } catch (Exception e) {
+            System.err.println("An error occurred while saving the user: " + e.getMessage());
+        }
+    }
 
-        // Open a session and begin a transaction
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        Transaction transaction = session.beginTransaction();
+    private static User createUser(String username, String email, String password) {
+        return new User(username, email, password);
+    }
 
-        // Save the user
+    private static void saveUser(Session session, User user) {
         session.save(user);
-
-        // Commit the transaction and close the session
-        transaction.commit();
-        session.close();
-
-        System.out.println("User saved successfully!");
     }
 }

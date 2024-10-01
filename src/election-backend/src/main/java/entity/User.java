@@ -2,24 +2,25 @@ package entity;
 
 import jakarta.persistence.*;
 import java.io.Serializable;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import java.io.Serializable;
-import java.util.List;
 
 @Entity
+@Table(name = "user")
 public class User implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "username", columnDefinition = "VARCHAR(255)")
+
+    @Column(name = "username", length = 255, nullable = false)
     private String username;
-    @Column(name = "email", columnDefinition = "VARCHAR(255)")
+
+    @Column(name = "email", length = 255, unique = true, nullable = false)
     private String email;
-    @Column(name = "password", columnDefinition = "VARCHAR(255)")
+
+    @Column(name = "password", length = 255, nullable = false)
     private String password;
+
     @Column(name = "is_active")
-    private boolean is_active = true;
+    private boolean isActive = true;
 
     public Long getId() {
         return id;
@@ -29,12 +30,12 @@ public class User implements Serializable {
         this.id = id;
     }
 
-    public String getName() {
+    public String getUsername() {
         return username;
     }
 
-    public void setName(String name) {
-        this.username = name;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getEmail() {
@@ -54,15 +55,15 @@ public class User implements Serializable {
     }
 
     public boolean isActive() {
-        return is_active;
+        return isActive;
     }
 
-    public void setActive(boolean is_active) {
-        this.is_active = is_active;
+    public void setActive(boolean isActive) {
+        this.isActive = isActive;
     }
 
-    public User(String name, String email, String password) {
-        this.username = name;
+    public User(String username, String email, String password) {
+        this.username = username;
         this.email = email;
         this.password = password;
     }
