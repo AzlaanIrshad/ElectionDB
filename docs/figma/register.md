@@ -8,6 +8,7 @@ The registration page for the website follows a minimalist design, focusing on s
 
   
 - **Registration Form:**
+  - **Username Field:** A text box for users to enter their desired username. 
   - **Email Field:** A text box for users to enter their email.
   - **Password Fields:** Two password fields for entering and confirming the password.
   - **Remember Me Option:** A checkbox that allows users to stay logged in across sessions.
