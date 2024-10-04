@@ -22,15 +22,19 @@ a,
   }
 }
 
-@media (min-width: 1024px) {
   body {
     display: flex;
     place-items: center;
+    background-color: aliceblue;
   }
 
   #app {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 0 2rem;
+    max-width: 1280px;
+    grid-gap: 30px;
+    padding: 2rem 4rem;
+    background: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    width: -webkit-fill-available;
+    background: #f9f9f9;
+    color: black;
   }
-}
