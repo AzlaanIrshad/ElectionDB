@@ -1,88 +1,104 @@
 <template>
-    <div class="homepage">
-      <!-- Hero Section with Carousel -->
-      <section class="hero text-center py-16 rounded-lg">
-        <h1 class="text-5xl text-black mb-5">Elections</h1>
-        <p class="text-lg text-black mb-5">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dignissimos, voluptates dolore. Vitae, modi error? Dolorem eveniet illo debitis et repellat. Quia fugiat doloremque nam dolore illo in reprehenderit corrupti eligendi.</p>
-        <button class="cta-button px-6 py-3 text-white bg-gray-200 hover:bg-gray-600 rounded-md transition">Learn more</button>
-        
-        <div class="carousel my-5">
-          <img :src="featuredImages[activeIndex]" class="hero-image w-full h-72 object-cover rounded-lg" alt="Featured Image" />
-        </div>
-        
-        <div class="tiles flex justify-around mt-5 gap-2">
-          <div
+  <div class="homepage bg-gray-100 font-sans">
+
+    <!-- Hero Section -->
+    <section class="hero text-center py-16 bg-white rounded-lg shadow-xl mt-5 mx-5">
+      <h1 class="text-6xl text-gray-800 mb-5 font-extrabold">Electiondb 2024</h1>
+      <p class="text-lg text-gray-700 mb-8">Stay updated with the latest insights on upcoming elections.</p>
+      <button class="cta-button px-6 py-3 text-white bg-blue-700 hover:bg-blue-600 rounded-full transition-all shadow-lg transform hover:scale-105">Learn More</button>
+      
+      <div class="carousel my-8 relative overflow-hidden mx-12 rounded-lg">
+        <div
+          class="carousel-images flex transition-transform duration-500"
+          :style="{ transform: `translateX(-${activeIndex * 100}%)` }"
+        >
+          <img
             v-for="(image, index) in featuredImages"
             :key="index"
-            class="tile w-1/3 h-36 bg-gray-200 text-center leading-36 rounded-lg transition cursor-pointer hover:bg-gray-600 hover:text-white"
-            :class="{ 'border-white border-4': activeIndex === index }"
-            @click="setActiveIndex(index)"
-          >
-            Tile {{ index + 1 }}
-          </div>
+            :src="image"
+            class="hero-image w-full h-80 object-cover rounded-lg shadow-xl"
+            alt="Featured Image"
+          />
         </div>
-      </section>
-  
-      <!-- Section 2 - Categories -->
-      <section class="categories py-10 mb-10 bg-gray-50 rounded-lg">
-        <h2 class="text-3xl text-center mb-6">Election Categories</h2>
-        <div class="blocks flex justify-around gap-5">
-          <div class="block w-1/3 h-36 bg-gray-200 text-center leading-36 rounded-lg transition cursor-pointer hover:bg-gray-600 hover:text-white">
-            Region Results
-          </div>
-          <div class="block w-1/3 h-36 bg-gray-200 text-center leading-36 rounded-lg transition cursor-pointer hover:bg-gray-600 hover:text-white">
-            District Insights
-          </div>
-          <div class="block w-1/3 h-36 bg-gray-200 text-center leading-36 rounded-lg transition cursor-pointer hover:bg-gray-600 hover:text-white">
-            Candidate Profiles
-          </div>
+      </div>
+      
+      <div class="tiles flex justify-center mt-5 gap-4">
+        <div
+          v-for="(image, index) in featuredImages"
+          :key="index"
+          class="tile w-1/5 h-40 flex justify-center items-center bg-gray-200 text-center rounded-lg shadow-md transition-all cursor-pointer hover:bg-blue-500 hover:text-white transform hover:scale-105"
+          :class="{ 'border-blue-500 border-4': activeIndex === index }"
+          @click="setActiveIndex(index)"
+        >
+          <span class="font-semibold text-xl">Tile {{ index + 1 }}</span>
         </div>
-        <div class="text-center mt-6">
-          <button class="cta-button px-6 py-3 text-white bg-gray-200 hover:bg-gray-600 rounded-md transition">Learn more</button>
+      </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section class="categories py-10 mb-10 bg-white rounded-lg shadow-xl mt-10 mx-5">
+      <h2 class="text-4xl text-center mb-8 font-extrabold text-gray-800">Election Categories</h2>
+      <div class="blocks flex justify-around gap-6 mx-10">
+        <div class="block w-1/4 h-44 flex justify-center items-center bg-blue-600 text-center rounded-lg shadow-md cursor-pointer hover:bg-blue-800 transition-all text-white transform hover:scale-105">
+          <span class="font-bold text-2xl">Region Results</span>
         </div>
-      </section>
-  
-      <!-- Section 3 - Articles or News -->
-      <section class="news py-10 bg-white rounded-lg shadow-md">
-        <h2 class="text-3xl text-center mb-6">Recent Election News</h2>
-        <div class="news-content flex items-center gap-5">
-          <div class="news-image w-2/5 h-52 bg-gray-200 rounded-lg ml-8"></div>
-          <div class="news-text w-3/5">
-            <h3 class="text-2xl mb-3">Lorem Ipsum Article</h3>
-            <p class="mb-3">Lorem ipsum is a placeholder text used to demonstrate the layout of a document or a typeface.</p>
-            <p>Read on to discover more about recent election developments.</p>
-          </div>
+        <div class="block w-1/4 h-44 flex justify-center items-center bg-blue-600 text-center rounded-lg shadow-md cursor-pointer hover:bg-blue-800 transition-all text-white transform hover:scale-105">
+          <span class="font-bold text-2xl">District Insights</span>
         </div>
-      </section>
-    </div>
-  </template>
-  
-  <script>
-  export default {
-    name: "HomePage",
-    data() {
-      return {
-        activeIndex: 0,
-        featuredImages: [
-          "https://via.placeholder.com/800x300?text=Featured+Image+1",
-          "https://via.placeholder.com/800x300?text=Featured+Image+2",
-          "https://via.placeholder.com/800x300?text=Featured+Image+3",
-        ],
-      };
+        <div class="block w-1/4 h-44 flex justify-center items-center bg-blue-600 text-center rounded-lg shadow-md cursor-pointer hover:bg-blue-800 transition-all text-white transform hover:scale-105">
+          <span class="font-bold text-2xl">Candidate Profiles</span>
+        </div>
+      </div>
+      <div class="text-center mt-10">
+        <button class="cta-button px-8 py-4 text-white bg-blue-700 hover:bg-blue-900 rounded-full transition-all shadow-lg transform hover:scale-105">Explore More</button>
+      </div>
+    </section>
+
+    <!-- News Section -->
+    <section class="news py-12 bg-white rounded-lg shadow-xl mx-5 mb-10">
+      <h2 class="text-4xl text-center mb-10 font-extrabold text-gray-800">Recent Election News</h2>
+      <div class="news-content flex items-center gap-8 mx-10">
+        <div class="news-image w-2/5 h-60 bg-gradient-to-b from-gray-200 to-gray-400 rounded-lg shadow-md"></div>
+        <div class="news-text w-3/5">
+          <h3 class="text-3xl font-extrabold mb-5 text-gray-800">Lorem Ipsum Article</h3>
+          <p class="mb-4 text-lg text-gray-600 leading-relaxed">Lorem ipsum is a placeholder text used to demonstrate the layout of a document or a typeface.</p>
+          <p class="text-lg text-gray-600 leading-relaxed">Read on to discover more about recent election developments and stay informed.</p>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</template>
+
+<script>
+export default {
+  name: "HomePage",
+  data() {
+    return {
+      activeIndex: 0,
+      featuredImages: [
+        "https://via.placeholder.com/800x300?text=Featured+Image+1",
+        "https://via.placeholder.com/800x300?text=Featured+Image+2",
+        "https://via.placeholder.com/800x300?text=Featured+Image+3",
+      ],
+    };
+  },
+  mounted() {
+    this.startCarousel();
+  },
+  methods: {
+    startCarousel() {
+      setInterval(() => {
+        this.activeIndex = (this.activeIndex + 1) % this.featuredImages.length;
+      }, 5000); // 5 sec interval for image carousel
     },
-    mounted() {
-      this.startCarousel();
+    setActiveIndex(index) {
+      this.activeIndex = index;
     },
-    methods: {
-      startCarousel() {
-        setInterval(() => {
-          this.activeIndex = (this.activeIndex + 1) % this.featuredImages.length;
-        }, 4000); // 4 sec
-      },
-      setActiveIndex(index) {
-        this.activeIndex = index;
-      },
-    },
-  };
-  </script>
-  
+  },
+};
+</script>
+
+<style scoped>
+
+</style>
