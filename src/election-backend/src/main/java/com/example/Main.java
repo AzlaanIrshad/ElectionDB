@@ -6,7 +6,7 @@ import org.hibernate.Transaction;
 
 public class Main {
     public static void main(String[] args) {
-        User user = createUser("john_doe", "john@example.com", "password123");
+        User user = createUser("gaga", "gaga@example.com", "password123");
         
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
