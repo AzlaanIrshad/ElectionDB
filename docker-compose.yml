@@ -1,6 +1,18 @@
-version: '3.8'  # Add version to the top
+version: '3.8'
 
 services:
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_DATABASE: sm3test
+      MYSQL_ALLOW_EMPTY_PASSWORD: "true"
+    ports:
+      - "3306:3306"
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "db" ]
+      interval: 10s
+      retries: 5
+
   backend:
     build:
       context: ./src/election-backend
@@ -9,22 +21,14 @@ services:
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/sm3test
       SPRING_DATASOURCE_USERNAME: root
-      SPRING_DATASOURCE_PASSWORD:
+      SPRING_DATASOURCE_PASSWORD:  # Empty password
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
+    command: [ "sh", "-c", "until nc -z db 3306; do sleep 1; done; java -jar app.jar" ]
+    depends_on:
+      - db
 
-  frontend:
-    build:
-      context: ./src/election-frontend
-    ports:
-      - "80:80"
-      
-  db:
-    image: mysql:8.0
-    environment:
-      MYSQL_DATABASE: sm3test
-      MYSQL_ROOT_PASSWORD:
-      MYSQL_ALLOW_EMPTY_PASSWORD: "true"
-      MYSQL_RANDOM_ROOT_PASSWORD: "yes"
-      MYSQL_PASSWORD:
-    ports:
-      - "3306:3306"
+# frontend:
+# build:
+#   context: ./src/election-frontend
+# ports:
+#   - "80:80"
