@@ -5,7 +5,7 @@
 
     <!-- Main Content -->
     <main class="mt-8">
-      <HomePage />
+      <router-view />
     </main>
 
     <!-- Footer Section -->
@@ -14,14 +14,12 @@
 </template>
 
 <script>
-import HomePage from "./components/HomePage.vue";
 import HeaderComponent from "./components/Header.vue";
 import FooterComponent from "./components/Footer.vue";
 
 export default {
   name: "App",
   components: {
-    HomePage,
     HeaderComponent,
     FooterComponent,
   },
