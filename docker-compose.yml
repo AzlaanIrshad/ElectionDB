@@ -28,16 +28,12 @@ services:
       db:
         condition: service_healthy
 
-# frontend:
-# build:
-#   context: ./src/election-frontend
-# ports:
-#   - "80:80"  # Change this to expose on port 80
-# environment:
-#   REACT_APP_BACKEND_URL: http://localhost:8080
-# command: [ "sh", "-c", "npm start" ]
-# healthcheck:
-#   test: [ "CMD", "curl", "-f", "http://localhost:80" ]  # Check Nginx port
-# depends_on:
-#   backend:
-#     condition: service_healthy
+  frontend:
+    build:
+      context: ./src/election-frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:80" # port mapping
+    depends_on:
+      - backend
+    restart: always  # Restart the frontend service if it stops

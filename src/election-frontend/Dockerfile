@@ -1,18 +1,29 @@
-# Stage 1: Install Dependencies
-FROM node:14 AS deps
+# Use the official Node.js image
+FROM node:18 AS build
+
+# Set the working directory inside the container
 WORKDIR /app
+
+# Copy package.json and package-lock.json
 COPY package*.json ./
+
+# Install dependencies
 RUN npm install
 
-# Stage 2: Build Application
-FROM node:14 AS builder
-WORKDIR /app
-COPY --from=deps /app/node_modules ./node_modules
+# Copy the rest of the application code
 COPY . .
-RUN npm run build  # Make sure you have a build script in package.json
 
-# Final Stage: Serve with Nginx
+# Build the application
+RUN npm run build
+
+# Use a server to serve the app
 FROM nginx:alpine
-COPY --from=builder /app/dist /usr/share/nginx/html
+
+# Copy the application to the server
+COPY --from=build /app/dist /usr/share/nginx/html
+
+# Expose the port that Nginx runs on
 EXPOSE 80
+
+# Start Nginx server
 CMD ["nginx", "-g", "daemon off;"]
