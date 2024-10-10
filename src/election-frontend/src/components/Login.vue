@@ -27,8 +27,16 @@ export default {
     loginUser() {
       const email = document.getElementById('email').value;
       const password = document.getElementById('password').value;
-      
+
+      // Dummy authentication check
+      if (email === 'user@example.com' && password === 'password') {
+        alert('Login successful!');
+        this.errorMessage = ''; // Reset error message
+      } else {
+        this.errorMessage = 'Invalid email or password.';
+      }
     }
   }
 };
 </script>
+
