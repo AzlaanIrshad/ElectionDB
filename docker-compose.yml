@@ -33,7 +33,9 @@ services:
       context: ./src/election-frontend
       dockerfile: Dockerfile
     ports:
-      - "3000:80" # port mapping
+      - "3000:80" # Port mapping
     depends_on:
       - backend
+    volumes:
+      - ./src/election-frontend/nginx.conf:/etc/nginx/conf.d/default.conf
     restart: always  # Restart the frontend service if it stops
