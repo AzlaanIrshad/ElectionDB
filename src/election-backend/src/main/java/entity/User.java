@@ -22,6 +22,10 @@ public class User implements Serializable {
     @Column(name = "is_active")
     private boolean isActive = true;
 
+    @Column(name = "role", length = 50, nullable = false)
+    private String role = "user";
+
+
     public Long getId() {
         return id;
     }
@@ -62,13 +66,22 @@ public class User implements Serializable {
         this.isActive = isActive;
     }
 
-    public User(String username, String email, String password) {
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    // Constructors
+    public User(String username, String email, String password, String role) {
         this.username = username;
         this.email = email;
         this.password = password;
+        this.role = role;
     }
 
     public User() {
     }
 }
-
