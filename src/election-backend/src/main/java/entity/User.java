@@ -6,6 +6,11 @@ import java.io.Serializable;
 @Entity
 @Table(name = "user")
 public class User implements Serializable {
+
+    public enum Role {
+        USER, MODERATOR, ADMIN
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -22,9 +27,9 @@ public class User implements Serializable {
     @Column(name = "is_active")
     private boolean isActive = true;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "role", length = 50, nullable = false)
-    private String role = "user";
-
+    private Role role = Role.USER; // Standaardrol is 'USER'
 
     public Long getId() {
         return id;
@@ -66,16 +71,16 @@ public class User implements Serializable {
         this.isActive = isActive;
     }
 
-    public String getRole() {
+    public Role getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(Role role) {
         this.role = role;
     }
 
     // Constructors
-    public User(String username, String email, String password, String role) {
+    public User(String username, String email, String password, Role role) {
         this.username = username;
         this.email = email;
         this.password = password;
