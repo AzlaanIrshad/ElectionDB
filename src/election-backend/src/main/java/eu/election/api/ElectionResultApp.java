@@ -21,6 +21,12 @@ public class ElectionResultApp {
         CandidateListParser candidateParser = new CandidateListParser();
         List<Candidate> candidates = candidateParser.parse(candidateDoc);
 
+        // Log candidates
+        System.out.println("Parsed Candidates:");
+        for (Candidate candidate : candidates) {
+            System.out.println(candidate);  // Log each candidate's details
+        }
+
         // Load election result data
         XmlLoader resultLoader = new XmlLoader(resultFilePath);
         Document resultDoc = resultLoader.load();
@@ -28,6 +34,7 @@ public class ElectionResultApp {
         List<ElectionResult> electionResults = resultParser.parse(resultDoc, candidates);
 
         // Process the results (e.g., print to console)
+        System.out.println("\nParsed Election Results:");
         for (ElectionResult result : electionResults) {
             System.out.println(result);
         }
