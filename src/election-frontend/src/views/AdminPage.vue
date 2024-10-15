@@ -21,35 +21,44 @@ export default {
     };
   },
   methods: {
+    // Fetch the users from backend
     async fetchUsers() {
-      try {
-        const response = await fetch('/api/users');
-        if (!response.ok) throw new Error('Network response was not ok');
-        this.users = await response.json();
-      } catch (error) {
-        console.error('Error fetching users:', error);
-      } finally {
-        this.loading = false;
-      }
-    },
+  try {
+    const response = await fetch('http://localhost:8080/api/users');
+    if (!response.ok) {
+      const text = await response.text();
+      throw new Error(`Network response was not ok: ${text}`);
+    }
+    this.users = await response.json();
+  } catch (error) {
+    console.error('Error fetching users:', error);
+  }
+}
+
+,
+
+    // Deactivate a user
     async deactivateUser(email) {
       try {
-        const response = await fetch('/api/users/deactivate', {
+        const response = await fetch('http://localhost:8080/api/users/deactivate', {  // Add correct backend URL
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({email}),
+          body: JSON.stringify({ email }),
         });
-        if (!response.ok) throw new Error('Network response was not ok');
-        await this.fetchUsers();
+        if (!response.ok) {
+          const text = await response.text();  // Capture detailed error response
+          throw new Error(`Network response was not ok: ${text}`);
+        }
+        await this.fetchUsers();  // Refresh the user list after successful deactivation
       } catch (error) {
         console.error('Error deactivating user:', error);
       }
     },
   },
   mounted() {
-    this.fetchUsers();
+    this.fetchUsers();  // Fetch users on component mount
   },
 };
 </script>

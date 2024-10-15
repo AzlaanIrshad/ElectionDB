@@ -11,16 +11,20 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/users")
+@CrossOrigin(origins = "http://localhost:3000")
 public class UserController {
 
     @Autowired
     private UserRepository userRepository;
 
-    @GetMapping
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
+    // Fetch all users
+    @GetMapping(produces = "application/json")
+    public ResponseEntity<List<User>> getAllUsers() {
+        List<User> users = userRepository.findAll();
+        return ResponseEntity.ok(users);
     }
 
+    // Deactivate user by email
     @PutMapping("/deactivate")
     public ResponseEntity<Void> deactivateUser(@RequestParam String email) {
         Optional<User> userOptional = userRepository.findByEmail(email);
@@ -28,8 +32,6 @@ public class UserController {
             User user = userOptional.get();
             user.setActive(false);
             userRepository.save(user);
-            return ResponseEntity.ok().build();
         }
-        return ResponseEntity.notFound().build();
     }
 }
