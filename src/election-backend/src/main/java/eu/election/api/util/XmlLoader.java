@@ -24,7 +24,8 @@ public class XmlLoader{
             dBuilder = dbFactory.newDocumentBuilder();
             doc = dBuilder.parse(xmlFile);
         } catch (Exception e) {
-            throw new RuntimeException("Error while loading XML file: " + e.getMessage());
+            System.err.println("Error while loading XML file at " + path + ": " + e.getMessage());
+            throw new RuntimeException(e);
         }
 
         doc.getDocumentElement().normalize();
