@@ -6,9 +6,9 @@ import repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
+import java.util.Optional;
 import exception.ResourceNotFoundException;
 import exception.UnauthorizedActionException;
-
 
 @Service
 public class UserService {
@@ -16,15 +16,17 @@ public class UserService {
     private UserRepository userRepository;
 
     public User saveUser(User user) {
-        // Set default role if not provided
+
         if (user.getRole() == null) {
-            user.setRole(Role.USER); // Default role is USER
+            user.setRole(Role.USER);
         }
         return userRepository.save(user);
     }
 
     public User getUser(String email) {
-        return userRepository.findByEmail(email);
+
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
     }
 
     public List<User> getUsers() {
@@ -32,11 +34,12 @@ public class UserService {
     }
 
     public void deactivateUser(String email) {
-        User user = userRepository.findByEmail(email);
-        if (user != null) {
+
+        Optional<User> userOptional = userRepository.findByEmail(email);
+        userOptional.ifPresent(user -> {
             user.setActive(false);
             userRepository.save(user);
-        }
+        });
     }
 
     public User promoteUserToAdmin(Long userId, Long adminId) {

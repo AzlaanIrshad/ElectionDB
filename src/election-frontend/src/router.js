@@ -17,8 +17,8 @@ const routes = [
     {
         path: '/admin',
         name: 'admin',
-        component: AdminPage, // Define route for the admin page
-        meta: { requiresAuth: true } // Add meta to define it requires authentication (if applicable)
+        component: AdminPage,
+        // meta: { requiresAuth: true }
     }
 ];
 

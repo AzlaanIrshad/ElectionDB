@@ -1,30 +1,29 @@
 <template>
   <div class="homepage bg-gray-100 font-sans">
-
-      <!-- Hero Section -->
-      <section class="hero text-center py-12 lg:py-16 bg-white rounded-lg shadow-xl mt-5 mx-2 lg:mx-5">
-        <h1 class="text-3xl sm:text-4xl lg:text-6xl text-gray-800 mb-5 font-extrabold">
-          Welcome to Electiondb
-        </h1>
-        <p class="text-sm sm:text-base lg:text-lg text-gray-700 my-6 sm:my-8 mx-4 sm:mx-12 lg:mx-24">
-          Stay ahead of the curve with Electiondb 2024, your ultimate hub for real-time election updates and expert analysis. Whether it's breaking news, shifts in voter sentiment, or key insights into the most closely-watched races, we provide comprehensive, up-to-the-minute coverage. Dive deep into national and state-level contests, explore detailed candidate profiles, and track every pivotal development as we journey through the 2024 election cycle. From trending issues to in-depth forecasts, our platform ensures you're informed every step of the way.
-        </p>
-        <button class="cta-button px-4 sm:px-6 py-2 sm:py-3 text-white bg-blue-700 hover:bg-blue-600 rounded-full transition-all shadow-lg transform hover:scale-105">
-          Learn More
-        </button>
+    <!-- Hero Section -->
+    <section class="hero text-center py-12 lg:py-16 bg-white rounded-lg shadow-xl mt-5 mx-2 lg:mx-5">
+      <h1 class="text-3xl sm:text-4xl lg:text-6xl text-gray-800 mb-5 font-extrabold">
+        Welcome to Electiondb
+      </h1>
+      <p class="text-sm sm:text-base lg:text-lg text-gray-700 my-6 sm:my-8 mx-4 sm:mx-12 lg:mx-24">
+        Stay ahead of the curve with Electiondb 2024, your ultimate hub for real-time election updates and expert analysis. Whether it's breaking news, shifts in voter sentiment, or key insights into the most closely-watched races, we provide comprehensive, up-to-the-minute coverage. Dive deep into national and state-level contests, explore detailed candidate profiles, and track every pivotal development as we journey through the 2024 election cycle. From trending issues to in-depth forecasts, our platform ensures you're informed every step of the way.
+      </p>
+      <button class="cta-button px-4 sm:px-6 py-2 sm:py-3 text-white bg-blue-700 hover:bg-blue-600 rounded-full transition-all shadow-lg transform hover:scale-105">
+        Learn More
+      </button>
 
       <!-- Carousel Section -->
       <div class="carousel my-8 relative overflow-hidden mx-2 sm:mx-6 md:mx-10 lg:mx-12 rounded-lg">
         <div
-          class="carousel-images flex transition-transform duration-500"
-          :style="{ transform: `translateX(-${activeIndex * 100}%)` }"
+            class="carousel-images flex transition-transform duration-500"
+            :style="{ transform: `translateX(-${activeIndex * 100}%)` }"
         >
           <img
-            v-for="(image, index) in featuredImages"
-            :key="index"
-            :src="image"
-            class="hero-image w-full h-48 sm:h-64 lg:h-80 object-cover rounded-lg shadow-xl"
-            alt="Featured Image"
+              v-for="(image, index) in featuredImages"
+              :key="index"
+              :src="image"
+              class="hero-image w-full h-48 sm:h-64 lg:h-80 object-cover rounded-lg shadow-xl"
+              alt="Featured Image"
           />
         </div>
       </div>
@@ -32,11 +31,11 @@
       <!-- Tiles Section -->
       <div class="tiles flex justify-center mt-5 gap-2 sm:gap-4">
         <div
-          v-for="(image, index) in featuredImages"
-          :key="index"
-          class="tile w-1/4 sm:w-1/5 h-24 sm:h-32 lg:h-40 flex justify-center items-center bg-gray-200 text-center rounded-lg shadow-md transition-all cursor-pointer hover:bg-blue-500 hover:text-white transform hover:scale-105"
-          :class="{ 'border-blue-500 border-4': activeIndex === index }"
-          @click="setActiveIndex(index)"
+            v-for="(image, index) in featuredImages"
+            :key="index"
+            class="tile w-1/4 sm:w-1/5 h-24 sm:h-32 lg:h-40 flex justify-center items-center bg-gray-200 text-center rounded-lg shadow-md transition-all cursor-pointer hover:bg-blue-500 hover:text-white transform hover:scale-105"
+            :class="{ 'border-blue-500 border-4': activeIndex === index }"
+            @click="setActiveIndex(index)"
         >
           <span class="font-semibold text-sm sm:text-lg lg:text-xl">View {{ index + 1 }}</span>
         </div>
@@ -58,8 +57,20 @@
         </div>
       </div>
       <div class="text-center mt-10">
-        <button class="cta-button px-6 sm:px-8 py-3 sm:py-4 text-white bg-blue-700 hover:bg-blue-900 rounded-full transition-all shadow-lg transform hover:scale-105">Explore More</button>
+        <button class="cta-button px-6 sm:px-8 py-3 sm:py-4 text-white bg-blue-700 hover:bg-blue-900 rounded-full transition-all shadow-lg transform hover:scale-105">
+          Explore More
+        </button>
       </div>
+    </section>
+
+    <!-- Admin Panel Button -->
+    <section class="admin-panel text-center mb-10">
+      <button
+          class="cta-button px-6 sm:px-8 py-3 sm:py-4 text-white bg-green-700 hover:bg-green-900 rounded-full transition-all shadow-lg transform hover:scale-105"
+          @click="$router.push('/admin')"
+      >
+        Go to Admin Panel
+      </button>
     </section>
 
     <!-- News Section -->
@@ -73,7 +84,6 @@
         </div>
       </div>
     </section>
-
   </div>
 </template>
 
