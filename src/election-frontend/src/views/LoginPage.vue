@@ -46,25 +46,46 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   data() {
     return {
       email: '',
       password: '',
-      errorMessage: ''
+      errorMessage: '',
+      isLoading: false,
     };
   },
   methods: {
-    loginUser() {
-      // Dummy authentication check
-      if (this.email === 'user@example.com' && this.password === 'password') {
-        alert('Login successful!');
-        this.errorMessage = ''; // Reset error message
-      } else {
-        this.errorMessage = 'Invalid email or password.';
+    async loginUser() {
+      try {
+        this.isLoading = true;
+        const response = await axios.post('/auth/login', {
+    email: this.email,
+    password: this.password,
+    rememberMe: document.getElementById('remember').checked,
+});
+        this.errorMessage = '';
+        const sessionId = response.data.sessionId;
+
+        if (document.getElementById('remember').checked) {
+          localStorage.setItem('sessionId', sessionId);
+        } else {
+          sessionStorage.setItem('sessionId', sessionId);
+        }
+
+        this.$router.push('/dashboard');
+      } catch (error) {
+        if (error.response && error.response.status === 401) {
+          this.errorMessage = 'Invalid email or password';
+        } else {
+          this.errorMessage = 'An error occurred. Please try again later.';
+        }
+      } finally {
+        this.isLoading = false;
       }
-    }
-  }
+    },
+  },
 };
 </script>
-

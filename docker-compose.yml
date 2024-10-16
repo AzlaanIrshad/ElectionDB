@@ -1,3 +1,5 @@
+version: '3.8'
+
 services:
   db:
     image: mysql:8.0
@@ -10,6 +12,8 @@ services:
       test: [ "CMD", "mysqladmin", "ping", "-h", "db" ]
       interval: 10s
       retries: 5
+    volumes:
+      - db_data:/var/lib/mysql
 
   backend:
     build:
@@ -43,3 +47,6 @@ services:
     depends_on:
       - backend
     restart: always
+
+volumes:
+  db_data:

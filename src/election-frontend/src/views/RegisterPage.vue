@@ -52,7 +52,7 @@
         <p class="error-message text-red-500 text-center mt-4" v-if="errorMessage">{{ errorMessage }}</p>
       </form>
       <p class="text-center text-gray-600 mt-6">
-        Already have an account? <a href="#" class="text-blue-600 hover:underline">Login here</a>
+        Already have an account? <a href="/login" class="text-blue-600 hover:underline">Login here</a>
       </p>
     </div>
   </div>
@@ -70,20 +70,49 @@ export default {
     };
   },
   methods: {
-    registerUser() {
-      // Dummy registration check
+    async registerUser() {
+      this.errorMessage = '';
+
+      // Check if passwords match
       if (this.password !== this.confirmPassword) {
         this.errorMessage = 'Passwords do not match.';
         return;
       }
 
-      // Simulating a successful registration
-      alert(`Registration successful for ${this.username}!`);
-      this.errorMessage = '';
-      this.username = '';
-      this.email = '';
-      this.password = '';
-      this.confirmPassword = '';
+      // Create a user object
+      const user = {
+        username: this.username,
+        email: this.email,
+        password: this.password
+      };
+
+      try {
+        // Send registration request to the backend
+        const response = await fetch('http://localhost:8080/api/register', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(user)
+        });
+
+        // Handle the response
+        if (!response.ok) {
+          const errorData = await response.json();
+          this.errorMessage = errorData.message || 'Registration failed. Please try again.';
+          return;
+        }
+        alert(`Registration successful for ${this.username}!`);
+
+        // Clear the form fields
+        this.username = '';
+        this.email = '';
+        this.password = '';
+        this.confirmPassword = '';
+      } catch (error) {
+        this.errorMessage = 'An error occurred. Please try again later.';
+        console.error('Registration error:', error);
+      }
     }
   }
 };
