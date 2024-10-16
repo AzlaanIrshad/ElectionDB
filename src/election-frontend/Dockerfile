@@ -1,5 +1,5 @@
-# Use the official Node.js image
-FROM node:18 AS build
+# Stage 1: Development with nodemon (hot reload)
+FROM node:18 AS dev
 
 # Set the working directory inside the container
 WORKDIR /app
@@ -8,22 +8,15 @@ WORKDIR /app
 COPY package*.json ./
 
 # Install dependencies
-RUN npm install
+RUN npm install && npm install -g nodemon
 
 # Copy the rest of the application code
 COPY . .
 
-# Build the application
-RUN npm run build
+# Expose the Vite dev server port
+EXPOSE 5173
 
-# Use a server to serve the app
-FROM nginx:alpine
+# Start nodemon for development, watching for changes
+CMD ["nodemon", "--watch", "src", "--exec", "npm", "run", "dev"]
 
-# Copy the application to the server
-COPY --from=build /app/dist /usr/share/nginx/html
 
-# Expose the port that Nginx runs on
-EXPOSE 80
-
-# Start Nginx server
-CMD ["nginx", "-g", "daemon off;"]
