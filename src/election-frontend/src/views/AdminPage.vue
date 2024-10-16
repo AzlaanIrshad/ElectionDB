@@ -47,7 +47,7 @@ export default {
   methods: {
     async fetchUsers() {
       try {
-        const response = await fetch("/api/users")
+        const response = await fetch("http://localhost:8080/api/users");
         if (!response.ok) throw new Error('Network response was not ok');
         this.users = await response.json();
         console.log('Users:', this.users);
@@ -73,16 +73,15 @@ export default {
       }
     },
     toggleActive(user) {
-      // Here you could implement functionality to enable/disable the user,
-      // but since you're already using deactivateUser, this can remain for toggling
+
       user.active = !user.active;
-      // Call deactivateUser to handle the update with the backend
+
       this.deactivateUser(user.email);
     },
     async deleteUser(userId) {
-      // Placeholder for delete functionality
+
       console.log(`Delete user with ID: ${userId}`);
-      // Add your delete logic here
+
     },
   },
   mounted() {
@@ -92,5 +91,5 @@ export default {
 </script>
 
 <style scoped>
-/* Add your styles here */
+
 </style>
