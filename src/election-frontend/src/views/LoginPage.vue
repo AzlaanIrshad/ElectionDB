@@ -1,38 +1,46 @@
 <template>
-  <div class="login-container flex items-center justify-center min-h-screen bg-gray-100">
-    <div class="login-box bg-white shadow-lg rounded-lg p-8 max-w-md w-full">
-      <h2 class="text-2xl font-bold text-center text-gray-800 mb-6">Login</h2>
+  <div class="login-container flex items-center justify-center min-h-screen bg-gray-50">
+    <div class="login-box bg-white shadow-lg rounded-lg p-8 max-w-sm w-full">
+      <h2 class="text-2xl font-bold text-center text-gray-800 mb-4">Welcome Back</h2>
       <form @submit.prevent="loginUser">
         <div class="form-group mb-4">
-          <label for="email" class="block text-gray-700">Email:</label>
           <input
-              type="email"
-              id="email"
-              v-model="email"
-              placeholder="Enter your email"
-              required
-              class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-300"
+            type="email"
+            id="email"
+            v-model="email"
+            placeholder="Email"
+            required
+            class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-300"
           />
         </div>
-        <div class="form-group mb-6">
-          <label for="password" class="block text-gray-700">Password:</label>
+        <div class="form-group mb-4">
           <input
-              type="password"
-              id="password"
-              v-model="password"
-              placeholder="Enter your password"
-              required
-              class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-300"
+            type="password"
+            id="password"
+            v-model="password"
+            placeholder="Password"
+            required
+            class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-300"
           />
+        </div>
+        <div class="flex items-center justify-between mb-6">
+          <div>
+            <input type="checkbox" id="remember" class="mr-1">
+            <label for="remember" class="text-gray-600 text-sm">Remember me</label>
+          </div>
+          <a href="#" class="text-sm text-blue-600 hover:underline">Forgot Password?</a>
         </div>
         <button
-            type="submit"
-            class="w-full bg-blue-700 text-white py-2 rounded-md hover:bg-blue-600 transition duration-300"
+          type="submit"
+          class="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-500 transition duration-300"
         >
           Login
         </button>
         <p class="error-message text-red-500 text-center mt-4" v-if="errorMessage">{{ errorMessage }}</p>
       </form>
+      <p class="text-center text-gray-600 mt-6">
+        Or <a href="/register" class="text-blue-600 hover:underline">create an account</a>
+      </p>
     </div>
   </div>
 </template>
@@ -60,20 +68,3 @@ export default {
 };
 </script>
 
-<style scoped>
-.login-container {
-  background-color: #f8fafc; /* Light gray background */
-}
-
-.login-box {
-  background-color: white; /* White box for form */
-}
-
-.form-group {
-  margin-bottom: 1rem; /* Space between form groups */
-}
-
-.error-message {
-  margin-top: 1rem; /* Space above error message */
-}
-</style>

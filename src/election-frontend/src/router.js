@@ -15,9 +15,9 @@ const routes = [
         component: LoginPage,
     },
     {
-        path: '/register', // Add this new route for registration
+        path: '/register',
         name: 'register',
-        component: RegisterPage, // Reference to the RegisterPage component
+        component: RegisterPage,
     }
 ];
 
