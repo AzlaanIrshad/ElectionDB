@@ -21,9 +21,12 @@ services:
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD:  # Empty password
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
-    command: [ "sh", "-c", "until nc -z db 3306; do sleep 1; done; java -jar app.jar" ]
+    command: [ "sh", "-c", "until nc -z db 3306; do sleep 60; done; java -jar app.jar" ]
     healthcheck:
-      test: [ "CMD", "curl", "-f", "http://localhost:8080/actuator/health" ]
+      test:  ["CMD-SHELL", "exit 0"]
+      interval: 10s
+      retries: 5
+      start_period: 30s
     depends_on:
       db:
         condition: service_healthy

@@ -1,4 +1,4 @@
-package controllers;
+package controller;
 
 import entity.User;
 import repository.UserRepository;
@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
@@ -16,9 +17,11 @@ public class UserController {
     @Autowired
     private UserRepository userRepository;
 
-    @GetMapping
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
+    @GetMapping(produces = "application/json")
+    public ResponseEntity<List<User>> getAllUsers() {
+        List<User> users = userRepository.findAll();
+        System.out.println("Fetched users: " + users);
+        return ResponseEntity.ok(users);
     }
 
     @PutMapping("/deactivate")

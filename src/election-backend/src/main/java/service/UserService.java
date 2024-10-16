@@ -16,7 +16,6 @@ public class UserService {
     private UserRepository userRepository;
 
     public User saveUser(User user) {
-
         if (user.getRole() == null) {
             user.setRole(Role.USER);
         }
@@ -24,7 +23,6 @@ public class UserService {
     }
 
     public User getUser(String email) {
-
         return userRepository.findByEmail(email)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
     }
@@ -34,7 +32,6 @@ public class UserService {
     }
 
     public void deactivateUser(String email) {
-
         Optional<User> userOptional = userRepository.findByEmail(email);
         userOptional.ifPresent(user -> {
             user.setActive(false);
