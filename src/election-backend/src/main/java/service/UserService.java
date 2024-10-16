@@ -28,7 +28,7 @@ public class UserService {
         user.setEmail(email);
         user.setUsername(username);
         user.setPassword(password);
-        return saveUser(user);
+        return userRepository.save(user);
     }
 
     public void logout(String email) {

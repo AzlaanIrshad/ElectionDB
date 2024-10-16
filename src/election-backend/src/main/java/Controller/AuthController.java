@@ -18,8 +18,8 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestParam String email, @RequestParam String password) {
-        return ResponseEntity.ok(userervice.register(email, password, username));
+    public ResponseEntity<?> register(@RequestParam String email, @RequestParam String password, @RequestParam String username) {
+        return ResponseEntity.ok(userService.register(email, password, username));
     }
 
     @PostMapping("/logout")
