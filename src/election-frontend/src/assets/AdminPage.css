@@ -1,16 +1,24 @@
 .admin-page {
-    max-width: 800px;
-    margin: auto;
-    background: #f9fafb;
     padding: 20px;
-    border-radius: 8px;
+    background-color: var(--color-background-soft);
 }
 
 .title {
     font-size: 2rem;
-    margin-bottom: 1.5rem;
-    color: #4A5568;
-    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.search-input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid var(--color-border);
+    border-radius: 5px;
+}
+
+.loading-text {
+    font-size: 1.2rem;
+    color: var(--vt-c-black-soft);
 }
 
 .user-table {
@@ -19,36 +27,64 @@
 }
 
 .header-cell {
+    background-color: var(--color-background);
+    color: var(--vt-c-black);
     padding: 12px;
     text-align: left;
-    background-color: #edf2f7;
-    color: #4A5568;
+    border-bottom: 2px solid var(--color-border);
 }
 
 .user-row {
-    border-bottom: 1px solid #e2e8f0;
     transition: background-color 0.3s;
 }
 
 .user-row:hover {
-    background-color: #f7fafc;
+    background-color: var(--color-background-mute);
 }
 
 .user-cell {
     padding: 12px;
-}
-
-.deactivate-button {
-    color: #e53e3e;
-    cursor: pointer;
-    text-decoration: underline;
+    border-bottom: 1px solid var(--color-border);
 }
 
 .deactivated-text {
-    color: #a0aec0;
+    color: red;
 }
 
-.loading-text {
+.actions-cell {
+    display: flex;
+    justify-content: flex-start;
+    padding: 0;
+}
+
+.button-container {
+    display: flex;
+    gap: 10px;
+}
+
+.button {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 120px;
     text-align: center;
-    margin-top: 1rem;
+}
+
+.button {
+    background-color: #007bff; /* Blue */
+    color: white;
+}
+
+.delete-button {
+    background-color: #dc3545; /* Red */
+    color: white;
+}
+
+.button:hover {
+    opacity: 0.9;
+}
+
+.delete-button:hover {
+    opacity: 0.9;
 }

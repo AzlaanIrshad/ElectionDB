@@ -36,13 +36,13 @@ public class UserService {
 
     public User register(String email, String password, String username) {
         if (userRepository.existsByEmail(email)) {
-            return null;
+            return null; // Email already in use
         }
 
         User user = new User();
         user.setEmail(email);
         user.setUsername(username);
-        user.setPassword(passwordEncoder.encode(password)); // Hash
+        user.setPassword(passwordEncoder.encode(password)); // Hash the password
         return userRepository.save(user);
     }
 
@@ -58,30 +58,42 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public void deactivateUser(String email) {
+    public User deactivateUser(String email) {
         Optional<User> userOptional = userRepository.findByEmail(email);
-        userOptional.ifPresent(user -> {
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
             user.setActive(false);
-            userRepository.save(user);
-        });
+            return userRepository.save(user);
+        }
+        return null;
     }
 
-//    public User promoteUserToAdmin(Long userId, Long adminId) {
-//        User admin = userRepository.findById(adminId)
-//                .orElseThrow(() -> return null;);
-//
-//        if (!admin.getRole().equals(Role.ADMIN)) {
-//            throw new UnauthorizedActionException("Only admins can promote users.");
-//        }
-//
-//        User user = userRepository.findById(userId)
-//                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
-//
-//        user.setRole(Role.ADMIN);
-//        return userRepository.save(user);
-//    }
+    public boolean deleteUser(Long id) {
+        if (userRepository.existsById(id)) {
+            userRepository.deleteById(id);
+            return true; // User deleted successfully
+        }
+        return false; // User not found
+    }
 
     public boolean existsByEmail(String email) {
         return userRepository.existsByEmail(email);
     }
+
+//    // Method to promote a user to admin
+//    public User promoteUserToAdmin(Long userId, Long adminId) {
+//        User admin = userRepository.findById(adminId)
+//                .orElseThrow(() -> new RuntimeException("Admin not found")); // Handle admin not found
+//
+//        // Ensure the user performing the action is an admin
+//        if (!admin.isAdmin()) { // Assuming isAdmin() method exists in User
+//            throw new RuntimeException("Only admins can promote users.");
+//        }
+//
+//        User user = userRepository.findById(userId)
+//                .orElseThrow(() -> new RuntimeException("User not found")); // Handle user not found
+//
+//        user.setRole(Role.ADMIN); // Assuming setRole() method exists in User
+//        return userRepository.save(user); // Save and return the updated user
+//    }
 }
