@@ -1,6 +1,10 @@
 package entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 import java.io.Serializable;
 
 @Entity
@@ -15,12 +19,16 @@ public class User implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message = "Username is required")
     @Column(name = "username", length = 255, nullable = false)
     private String username;
 
+    @NotBlank(message = "Email is required")
+    @Email(message = "Email should be valid")
     @Column(name = "email", length = 255, unique = true, nullable = false)
     private String email;
 
+    @NotBlank(message = "Password is required")
     @Column(name = "password", length = 255, nullable = false)
     private String password;
 

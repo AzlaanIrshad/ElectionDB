@@ -1,11 +1,14 @@
-package main.java.com.example;
+package com.example;
 
 import entity.User;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.util.concurrent.TimeUnit;
 
+@SpringBootApplication
 public class Main {
     public static void main(String[] args) {
         // Create users with appropriate roles
@@ -27,11 +30,10 @@ public class Main {
             System.err.println("An error occurred while saving the users: " + e.getMessage());
         }
 
-        // Keep the application running by adding a persistent process
+        // Keep the app running
         try {
             while (true) {
-                // Sleep for a long period to simulate persistence
-                TimeUnit.HOURS.sleep(1);  // Sleeps for 1 hour, repeat indefinitely
+                TimeUnit.HOURS.sleep(1);
             }
         } catch (InterruptedException e) {
             System.err.println("Persistent process interrupted!");
