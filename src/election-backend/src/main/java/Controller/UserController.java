@@ -34,23 +34,6 @@ public class UserController {
         }
     }
 
-    @PostMapping("/register")
-    public ResponseEntity<User> register(@Valid @RequestBody User user) {
-        // Validate user input
-        if (user.getEmail() == null || user.getPassword() == null || user.getUsername() == null) {
-            return ResponseEntity.badRequest().body(null);
-        }
-
-        try {
-            User registeredUser = userService.register(user.getEmail(), user.getPassword(), user.getUsername());
-            return ResponseEntity.status(HttpStatus.CREATED).body(registeredUser);
-        } catch (UserAlreadyExistsException e) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(null); // User already exists
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null); // Handle other errors
-        }
-    }
-
     @PostMapping("/logout")
     public ResponseEntity<Void> logout(@Valid @RequestBody User user) {
         // Validate user input
@@ -60,11 +43,5 @@ public class UserController {
 
         userService.logout(user.getEmail());
         return ResponseEntity.ok().build();
-    }
-
-    @GetMapping("/users")
-    public ResponseEntity<List<User>> getUsers() {
-        List<User> users = userService.getUsers();
-        return ResponseEntity.ok(users);
     }
 }
