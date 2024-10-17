@@ -11,21 +11,23 @@ import java.util.concurrent.TimeUnit;
 @SpringBootApplication
 public class Main {
     public static void main(String[] args) {
-        SpringApplication.run(Main.class, args);
-
-        // Create User
-        User user = createUser("gaga", "gaga@example.com", "password123");
+        // Create users with appropriate roles
+        User regularUser = createUser("gaga", "gaga@example.com", "password123", User.Role.USER);
+        User modUser = createUser("modUser", "mod@example.com", "modpw", User.Role.MODERATOR);
+        User adminUser = createUser("adminUser", "admin@example.com", "adminpw", User.Role.ADMIN);
 
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
 
-            // Save User
-            saveUser(session, user);
+            // Save all users
+            saveUser(session, regularUser);
+            saveUser(session, modUser);
+            saveUser(session, adminUser);
 
             transaction.commit();
-            System.out.println("User saved successfully!");
+            System.out.println("Users saved successfully!");
         } catch (Exception e) {
-            System.err.println("An error occurred while saving the user: " + e.getMessage());
+            System.err.println("An error occurred while saving the users: " + e.getMessage());
         }
 
         // Keep the app running
@@ -39,8 +41,8 @@ public class Main {
         }
     }
 
-    private static User createUser(String username, String email, String password) {
-        return new User(username, email, password);
+    private static User createUser(String username, String email, String password, User.Role role) {
+        return new User(username, email, password, role);
     }
 
     private static void saveUser(Session session, User user) {

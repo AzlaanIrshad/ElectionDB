@@ -11,6 +11,10 @@ import java.io.Serializable;
 @Table(name = "user")
 public class User implements Serializable {
 
+    public enum Role {
+        USER, MODERATOR, ADMIN
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -30,6 +34,10 @@ public class User implements Serializable {
 
     @Column(name = "is_active")
     private boolean isActive = true;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "role", length = 50, nullable = false)
+    private Role role = Role.USER; // Standaardrol is 'USER'
 
     public Long getId() {
         return id;
@@ -71,18 +79,20 @@ public class User implements Serializable {
         this.isActive = isActive;
     }
 
-    @PrePersist
-    private void hashPassword() {
-        if (this.password != null) {
-            this.password = new BCryptPasswordEncoder().encode(this.password);
-        }
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     // Constructors
-    public User(String username, String email, String password) {
+    public User(String username, String email, String password, Role role) {
         this.username = username;
         this.email = email;
-        this.setPassword(password);
+        this.password = password;
+        this.role = role;
     }
 
     public User() {

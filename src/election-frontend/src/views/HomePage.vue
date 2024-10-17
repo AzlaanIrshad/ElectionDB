@@ -1,6 +1,5 @@
 <template>
   <div class="homepage bg-gray-100 font-sans">
-
     <!-- Hero Section -->
     <section class="hero text-center py-12 lg:py-16 bg-white rounded-lg shadow-xl mt-5 mx-2 lg:mx-5">
       <h1 class="text-3xl sm:text-4xl lg:text-6xl text-gray-800 mb-5 font-extrabold">
@@ -83,6 +82,16 @@
       </div>
     </section>
 
+    <!-- Admin Panel Button -->
+    <section class="admin-panel text-center mb-10">
+      <button
+          class="cta-button px-6 sm:px-8 py-3 sm:py-4 text-white bg-green-700 hover:bg-green-900 rounded-full transition-all shadow-lg transform hover:scale-105"
+          @click="$router.push('/admin')"
+      >
+        Go to Admin Panel
+      </button>
+    </section>
+
     <!-- News Section -->
     <section class="news py-12 bg-white rounded-lg shadow-lg mx-2 lg:mx-5 mb-10">
       <h2 class="text-3xl lg:text-4xl text-center mb-10 font-extrabold text-gray-800">Recent Election News</h2>
@@ -98,7 +107,6 @@
         </div>
       </div>
     </section>
-
   </div>
 </template>
 

@@ -8,6 +8,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+import exception.ResourceNotFoundException;
+import exception.UnauthorizedActionException;
 
 @Service
 public class UserService {
@@ -59,10 +62,25 @@ public class UserService {
     }
 
     public void deactivateUser(String email) {
-        User user = userRepository.findByEmail(email);
-        if (user != null) {
+        Optional<User> userOptional = userRepository.findByEmail(email);
+        userOptional.ifPresent(user -> {
             user.setActive(false);
             userRepository.save(user);
+        });
+    }
+
+    public User promoteUserToAdmin(Long userId, Long adminId) {
+        User admin = userRepository.findById(adminId)
+                .orElseThrow(() -> new ResourceNotFoundException("Admin not found"));
+
+        if (admin.getRole() != Role.ADMIN) {
+            throw new UnauthorizedActionException("Only admins can promote users.");
         }
+
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+
+        user.setRole(Role.ADMIN);
+        return userRepository.save(user);
     }
 }
