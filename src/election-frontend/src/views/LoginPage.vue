@@ -54,36 +54,25 @@ export default {
       email: '',
       password: '',
       errorMessage: '',
-      isLoading: false,
     };
   },
   methods: {
     async loginUser() {
       try {
-        this.isLoading = true;
-        const response = await axios.post('/auth/login', {
-    email: this.email,
-    password: this.password,
-    rememberMe: document.getElementById('remember').checked,
-});
-        this.errorMessage = '';
-        const sessionId = response.data.sessionId;
+        // Making a POST request to the backend login API
+        const response = await axios.post('http://localhost:8080/api/login', {
+          email: this.email,
+          password: this.password,
+        });
 
-        if (document.getElementById('remember').checked) {
-          localStorage.setItem('sessionId', sessionId);
-        } else {
-          sessionStorage.setItem('sessionId', sessionId);
+        // Assuming you receive a token or user data upon successful login
+        if (response.data && response.data.token) {
+          localStorage.setItem('token', response.data.token); // Store the token
+          this.$router.push('/dashboard'); // Redirect to dashboard or another page
         }
-
-        this.$router.push('/dashboard');
       } catch (error) {
-        if (error.response && error.response.status === 401) {
-          this.errorMessage = 'Invalid email or password';
-        } else {
-          this.errorMessage = 'An error occurred. Please try again later.';
-        }
-      } finally {
-        this.isLoading = false;
+        // Handle any errors, e.g., incorrect credentials
+        this.errorMessage = 'Invalid email or password. Please try again.';
       }
     },
   },
