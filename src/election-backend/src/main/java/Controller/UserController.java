@@ -7,12 +7,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import jakarta.validation.Valid; // Updated import
-import jakarta.validation.constraints.NotNull; // Updated import
+import jakarta.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
+@CrossOrigin(origins = "http://localhost:5173", allowedHeaders = "*") // Allow requests from the frontend
 public class UserController {
 
     @Autowired
@@ -20,14 +21,13 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseEntity<User> login(@Valid @RequestBody User user) {
-        // Validate user input
         if (user.getEmail() == null || user.getPassword() == null) {
             return ResponseEntity.badRequest().body(null);
         }
 
-        User loggedInUser = userService.login(user.getEmail(), user.getPassword());
-        if (loggedInUser != null) {
-            return ResponseEntity.ok(loggedInUser);
+        Optional<User> loggedInUser = userService.login(user.getEmail(), user.getPassword());
+        if (loggedInUser.isPresent()) {
+            return ResponseEntity.ok(loggedInUser.get());
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
@@ -52,7 +52,7 @@ public class UserController {
 
     @PostMapping("/logout")
     public ResponseEntity<Void> logout(@Valid @RequestBody User user) {
-        // Validate user input
+        // Validate user inputw
         if (user.getEmail() == null) {
             return ResponseEntity.badRequest().build();
         }
