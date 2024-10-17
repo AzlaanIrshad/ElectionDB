@@ -87,6 +87,12 @@ public class User implements Serializable {
         this.role = role;
     }
 
+    @PrePersist
+    private void hashPassword() {
+        if (this.password != null) {
+            this.password = new BCryptPasswordEncoder().encode(this.password);
+        }
+    }
     // Constructors
     public User(String username, String email, String password, Role role) {
         this.username = username;
