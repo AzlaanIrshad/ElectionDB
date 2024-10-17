@@ -1,4 +1,4 @@
-package main.java.com.example;
+package com.example;
 
 import entity.User;
 import entity.Candidate;
@@ -13,10 +13,8 @@ public class HibernateUtil {
     private static SessionFactory buildSessionFactory() {
         try {
             return new Configuration()
-                .configure() 
+                .configure()
                 .addAnnotatedClass(User.class)
-                .addAnnotatedClass(Candidate.class)
-                .addAnnotatedClass(ElectionResult.class)
                 .buildSessionFactory();
         } catch (Throwable ex) {
             throw new ExceptionInInitializerError(ex);
@@ -25,5 +23,9 @@ public class HibernateUtil {
 
     public static SessionFactory getSessionFactory() {
         return sessionFactory;
+    }
+
+    public static void shutdown() {
+        getSessionFactory().close();
     }
 }

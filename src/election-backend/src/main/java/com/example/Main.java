@@ -1,36 +1,31 @@
-package main.java.com.example;
+package com.example;
 
 import entity.User;
-import entity.Candidate;
-import entity.ElectionResult;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.util.concurrent.TimeUnit;
 
+@SpringBootApplication
 public class Main {
     public static void main(String[] args) {
+        SpringApplication.run(Main.class, args);
+
         // Create User
         User user = createUser("gaga", "gaga@example.com", "password123");
-
-        // Create Candidate
-        Candidate candidate = new Candidate("John Doe", "Party X");
-
-        // Create ElectionResult
-        ElectionResult electionResult = new ElectionResult(candidate, 500);
 
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
 
-            // Save entities
+            // Save User
             saveUser(session, user);
-            saveCandidate(session, candidate);   // Save the Candidate
-            saveElectionResult(session, electionResult);  // Save the ElectionResult
 
             transaction.commit();
-            System.out.println("User, Candidate, and ElectionResult saved successfully!");
+            System.out.println("User saved successfully!");
         } catch (Exception e) {
-            System.err.println("An error occurred while saving the entities: " + e.getMessage());
+            System.err.println("An error occurred while saving the user: " + e.getMessage());
         }
 
         // Keep the app running
@@ -50,13 +45,5 @@ public class Main {
 
     private static void saveUser(Session session, User user) {
         session.save(user);
-    }
-
-    private static void saveCandidate(Session session, Candidate candidate) {
-        session.save(candidate);
-    }
-
-    private static void saveElectionResult(Session session, ElectionResult electionResult) {
-        session.save(electionResult);
     }
 }
