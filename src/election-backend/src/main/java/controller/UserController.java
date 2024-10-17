@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid; // Updated import
-import jakarta.validation.constraints.NotNull; // Updated import
 import java.util.List;
 
 @RestController
@@ -18,9 +17,14 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @GetMapping("/users")
+    public ResponseEntity<List<User>> getUsers() {
+        List<User> users = userService.getUsers();
+        return ResponseEntity.ok(users);
+    }
+
     @PostMapping("/login")
     public ResponseEntity<User> login(@Valid @RequestBody User user) {
-        // Validate user input
         if (user.getEmail() == null || user.getPassword() == null) {
             return ResponseEntity.badRequest().body(null);
         }
@@ -52,18 +56,11 @@ public class UserController {
 
     @PostMapping("/logout")
     public ResponseEntity<Void> logout(@Valid @RequestBody User user) {
-        // Validate user input
         if (user.getEmail() == null) {
             return ResponseEntity.badRequest().build();
         }
 
         userService.logout(user.getEmail());
         return ResponseEntity.ok().build();
-    }
-
-    @GetMapping("/users")
-    public ResponseEntity<List<User>> getUsers() {
-        List<User> users = userService.getUsers();
-        return ResponseEntity.ok(users);
     }
 }
