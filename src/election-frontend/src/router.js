@@ -4,6 +4,7 @@ import LoginPage from './views/LoginPage.vue';
 import RegisterPage from './views/RegisterPage.vue'; // Import the RegisterPage component
 import AdminPage from './views/Adminpage.vue';
 import ThreadsPage from "./views/ThreadsPage.vue";
+import SingleThreadPage from "./views/SingleThreadPage.vue";
 
 const routes = [
     {
@@ -29,6 +30,10 @@ const routes = [
     {   Path: '/threads',
         name: 'threads',
         component: ThreadsPage
+    },
+    {   Path: '/threads/:id',
+        name: 'single-thread',
+        component: SingleThreadPage
     }
 ];
 
