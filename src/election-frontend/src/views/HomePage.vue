@@ -84,16 +84,6 @@
       </div>
     </section>
 
-    <!-- Admin Panel Button -->
-    <section class="admin-panel text-center mb-10">
-      <button
-          class="cta-button px-6 sm:px-8 py-3 sm:py-4 text-white bg-green-700 hover:bg-green-900 rounded-full transition-all shadow-lg transform hover:scale-105"
-          @click="$router.push('/admin')"
-      >
-        Go to Admin Panel
-      </button>
-    </section>
-
     <!-- Candidates Section -->
 <!--    <section class="candidates-list py-8 bg-white rounded-lg shadow-lg mx-4 sm:mx-6 lg:mx-10">-->
 <!--      <h2 class="text-3xl lg:text-4xl text-center mb-8 font-extrabold text-gray-800">Candidates</h2>-->
