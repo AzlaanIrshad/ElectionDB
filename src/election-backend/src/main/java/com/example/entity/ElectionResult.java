@@ -1,4 +1,4 @@
-package entity;
+package com.example.entity;
 
 public class ElectionResult {
     private Candidate candidate;

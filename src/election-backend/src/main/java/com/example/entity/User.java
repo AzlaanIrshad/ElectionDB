@@ -1,10 +1,8 @@
-package entity;
+package com.example.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
 import java.io.Serializable;
 
 @Entity
@@ -33,11 +31,11 @@ public class User implements Serializable {
     private String password;
 
     @Column(name = "is_active")
-    private boolean isActive = true;
+    private Boolean isActive = true;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "role", length = 50, nullable = false)
-    private Role role = Role.USER; // Standaardrol is 'USER'
+    private Role role = Role.USER;
 
     public Long getId() {
         return id;
@@ -71,11 +69,11 @@ public class User implements Serializable {
         this.password = password;
     }
 
-    public boolean isActive() {
+    public Boolean isActive() {
         return isActive;
     }
 
-    public void setActive(boolean isActive) {
+    public void setActive(Boolean isActive) {
         this.isActive = isActive;
     }
 
@@ -87,18 +85,17 @@ public class User implements Serializable {
         this.role = role;
     }
 
-    @PrePersist
-    private void hashPassword() {
-        if (this.password != null) {
-            this.password = new BCryptPasswordEncoder().encode(this.password);
-        }
-    }
     // Constructors
-    public User(String username, String email, String password, Role role) {
+    public User(String username, String email, String password, Role role, Boolean isActive) {
         this.username = username;
         this.email = email;
         this.password = password;
         this.role = role;
+        this.isActive = isActive;
+    }
+
+    public User(String username, String email, String password, Role role) {
+        this(username, email, password, role, true); // Default isActive to true
     }
 
     public User() {
