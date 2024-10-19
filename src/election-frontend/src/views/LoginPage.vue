@@ -1,7 +1,7 @@
 <template>
   <div class="login-container flex items-center justify-center min-h-screen bg-gray-50">
     <div class="login-box bg-white shadow-lg rounded-lg p-8 max-w-sm w-full">
-      <h2 class="text-2xl font-bold text-center text-gray-800 mb-4">Welcome Back</h2>
+      <h2 class="text-2xl font-bold text-center text-gray-800 mb-4">Login</h2>
       <form @submit.prevent="loginUser">
         <div class="form-group mb-4">
           <input
@@ -46,35 +46,45 @@
 </template>
 
 <script>
-import axios from 'axios';
-
 export default {
   data() {
     return {
       email: '',
       password: '',
-      errorMessage: '',
+      errorMessage: ''
     };
   },
   methods: {
     async loginUser() {
       try {
-        // Making a POST request to the backend login API
-        const response = await axios.post('http://localhost:8080/api/login', {
-          email: this.email,
-          password: this.password,
+        const response = await fetch('http://localhost:8080/api/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            email: this.email,
+            password: this.password,
+          }),
         });
 
-        // Assuming you receive a token or user data upon successful login
-        if (response.data && response.data.token) {
-          localStorage.setItem('token', response.data.token); // Store the token
-          this.$router.push('/dashboard'); // Redirect to dashboard or another page
+        const data = await response.json();
+
+        if (response.ok) {
+          // Save token or user data if necessary
+          localStorage.setItem('token', data.token);
+
+          // Redirect succes
+          this.$router.push('/');
+        } else {
+          // Show error message if login fails
+          this.errorMessage = data.message;
         }
       } catch (error) {
-        // Handle any errors, e.g., incorrect credentials
-        this.errorMessage = 'Invalid email or password. Please try again.';
+        console.error('Login error:', error);
+        this.errorMessage = 'An error occurred. Please try again.';
       }
-    },
-  },
+    }
+  }
 };
 </script>

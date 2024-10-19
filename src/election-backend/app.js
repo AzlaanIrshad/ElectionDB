@@ -1,9 +1,12 @@
 const express = require('express');
 const cors = require('cors');
 const { Sequelize, DataTypes } = require('sequelize');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 const app = express();
 const PORT = 8080;
+const SECRET_KEY = 'your_secret_key';
 
 app.use(cors());
 
@@ -36,17 +39,43 @@ const Candidate = sequelize.define('Candidate', {
     timestamps: false
 });
 
+const User = sequelize.define('User', {
+    id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true
+    },
+    email: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: true
+    },
+    password: {
+        type: DataTypes.STRING,
+        allowNull: false
+    }
+}, {
+    tableName: 'user',
+    timestamps: false
+});
+
 // Sync the database and create
 sequelize.sync({ force: true })
     .then(async () => {
         console.log('Database & tables created!');
 
-        // Insert dummy data
+        // Insert dummy candidate data
         await Candidate.bulkCreate([
             { name: 'Azlaan Sahan', party: 'Stink Party' },
             { name: 'Erdem Berk Irshad', party: 'Cute Party' },
             { name: 'Rahim Pookie', party: 'Kaboem Party' }
         ]);
+
+        const hashedPassword = await bcrypt.hash('test', 10);
+        await User.create({
+            email: 'test@test.nl',
+            password: hashedPassword
+        });
 
         console.log('Dummy data inserted!');
     })
@@ -71,6 +100,36 @@ app.get('/api/candidates', async (req, res) => {
     } catch (error) {
         console.error('Error fetching candidates:', error);
         res.status(500).json({ message: 'Error fetching candidates' });
+    }
+});
+
+// Login route
+app.post('/api/login', async (req, res) => {
+    const { email, password } = req.body;
+
+    try {
+        // Check if the user exists
+        const user = await User.findOne({ where: { email } });
+
+        if (!user) {
+            return res.status(401).json({ message: 'Invalid email or password' });
+        }
+
+        // Compare passwords
+        const isPasswordValid = await bcrypt.compare(password, user.password);
+
+        if (!isPasswordValid) {
+            return res.status(401).json({ message: 'Invalid email or password' });
+        }
+
+        // Generate JWT token
+        const token = jwt.sign({ userId: user.id }, SECRET_KEY, { expiresIn: '1h' });
+
+        // Respond with token
+        res.json({ message: 'Login successful', token });
+    } catch (error) {
+        console.error('Login error:', error);
+        res.status(500).json({ message: 'Internal server error' });
     }
 });
 
