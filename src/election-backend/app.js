@@ -36,7 +36,25 @@ const Candidate = sequelize.define('Candidate', {
     timestamps: false
 });
 
-// Test
+// Sync the database and create
+sequelize.sync({ force: true })
+    .then(async () => {
+        console.log('Database & tables created!');
+
+        // Insert dummy data
+        await Candidate.bulkCreate([
+            { name: 'Azlaan Sahan', party: 'Stink Party' },
+            { name: 'Erdem Berk Irshad', party: 'Cute Party' },
+            { name: 'Rahim Pookie', party: 'Kaboem Party' }
+        ]);
+
+        console.log('Dummy data inserted!');
+    })
+    .catch(err => {
+        console.error('Error syncing the database:', err);
+    });
+
+// Test connection
 sequelize.authenticate()
     .then(() => {
         console.log('Connection to the database has been established successfully.');
