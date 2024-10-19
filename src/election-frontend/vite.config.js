@@ -3,20 +3,25 @@ import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 
 export default defineConfig({
-  plugins: [
-    vue(),
-  ],
+  plugins: [vue()],
   resolve: {
     alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url)) // Alias for src folder
+      '@': fileURLToPath(new URL('./src', import.meta.url))
     }
   },
   server: {
-    host: true, // Enables access over network and from within Docker container
+    host: true,
     watch: {
       usePolling: true,
     },
-    port: 5173, // vite port
-    strictPort: true
+    port: 5173,
+    strictPort: true,
+    proxy: {
+      '/auth': {
+        target: 'http://localhost:3000',
+        changeOrigin: true,
+        secure: false,
+      },
+    },
   }
 });
