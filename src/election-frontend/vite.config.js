@@ -6,22 +6,22 @@ export default defineConfig({
   plugins: [vue()],
   resolve: {
     alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url))
-    }
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
+    },
   },
   server: {
     host: true,
     watch: {
       usePolling: true,
     },
-    port: 5173,
+    port: 3000,
     strictPort: true,
     proxy: {
-      '/auth': {
-        target: 'http://localhost:3000',
+      '/api': {
+        target: 'http://localhost:8080',
         changeOrigin: true,
         secure: false,
       },
     },
-  }
+  },
 });

@@ -12,6 +12,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/auth")
+@CrossOrigin(origins = "http://localhost:*", allowedHeaders = "*") // Enable CORS here
 public class AuthController {
 
     @Autowired
