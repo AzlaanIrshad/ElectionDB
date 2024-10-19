@@ -21,6 +21,14 @@
     </properties>
 
     <dependencies>
+        <!-- Getters, Setters, Constructors, and more with Project Lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.26</version>
+            <scope>provided</scope>
+        </dependency>
+
         <!-- Spring Boot JPA Starter for Data Access and ORM -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
