@@ -55,17 +55,13 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   name: "AdminPage",
   data() {
     return {
-      users: [
-        {id: 1, username: "user1", email: "user1@example.com", active: true},
-        {id: 2, username: "user2", email: "user2@example.com", active: true},
-        {id: 3, username: "user3", email: "user3@example.com", active: false},
-        {id: 4, username: "user4", email: "user4@example.com", active: true},
-        {id: 5, username: "user5", email: "user5@example.com", active: false},
-      ],
+      users: [],
       displayedUsers: [],
       loading: false,
     };
@@ -73,19 +69,32 @@ export default {
   methods: {
     async fetchUsers() {
       this.loading = true;
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      this.loading = false;
-
-
-      this.displayedUsers = [...this.users];
+      try {
+        const response = await axios.get('http://localhost:8080/api/users');
+        this.users = response.data;
+        this.displayedUsers = [...this.users];
+      } catch (error) {
+        console.error('Error fetching users:', error);
+      } finally {
+        this.loading = false;
+      }
     },
     async toggleActive(user) {
       user.active = !user.active;
+      try {
+        await axios.put(`http://localhost:8080/api/users/${user.id}`, { active: user.active });
+      } catch (error) {
+        console.error('Error updating user status:', error);
+      }
     },
     async deleteUser(userId) {
-      this.users = this.users.filter((user) => user.id !== userId);
-
-      this.displayedUsers = this.users;
+      try {
+        await axios.delete(`http://localhost:8080/api/users/${userId}`);
+        this.users = this.users.filter(user => user.id !== userId);
+        this.displayedUsers = this.users;
+      } catch (error) {
+        console.error('Error deleting user:', error);
+      }
     },
     searchUsers(event) {
       const query = event.target.value.toLowerCase();
@@ -96,7 +105,6 @@ export default {
                 user.email.toLowerCase().includes(query)
         );
       } else {
-
         this.displayedUsers = [...this.users];
       }
     },
