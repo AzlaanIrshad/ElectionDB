@@ -1,6 +1,6 @@
 package com.example;
 
-import entity.User;
+import com.example.entity.User;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.springframework.boot.SpringApplication;
