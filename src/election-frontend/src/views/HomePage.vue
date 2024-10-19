@@ -77,7 +77,9 @@
       </div>
       <div class="text-center mt-10">
         <a href="/">
-          <button class="cta-button px-6 sm:px-8 py-3 sm:py-4 text-white bg-blue-700 hover:bg-blue-900 rounded-full transition-all shadow-lg transform hover:scale-105">Election Dashboard</button>
+          <button class="cta-button px-6 sm:px-8 py-3 sm:py-4 text-white bg-blue-700 hover:bg-blue-900 rounded-full transition-all shadow-lg transform hover:scale-105">
+            Election Dashboard
+          </button>
         </a>
       </div>
     </section>
@@ -92,6 +94,18 @@
       </button>
     </section>
 
+    <!-- Candidates Section -->
+<!--    <section class="candidates-list py-8 bg-white rounded-lg shadow-lg mx-4 sm:mx-6 lg:mx-10">-->
+<!--      <h2 class="text-3xl lg:text-4xl text-center mb-8 font-extrabold text-gray-800">Candidates</h2>-->
+<!--      <div v-if="candidates.length" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">-->
+<!--        <div v-for="candidate in candidates" :key="candidate.id" class="candidate-card bg-gray-200 p-4 rounded-lg shadow-md">-->
+<!--          <h3 class="text-xl font-bold">{{ candidate.name }}</h3>-->
+<!--          <p class="text-sm text-gray-600">{{ candidate.party }}</p>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--      <p v-else class="text-center text-gray-600">No candidates found.</p>-->
+<!--    </section>-->
+
     <!-- News Section -->
     <section class="news py-12 bg-white rounded-lg shadow-lg mx-2 lg:mx-5 mb-10">
       <h2 class="text-3xl lg:text-4xl text-center mb-10 font-extrabold text-gray-800">Recent Election News</h2>
@@ -99,11 +113,13 @@
         <img
             src="https://media.gettyimages.com/id/1368872054/nl/vector/online-news-search-and-reading-news-updates-news-websites-information-on-newspapers-public.jpg?s=612x612&w=0&k=20&c=iZdnx4rKpTsJiSK8tFNyE1xztBXHXpHoBEXdDdT4ZFw="
             alt="News Image"
-            class="news-image w-full md:w-2/6 mr-28 h-40 sm:h-60 object-cover rounded-lg shadow-md"
+            class="news-image w-full md:w-2/6 lg:mr-28 h-40 sm:h-60 object-cover rounded-lg shadow-md"
         />
         <div class="news-text w-full md:w-3/5">
           <h3 class="text-2xl sm:text-3xl font-extrabold mb-5 text-gray-800">Dutch Elections See Surge in New Political Parties</h3>
-          <p class="mb-4 text-base sm:text-lg text-gray-600 leading-relaxed">The Netherlands is witnessing a rise in new political movements, challenging the traditional political landscape. These emerging parties are focusing on issues like housing, climate change, and immigration, which resonate strongly with younger voters.</p>
+          <p class="mb-4 text-base sm:text-lg text-gray-600 leading-relaxed">
+            The Netherlands is witnessing a rise in new political movements, challenging the traditional political landscape. These emerging parties are focusing on issues like housing, climate change, and immigration, which resonate strongly with younger voters.
+          </p>
         </div>
       </div>
     </section>
@@ -111,10 +127,13 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   name: "HomePage",
   data() {
     return {
+      candidates: [],
       activeIndex: 0,
       featuredImages: [
         "https://media.gettyimages.com/id/1327961273/nl/foto/the-hague-netherlands-general-interior-view-of-the-tweede-kamer-building-is-seen-during-the.jpg?s=612x612&w=0&k=20&c=FZv3KDWl4flKiXpm49-0QwZvXB9Sp2Cry3artg0Uw9o=",
@@ -125,22 +144,35 @@ export default {
   },
   mounted() {
     this.startCarousel();
+    this.fetchCandidates();
   },
   methods: {
     startCarousel() {
       setInterval(() => {
-        this.activeIndex = (this.activeIndex + 1) % this.featuredImages.length;
-      }, 5000); // 5 sec interval for image carousel
+        this.nextImage();
+      }, 5000); // 5 sec
     },
+
     setActiveIndex(index) {
       this.activeIndex = index;
     },
-    prevImage() {
-      this.activeIndex = (this.activeIndex - 1 + this.featuredImages.length) % this.featuredImages.length;
+
+    async fetchCandidates() {
+      try {
+        const response = await axios.get("http://localhost:8080/api/candidates");
+        this.candidates = response.data;
+      } catch (error) {
+        console.error("Error fetching candidates:", error);
+      }
     },
+
     nextImage() {
       this.activeIndex = (this.activeIndex + 1) % this.featuredImages.length;
     },
-  },
+
+    prevImage() {
+      this.activeIndex = (this.activeIndex - 1 + this.featuredImages.length) % this.featuredImages.length;
+    },
+  }
 };
 </script>
