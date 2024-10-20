@@ -23,46 +23,6 @@ public class UserController {
         return ResponseEntity.ok(users);
     }
 
-    @PostMapping("/login")
-    public ResponseEntity<User> login(@Valid @RequestBody User user) {
-        if (user.getEmail() == null || user.getPassword() == null) {
-            return ResponseEntity.badRequest().body(null);
-        }
-
-        User loggedInUser = userService.login(user.getEmail(), user.getPassword());
-        if (loggedInUser != null) {
-           return ResponseEntity.ok(loggedInUser);
-        } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        }
-    }
-
-    @PostMapping("/register")
-    public ResponseEntity<User> register(@Valid @RequestBody User user) {
-        // Validate user input
-        if (user.getEmail() == null || user.getPassword() == null || user.getUsername() == null) {
-            return ResponseEntity.badRequest().body(null);
-       }
-
-//        try {
-           User registeredUser = userService.register(user.getEmail(), user.getPassword(), user.getUsername());
-            return ResponseEntity.status(HttpStatus.CREATED).body(registeredUser);
-//        } catch (UserAlreadyExistsException e) {
-//           return ResponseEntity.status(HttpStatus.CONFLICT).body(null); // User already exists
-//        } catch (Exception e) {
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null); // Handle other errors
-//        }
-    }
-
-   @PostMapping("/logout")
-    public ResponseEntity<Void> logout(@Valid @RequestBody User user) {
-        if (user.getEmail() == null) {
-            return ResponseEntity.badRequest().build();
-        }
-
-        userService.logout(user.getEmail());
-        return ResponseEntity.ok().build();
-    }
     @PutMapping("/users/{id}")
     public ResponseEntity<User> toggleUserActive(@PathVariable Long id) {
         User updatedUser = userService.toggleActiveStatus(id);
