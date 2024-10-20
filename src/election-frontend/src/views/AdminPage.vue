@@ -17,7 +17,7 @@
         <th class="px-4 py-2">ID</th>
         <th class="px-4 py-2">Username</th>
         <th class="px-4 py-2">Email</th>
-        <th class="px-4 py-2">Active</th>
+        <th class="px-4 py-2 text-center">Active</th>
         <th class="px-4 py-2">Actions</th>
       </tr>
       </thead>
@@ -26,7 +26,7 @@
         <td class="border px-4 py-2">{{ user.id }}</td>
         <td class="border px-4 py-2">{{ user.username }}</td>
         <td class="border px-4 py-2">{{ user.email }}</td>
-        <td class="border px-4 py-2">
+        <td class="border px-4 py-2 text-center">
           <span v-if="user.active" class="text-green-600">Yes</span>
           <span v-else class="text-red-600">No</span>
         </td>
@@ -55,8 +55,6 @@
 </template>
 
 <script>
-import axios from 'axios';
-
 export default {
   name: "AdminPage",
   data() {
@@ -70,8 +68,9 @@ export default {
     async fetchUsers() {
       this.loading = true;
       try {
-        const response = await axios.get('http://localhost:8080/api/users');
-        this.users = response.data;
+        const response = await fetch('http://localhost:8080/api/users');
+        const data = await response.json();
+        this.users = data;
         this.displayedUsers = [...this.users];
       } catch (error) {
         console.error('Error fetching users:', error);
@@ -82,14 +81,20 @@ export default {
     async toggleActive(user) {
       user.active = !user.active;
       try {
-        await axios.put(`http://localhost:8080/api/users/${user.id}`, { active: user.active });
+        await fetch(`http://localhost:8080/api/users/${user.id}`, {
+          method: 'PUT',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({active: user.active})
+        });
       } catch (error) {
         console.error('Error updating user status:', error);
       }
     },
     async deleteUser(userId) {
       try {
-        await axios.delete(`http://localhost:8080/api/users/${userId}`);
+        await fetch(`http://localhost:8080/api/users/${userId}`, {
+          method: 'DELETE'
+        });
         this.users = this.users.filter(user => user.id !== userId);
         this.displayedUsers = this.users;
       } catch (error) {
