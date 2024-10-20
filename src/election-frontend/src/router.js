@@ -27,13 +27,13 @@ const routes = [
         name: 'admin',
         component: AdminPage
     },
-    {   Path: '/threads',
+    {   path: '/threads',
         name: 'threads',
         component: ThreadsPage
     },
-    {   Path: '/threads/:id',
+    {   path: '/threads/:id',
         name: 'single-thread',
-        component: SingleThreadPage``
+        component: SingleThreadPage
     }
 ];
 
