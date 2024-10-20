@@ -1,45 +1,28 @@
 package com.example.service;
 
 import com.example.entity.User;
-import com.example.repository.UserRepository;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.Date;
-import java.util.Optional;
 
 @Service
 public class AuthService {
 
-    @Autowired
-    private UserRepository userRepository;
-
-    private final String secretKey = "mySecretKey"; // Store securely in a real application
-
-    public String login(String email, String password) {
-        System.out.println("Attempting login for: " + email); // Log the email for debugging
-        Optional<User> userOpt = userRepository.findByEmail(email);
-        if (userOpt.isPresent()) {
-            User user = userOpt.get();
-            System.out.println("User found: " + user.getEmail()); // Log if user is found
-            // Compare passwords
-            if (password.equals(user.getPassword())) {
-                // Token generation
-                return generateToken(user); // Encapsulate token generation in a method
-            }
-        }
-        return null; // Return null if login fails
+    // Voorbeeld login logica
+    public User login(String email, String password) {
+        // Hier controleer je de email en wachtwoord en haal je de gebruiker uit de database
+        // Als de login correct is, return de User, anders null.
+        // Bijvoorbeeld:
+        return findUserByEmailAndPassword(email, password);  // Pas dit aan je eigen logica aan
     }
 
-    private String generateToken(User user) {
-        return Jwts.builder()
-                .setSubject(user.getEmail())
-                .claim("role", user.getRole())
-                .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + 864_000_00)) // 1 day validity
-                .signWith(SignatureAlgorithm.HS512, secretKey)
-                .compact();
+    // Zorg ervoor dat de generateToken-methode public is
+    public String generateToken(User user) {
+        // Genereer een JWT-token of een ander soort token voor de gebruiker
+        return "fake-jwt-token";  // Hier komt de daadwerkelijke token generatie code
+    }
+
+    // Dit is een placeholder. Je moet dit implementeren om de user te vinden.
+    private User findUserByEmailAndPassword(String email, String password) {
+        // Dit moet de gebruiker opzoeken in de database en teruggeven
+        return null;  // Implement your actual logic
     }
 }
