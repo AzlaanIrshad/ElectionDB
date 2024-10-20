@@ -5,34 +5,34 @@
       <form @submit.prevent="loginUser">
         <div class="form-group mb-4">
           <input
-            type="email"
-            id="email"
-            v-model="email"
-            placeholder="Email"
-            required
-            class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-300"
+              type="email"
+              id="email"
+              v-model="email"
+              placeholder="Email"
+              required
+              class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-300"
           />
         </div>
         <div class="form-group mb-4">
           <input
-            type="password"
-            id="password"
-            v-model="password"
-            placeholder="Password"
-            required
-            class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-300"
+              type="password"
+              id="password"
+              v-model="password"
+              placeholder="Password"
+              required
+              class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-300"
           />
         </div>
         <div class="flex items-center justify-between mb-6">
           <div>
-            <input type="checkbox" id="remember" class="mr-1">
+            <input type="checkbox" id="remember" class="mr-1" v-model="rememberMe" />
             <label for="remember" class="text-gray-600 text-sm">Remember me</label>
           </div>
           <a href="#" class="text-sm text-blue-600 hover:underline">Forgot Password?</a>
         </div>
         <button
-          type="submit"
-          class="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-500 transition duration-300"
+            type="submit"
+            class="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-500 transition duration-300"
         >
           Login
         </button>
@@ -51,11 +51,13 @@ export default {
     return {
       email: '',
       password: '',
-      errorMessage: ''
+      rememberMe: false,
+      errorMessage: '',
     };
   },
   methods: {
     async loginUser() {
+      this.errorMessage = ''; // Reset error message
       try {
         const response = await fetch('http://localhost:8080/api/login', {
           method: 'POST',
@@ -68,24 +70,21 @@ export default {
           }),
         });
 
+        if (!response.ok) {
+          throw new Error('Invalid email or password');
+        }
+
         const data = await response.json();
 
-        if (response.ok) {
-          // Save token or user data if necessary
-          localStorage.setItem('token', data.token);
+        // Handle successful login
+        console.log('Login successful:', data);
 
-          // Redirect succes
-          this.$router.push('/');
-        } else {
-          // Show error message if login fails
-          this.errorMessage = data.message;
-        }
+        // Redirect to home page after successful login
+        this.$router.push({name: 'home'});
       } catch (error) {
-        console.error('Login error:', error);
-        this.errorMessage = 'An error occurred. Please try again.';
+        this.errorMessage = error.message;
       }
-    }
-  }
+    },
+  },
 };
 </script>
-

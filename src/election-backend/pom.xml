@@ -33,42 +33,37 @@
         </dependency>
 
         <dependency>
-            <groupId>io.jsonwebtoken</groupId>
-            <artifactId>jjwt</artifactId>
-            <version>0.9.1</version>
+            <groupId>jakarta.annotation</groupId>
+            <artifactId>jakarta.annotation-api</artifactId>
+            <version>2.0.0</version>
         </dependency>
 
-        <dependency>
-            <groupId>jakarta.persistence</groupId>
-            <artifactId>jakarta.persistence-api</artifactId>
-            <version>3.1.0</version>
-        </dependency>
-
+        <!-- Jakarta Validation API Dependency -->
         <dependency>
             <groupId>jakarta.validation</groupId>
             <artifactId>jakarta.validation-api</artifactId>
             <version>3.0.2</version>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.security</groupId>-->
-<!--            <artifactId>spring-security-config</artifactId>-->
-<!--        </dependency>-->
 
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.boot</groupId>-->
-<!--            <artifactId>spring-boot-starter-security</artifactId>-->
-<!--        </dependency>-->
+        <!-- Hibernate Validator (compatible with Jakarta EE) -->
+        <dependency>
+            <groupId>org.hibernate.validator</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>7.0.0.Final</version>
+        </dependency>
+
         <!-- MySQL Connector for Database Access -->
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>8.0.32</version> <!-- Check for the latest version -->
+            <version>8.0.32</version>
         </dependency>
 
+        <!-- HikariCP (default connection pool) -->
         <dependency>
             <groupId>com.zaxxer</groupId>
             <artifactId>HikariCP</artifactId>
-            <version>5.0.1</version> <!-- Check for the latest version -->
+            <version>5.0.1</version>
         </dependency>
 
         <dependency>
@@ -77,6 +72,7 @@
             <optional>true</optional>
         </dependency>
 
+        <!-- Spring Boot Test Starter for Testing -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -88,6 +84,14 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
+        <!-- JUnit for Unit Testing -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.13.2</version>
+            <scope>test</scope>
+        </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
@@ -96,6 +100,7 @@
 
     <build>
         <plugins>
+            <!-- Spring Boot Maven Plugin to run the application -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
@@ -104,10 +109,11 @@
                 </configuration>
             </plugin>
 
+            <!-- Maven Compiler Plugin to compile Java Code -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.0</version>
+                <version>3.10.1</version>
                 <configuration>
                     <source>${java.version}</source>
                     <target>${java.version}</target>

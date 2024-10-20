@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import HomePage from './views/HomePage.vue';
 import LoginPage from './views/LoginPage.vue';
-import RegisterPage from './views/RegisterPage.vue'; // Import the RegisterPage component
+import RegisterPage from './views/RegisterPage.vue';
 import AdminPage from './views/Adminpage.vue';
 import ThreadsPage from "./views/ThreadsPage.vue";
 import SingleThreadPage from "./views/SingleThreadPage.vue";
@@ -25,15 +25,17 @@ const routes = [
     {
         path: '/admin',
         name: 'admin',
-        component: AdminPage
+        component: AdminPage,
     },
-    {   Path: '/threads',
+    {
+        path: '/threads',
         name: 'threads',
-        component: ThreadsPage
+        component: ThreadsPage,
     },
-    {   Path: '/threads/:id',
+    {
+        path: '/threads/:id',
         name: 'single-thread',
-        component: SingleThreadPage
+        component: SingleThreadPage,
     }
 ];
 
