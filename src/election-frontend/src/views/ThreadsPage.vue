@@ -33,7 +33,7 @@
           {{ thread.title }}
 <!--                    </router-link>-->
           <p class="text-gray-600">{{ thread.content }}</p>
-          <p class="text-sm text-gray-400">Created by: {{ thread.author }} on {{ thread.createdAt }}</p>
+          <p class="text-sm text-gray-400">Created by: {{ thread.user.username }} on {{ thread.date }}</p>
         </div>
       </div>
     </section>
