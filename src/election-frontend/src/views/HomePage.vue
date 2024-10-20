@@ -117,7 +117,6 @@
 </template>
 
 <script>
-import axios from 'axios';
 
 export default {
   name: "HomePage",
@@ -134,7 +133,6 @@ export default {
   },
   mounted() {
     this.startCarousel();
-    this.fetchCandidates();
   },
   methods: {
     startCarousel() {
@@ -145,15 +143,6 @@ export default {
 
     setActiveIndex(index) {
       this.activeIndex = index;
-    },
-
-    async fetchCandidates() {
-      try {
-        const response = await axios.get("http://localhost:8080/api/candidates");
-        this.candidates = response.data;
-      } catch (error) {
-        console.error("Error fetching candidates:", error);
-      }
     },
 
     nextImage() {

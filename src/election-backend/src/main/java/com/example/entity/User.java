@@ -37,6 +37,7 @@ public class User implements Serializable {
     @Column(name = "role", length = 50, nullable = false)
     private Role role = Role.USER;
 
+    // Getters and Setters
     public Long getId() {
         return id;
     }
@@ -69,11 +70,11 @@ public class User implements Serializable {
         this.password = password;
     }
 
-    public Boolean isActive() {
+    public Boolean getIsActive() {
         return isActive;
     }
 
-    public void setActive(Boolean isActive) {
+    public void setIsActive(Boolean isActive) {
         this.isActive = isActive;
     }
 

@@ -2,7 +2,6 @@ package com.example;
 
 import com.example.entity.User;
 import com.example.entity.Candidate;
-import com.example.entity.ElectionResult;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
