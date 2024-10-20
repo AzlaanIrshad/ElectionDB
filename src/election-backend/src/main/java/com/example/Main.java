@@ -31,20 +31,22 @@ public class Main implements CommandLineRunner {
         User adminUser = new User("adminUser", "admin@example.com", "adminpw", User.Role.ADMIN);
 
         // Save all users
-        userRepository.save(regularUser);
-        userRepository.save(modUser);
-        userRepository.save(adminUser);
-
+        if (userRepository.count() == 0) {
+            userRepository.save(regularUser);
+            userRepository.save(modUser);
+            userRepository.save(adminUser);
+        }
         // Create placeholder threads
         Thread thread1 = new Thread("Thread 1", "Body 1", "2021-09-01", "Category 1", regularUser);
         Thread thread2 = new Thread("Thread 2", "Body 2", "2021-09-02", "Category 2", modUser);
         Thread thread3 = new Thread("Thread 3", "Body 3", "2021-09-03", "Category 3", adminUser);
 
         // Save all threads
-        threadRepository.save(thread1);
-        threadRepository.save(thread2);
-        threadRepository.save(thread3);
-
+        if (threadRepository.count() == 0) {
+            threadRepository.save(thread1);
+            threadRepository.save(thread2);
+            threadRepository.save(thread3);
+        }
         System.out.println("Users and Threads saved successfully!");
     }
 }

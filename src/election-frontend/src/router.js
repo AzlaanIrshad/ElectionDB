@@ -8,7 +8,7 @@ import SingleThreadPage from "./views/SingleThreadPage.vue";
 
 const routes = [
     {
-        path: '',
+        path: '/',
         name: 'home',
         component: HomePage,
     },
@@ -33,7 +33,7 @@ const routes = [
     },
     {   Path: '/threads/:id',
         name: 'single-thread',
-        component: SingleThreadPage
+        component: SingleThreadPage``
     }
 ];
 
