@@ -3,7 +3,6 @@ package com.example.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.io.Serializable;
 
@@ -81,5 +80,17 @@ public class Thread implements Serializable {
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    public Thread() {
+        // Default constructor
+    }
+
+    public Thread(String title, String body, String date, String category, User user) {
+        this.title = title;
+        this.body = body;
+        this.date = date;
+        this.category = category;
+        this.user = user;
     }
 }

@@ -3,7 +3,7 @@ package com.example.service;
 import com.example.entity.User;
 import com.example.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
+//import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
@@ -14,20 +14,20 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+//    @Autowired
+//    private PasswordEncoder passwordEncoder;
 
     public User login(String email, String password) {
         System.out.println("Logging in user: " + email);
         User user = userRepository.findByEmail(email).orElse(null);
         if (user != null) {
             System.out.println("User found, checking password.");
-            if (passwordEncoder.matches(password, user.getPassword())) {
-                System.out.println("Password matches.");
-                return user;
-            } else {
-                System.out.println("Password does not match.");
-            }
+//            if (passwordEncoder.matches(password, user.getPassword())) {
+//                System.out.println("Password matches.");
+//                return user;
+//            } else {
+//                System.out.println("Password does not match.");
+//            }
         } else {
             System.out.println("User not found.");
         }
@@ -42,7 +42,7 @@ public class UserService {
         User user = new User();
         user.setEmail(email);
         user.setUsername(username);
-        user.setPassword(passwordEncoder.encode(password)); // Hash the password
+//        user.setPassword(passwordEncoder.encode(password)); // Hash the password
         return userRepository.save(user);
     }
 
