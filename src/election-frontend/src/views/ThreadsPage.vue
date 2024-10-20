@@ -29,9 +29,10 @@
       <h2 class="text-3xl lg:text-4xl text-center mb-8 font-extrabold text-gray-800 ">Active Threads</h2>
       <div class="threads-list space-y-6 mx-4 sm:mx-6 lg:mx-10 ">
         <div v-for="thread in threads" :key="thread.id" class="thread-item p-4 bg-gray-100 border rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
-<!--                    <router-link :to="{ name: 'SingleThread', params: { id: thread.id } }" class="text-lg font-semibold text-gray-800 hover:underline">-->
-          {{ thread.title }}
-<!--                    </router-link>-->
+          <router-link :to="{ name: 'single-thread', params: { id: thread.id } }" class="text-lg font-semibold text-gray-800 hover:underline">
+            {{ thread.title }}
+          </router-link>
+
           <p class="text-gray-600">{{ thread.content }}</p>
           <p class="text-sm text-gray-400">Created by: {{ thread.user.username }} on {{ thread.date }}</p>
         </div>
