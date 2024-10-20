@@ -3,7 +3,7 @@
     <!-- Section 1-->
     <section>
       <!-- Threads Section -->
-      <div class="threads py-12 bg-white rounded-lg shadow-lg mx-2 lg:mx-5 mb-10">
+      <div class="threads py-12 bg-gray-200 rounded-lg shadow-lg mx-2 lg:mx-5 mb-10">
         <h2 class="text-3xl lg:text-4xl text-center mb-10 font-extrabold text-gray-800">Election Threads</h2>
         <div class="threads-content flex flex-col md:flex-row items-center gap-8 mx-4 sm:mx-6 lg:mx-10">
           <img
@@ -24,11 +24,11 @@
     </section>
 
     <!-- Section 2 -->
-    <section class="categories py-10 mb-10 bg-white rounded-lg shadow-lg mt-10 mx-2 lg:mx-5">
+    <section class="categories py-10 mb-10 bg-gray-200 rounded-lg shadow-lg mt-10 mx-2 lg:mx-5">
       <!-- Looping through a list of threads -->
-      <h2 class="text-3xl lg:text-4xl text-center mb-8 font-extrabold text-gray-800">Active Threads</h2>
-      <div class="threads-list space-y-6 mx-4 sm:mx-6 lg:mx-10">
-        <div v-for="thread in threads" :key="thread.id" class="thread-item p-4 bg-gray-50 border rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
+      <h2 class="text-3xl lg:text-4xl text-center mb-8 font-extrabold text-gray-800 ">Active Threads</h2>
+      <div class="threads-list space-y-6 mx-4 sm:mx-6 lg:mx-10 ">
+        <div v-for="thread in threads" :key="thread.id" class="thread-item p-4 bg-gray-100 border rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
 <!--                    <router-link :to="{ name: 'SingleThread', params: { id: thread.id } }" class="text-lg font-semibold text-gray-800 hover:underline">-->
           {{ thread.title }}
 <!--                    </router-link>-->
