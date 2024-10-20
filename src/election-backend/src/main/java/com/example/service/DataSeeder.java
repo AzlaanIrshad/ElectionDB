@@ -1,48 +1,52 @@
 package com.example.service;
 
-import com.example.entity.Candidate;
 import com.example.entity.User;
-import com.example.entity.User.Role;
-import com.example.repository.CandidateRepository;
+import com.example.entity.Thread;
 import com.example.repository.UserRepository;
+import com.example.repository.ThreadRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 @Component
 public class DataSeeder implements CommandLineRunner {
 
-    private final CandidateRepository candidateRepository;
-    private final UserRepository userRepository;
+    @Autowired
+    private UserRepository userRepository;
 
-    public DataSeeder(CandidateRepository candidateRepository, UserRepository userRepository) {
-        this.candidateRepository = candidateRepository;
-        this.userRepository = userRepository;
-    }
+    @Autowired
+    private ThreadRepository threadRepository;
 
     @Override
-    @Transactional
-    public void run(String... args) throws Exception {
-        // Seed dummy Candidates
-        if (candidateRepository.count() == 0) {
-            Candidate candidate1 = new Candidate("John Doe", "Democratic");
-            Candidate candidate2 = new Candidate("Jane Smith", "Republican");
-            Candidate candidate3 = new Candidate("Robert Johnson", "Independent");
+    public void run(String... args) {
+        seedData();
+    }
 
-            candidateRepository.save(candidate1);
-            candidateRepository.save(candidate2);
-            candidateRepository.save(candidate3);
-        }
+    private void seedData() {
+        // Delete existing users and threads
+        threadRepository.deleteAll();
+        userRepository.deleteAll();
 
-        // Seed dummy Users
-        if (userRepository.count() == 0) {
-            User admin = new User("admin", "admin@example.com", "password123", Role.ADMIN);
-            User moderator = new User("moderator", "moderator@example.com", "password123", Role.MODERATOR);
-            User user = new User("user1", "user@user", "user", Role.USER);
+        // Create users with appropriate roles
+        User regularUser = new User("test", "test@test", "test", User.Role.USER);
+        User modUser = new User("modUser", "mod@example.com", "modpw", User.Role.MODERATOR);
+        User adminUser = new User("adminUser", "admin@example.com", "adminpw", User.Role.ADMIN);
 
-            userRepository.save(admin);
-            userRepository.save(moderator);
-            userRepository.save(user);
-        }
+        // Save all users
+        userRepository.save(regularUser);
+        userRepository.save(modUser);
+        userRepository.save(adminUser);
+
+        // Create placeholder threads
+        Thread thread1 = new Thread("Thread 1", "Body 1", "2021-09-01", "Category 1", regularUser);
+        Thread thread2 = new Thread("Thread 2", "Body 2", "2021-09-02", "Category 2", modUser);
+        Thread thread3 = new Thread("Thread 3", "Body 3", "2021-09-03", "Category 3", adminUser);
+
+        // Save all threads
+        threadRepository.save(thread1);
+        threadRepository.save(thread2);
+        threadRepository.save(thread3);
+
+        System.out.println("Users and Threads saved successfully!");
     }
 }
