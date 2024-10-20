@@ -73,18 +73,15 @@ export default {
         if (!response.ok) {
           throw new Error('Invalid email or password');
         }
+        const token = await response.text();
 
-        const data = await response.json();
+        localStorage.setItem('token', token);
 
-        // Handle successful login
-        console.log('Login successful:', data);
-
-        // Redirect to home page after successful login
-        this.$router.push({name: 'home'});
+        this.$router.push({ name: 'home' });
       } catch (error) {
         this.errorMessage = error.message;
       }
-    },
-  },
+    }
+  }
 };
 </script>

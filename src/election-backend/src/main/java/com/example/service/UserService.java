@@ -4,6 +4,7 @@ import com.example.entity.User;
 import com.example.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import com.example.util.JwtUtil;
 
 import java.util.List;
 import java.util.Optional;
@@ -14,12 +15,15 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public User authenticate(String email, String password) {
+    @Autowired
+    private JwtUtil jwtUtil;
+
+    public String authenticate(String email, String password) {
         Optional<User> userOptional = userRepository.findByEmail(email);
         if (userOptional.isPresent()) {
             User user = userOptional.get();
             if (user.getPassword().equals(password)) {
-                return user;
+                return jwtUtil.generateToken(user.getEmail());
             }
         }
         return null;

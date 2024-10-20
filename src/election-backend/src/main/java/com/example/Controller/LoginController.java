@@ -25,10 +25,10 @@ public class LoginController {
             return ResponseEntity.badRequest().body("Password is required");
         }
 
-        User user = userService.authenticate(loginRequest.getEmail(), loginRequest.getPassword());
+        String token = userService.authenticate(loginRequest.getEmail(), loginRequest.getPassword());
 
-        if (user != null) {
-            return ResponseEntity.ok(user);
+        if (token != null) {
+            return ResponseEntity.ok(token);
         } else {
             return ResponseEntity.status(401).body("Invalid email or password");
         }
