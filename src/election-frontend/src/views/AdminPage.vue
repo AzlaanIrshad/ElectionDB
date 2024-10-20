@@ -11,7 +11,7 @@
 
     <div v-if="loading" class="text-gray-500">Loading users...</div>
 
-    <table v-if="!loading && displayedUsers.length" class="min-w-full bg-gray-100 rounded-lg shadow">
+    <table v-if="!loading && displayedUsers.length" class="min-w-full bg-gray-100 rounded-lg shadow border-collapse">
       <thead class="bg-gray-800 text-white">
       <tr>
         <th class="px-4 py-2">ID</th>
@@ -23,14 +23,14 @@
       </thead>
       <tbody>
       <tr v-for="user in displayedUsers" :key="user.id" class="hover:bg-gray-200">
-        <td class="border px-4 py-2">{{ user.id }}</td>
-        <td class="border px-4 py-2">{{ user.username }}</td>
-        <td class="border px-4 py-2">{{ user.email }}</td>
-        <td class="border px-4 py-2 text-center">
+        <td class="px-4 py-2">{{ user.id }}</td>
+        <td class="px-4 py-2">{{ user.username }}</td>
+        <td class="px-4 py-2">{{ user.email }}</td>
+        <td class="px-4 py-2 text-center">
           <span v-if="user.active" class="text-green-600">Yes</span>
           <span v-else class="text-red-600">No</span>
         </td>
-        <td class="border px-4 py-2 flex justify-center items-center space-x-2">
+        <td class="px-4 py-2 flex justify-center items-center space-x-2">
           <button
               @click="toggleActive(user)"
               class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-1 px-4 rounded w-32"
