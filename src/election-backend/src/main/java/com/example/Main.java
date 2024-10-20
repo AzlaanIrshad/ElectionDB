@@ -27,6 +27,9 @@ public class Main implements CommandLineRunner {
     public void run(String... args) throws Exception {
         // Create users with appropriate roles
         User regularUser = new User("gaga", "gaga@example.com", "password123", User.Role.USER);
+        User regularUser = new User("piet", "kzt@example.com", "password123", User.Role.USER);
+        User regularUser = new User("azlaan", "azlaaniscute@example.com", "password123", User.Role.USER);
+        User regularUser = new User("dragonslayer", "pakkoe@example.com", "password123", User.Role.USER);
         User modUser = new User("modUser", "mod@example.com", "modpw", User.Role.MODERATOR);
         User adminUser = new User("adminUser", "admin@example.com", "adminpw", User.Role.ADMIN);
 
