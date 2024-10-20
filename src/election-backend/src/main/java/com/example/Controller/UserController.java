@@ -63,4 +63,17 @@ public class UserController {
         userService.logout(user.getEmail());
         return ResponseEntity.ok().build();
     }
+    @PutMapping("/users/{id}")
+    public ResponseEntity<User> toggleUserActive(@PathVariable Long id) {
+        User updatedUser = userService.toggleActiveStatus(id);
+        return ResponseEntity.ok(updatedUser);
+    }
+    @DeleteMapping("/users/{id}")
+    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
+        boolean isRemoved = userService.deleteUser(id);
+        if (!isRemoved) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok().build();
+    }
 }

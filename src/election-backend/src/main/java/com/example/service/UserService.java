@@ -68,16 +68,25 @@ public class UserService {
         return null;
     }
 
+    public boolean existsByEmail(String email) {
+        return userRepository.existsByEmail(email);
+    }
+    public User toggleActiveStatus(Long id) {
+        Optional<User> userOptional = userRepository.findById(id);
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            user.setActive(!user.isActive());
+            return userRepository.save(user);
+        }
+        return null;
+    }
+
     public boolean deleteUser(Long id) {
         if (userRepository.existsById(id)) {
             userRepository.deleteById(id);
-            return true; // User deleted successfully
+            return true;
         }
-        return false; // User not found
-    }
-
-    public boolean existsByEmail(String email) {
-        return userRepository.existsByEmail(email);
+        return false;
     }
 
 //    // Method to promote a user to admin
