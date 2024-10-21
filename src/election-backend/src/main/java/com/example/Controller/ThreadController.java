@@ -34,6 +34,12 @@ public class ThreadController {
         }
     }
 
+    @PostMapping("/threads")
+    public ResponseEntity<Thread> createThread(@Valid @RequestBody Thread thread) {
+        Thread newThread = threadService.createThread(thread);
+        return ResponseEntity.ok(newThread);
+    }
+
     @GetMapping("/threads/{id}/comments")
     public ResponseEntity<List<ThreadComment>> getComments(@PathVariable Long id) {
         List<ThreadComment> comments = threadService.getComments(id);
