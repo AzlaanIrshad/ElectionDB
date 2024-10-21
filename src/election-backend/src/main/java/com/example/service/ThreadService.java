@@ -1,7 +1,9 @@
 package com.example.service;
 
 import com.example.entity.Thread;
+import com.example.entity.ThreadComment;
 import com.example.repository.ThreadRepository;
+import com.example.repository.ThreadCommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -12,6 +14,9 @@ public class ThreadService {
 
     @Autowired
     private ThreadRepository ThreadRepository;
+
+    @Autowired
+    private ThreadCommentRepository ThreadCommentRepository;
 
     public Thread createThread(Thread thread) {
         return ThreadRepository.save(thread);
@@ -37,6 +42,10 @@ public class ThreadService {
             return true;
         }
         return false;
+    }
+
+    public List<ThreadComment> getComments(Long threadId) {
+        return ThreadCommentRepository.findByThreadId(threadId);
     }
 
 

@@ -2,8 +2,10 @@ package com.example;
 
 import com.example.entity.User;
 import com.example.entity.Thread;
+import com.example.entity.ThreadComment;
 import com.example.repository.UserRepository;
 import com.example.repository.ThreadRepository;
+import com.example.repository.ThreadCommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -19,6 +21,9 @@ public class Main implements CommandLineRunner {
 
     @Autowired
     private ThreadRepository threadRepository;
+
+    @Autowired
+    private ThreadCommentRepository threadCommentRepository;
 
     public static void main(String[] args) {
         SpringApplication.run(Main.class, args);
@@ -47,6 +52,19 @@ public class Main implements CommandLineRunner {
             threadRepository.save(thread2);
             threadRepository.save(thread3);
         }
-        System.out.println("Users and Threads saved successfully!");
+
+        // Create placeholder comments
+        ThreadComment comment1 = new ThreadComment(regularUser, thread1, "Comment 1", "2021-09-01", "Category 1");
+        ThreadComment comment2 = new ThreadComment(modUser, thread2, "Comment 2", "2021-09-02", "Category 2");
+        ThreadComment comment3 = new ThreadComment(adminUser, thread3, "Comment 3", "2021-09-03", "Category 3");
+
+        // Save all comments
+        if (threadCommentRepository.count() == 0) {
+            threadCommentRepository.save(comment1);
+            threadCommentRepository.save(comment2);
+            threadCommentRepository.save(comment3);
+        }
+
+        System.out.println("Users, Threads and ThreadComments saved successfully!");
     }
 }

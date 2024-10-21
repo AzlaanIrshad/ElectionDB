@@ -1,6 +1,7 @@
 package com.example.controller;
 
 import com.example.entity.Thread;
+import com.example.entity.ThreadComment;
 import com.example.service.ThreadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -31,5 +32,11 @@ public class ThreadController {
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
+    }
+
+    @GetMapping("/threads/{id}/comments")
+    public ResponseEntity<List<ThreadComment>> getComments(@PathVariable Long id) {
+        List<ThreadComment> comments = threadService.getComments(id);
+        return ResponseEntity.ok(comments);
     }
 }

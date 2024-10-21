@@ -23,7 +23,7 @@
             v-for="comment in comments"
             :key="comment.id"
         >
-          <p class="text-gray-600">{{ comment.content }}</p>
+          <p class="text-gray-600">{{ comment.body }}</p>
           <p class="text-sm text-gray-400">By: <span class="font-medium text-gray-700">{{ comment.user.username }}</span> on {{ comment.date }}</p>
         </div>
       </div>
@@ -52,10 +52,15 @@ export default {
       this.thread = await response.json();
       this.comments = this.thread.comments || [];
       this.loading = false;
-    }
+    },
+    async fetchComments() {
+      const response = await fetch(`http://localhost:8080/api/threads/${this.$route.params.id}/comments`);
+      this.comments = await response.json();
+    },
   },
   created() {
     this.fetchThread();
+    this.fetchComments();
   },
 };
 </script>
