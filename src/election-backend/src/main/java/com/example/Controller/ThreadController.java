@@ -22,4 +22,14 @@ public class ThreadController {
         List<Thread> threads = threadService.getThreads();
         return ResponseEntity.ok(threads);
     }
+
+    @GetMapping("/threads/{id}")
+    public ResponseEntity<Thread> getThread(@PathVariable Long id) {
+        Thread thread = threadService.getThreadById(id);
+        if (thread != null) {
+            return ResponseEntity.ok(thread);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
 }

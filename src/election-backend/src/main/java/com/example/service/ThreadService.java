@@ -21,8 +21,14 @@ public class ThreadService {
         return ThreadRepository.findAll();
     }
 
-    public Optional<Thread> getThread(Long id) {
-        return ThreadRepository.findById(id);
+    public Thread getThreadById(Long id) {
+        Optional<Thread> optionalThread = ThreadRepository.findById(id);
+
+        if (optionalThread.isPresent()) {
+            return optionalThread.get();
+        } else {
+            throw new RuntimeException("Thread not found with id: " + id);  // Handle appropriately
+        }
     }
 
     public boolean deleteThread(Long id) {
@@ -32,4 +38,6 @@ public class ThreadService {
         }
         return false;
     }
+
+
 }
