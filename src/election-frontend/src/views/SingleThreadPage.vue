@@ -50,7 +50,6 @@ export default {
     async fetchThread() {
       const response = await fetch(`http://localhost:8080/api/threads/${this.$route.params.id}`);
       this.thread = await response.json();
-      this.comments = this.thread.comments || [];
       this.loading = false;
     },
     async fetchComments() {
