@@ -1,26 +1,34 @@
 <template>
-  <div class="homepage bg-gray-100 font-sans">
-    <!-- Section 1-->
-    <section>
+  <div class="homepage bg-gray-100 font-sans min-h-screen py-8">
+    <!-- Section 1: Create Thread Section -->
+    <section class="mx-4 sm:mx-6 lg:mx-10">
       <!-- Threads Section -->
-      <div class="threads py-12 bg-gray-200 rounded-lg shadow-lg mx-2 lg:mx-5 mb-10">
-        <h2 class="text-3xl lg:text-4xl text-center mb-10 font-extrabold text-gray-800">Create a new election thread!</h2>
-        <div class="threads-content flex flex-col md:flex-row items-center gap-8 mx-4 sm:mx-6 lg:mx-10">
-          <form>
+      <div class="threads py-12 bg-white rounded-lg shadow-lg mx-auto mb-10 max-w-4xl">
+        <h2 class="text-3xl lg:text-4xl text-center mb-8 font-extrabold text-gray-800">
+          Create a new election thread!
+        </h2>
+        <div class="threads-content flex flex-col md:flex-row items-center gap-8 px-4 sm:px-6 lg:px-8">
+          <form class="w-full space-y-6">
             <input
                 type="text"
                 id="title"
                 v-model="title"
                 placeholder="Thread Title"
-                class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-300"
+                class="w-full p-4 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-300 text-gray-700"
             />
             <textarea
                 id="body"
                 v-model="body"
                 placeholder="Thread Body"
-                class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-300"
+                class="w-full p-4 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-300 text-gray-700 h-32 resize-none"
             ></textarea>
-            <input type="string" id="category" v-model="category" placeholder="Category" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-300" />
+            <input
+                type="text"
+                id="category"
+                v-model="category"
+                placeholder="Category"
+                class="w-full p-4 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-300 text-gray-700"
+            />
           </form>
         </div>
       </div>
@@ -29,7 +37,7 @@
     <!-- Make new thread button -->
     <section class="admin-panel text-center mb-10">
       <button
-          class="cta-button px-6 sm:px-8 py-3 sm:py-4 text-white bg-green-700 hover:bg-green-900 rounded-full transition-all shadow-lg transform hover:scale-105"
+          class="cta-button px-8 py-4 text-white bg-green-600 hover:bg-green-700 focus:ring focus:ring-green-300 rounded-full transition-all shadow-lg transform hover:scale-105"
           @click="createThread"
       >
         Create Thread
@@ -74,7 +82,7 @@ export default {
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify(threadData),
+        body: JSON.stringify(threadData),
         });
 
 

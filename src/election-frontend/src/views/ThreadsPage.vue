@@ -43,7 +43,7 @@
     <section class="admin-panel text-center mb-10">
       <button
           class="cta-button px-6 sm:px-8 py-3 sm:py-4 text-white bg-green-700 hover:bg-green-900 rounded-full transition-all shadow-lg transform hover:scale-105"
-          @click="$router.push('/threads/new')"
+          @click="$router.push('/create-thread')"
       >
         Make New Thread
       </button>
