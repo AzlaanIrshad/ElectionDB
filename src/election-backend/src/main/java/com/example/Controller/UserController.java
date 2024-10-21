@@ -23,7 +23,7 @@ public class UserController {
         return ResponseEntity.ok(users);
     }
 
-    @PutMapping("/users/{id}")
+    @PostMapping("/users/{id}")
     public ResponseEntity<User> toggleUserActive(@PathVariable Long id) {
         User updatedUser = userService.toggleActiveStatus(id);
         return ResponseEntity.ok(updatedUser);

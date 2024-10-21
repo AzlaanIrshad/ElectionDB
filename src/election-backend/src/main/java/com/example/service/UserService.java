@@ -63,4 +63,18 @@ public class UserService {
         }
         return false;
     }
+
+    public User toggleUserActive(Long id) {
+        Optional<User> userOptional = userRepository.findById(id);
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            if (user.isActive()) {
+                user.setActive(false);
+            } else {
+                user.setActive(true);
+            }
+            return userRepository.save(user);
+        }
+        return null;
+    }
 }

@@ -82,7 +82,7 @@ export default {
       user.active = !user.active;
       try {
         await fetch(`http://localhost:8080/api/users/${user.id}`, {
-          method: 'PUT',
+          method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ active: user.active }),
         });
