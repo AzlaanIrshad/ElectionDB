@@ -48,5 +48,10 @@ public class ThreadService {
         return ThreadCommentRepository.findByThreadId(threadId);
     }
 
-
+    public ThreadComment createComment(Long threadId, ThreadComment comment) {
+        Thread thread = ThreadRepository.findById(threadId)
+                .orElseThrow(() -> new IllegalArgumentException("Thread not found with id: " + threadId));
+        comment.setThread(thread);
+        return ThreadCommentRepository.save(comment);
+    }
 }

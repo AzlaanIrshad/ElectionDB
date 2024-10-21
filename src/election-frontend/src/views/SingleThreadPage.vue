@@ -26,6 +26,7 @@
           <p class="text-gray-600">{{ comment.body }}</p>
           <p class="text-sm text-gray-400">By: <span class="font-medium text-gray-700">{{ comment.user.username }}</span> on {{ comment.date }}</p>
         </div>
+        <CreateCommentComponent/>
       </div>
     </div>
 
@@ -37,8 +38,12 @@
 </template>
 
 <script>
+import CreateCommentComponent from "../components/CreateComment.vue";
 export default {
   name: "SingleThread",
+  components: {
+    CreateCommentComponent,
+  },
   data() {
     return {
       thread: {},
