@@ -28,11 +28,7 @@ public class DataSeeder implements CommandLineRunner {
     }
 
     private void seedData() {
-        // Delete existing users and threads
-        threadCommentRepository.deleteAll();
-        threadRepository.deleteAll();
-        userRepository.deleteAll();
-
+        // The tables are automatically dropped and recreated, no need to delete them manually.
 
         // Create users with appropriate roles
         User regularUser = new User("test", "test@test", "test", User.Role.USER);
@@ -45,8 +41,8 @@ public class DataSeeder implements CommandLineRunner {
         User supermodUser = new User("supermodUser", "supermodUser@example.com", "modpw", User.Role.MODERATOR);
         User verysuperadminUser = new User("verysuperadminUsersuperadminUser", "verysuperadminUser@example.com", "adminpw", User.Role.ADMIN);
 
-
         User[] users = {regularUser, modUser, adminUser, regularerUser, verymoddyUser, megaadminUser, nogregularerUser, supermodUser, verysuperadminUser};
+
         // Save all users
         for (User user : users) {
             userRepository.save(user);
@@ -72,7 +68,6 @@ public class DataSeeder implements CommandLineRunner {
         threadCommentRepository.save(comment2);
         threadCommentRepository.save(comment3);
 
-
-        System.out.println("Users, Threads and ThreadComments saved successfully!");
+        System.out.println("Users, Threads, and ThreadComments saved successfully!");
     }
 }

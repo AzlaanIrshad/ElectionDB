@@ -1,42 +1,41 @@
 <template>
-  <div class="create-comment-container max-w-4xl mx-auto py-8 px-4 bg-white rounded-lg shadow-lg">
-    <h1 class="text-3xl font-bold text-gray-800 mb-6 text-center">Create Comment</h1>
+  <div class="create-comment-container max-w-4xl mx-auto py-12 px-6 bg-white rounded-lg shadow-xl">
+    <h1 class="text-3xl font-extrabold text-gray-800 mb-8 text-center">Create a New Comment</h1>
 
     <div>
-      <form @submit.prevent="createComment" class="space-y-6">
-        <!-- Comment Body -->
+      <form @submit.prevent="createComment" class="space-y-8">
         <div>
-          <label for="comment" class="block text-lg font-medium text-gray-700 mb-2">Comment:</label>
+          <label for="comment" class="block text-lg font-semibold text-gray-700 mb-3">Comment:</label>
           <textarea
               v-model="body"
               id="comment"
               name="comment"
               rows="4"
-              class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-300"
+              class="w-full p-4 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-300 focus:border-transparent transition duration-300"
               placeholder="Write your comment..."
           ></textarea>
         </div>
 
-        <!-- Category -->
         <div>
-          <label for="category" class="block text-lg font-medium text-gray-700 mb-2">Category:</label>
+          <label for="category" class="block text-lg font-semibold text-gray-700 mb-3">Category:</label>
           <input
               v-model="category"
               id="category"
               name="category"
-              type="string"
-              class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-300"
+              type="text"
+              class="w-full p-4 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-300 focus:border-transparent transition duration-300"
               placeholder="Enter category..."
           />
         </div>
 
-        <!-- Submit Button -->
-        <button
-            class="cta-button w-full px-6 py-3 text-white bg-green-700 hover:bg-green-900 rounded-full transition-all shadow-lg transform hover:scale-105"
-            type="submit"
-        >
-          Create Comment
-        </button>
+        <div class="text-center">
+          <button
+              class="w-full sm:w-auto px-8 py-4 text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 rounded-full transition-all shadow-md transform hover:scale-105"
+              type="submit"
+          >
+            Submit Comment
+          </button>
+        </div>
       </form>
     </div>
   </div>
@@ -48,8 +47,6 @@ export default {
   data() {
     return {
       body: '',
-      date: '',
-      user: '',
       category: '',
     };
   },
@@ -57,20 +54,15 @@ export default {
     async createComment() {
       try {
         const dummyUser = {
-          id: 1, // Use a static ID for the dummy user
+          id: 1,
           username: 'googoo',
           email: 'googoo@example.com',
           password: 'password',
           role: 'ADMIN'
         };
 
-        // Create a new Date object
         const now = new Date();
-
-        // format the date to "YYYY-MM-DD HH:mm"
-        const formattedDate = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-
-        ${String(now.getDate()).padStart(2, '0')} ${String(now.getHours()).padStart(2, '0')}
-        :${String(now.getMinutes()).padStart(2, '0')}`
+        const formattedDate = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
 
         const commentData = {
           body: this.body,

@@ -1,51 +1,70 @@
 <template>
   <div class="homepage bg-gray-100 font-sans">
-    <!-- Section 1-->
-    <section>
-      <!-- Threads Section -->
-      <div class="threads py-12 bg-gray-200 rounded-lg shadow-lg mx-2 lg:mx-5 mb-10">
-        <h2 class="text-3xl lg:text-4xl text-center mb-10 font-extrabold text-gray-800">Election Threads</h2>
-        <div class="threads-content flex flex-col md:flex-row items-center gap-8 mx-4 sm:mx-6 lg:mx-10">
-          <img
-              src="https://imgs.search.brave.com/QFQM7Ro7Dp252Ne2DY4GK0rbLWu2lPYD37gV1VJDVLg/rs:fit:860:0:0:0/g:ce/a
-              HR0cHM6Ly9jZG4u/YnJpdGFubmljYS5j/b20vNTYvMTkzNTU2/LTEzMS03RDNEMUVE/RC9FbGVjdGlvbi0t/LUJ1dHRvbi1Wb3Rl/L
-              XN0cmlwZXMtcG9s/aXRpY3MtY2FtcGFp/Z24uanBnP3c9MjAw/Jmg9MjAwJmM9Y3Jv/cA"
+    <!-- Section 1: Election Threads Overview -->
+    <section class="threads-overview py-12 bg-gray-50 rounded-lg shadow-lg mx-2 lg:mx-5 mb-10">
+      <div class="max-w-7xl mx-auto flex flex-col lg:flex-row items-center lg:space-x-8">
+        <div class="threads-text w-full lg:w-1/2">
+          <h2 class="text-3xl lg:text-5xl font-extrabold text-gray-800 mb-6">Join the Conversation</h2>
+          <p class="text-lg lg:text-xl text-gray-600 mb-4 leading-relaxed">
+            Stay up-to-date with the latest election news and share your thoughts in real-time. Our election threads allow you to dive deep into the discussions around the most critical election topics.
+          </p>
+          <p class="text-lg lg:text-xl text-gray-600">
+            Whether you're interested in the polls, candidate debates, or election results, we've got you covered. Join the conversation now!
+          </p>
+        </div>
+        <img
+            src="https://via.placeholder.com/400x250.png?text=Election+Threads"
+            alt="Threads Placeholder"
+            class="threads-image mt-8 lg:mt-0 w-full lg:w-1/2 rounded-lg shadow-md"
+        />
+      </div>
+    </section>
 
-              alt="Threads Image"
-              class="threads-image w-full md:w-2/6 mr-28 h-40 sm:h-60 object-cover rounded-lg shadow-md"
-          />
-          <div class="threads-text w-full md:w-3/5">
-            <h3 class="text-2xl sm:text-3xl font-extrabold mb-5 text-gray-800">Election Threads</h3>
-            <p class="mb-4 text-base sm:text-lg text-gray-600 leading-relaxed">Election threads are a great way to discuss the latest news, polls, and predictions.
-              Join the conversation and share your thoughts on the upcoming elections.</p>
+    <!-- Section 2: Active Threads with Pagination -->
+    <section class="active-threads py-10 bg-white rounded-lg shadow-lg mx-2 lg:mx-5">
+      <div class="max-w-7xl mx-auto">
+        <h2 class="text-3xl lg:text-4xl font-extrabold text-center text-gray-800 mb-8">Active Election Threads</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div
+              v-for="thread in paginatedThreads"
+              :key="thread.id"
+              class="thread-item p-6 bg-gray-100 border border-gray-300 rounded-lg shadow-md hover:shadow-lg hover:bg-gray-50 transition-shadow duration-300"
+          >
+            <router-link
+                :to="{ name: 'single-thread', params: { id: thread.id } }"
+                class="text-lg font-semibold text-blue-600 hover:underline"
+            >
+              {{ thread.title }}
+            </router-link>
+            <p class="text-gray-600 mt-2 mb-4 line-clamp-3">
+              {{ thread.content }}
+            </p>
+            <div class="text-sm text-gray-400 flex justify-between">
+              <span>Created by: {{ thread.user.username }}</span>
+              <span>{{ thread.date }}</span>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
 
-    <!-- Section 2 -->
-    <section class="categories py-10 mb-10 bg-gray-200 rounded-lg shadow-lg mt-10 mx-2 lg:mx-5">
-      <!-- Looping through a list of threads -->
-      <h2 class="text-3xl lg:text-4xl text-center mb-8 font-extrabold text-gray-800 ">Active Threads</h2>
-      <div class="threads-list space-y-6 mx-4 sm:mx-6 lg:mx-10 ">
-        <div v-for="thread in threads" :key="thread.id" class="thread-item p-4 bg-gray-100 border rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
-          <router-link :to="{ name: 'single-thread', params: { id: thread.id } }" class="text-lg font-semibold text-gray-800 hover:underline">
-            {{ thread.title }}
-          </router-link>
-
-          <p class="text-gray-600">{{ thread.content }}</p>
-          <p class="text-sm text-gray-400">Created by: {{ thread.user.username }} on {{ thread.date }}</p>
+        <!-- See More Button -->
+        <div v-if="hasMoreThreads" class="text-center mt-8">
+          <button
+              class="cta-button px-6 sm:px-8 py-3 sm:py-4 text-white bg-blue-600 hover:bg-blue-800 rounded-full transition-all shadow-lg transform hover:scale-105"
+              @click="loadMoreThreads"
+          >
+            See More
+          </button>
         </div>
       </div>
     </section>
 
-    <!-- Make new thread button -->
-    <section class="admin-panel text-center mb-10">
+    <!-- Section 3: Create New Thread Button -->
+    <section class="text-center mt-12 mb-10">
       <button
           class="cta-button px-6 sm:px-8 py-3 sm:py-4 text-white bg-green-700 hover:bg-green-900 rounded-full transition-all shadow-lg transform hover:scale-105"
           @click="$router.push('/create-thread')"
       >
-        Make New Thread
+        Create New Thread
       </button>
     </section>
   </div>
@@ -57,12 +76,27 @@ export default {
   data() {
     return {
       threads: [],
+      visibleThreadsCount: 3,
     };
+  },
+  computed: {
+    paginatedThreads() {
+      // Display only the visible number of threads
+      return this.threads.slice(0, this.visibleThreadsCount);
+    },
+    hasMoreThreads() {
+      // Check if there are more threads to show
+      return this.visibleThreadsCount < this.threads.length;
+    },
   },
   methods: {
     async fetchThreads() {
       const response = await fetch("http://localhost:8080/api/threads");
       this.threads = await response.json();
+    },
+    loadMoreThreads() {
+      // Increase the number of visible threads
+      this.visibleThreadsCount += 3;
     },
   },
   mounted() {
