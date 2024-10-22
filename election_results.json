@@ -1,1 +1,1 @@
-[{"transactionId":"12345","electionName":"General Elections 2023","electionDate":"2023-09-15","totalVotes":15000}]
+[{"transactionId":"12345","electionName":"General Elections 2023","electionDate":"2023-09-15","totalVotes":15000,"contests":[]},{"transactionId":null,"electionName":null,"electionDate":null,"totalVotes":0,"contests":[]}]
