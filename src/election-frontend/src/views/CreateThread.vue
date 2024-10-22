@@ -102,6 +102,7 @@ export default {
       } catch (error) {
         console.error('Error creating thread:', error);
       }
+      this.$router.push('/threads');
     },
   },
 };

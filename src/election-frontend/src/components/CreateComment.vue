@@ -96,6 +96,7 @@ export default {
       } catch (error) {
         console.error('Error:', error);
       }
+      this.$router.go();
     },
   },
 }
