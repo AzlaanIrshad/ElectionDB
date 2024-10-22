@@ -50,3 +50,5 @@ Thumbs.db
 # MS-office files
 ~$*.*
 package-lock.json
+
+resources/ElectionResults
