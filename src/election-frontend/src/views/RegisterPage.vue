@@ -66,54 +66,43 @@ export default {
       email: '',
       password: '',
       confirmPassword: '',
-      errorMessage: ''
+      errorMessage: '',
     };
   },
   methods: {
     async registerUser() {
-      this.errorMessage = '';
+      this.errorMessage = ''; // Reset de foutmelding
 
-      // Check if passwords match
+      // Simple password match check
       if (this.password !== this.confirmPassword) {
-        this.errorMessage = 'Passwords do not match.';
+        this.errorMessage = "Passwords do not match";
         return;
       }
 
-      // Create a user object
-      const user = {
-        username: this.username,
-        email: this.email,
-        password: this.password
-      };
-
       try {
-        // Send registration request to the backend
         const response = await fetch('http://localhost:8080/api/register', {
           method: 'POST',
           headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
           },
-          body: JSON.stringify(user)
+          body: JSON.stringify({
+            username: this.username,
+            email: this.email,
+            password: this.password,
+          }),
         });
 
-        // Handle the response
         if (!response.ok) {
-          const errorData = await response.json();
-          this.errorMessage = errorData.message || 'Registration failed. Please try again.';
-          return;
+          const errorData = await response.text();
+          throw new Error(errorData || 'Registration failed');
         }
-        alert(`Registration successful for ${this.username}!`);
 
-        // Clear the form fields
-        this.username = '';
-        this.email = '';
-        this.password = '';
-        this.confirmPassword = '';
+        // Als de registratie succesvol is, navigeer de gebruiker naar de loginpagina
+        this.$router.push({ name: 'login' });
       } catch (error) {
-        this.errorMessage = 'An error occurred. Please try again later.';
-        console.error('Registration error:', error);
+        this.errorMessage = error.message;
       }
-    }
-  }
+    },
+  },
 };
 </script>
