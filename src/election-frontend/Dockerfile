@@ -14,7 +14,7 @@ RUN npm install && npm install -g nodemon
 COPY . .
 
 # Expose the Vite dev server port
-EXPOSE 5173
+EXPOSE 3000
 
 # Start nodemon for development, watching for changes
 CMD ["nodemon", "--watch", "src", "--exec", "npm", "run", "dev"]

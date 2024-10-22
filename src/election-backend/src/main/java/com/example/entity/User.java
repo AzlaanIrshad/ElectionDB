@@ -37,6 +37,7 @@ public class User implements Serializable {
     @Column(name = "role", length = 50, nullable = false)
     private Role role = Role.USER;
 
+    // Getters and Setters
     public Long getId() {
         return id;
     }

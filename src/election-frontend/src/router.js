@@ -26,11 +26,11 @@ const routes = [
     {
         path: '/admin',
         name: 'admin',
-        component: AdminPage
+        component: AdminPage,
     },
     {   path: '/threads',
         name: 'threads',
-        component: ThreadsPage
+        component: ThreadsPage,
     },
     {   path: '/threads/:id',
         name: 'single-thread',
