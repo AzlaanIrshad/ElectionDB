@@ -84,4 +84,16 @@ public class ThreadComment implements Serializable {
     public void setCategory(String category) {
         this.category = category;
     }
+
+    public ThreadComment() {
+        // Default constructor
+    }
+
+    public ThreadComment(User user, Thread thread, String body, String date, String category) {
+        this.user = user;
+        this.thread = thread;
+        this.body = body;
+        this.date = date;
+        this.category = category;
+    }
 }
