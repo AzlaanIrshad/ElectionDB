@@ -70,11 +70,19 @@ export default {
           role: 'ADMIN'
         };
 
+        // Create a new Date object
+        const now = new Date();
+
+        // Format the date to "YYYY-MM-DD HH:mm"
+        const formattedDate = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-
+        ${String(now.getDate()).padStart(2, '0')} ${String(now.getHours()).padStart(2, '0')}
+        :${String(now.getMinutes()).padStart(2, '0')}`
+
         const threadData = {
           title: this.title,
           body: this.body,
           category: this.category,
-          date: new Date(),
+          date: formattedDate,
           user: dummyUser,
         };
         const response = await fetch('http://localhost:8080/api/threads', {

@@ -64,9 +64,17 @@ export default {
           role: 'ADMIN'
         };
 
+        // Create a new Date object
+        const now = new Date();
+
+        // format the date to "YYYY-MM-DD HH:mm"
+        const formattedDate = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-
+        ${String(now.getDate()).padStart(2, '0')} ${String(now.getHours()).padStart(2, '0')}
+        :${String(now.getMinutes()).padStart(2, '0')}`
+
         const commentData = {
           body: this.body,
-          date: new Date(),
+          date: formattedDate,
           category: this.category,
           user: dummyUser,
         };
