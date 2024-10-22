@@ -38,11 +38,19 @@ public class DataSeeder implements CommandLineRunner {
         User regularUser = new User("test", "test@test", "test", User.Role.USER);
         User modUser = new User("modUser", "mod@example.com", "modpw", User.Role.MODERATOR);
         User adminUser = new User("adminUser", "admin@example.com", "adminpw", User.Role.ADMIN);
+        User regularerUser = new User("regularerUser", "regularerUser@test", "test", User.Role.USER);
+        User verymoddyUser = new User("verymoddyUser", "verymoddyUser@example.com", "modpw", User.Role.MODERATOR);
+        User megaadminUser = new User("megaadminUser", "megaadminUser@example.com", "adminpw", User.Role.ADMIN);
+        User nogregularerUser = new User("nogregularerUser", "nogregularerUser@test", "test", User.Role.USER);
+        User supermodUser = new User("supermodUser", "supermodUser@example.com", "modpw", User.Role.MODERATOR);
+        User verysuperadminUser = new User("verysuperadminUsersuperadminUser", "verysuperadminUser@example.com", "adminpw", User.Role.ADMIN);
 
+
+        User[] users = {regularUser, modUser, adminUser, regularerUser, verymoddyUser, megaadminUser, nogregularerUser, supermodUser, verysuperadminUser};
         // Save all users
-        userRepository.save(regularUser);
-        userRepository.save(modUser);
-        userRepository.save(adminUser);
+        for (User user : users) {
+            userRepository.save(user);
+        }
 
         // Create placeholder threads
         Thread thread1 = new Thread("Thread 1", "Body 1", "2021-09-01", "Category 1", regularUser);

@@ -58,4 +58,35 @@ public class UserService {
     public boolean existsByEmail(String email) {
         return userRepository.existsByEmail(email);
     }
+    public User toggleActiveStatus(Long id) {
+        Optional<User> userOptional = userRepository.findById(id);
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            user.setActive(!user.isActive());
+            return userRepository.save(user);
+        }
+        return null;
+    }
+
+    public boolean deleteUser(Long id) {
+        if (userRepository.existsById(id)) {
+            userRepository.deleteById(id);
+            return true;
+        }
+        return false;
+    }
+
+    public User toggleUserActive(Long id) {
+        Optional<User> userOptional = userRepository.findById(id);
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            if (user.isActive()) {
+                user.setActive(false);
+            } else {
+                user.setActive(true);
+            }
+            return userRepository.save(user);
+        }
+        return null;
+    }
 }

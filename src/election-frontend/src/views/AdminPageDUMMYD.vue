@@ -11,33 +11,38 @@
 
     <div v-if="loading" class="text-gray-500">Loading users...</div>
 
-    <table v-if="!loading && displayedUsers.length" class="min-w-full bg-gray-100 rounded-lg shadow border-collapse">
+    <table v-if="!loading && displayedUsers.length" class="min-w-full bg-gray-100 rounded-lg shadow">
       <thead class="bg-gray-800 text-white">
       <tr>
-        <th class="px-4 py-2 text-center">ID</th>
-        <th class="px-4 py-2 text-center">Username</th>
-        <th class="px-4 py-2 text-center">Email</th>
-        <th class="px-4 py-2 text-center">Active</th>
-        <th class="px-4 py-2 text-center">Actions</th>
+        <th class="px-4 py-2">ID</th>
+        <th class="px-4 py-2">Username</th>
+        <th class="px-4 py-2">Email</th>
+        <th class="px-4 py-2">Active</th>
+        <th class="px-4 py-2">Actions</th>
       </tr>
       </thead>
       <tbody>
       <tr v-for="user in displayedUsers" :key="user.id" class="hover:bg-gray-200">
-        <td class="px-4 py-2 text-center align-middle">{{ user.id }}</td>
-        <td class="px-4 py-2 text-center align-middle">{{ user.username }}</td>
-        <td class="px-4 py-2 text-center align-middle">{{ user.email }}</td>
-        <td class="px-4 py-2 text-center align-middle">
+        <td class="border px-4 py-2">{{ user.id }}</td>
+        <td class="border px-4 py-2">{{ user.username }}</td>
+        <td class="border px-4 py-2">{{ user.email }}</td>
+        <td class="border px-4 py-2">
           <span v-if="user.active" class="text-green-600">Yes</span>
           <span v-else class="text-red-600">No</span>
         </td>
-        <td class="px-4 py-2 text-center align-middle flex justify-center items-center space-x-2">
+        <td class="border px-4 py-2 flex justify-center items-center space-x-2">
           <button
               @click="toggleActive(user)"
               class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-1 px-4 rounded w-32"
           >
             {{ user.active ? 'Deactivate' : 'Activate' }}
           </button>
-
+          <button
+              @click="deleteUser(user.id)"
+              class="bg-red-500 hover:bg-red-600 text-white font-bold py-1 px-4 rounded w-32"
+          >
+            Delete
+          </button>
         </td>
       </tr>
       </tbody>
@@ -54,7 +59,13 @@ export default {
   name: "AdminPage",
   data() {
     return {
-      users: [],
+      users: [
+        {id: 1, username: "user1", email: "user1@example.com", active: true},
+        {id: 2, username: "user2", email: "user2@example.com", active: true},
+        {id: 3, username: "user3", email: "user3@example.com", active: false},
+        {id: 4, username: "user4", email: "user4@example.com", active: true},
+        {id: 5, username: "user5", email: "user5@example.com", active: false},
+      ],
       displayedUsers: [],
       loading: false,
     };
@@ -62,39 +73,19 @@ export default {
   methods: {
     async fetchUsers() {
       this.loading = true;
-      try {
-        const response = await fetch('http://localhost:8080/api/users');
-        const data = await response.json();
-        this.users = data;
-        this.displayedUsers = [...this.users];
-      } catch (error) {
-        console.error('Error fetching users:', error);
-      } finally {
-        this.loading = false;
-      }
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      this.loading = false;
+
+
+      this.displayedUsers = [...this.users];
     },
     async toggleActive(user) {
       user.active = !user.active;
-      try {
-        await fetch(`http://localhost:8080/api/users/${user.id}`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ active: user.active }),
-        });
-      } catch (error) {
-        console.error('Error updating user status:', error);
-      }
     },
     async deleteUser(userId) {
-      try {
-        await fetch(`http://localhost:8080/api/users/${userId}`, {
-          method: 'DELETE',
-        });
-        this.users = this.users.filter((user) => user.id !== userId);
-        this.displayedUsers = this.users;
-      } catch (error) {
-        console.error('Error deleting user:', error);
-      }
+      this.users = this.users.filter((user) => user.id !== userId);
+
+      this.displayedUsers = this.users;
     },
     searchUsers(event) {
       const query = event.target.value.toLowerCase();
@@ -105,6 +96,7 @@ export default {
                 user.email.toLowerCase().includes(query)
         );
       } else {
+
         this.displayedUsers = [...this.users];
       }
     },
