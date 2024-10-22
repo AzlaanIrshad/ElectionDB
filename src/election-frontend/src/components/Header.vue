@@ -14,8 +14,14 @@
           Login
         </router-link>
 
-        <!-- Show Admin Panel and Logout if logged in -->
+        <!-- Show Admin Panel, Threads, and Logout if logged in -->
         <div v-if="isLoggedIn">
+          <router-link
+              to="/threads"
+              class="text-base md:text-lg text-white bg-green-600 hover:bg-green-500 rounded-full px-4 md:px-6 py-2 md:py-3 transition duration-300 mr-4"
+          >
+            Threads
+          </router-link>
           <button
               class="text-base md:text-lg text-white bg-blue-600 hover:bg-blue-500 rounded-full px-4 md:px-6 py-2 md:py-3 transition duration-300 mr-4"
               @click="$router.push('/admin')"

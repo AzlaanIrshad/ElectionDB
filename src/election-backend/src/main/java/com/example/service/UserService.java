@@ -47,14 +47,6 @@ public class UserService {
         return null;
     }
 
-    public boolean deleteUser(Long id) {
-        if (userRepository.existsById(id)) {
-            userRepository.deleteById(id);
-            return true;
-        }
-        return false;
-    }
-
     public boolean existsByEmail(String email) {
         return userRepository.existsByEmail(email);
     }
