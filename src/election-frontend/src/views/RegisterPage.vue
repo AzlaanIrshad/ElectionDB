@@ -33,12 +33,12 @@
               required
               class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-300"
           />
+          <!-- Dynamische feedback voor wachtwoord vereisten, alleen tonen als er wordt getypt -->
           <div v-if="isTyping" class="text-red-500 mt-2">
             <p v-if="!hasUppercase">Password needs one uppercase letter</p>
             <p v-if="!hasNumberOrSpecialChar">Password needs one number or one special character</p>
           </div>
         </div>
-
         <div class="form-group mb-4">
           <input
               type="password"
@@ -57,12 +57,9 @@
           Register
         </button>
 
+        <!-- Toon foutmelding als registratie mislukt -->
         <p class="error-message text-red-500 text-center mt-4" v-if="errorMessage">{{ errorMessage }}</p>
-        <p class="success-message text-green-500 text-center mt-4" v-if="successMessage">{{ successMessage }}</p>
       </form>
-      <p class="text-center text-gray-600 mt-6">
-        Already have an account? <a href="/login" class="text-blue-600 hover:underline">Login here</a>
-      </p>
     </div>
   </div>
 </template>
@@ -76,30 +73,26 @@ export default {
       password: '',
       confirmPassword: '',
       errorMessage: '',
-      successMessage: '',
       isTyping: false,  // Variable to track if the user is typing
     };
   },
   computed: {
     hasUppercase() {
-      // Controle of er een hoofdletter is
       return /[A-Z]/.test(this.password);
     },
     hasNumberOrSpecialChar() {
-      // Controle op een nummer of speciaal teken
       return /[0-9!@#$%^&*]/.test(this.password);
     },
     isPasswordValid() {
-      // Controleer of het wachtwoord voldoet aan alle vereisten
+      // Controleer of het wachtwoord voldoet aan de vereisten: minimaal 6 tekens, hoofdletter, en nummer/speciaal teken
       return this.password.length >= 6 && this.hasUppercase && this.hasNumberOrSpecialChar;
     },
   },
   methods: {
     async registerUser() {
       this.errorMessage = '';
-      this.successMessage = '';
 
-      // Simpele controle of wachtwoorden overeenkomen
+      // Controleer of de wachtwoorden overeenkomen
       if (this.password !== this.confirmPassword) {
         this.errorMessage = "Passwords do not match";
         return;
@@ -123,8 +116,8 @@ export default {
           throw new Error(errorData || 'Registration failed');
         }
 
-        const successMessage = await response.text();
-        this.successMessage = successMessage;
+        // Na succesvolle registratie doorverwijzen naar loginpagina
+        this.$router.push({name: 'login'});
 
       } catch (error) {
         this.errorMessage = error.message;
@@ -133,7 +126,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-/* Voeg hier aangepaste CSS toe als dat nodig is */
-</style>
