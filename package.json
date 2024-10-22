@@ -9,7 +9,7 @@
         "src/*"
     ],
     "scripts": {
-        "dev": "run-p dev:api dev:web",
+        "dev": "run-p dev:db dev:api dev:web",
         "dev:db": "docker-compose -f docker-compose.yml up",
         "dev:api": "cd src/election-backend && mvn spring-boot:run",
         "dev:web": "cd src/election-frontend && npm run dev",

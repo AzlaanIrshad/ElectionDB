@@ -1,7 +1,7 @@
 <template>
   <!-- Single Thread -->
-  <div class="single-thread max-w-4xl mx-auto px-4 py-8 bg-white rounded-lg shadow-md">
-    <h1 class="text-3xl font-bold mb-6 text-gray-800 text-center">Single Thread</h1>
+  <div class="single-thread max-w-4xl mx-auto px-4 py-8 bg-gray-200 rounded-lg shadow-md">
+    <h1 class="text-3xl font-bold mb-6 text-gray-800 text-center">{{ thread.title }}</h1>
 
     <div v-if="loading" class="text-center text-gray-500">
       <p>Loading thread...</p>
@@ -9,9 +9,9 @@
 
     <div v-if="!loading">
       <h2 class="text-2xl font-semibold mb-4 text-gray-800">{{ thread.title }}</h2>
-      <p class="text-gray-600 mb-4">{{ thread.content }}</p>
-      <p class="text-sm text-gray-500 mb-2">Posted by: <span class="font-medium text-gray-700">{{ thread.author }}</span></p>
-      <p class="text-sm text-gray-500">Posted on: <span class="font-medium text-gray-700">{{ thread.createdAt }}</span></p>
+      <p class="text-gray-600 mb-4">{{ thread.body }}</p>
+      <p class="text-sm text-gray-500 mb-2">Posted by: <span class="font-medium text-gray-700">{{ thread.user.username }}</span></p>
+      <p class="text-sm text-gray-500">Posted on: <span class="font-medium text-gray-700">{{ thread.date }}</span></p>
     </div>
 
     <!-- Thread Comments -->
@@ -23,22 +23,27 @@
             v-for="comment in comments"
             :key="comment.id"
         >
-          <p class="text-gray-600">{{ comment.content }}</p>
-          <p class="text-sm text-gray-400">By: <span class="font-medium text-gray-700">{{ comment.author }}</span> on {{ comment.createdAt }}</p>
+          <p class="text-gray-600">{{ comment.body }}</p>
+          <p class="text-sm text-gray-400">By: <span class="font-medium text-gray-700">{{ comment.user.username }}</span> on {{ comment.date }}</p>
         </div>
+        <CreateCommentComponent/>
       </div>
     </div>
 
     <!-- Back to Threads Button -->
     <div class="mt-6 text-center">
-      <router-link to="/" class="px-6 py-2 bg-green-700 text-white rounded-md hover:bg-green-900 transition duration-200">Back to Threads</router-link>
+      <router-link to="/threads" class="px-6 py-2 bg-green-700 text-white rounded-md hover:bg-green-900 transition duration-200">Back to Threads</router-link>
     </div>
   </div>
 </template>
 
 <script>
+import CreateCommentComponent from "../components/CreateComment.vue";
 export default {
   name: "SingleThread",
+  components: {
+    CreateCommentComponent,
+  },
   data() {
     return {
       thread: {},
@@ -50,12 +55,16 @@ export default {
     async fetchThread() {
       const response = await fetch(`http://localhost:8080/api/threads/${this.$route.params.id}`);
       this.thread = await response.json();
-      this.comments = this.thread.comments || [];
       this.loading = false;
-    }
+    },
+    async fetchComments() {
+      const response = await fetch(`http://localhost:8080/api/threads/${this.$route.params.id}/comments`);
+      this.comments = await response.json();
+    },
   },
   created() {
     this.fetchThread();
+    this.fetchComments();
   },
 };
 </script>

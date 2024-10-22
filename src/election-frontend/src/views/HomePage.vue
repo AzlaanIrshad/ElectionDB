@@ -76,10 +76,8 @@
         </div>
       </div>
       <div class="text-center mt-10">
-        <a href="/">
-          <button class="cta-button px-6 sm:px-8 py-3 sm:py-4 text-white bg-blue-700 hover:bg-blue-900 rounded-full transition-all shadow-lg transform hover:scale-105">
-            Election Dashboard
-          </button>
+        <a href="/threads">
+          <button class="cta-button px-6 sm:px-8 py-3 sm:py-4 text-white bg-blue-700 hover:bg-blue-900 rounded-full transition-all shadow-lg transform hover:scale-105">Election threads</button>
         </a>
       </div>
     </section>
