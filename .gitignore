@@ -10,6 +10,8 @@ Thumbs.db
 # Dutch election data files
 **/EML_bestanden_TK2021/
 **/EML_bestanden_TK2023/
+**/resources/data/
+**/ElectionResults/
 
 # IDE - Intellij
 **/.idea/
@@ -47,3 +49,4 @@ Thumbs.db
 
 # MS-office files
 ~$*.*
+package-lock.json
