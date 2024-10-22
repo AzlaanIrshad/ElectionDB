@@ -1,18 +1,40 @@
 package com.example.parser.election;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-
-@XmlRootElement(name = "Candidate")
 public class Candidate {
 
-    private String name;
-    private int votes;
+    private String shortCode;
     private int validVotes;
+    private String name;
 
     public Candidate() {}
 
-    @XmlElement(name = "Name")
+    public Candidate(String shortCode, int validVotes) {
+        this.shortCode = shortCode;
+        this.validVotes = validVotes;
+    }
+
+    public Candidate(String shortCode, int validVotes, String name) {
+        this.shortCode = shortCode;
+        this.validVotes = validVotes;
+        this.name = name;
+    }
+
+    public String getShortCode() {
+        return shortCode;
+    }
+
+    public void setShortCode(String shortCode) {
+        this.shortCode = shortCode;
+    }
+
+    public int getValidVotes() {
+        return validVotes;
+    }
+
+    public void setValidVotes(int validVotes) {
+        this.validVotes = validVotes;
+    }
+
     public String getName() {
         return name;
     }
@@ -21,21 +43,11 @@ public class Candidate {
         this.name = name;
     }
 
-    @XmlElement(name = "Votes")
     public int getVotes() {
-        return votes;
-    }
-
-    public void setVotes(int votes) {
-        this.votes = votes;
-    }
-
-    @XmlElement(name = "ValidVotes")
-    public int getValidVotes() {
         return validVotes;
     }
 
-    public void setValidVotes(int validVotes) {
-        this.validVotes = validVotes;
+    public void setVotes(int votes) {
+        this.validVotes = votes;
     }
 }
