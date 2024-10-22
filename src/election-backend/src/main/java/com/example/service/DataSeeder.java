@@ -29,9 +29,10 @@ public class DataSeeder implements CommandLineRunner {
 
     private void seedData() {
         // Delete existing users and threads
+        threadCommentRepository.deleteAll();
         threadRepository.deleteAll();
         userRepository.deleteAll();
-        threadCommentRepository.deleteAll();
+
 
         // Create users with appropriate roles
         User regularUser = new User("test", "test@test", "test", User.Role.USER);
