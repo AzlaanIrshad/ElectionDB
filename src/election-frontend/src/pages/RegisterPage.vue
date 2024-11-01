@@ -33,7 +33,6 @@
               required
               class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-300"
           />
-          <!-- Dynamische feedback voor wachtwoord vereisten, alleen tonen als er wordt getypt -->
           <div v-if="isTyping" class="text-red-500 mt-2">
             <p v-if="!hasUppercase">Password needs one uppercase letter</p>
             <p v-if="!hasNumberOrSpecialChar">Password needs one number or one special character</p>
@@ -57,9 +56,12 @@
           Register
         </button>
 
-        <!-- Toon foutmelding als registratie mislukt -->
         <p class="error-message text-red-500 text-center mt-4" v-if="errorMessage">{{ errorMessage }}</p>
       </form>
+      <p class="text-center text-gray-600 mt-6">
+        Already have an account?
+        <router-link to="/login" class="text-blue-600 hover:underline">Log in here</router-link>
+      </p>
     </div>
   </div>
 </template>
@@ -73,7 +75,7 @@ export default {
       password: '',
       confirmPassword: '',
       errorMessage: '',
-      isTyping: false,  // Variable to track if the user is typing
+      isTyping: false,
     };
   },
   computed: {
@@ -84,20 +86,16 @@ export default {
       return /[0-9!@#$%^&*]/.test(this.password);
     },
     isPasswordValid() {
-      // Controleer of het wachtwoord voldoet aan de vereisten: minimaal 6 tekens, hoofdletter, en nummer/speciaal teken
       return this.password.length >= 6 && this.hasUppercase && this.hasNumberOrSpecialChar;
     },
   },
   methods: {
     async registerUser() {
       this.errorMessage = '';
-
-      // Controleer of de wachtwoorden overeenkomen
       if (this.password !== this.confirmPassword) {
         this.errorMessage = "Passwords do not match";
         return;
       }
-
       try {
         const response = await fetch('http://localhost:8080/api/register', {
           method: 'POST',
@@ -116,9 +114,7 @@ export default {
           throw new Error(errorData || 'Registration failed');
         }
 
-        // Na succesvolle registratie doorverwijzen naar loginpagina
         this.$router.push({name: 'login'});
-
       } catch (error) {
         this.errorMessage = error.message;
       }

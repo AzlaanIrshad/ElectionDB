@@ -9,11 +9,14 @@ import java.util.Date;
 
 @Component
 public class JwtUtil {
-    private final String SECRET_KEY = "your_secret_key"; // Use a strong secret key
+    private final String SECRET_KEY = "your_secret_key";
 
-    public String generateToken(String email) {
+    public String generateToken(String email, String role) {
+        System.out.println("Generating token with role: " + role);
         return Jwts.builder()
                 .setSubject(email)
+                .claim("role", role)
+                .claim("test", "testValue")
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10)) // 10 hours expiration
                 .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
@@ -26,6 +29,10 @@ public class JwtUtil {
 
     public String extractEmail(String token) {
         return extractClaims(token).getSubject();
+    }
+
+    public String extractRole(String token) {
+        return extractClaims(token).get("role", String.class);
     }
 
     public boolean isTokenExpired(String token) {

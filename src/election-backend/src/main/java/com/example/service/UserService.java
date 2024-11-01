@@ -23,7 +23,8 @@ public class UserService {
         if (userOptional.isPresent()) {
             User user = userOptional.get();
             if (user.getPassword().equals(password)) {
-                return jwtUtil.generateToken(user.getEmail());
+                System.out.println("User Role: " + user.getRole().name());
+                return jwtUtil.generateToken(user.getEmail(), user.getRole().name());
             }
         }
         return null;
