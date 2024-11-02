@@ -6,6 +6,7 @@ import AdminPage from '@/pages/AdminPage.vue';
 import ThreadsPage from "@/pages/ThreadsPage.vue";
 import SingleThreadPage from "@/pages/SingleThreadPage.vue";
 import CreateThread from "@/pages/CreateThread.vue";
+import FaqPage from "@/pages/FaqPage.vue";
 
 // General authentication guard
 function authGuard(to, from, next) {
@@ -40,6 +41,7 @@ const routes = [
     { path: '/threads', name: 'threads', component: ThreadsPage },
     { path: '/threads/:id', name: 'single-thread', component: SingleThreadPage },
     { path: '/create-thread', name: 'create-thread', component: CreateThread, beforeEnter: authGuard },
+    { path: '/faq', name: 'faq', component: FaqPage },
 ];
 
 const router = createRouter({

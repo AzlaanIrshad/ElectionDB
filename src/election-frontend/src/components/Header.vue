@@ -5,6 +5,14 @@
         Electiondb
       </router-link>
       <div class="flex items-center">
+        <!-- FAQ Link -->
+        <router-link
+            to="/faq"
+            class="text-base md:text-lg text-white bg-gray-700 hover:bg-gray-600 rounded-full px-4 md:px-6 py-2 md:py-3 transition duration-300 mr-4"
+        >
+          FAQ
+        </router-link>
+
         <router-link
             v-if="!isLoggedIn"
             to="/login"
