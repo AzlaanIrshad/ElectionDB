@@ -6,7 +6,7 @@
         Welcome to Electiondb
       </h1>
       <p class="text-sm sm:text-base lg:text-lg text-gray-700 my-6 sm:my-8 mx-4 sm:mx-12 lg:mx-24">
-        Stay ahead of the curve with Electiondb 2024, your ultimate hub for real-time election updates and expert analysis. Whether it's breaking news, shifts in voter sentiment, or key insights into the most closely-watched races, we provide comprehensive, up-to-the-minute coverage. Dive deep into national and state-level contests, explore detailed candidate profiles, and track every pivotal development as we journey through the 2024 election cycle. From trending issues to in-depth forecasts, our platform ensures you're informed every step of the way.
+        Stay ahead of the curve with Electiondb 2024, your ultimate hub for real-time election updates and expert analysis. From breaking news to in-depth forecasts, explore detailed candidate profiles and track every pivotal development in the 2024 election cycle.
       </p>
       <a href="/">
         <button
@@ -52,11 +52,11 @@
         <div
             v-for="(image, index) in featuredImages"
             :key="index"
-            class="tile w-1/4 sm:w-1/5 h-24 sm:h-32 lg:h-40 flex justify-center items-center bg-gray-200 text-center rounded-lg shadow-md transition-all cursor-pointer hover:bg-blue-500 hover:text-white transform hover:scale-105"
+            class="tile w-1/4 sm:w-1/5 h-24 sm:h-32 lg:h-40 bg-gray-200 text-center rounded-lg shadow-md transition-all cursor-pointer hover:bg-blue-500 transform hover:scale-105"
             :class="{ 'border-blue-500 border-4': activeIndex === index }"
             @click="setActiveIndex(index)"
         >
-          <span class="font-semibold text-sm sm:text-lg lg:text-xl">View {{ index + 1 }}</span>
+          <img :src="image" alt="Thumbnail" class="w-full h-full object-cover rounded-lg" />
         </div>
       </div>
     </section>
@@ -81,19 +81,7 @@
         </a>
       </div>
     </section>
-
-    <!-- Candidates Section -->
-<!--    <section class="candidates-list py-8 bg-white rounded-lg shadow-lg mx-4 sm:mx-6 lg:mx-10">-->
-<!--      <h2 class="text-3xl lg:text-4xl text-center mb-8 font-extrabold text-gray-800">Candidates</h2>-->
-<!--      <div v-if="candidates.length" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">-->
-<!--        <div v-for="candidate in candidates" :key="candidate.id" class="candidate-card bg-gray-200 p-4 rounded-lg shadow-md">-->
-<!--          <h3 class="text-xl font-bold">{{ candidate.name }}</h3>-->
-<!--          <p class="text-sm text-gray-600">{{ candidate.party }}</p>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--      <p v-else class="text-center text-gray-600">No candidates found.</p>-->
-<!--    </section>-->
-
+    
     <!-- News Section -->
     <section class="news py-12 bg-white rounded-lg shadow-lg mx-2 lg:mx-5 mb-10">
       <h2 class="text-3xl lg:text-4xl text-center mb-10 font-extrabold text-gray-800">Recent Election News</h2>
@@ -115,7 +103,6 @@
 </template>
 
 <script>
-
 export default {
   name: "HomePage",
   data() {
