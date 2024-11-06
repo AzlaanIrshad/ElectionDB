@@ -1,4 +1,4 @@
-package com.example;
+package com. example. group;
 
 import com.example.entity.User;
 import com.example.entity.Candidate;
