@@ -1,10 +1,10 @@
 <template>
-  <div id="app">
+  <div id="app" class="flex flex-col min-h-screen">
     <!-- Header Section -->
     <HeaderComponent />
 
     <!-- Main Content -->
-    <main class="mt-8">
+    <main class="flex-grow mt-8">
       <router-view />
     </main>
 
@@ -25,3 +25,15 @@ export default {
   },
 };
 </script>
+
+<style>
+#app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main {
+  flex-grow: 1;
+}
+</style>

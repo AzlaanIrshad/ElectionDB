@@ -5,7 +5,14 @@
         Electiondb
       </router-link>
       <div class="flex items-center">
-        <!-- Show Login if not logged in -->
+        <!-- FAQ Link -->
+        <router-link
+            to="/faq"
+            class="text-base md:text-lg text-white bg-gray-700 hover:bg-gray-600 rounded-full px-4 md:px-6 py-2 md:py-3 transition duration-300 mr-4"
+        >
+          FAQ
+        </router-link>
+
         <router-link
             v-if="!isLoggedIn"
             to="/login"
@@ -14,9 +21,15 @@
           Login
         </router-link>
 
-        <!-- Show Admin Panel and Logout if logged in -->
         <div v-if="isLoggedIn">
+          <router-link
+              to="/threads"
+              class="text-base md:text-lg text-white bg-green-600 hover:bg-green-500 rounded-full px-4 md:px-6 py-2 md:py-3 transition duration-300 mr-4"
+          >
+            Threads
+          </router-link>
           <button
+              v-if="isAdmin"
               class="text-base md:text-lg text-white bg-blue-600 hover:bg-blue-500 rounded-full px-4 md:px-6 py-2 md:py-3 transition duration-300 mr-4"
               @click="$router.push('/admin')"
           >
@@ -40,6 +53,7 @@ export default {
   data() {
     return {
       isLoggedIn: false,
+      isAdmin: false,
     };
   },
   mounted() {
@@ -47,17 +61,30 @@ export default {
   },
   methods: {
     checkAuthStatus() {
-      const token = localStorage.getItem('token');
-      this.isLoggedIn = !!token;
+      const token = localStorage.getItem("token");
+      if (token) {
+        try {
+          const payload = JSON.parse(atob(token.split(".")[1]));
+          this.isLoggedIn = true;
+          this.isAdmin = payload.role === "ADMIN";
+        } catch (error) {
+          console.error("Error decoding token payload:", error);
+        }
+      } else {
+        this.isLoggedIn = false;
+        this.isAdmin = false;
+      }
     },
+
     logout() {
-      localStorage.removeItem('token');
+      localStorage.removeItem("token");
       this.isLoggedIn = false;
-      this.$router.push('/login');
+      this.isAdmin = false;
+      this.$router.push("/login");
     },
   },
   watch: {
-    '$route'() {
+    "$route"() {
       this.checkAuthStatus();
     },
   },
