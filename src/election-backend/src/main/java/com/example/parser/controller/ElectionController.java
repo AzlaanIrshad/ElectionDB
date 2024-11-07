@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/election")
 public class ElectionController {
@@ -22,18 +24,18 @@ public class ElectionController {
         logger.info("ElectionController initialized.");
     }
 
-    @GetMapping("/result")
-    public ElectionResult getElectionResult() {
+    @GetMapping("/results")
+    public List<ElectionResult> getElectionResults() {
         logger.info("Received request for election results.");
 
-        ElectionResult electionResult = electionService.parseXmlToJson();
+        List<ElectionResult> electionResults = electionService.parseXmlToJson();
 
-        if (electionResult == null) {
+        if (electionResults.isEmpty()) {
             logger.warn("No valid election result data found. Responding with empty data.");
         } else {
             logger.info("Election results retrieved successfully. Sending response.");
         }
 
-        return electionResult;
+        return electionResults;
     }
 }

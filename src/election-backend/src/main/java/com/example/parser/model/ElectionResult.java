@@ -16,8 +16,10 @@ public class ElectionResult {
     @XmlElement(name = "Count", namespace = "urn:oasis:names:tc:evs:schema:eml")
     private Count count;
 
+    @XmlElement(name = "CandidateList", namespace = "urn:oasis:names:tc:evs:schema:eml")
+    private CandidateList candidateList;
+
     public int getTransactionId() {
-        System.out.println("TransactionId: " + transactionId);
         return transactionId;
     }
 
@@ -26,7 +28,6 @@ public class ElectionResult {
     }
 
     public ManagingAuthority getManagingAuthority() {
-        System.out.println("ManagingAuthority: " + managingAuthority);
         return managingAuthority;
     }
 
@@ -35,12 +36,19 @@ public class ElectionResult {
     }
 
     public Count getCount() {
-        System.out.println("Count: " + count);
         return count;
     }
 
     public void setCount(Count count) {
         this.count = count;
+    }
+
+    public CandidateList getCandidateList() {
+        return candidateList;
+    }
+
+    public void setCandidateList(CandidateList candidateList) {
+        this.candidateList = candidateList;
     }
 }
 
@@ -50,7 +58,6 @@ class ManagingAuthority {
     private AuthorityIdentifier authorityIdentifier;
 
     public AuthorityIdentifier getAuthorityIdentifier() {
-        System.out.println("AuthorityIdentifier: " + authorityIdentifier);
         return authorityIdentifier;
     }
 
@@ -90,7 +97,6 @@ class Count {
     private Election election;
 
     public Election getElection() {
-        System.out.println("Election: " + election);
         return election;
     }
 
@@ -315,6 +321,12 @@ class Candidate {
     @XmlElement(name = "CandidateIdentifier", namespace = "urn:oasis:names:tc:evs:schema:eml")
     private CandidateIdentifier candidateIdentifier;
 
+    @XmlElement(name = "CandidateFullName", namespace = "urn:oasis:names:tc:evs:schema:eml")
+    private CandidateFullName candidateFullName;
+
+    @XmlElement(name = "Gender", namespace = "urn:oasis:names:tc:evs:schema:eml")
+    private String gender;
+
     public CandidateIdentifier getCandidateIdentifier() {
         return candidateIdentifier;
     }
@@ -322,18 +334,112 @@ class Candidate {
     public void setCandidateIdentifier(CandidateIdentifier candidateIdentifier) {
         this.candidateIdentifier = candidateIdentifier;
     }
+
+    public CandidateFullName getCandidateFullName() {
+        return candidateFullName;
+    }
+
+    public void setCandidateFullName(CandidateFullName candidateFullName) {
+        this.candidateFullName = candidateFullName;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+}
+
+@XmlAccessorType(XmlAccessType.FIELD)
+class CandidateFullName {
+
+    @XmlElement(name = "PersonName", namespace = "urn:oasis:names:tc:evs:schema:eml")
+    private PersonName personName;
+
+    public PersonName getPersonName() {
+        return personName;
+    }
+
+    public void setPersonName(PersonName personName) {
+        this.personName = personName;
+    }
+}
+
+@XmlAccessorType(XmlAccessType.FIELD)
+class PersonName {
+
+    @XmlElement(name = "FirstName", namespace = "urn:oasis:names:tc:evs:schema:eml")
+    private String firstName;
+
+    @XmlElement(name = "LastName", namespace = "urn:oasis:names:tc:evs:schema:eml")
+    private String lastName;
+
+    @XmlElement(name = "NamePrefix", namespace = "urn:oasis:names:tc:evs:schema:eml")
+    private String namePrefix;
+
+    @XmlElement(name = "NameLine", namespace = "urn:oasis:names:tc:evs:schema:eml")
+    private String nameLine;
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getNamePrefix() {
+        return namePrefix;
+    }
+
+    public void setNamePrefix(String namePrefix) {
+        this.namePrefix = namePrefix;
+    }
+
+    public String getNameLine() {
+        return nameLine;
+    }
+
+    public void setNameLine(String nameLine) {
+        this.nameLine = nameLine;
+    }
 }
 
 @XmlAccessorType(XmlAccessType.FIELD)
 class CandidateIdentifier {
-    @XmlAttribute(name = "ShortCode")
-    private String shortCode;
+    @XmlAttribute(name = "Id")
+    private String id;
 
-    public String getShortCode() {
-        return shortCode;
+    public String getId() {
+        return id;
     }
 
-    public void setShortCode(String shortCode) {
-        this.shortCode = shortCode;
+    public void setId(String id) {
+        this.id = id;
+    }
+}
+
+@XmlAccessorType(XmlAccessType.FIELD)
+class CandidateList {
+
+    @XmlElement(name = "Candidate", namespace = "urn:oasis:names:tc:evs:schema:eml")
+    private List<Candidate> candidates;
+
+    public List<Candidate> getCandidates() {
+        return candidates;
+    }
+
+    public void setCandidates(List<Candidate> candidates) {
+        this.candidates = candidates;
     }
 }
