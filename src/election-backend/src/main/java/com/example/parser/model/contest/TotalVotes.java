@@ -8,10 +8,12 @@ import jakarta.xml.bind.annotation.XmlElement;
 import java.util.List;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-class TotalVotes {
+public class TotalVotes {
+
     @XmlElement(name = "Selection", namespace = "urn:oasis:names:tc:evs:schema:eml")
     private List<Selection> selections;
 
+    // Getters and setters
     public List<Selection> getSelections() {
         return selections;
     }

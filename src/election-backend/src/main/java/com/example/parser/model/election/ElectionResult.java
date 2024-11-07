@@ -29,8 +29,7 @@ public class ElectionResult {
     private CanonicalizationMethod canonicalizationMethod;
 
     // Getters and setters
-
-public int getTransactionId() {
+    public int getTransactionId() {
         return transactionId;
     }
 
@@ -70,4 +69,3 @@ public int getTransactionId() {
         this.canonicalizationMethod = canonicalizationMethod;
     }
 }
-

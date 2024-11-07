@@ -15,8 +15,7 @@ public class AffiliationIdentifier {
     private String registeredName;
 
     // Getters and setters
-
-public String getId() {
+    public String getId() {
         return id;
     }
 

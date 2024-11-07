@@ -20,5 +20,30 @@ public class Candidate {
 
     @XmlElement(name = "Gender", namespace = "urn:oasis:names:tc:evs:schema:eml")
     @JsonProperty("gender")
-    private String gender;
+    private Gender gender;
+
+    // Getters and setters
+    public CandidateIdentifier getCandidateIdentifier() {
+        return candidateIdentifier;
+    }
+
+    public void setCandidateIdentifier(CandidateIdentifier candidateIdentifier) {
+        this.candidateIdentifier = candidateIdentifier;
+    }
+
+    public CandidateFullName getCandidateFullName() {
+        return candidateFullName;
+    }
+
+    public void setCandidateFullName(CandidateFullName candidateFullName) {
+        this.candidateFullName = candidateFullName;
+    }
+
+    public Gender getGender() {
+        return gender;
+    }
+
+    public void setGender(Gender gender) {
+        this.gender = gender;
+    }
 }

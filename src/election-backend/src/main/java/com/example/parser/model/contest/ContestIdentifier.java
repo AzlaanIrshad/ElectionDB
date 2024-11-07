@@ -5,10 +5,12 @@ import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlAttribute;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-class ContestIdentifier {
+public class ContestIdentifier {
+
     @XmlAttribute(name = "Id")
     private String id;
 
+    // Getters and setters
     public String getId() {
         return id;
     }

@@ -11,7 +11,7 @@ import jakarta.xml.bind.annotation.XmlType;
 public class PersonName {
 
     @XmlElement(name = "NameLine", namespace = "urn:oasis:names:tc:ciq:xsdschema:xNL:2.0")
-    @JsonProperty("initials")
+    @JsonProperty("name_line")
     private String nameLine;
 
     @XmlElement(name = "FirstName", namespace = "urn:oasis:names:tc:ciq:xsdschema:xNL:2.0")
@@ -21,4 +21,29 @@ public class PersonName {
     @XmlElement(name = "LastName", namespace = "urn:oasis:names:tc:ciq:xsdschema:xNL:2.0")
     @JsonProperty("last_name")
     private String lastName;
+
+    // Getters en Setters
+    public String getNameLine() {
+        return nameLine;
+    }
+
+    public void setNameLine(String nameLine) {
+        this.nameLine = nameLine;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
 }

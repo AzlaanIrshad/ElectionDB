@@ -13,4 +13,13 @@ public class CandidateFullName {
     @XmlElement(name = "PersonName", namespace = "urn:oasis:names:tc:ciq:xsdschema:xNL:2.0")
     @JsonProperty("person_name")
     private PersonName personName;
+
+    // Getters en Setters
+    public PersonName getPersonName() {
+        return personName;
+    }
+
+    public void setPersonName(PersonName personName) {
+        this.personName = personName;
+    }
 }

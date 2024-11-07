@@ -6,13 +6,15 @@ import jakarta.xml.bind.annotation.XmlAttribute;
 import jakarta.xml.bind.annotation.XmlValue;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-class AuthorityIdentifier {
+public class AuthorityIdentifier {
+
     @XmlAttribute(name = "Id")
     private String id;
 
     @XmlValue
     private String value;
 
+    // Getters and setters
     public String getId() {
         return id;
     }

@@ -18,6 +18,7 @@ public class Selection {
     @XmlElement(name = "ValidVotes", namespace = "urn:oasis:names:tc:evs:schema:eml")
     private int validVotes;
 
+    // Getters and setters
     public AffiliationIdentifier getAffiliationIdentifier() {
         return affiliationIdentifier;
     }

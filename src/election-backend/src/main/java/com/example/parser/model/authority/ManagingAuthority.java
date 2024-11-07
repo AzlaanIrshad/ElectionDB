@@ -13,6 +13,7 @@ public class ManagingAuthority {
     @XmlElement(name = "AuthorityAddress", namespace = "urn:oasis:names:tc:evs:schema:eml")
     private String authorityAddress;
 
+    // Getters and setters
     public AuthorityIdentifier getAuthorityIdentifier() {
         return authorityIdentifier;
     }

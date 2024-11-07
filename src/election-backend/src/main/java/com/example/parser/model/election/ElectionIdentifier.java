@@ -6,7 +6,8 @@ import jakarta.xml.bind.annotation.XmlAttribute;
 import jakarta.xml.bind.annotation.XmlElement;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-class ElectionIdentifier {
+public class ElectionIdentifier {
+
     @XmlAttribute(name = "Id")
     private String id;
 
@@ -23,7 +24,6 @@ class ElectionIdentifier {
     private String electionDate;
 
     // Getters and setters
-
     public String getId() {
         return id;
     }

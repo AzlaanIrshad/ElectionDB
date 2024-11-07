@@ -7,10 +7,19 @@ import jakarta.xml.bind.annotation.XmlAttribute;
 import jakarta.xml.bind.annotation.XmlType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "CandidateIdentifier")
+@XmlType(name = "CandidateIdentifier", namespace = "urn:oasis:names:tc:evs:schema:eml")
 public class CandidateIdentifier {
 
-    @XmlAttribute(name = "ShortCode")
-    @JsonProperty("shortCode")
-    private String shortCode;
+    @XmlAttribute(name = "Id")
+    @JsonProperty("id")
+    private String id;
+
+    // Getter en Setter
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 }

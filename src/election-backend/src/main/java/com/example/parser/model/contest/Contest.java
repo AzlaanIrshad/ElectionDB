@@ -6,12 +6,14 @@ import jakarta.xml.bind.annotation.XmlElement;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Contest {
+
     @XmlElement(name = "ContestIdentifier", namespace = "urn:oasis:names:tc:evs:schema:eml")
     private ContestIdentifier contestIdentifier;
 
     @XmlElement(name = "TotalVotes", namespace = "urn:oasis:names:tc:evs:schema:eml")
     private TotalVotes totalVotes;
 
+    // Getters and Setters
     public ContestIdentifier getContestIdentifier() {
         return contestIdentifier;
     }
