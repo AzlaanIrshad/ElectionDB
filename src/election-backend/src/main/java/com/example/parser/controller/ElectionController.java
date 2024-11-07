@@ -1,6 +1,6 @@
 package com.example.parser.controller;
 
-import com.example.parser.model.ElectionResult;
+import com.example.parser.model.election.ElectionResult;
 import com.example.parser.service.ElectionService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

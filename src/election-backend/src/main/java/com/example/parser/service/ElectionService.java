@@ -1,7 +1,9 @@
 package com.example.parser.service;
 
-import com.example.parser.model.ElectionResult;
+import com.example.parser.model.election.ElectionResult;
+import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBException;
 import jakarta.xml.bind.Unmarshaller;
@@ -11,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
@@ -29,7 +32,8 @@ public class ElectionService {
     private static final String DIRECTORY_PATH_DEEL_1 = "src/main/resources/ElectionResults/Verkiezingsuitslag Tweede Kamer 2023 (Deel 1)";
     private static final String DIRECTORY_PATH_DEEL_2 = "src/main/resources/ElectionResults/Verkiezingsuitslag Tweede Kamer 2023 (Deel 2)";
     private static final String DIRECTORY_PATH_DEEL_3 = "src/main/resources/ElectionResults/Verkiezingsuitslag Tweede Kamer 2023 (Deel 3)";
-    private static final String JSON_OUTPUT_PATH = "C:/Users/Ersin/Desktop/HVA/SM3-election/src/main/resources/election_results.json";
+    private static final String DIRECTORY_PATH_KANDIDATENLIJSTEN = "src/main/resources/ElectionResults/Verkiezingsuitslag Tweede Kamer 2023 (Deel 1)/Kandidatenlijsten";
+    private static final String JSON_OUTPUT_PATH = "src/main/resources/election_results.json";
 
     public List<ElectionResult> parseXmlToJson() {
         logger.info("Starting parseXmlToJson method...");
@@ -44,7 +48,7 @@ public class ElectionService {
         processDirectory(DIRECTORY_PATH_DEEL_1, "Telling_TK2023_kieskring_", futures, executor);
         processDirectory(DIRECTORY_PATH_DEEL_2, "Telling_TK2023_gemeente_", futures, executor);
         processDirectory(DIRECTORY_PATH_DEEL_3, "Telling_TK2023_gemeente_", futures, executor);
-        processDirectory(DIRECTORY_PATH_DEEL_1 + "/Kandidatenlijsten", "Kandidatenlijsten_TK2023_", futures, executor);
+        processDirectory(DIRECTORY_PATH_KANDIDATENLIJSTEN, "Kandidatenlijsten_TK2023_", futures, executor);
 
         for (Future<ElectionResult> future : futures) {
             try {
@@ -82,9 +86,12 @@ public class ElectionService {
 
     private void writeJsonToFile(List<ElectionResult> results) {
         ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.configure(JsonGenerator.Feature.WRITE_NUMBERS_AS_STRINGS, true);
+        objectMapper.configure(SerializationFeature.INDENT_OUTPUT, false);
+
         try {
             logger.info("Writing parsed data to JSON file at: {}", JSON_OUTPUT_PATH);
-            File jsonFile = new File(JSON_OUTPUT_PATH);
+            File jsonFile = Paths.get(JSON_OUTPUT_PATH).toFile();
             objectMapper.writeValue(jsonFile, results);
             logger.info("Data successfully written to JSON file.");
         } catch (IOException e) {
