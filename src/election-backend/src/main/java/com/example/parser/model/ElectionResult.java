@@ -261,8 +261,14 @@ class Selection {
     private Candidate candidate;
 
     public AffiliationIdentifier getAffiliationIdentifier() {
+        if (affiliationIdentifier == null) {
+            affiliationIdentifier = new AffiliationIdentifier();
+            affiliationIdentifier.setId("onbekend");
+            affiliationIdentifier.setRegisteredName("onbekende partij");
+        }
         return affiliationIdentifier;
     }
+
 
     public void setAffiliationIdentifier(AffiliationIdentifier affiliationIdentifier) {
         this.affiliationIdentifier = affiliationIdentifier;
@@ -309,6 +315,7 @@ class AffiliationIdentifier {
         this.registeredName = registeredName;
     }
 }
+
 
 @XmlAccessorType(XmlAccessType.FIELD)
 class Candidate {
