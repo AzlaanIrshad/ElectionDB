@@ -23,9 +23,13 @@ public class ElectionParser implements CommandLineRunner {
     @Override
     public void run(String... args) {
         System.out.println("Starting XML to JSON parsing process...");
-        electionService.parseXmlToJson();
+
+        // Start het parsingproces voor Telling- en Kandidatenlijsten-bestanden
+        electionService.parseXmlFilesToJson();
+
         System.out.println("Parsing process completed.");
 
+        // Beëindig de applicatie na het parsingproces
         SpringApplication.exit(context, () -> 0);
     }
 }
