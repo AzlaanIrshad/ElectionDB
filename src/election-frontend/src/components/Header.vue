@@ -1,5 +1,5 @@
 <template>
-  <header class="bg-gray-800 py-4 md:py-6 text-white shadow-lg">
+  <header class="bg-gray-800 dark:bg-gray-900 py-4 md:py-6 text-white shadow-lg">
     <div class="container mx-auto flex justify-between items-center px-4 md:px-8">
       <!-- Logo -->
       <router-link to="/" class="logo text-3xl font-bold tracking-wide text-blue-400 hover:text-blue-300 transition duration-200">
@@ -7,6 +7,9 @@
       </router-link>
 
       <div class="flex items-center space-x-4 md:space-x-6">
+        <!-- Dark Mode Toggle -->
+        <DarkModeToggle />
+
         <!-- Links for All Users -->
         <router-link
             to="/faq"
@@ -64,8 +67,13 @@
 </template>
 
 <script>
+import DarkModeToggle from "./DarkModeToggle.vue";
+
 export default {
   name: "HeaderComponent",
+  components: {
+    DarkModeToggle,
+  },
   data() {
     return {
       isLoggedIn: false,

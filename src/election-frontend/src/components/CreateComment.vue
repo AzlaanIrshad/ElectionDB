@@ -1,36 +1,36 @@
 <template>
-  <div class="create-comment-container max-w-4xl mx-auto py-12 px-6 bg-white rounded-lg shadow-xl">
-    <h1 class="text-3xl font-extrabold text-gray-800 mb-8 text-center">Create a New Comment</h1>
+  <div class="create-comment-container max-w-4xl mx-auto py-12 px-6 bg-white dark:bg-gray-700 rounded-lg shadow-xl">
+    <h1 class="text-3xl font-extrabold text-gray-800 dark:text-gray-100 mb-8 text-center">Create a New Comment</h1>
 
     <div>
       <form @submit.prevent="createComment" class="space-y-8">
         <div>
-          <label for="comment" class="block text-lg font-semibold text-gray-700 mb-3">Comment:</label>
+          <label for="comment" class="block text-lg font-semibold text-gray-700 dark:text-gray-200 mb-3">Comment:</label>
           <textarea
               v-model="body"
               id="comment"
               name="comment"
               rows="4"
-              class="w-full p-4 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-300 focus:border-transparent transition duration-300"
+              class="w-full p-4 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-500 focus:border-transparent transition duration-300 bg-gray-50 dark:bg-gray-700 text-gray-800 dark:text-gray-100"
               placeholder="Write your comment..."
           ></textarea>
         </div>
 
         <div>
-          <label for="category" class="block text-lg font-semibold text-gray-700 mb-3">Category:</label>
+          <label for="category" class="block text-lg font-semibold text-gray-700 dark:text-gray-200 mb-3">Category:</label>
           <input
               v-model="category"
               id="category"
               name="category"
               type="text"
-              class="w-full p-4 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-300 focus:border-transparent transition duration-300"
+              class="w-full p-4 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-500 focus:border-transparent transition duration-300 bg-gray-50 dark:bg-gray-700 text-gray-800 dark:text-gray-100"
               placeholder="Enter category..."
           />
         </div>
 
         <div class="text-center">
           <button
-              class="w-full sm:w-auto px-8 py-4 text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 rounded-full transition-all shadow-md transform hover:scale-105"
+              class="w-full sm:w-auto px-8 py-4 text-white bg-blue-600 dark:bg-blue-700 hover:bg-blue-700 dark:hover:bg-blue-600 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-500 rounded-full transition-all shadow-md transform hover:scale-105"
               type="submit"
           >
             Submit Comment
