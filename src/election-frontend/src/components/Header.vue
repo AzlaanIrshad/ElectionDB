@@ -1,47 +1,63 @@
 <template>
-  <header class="bg-gray-900 py-4 md:py-6 text-white shadow-lg">
-    <div class="container mx-auto flex justify-between items-center px-4 md:px-6">
-      <router-link to="/" class="logo text-2xl md:text-3xl font-bold">
+  <header class="bg-gray-800 py-4 md:py-6 text-white shadow-lg">
+    <div class="container mx-auto flex justify-between items-center px-4 md:px-8">
+      <!-- Logo -->
+      <router-link to="/" class="logo text-3xl font-bold tracking-wide text-blue-400 hover:text-blue-300 transition duration-200">
         Electiondb
       </router-link>
-      <div class="flex items-center">
-        <!-- FAQ Link -->
+
+      <div class="flex items-center space-x-4 md:space-x-6">
+        <!-- Links for All Users -->
         <router-link
             to="/faq"
-            class="text-base md:text-lg text-white bg-gray-700 hover:bg-gray-600 rounded-full px-4 md:px-6 py-2 md:py-3 transition duration-300 mr-4"
+            class="text-lg text-white hover:text-gray-300 transition duration-200 px-4 py-2 flex items-center space-x-2"
         >
-          FAQ
+          <span>FAQ</span>
         </router-link>
 
+        <!-- About Link (Visible for both logged in and logged out users) -->
         <router-link
-            v-if="!isLoggedIn"
-            to="/login"
-            class="text-base md:text-lg text-white bg-blue-600 hover:bg-blue-500 rounded-full px-4 md:px-6 py-2 md:py-3 transition duration-300 mr-4"
+            to="/about"
+            class="text-lg text-white hover:text-gray-300 transition duration-200 px-4 py-2 flex items-center space-x-2"
         >
-          Login
+          <span>About Us</span>
         </router-link>
 
-        <div v-if="isLoggedIn">
+        <!-- Conditional Links for Authentication -->
+        <template v-if="!isLoggedIn">
+          <router-link
+              to="/login"
+              class="text-lg bg-blue-600 hover:bg-blue-500 rounded-full px-5 py-2 transition duration-300 flex items-center space-x-2"
+          >
+            <span>Login</span>
+          </router-link>
+        </template>
+
+        <template v-else>
           <router-link
               to="/threads"
-              class="text-base md:text-lg text-white bg-green-600 hover:bg-green-500 rounded-full px-4 md:px-6 py-2 md:py-3 transition duration-300 mr-4"
+              class="text-lg text-white hover:text-gray-300 transition duration-200 px-4 py-2 flex items-center space-x-2"
           >
-            Threads
+            <span>Threads</span>
           </router-link>
+
+          <!-- Admin Panel Link -->
           <button
               v-if="isAdmin"
-              class="text-base md:text-lg text-white bg-blue-600 hover:bg-blue-500 rounded-full px-4 md:px-6 py-2 md:py-3 transition duration-300 mr-4"
               @click="$router.push('/admin')"
+              class="text-lg bg-blue-600 hover:bg-blue-500 rounded-full px-5 py-2 transition duration-300 flex items-center space-x-2"
           >
-            Go to Admin Panel
+            <span>Admin Panel</span>
           </button>
+
+          <!-- Logout Button -->
           <button
-              class="text-base md:text-lg text-white bg-red-600 hover:bg-red-500 rounded-full px-4 md:px-6 py-2 md:py-3 transition duration-300"
               @click="logout"
+              class="text-lg bg-red-600 hover:bg-red-500 rounded-full px-5 py-2 transition duration-300 flex items-center space-x-2"
           >
-            Logout
+            <span>Logout</span>
           </button>
-        </div>
+        </template>
       </div>
     </div>
   </header>
@@ -75,7 +91,6 @@ export default {
         this.isAdmin = false;
       }
     },
-
     logout() {
       localStorage.removeItem("token");
       this.isLoggedIn = false;

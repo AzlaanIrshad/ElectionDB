@@ -114,8 +114,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-.admin-page {
-}
-</style>
