@@ -1,9 +1,17 @@
 package com.example.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "faq")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Faq {
 
     @Id
@@ -16,36 +24,8 @@ public class Faq {
     @Column(nullable = false, columnDefinition = "TEXT")
     private String answer;
 
-    // Constructors
-    public Faq() {}
-
     public Faq(String question, String answer) {
         this.question = question;
-        this.answer = answer;
-    }
-
-    // Getters and Setters
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getQuestion() {
-        return question;
-    }
-
-    public void setQuestion(String question) {
-        this.question = question;
-    }
-
-    public String getAnswer() {
-        return answer;
-    }
-
-    public void setAnswer(String answer) {
         this.answer = answer;
     }
 }
