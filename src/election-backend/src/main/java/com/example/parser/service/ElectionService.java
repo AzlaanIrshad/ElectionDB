@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 
 @Service
 public class ElectionService {
@@ -19,12 +20,12 @@ public class ElectionService {
 
     @Autowired
     private TellingFileProcessor tellingFileProcessor;
-
-    @Autowired
-    private GemeenteTellingFileProcessor gemeenteTellingFileProcessor;
-
-    @Autowired
-    private KandidatenlijstenFileProcessor kandidatenlijstenFileProcessor;
+//
+//    @Autowired
+//    private GemeenteTellingFileProcessor gemeenteTellingFileProcessor;
+//
+//    @Autowired
+//    private KandidatenlijstenFileProcessor kandidatenlijstenFileProcessor;
 
     @Autowired
     private JsonWriterService jsonWriterService;
@@ -35,11 +36,19 @@ public class ElectionService {
         List<Future<ElectionResult>> futures = new ArrayList<>();
 
         futures.addAll(tellingFileProcessor.processFiles(executor));
-        futures.addAll(gemeenteTellingFileProcessor.processFiles(executor));
-        futures.addAll(kandidatenlijstenFileProcessor.processFiles(executor));
+//        futures.addAll(gemeenteTellingFileProcessor.processFiles(executor));
+//        futures.addAll(kandidatenlijstenFileProcessor.processFiles(executor));
 
         List<ElectionResult> results = collectResults(futures);
         executor.shutdown();
+        try {
+            if (!executor.awaitTermination(60, TimeUnit.SECONDS)) {
+                executor.shutdownNow();
+            }
+        } catch (InterruptedException e) {
+            executor.shutdownNow();
+            Thread.currentThread().interrupt();
+        }
 
         jsonWriterService.writeJsonToFile(results);
     }

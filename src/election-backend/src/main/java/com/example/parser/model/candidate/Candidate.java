@@ -13,13 +13,4 @@ public class Candidate {
 
     @XmlElement(name = "CandidateIdentifier", namespace = "urn:oasis:names:tc:evs:schema:eml")
     private CandidateIdentifier candidateIdentifier;
-
-    @XmlElement(name = "CandidateFullName", namespace = "urn:oasis:names:tc:evs:schema:eml")
-    private CandidateFullName candidateFullName;
-
-    @XmlElement(name = "Gender", namespace = "urn:oasis:names:tc:evs:schema:eml")
-    private Gender gender;
-
-    @XmlElement(name = "QualifyingAddress", namespace = "urn:oasis:names:tc:evs:schema:eml")
-    private QualifyingAddress qualifyingAddress;
 }

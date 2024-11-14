@@ -14,7 +14,9 @@ import java.util.List;
 public class JsonWriterService {
 
     private static final Logger logger = LoggerFactory.getLogger(JsonWriterService.class);
-    private static final String JSON_OUTPUT_PATH = "src/main/resources/election_results.json";
+    private static final String JSON_OUTPUT_PATH = "src/election-backend/src/main/resources/election_results.json";
+    //        C:\Users\Ersin\Desktop\HVA\SM3-election\src\main\resources
+//        C:\Users\Ersin\Desktop\HVA\SM3-election\src\election-backend\src\main\resources
 
     public void writeJsonToFile(List<ElectionResult> results) {
         ObjectMapper objectMapper = new ObjectMapper();
