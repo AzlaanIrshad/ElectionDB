@@ -1,31 +1,34 @@
 <template>
   <div class="dashboard-container max-w-6xl mx-auto py-12 px-4">
     <h1 class="text-3xl font-bold text-center mb-6 text-gray-900 dark:text-gray-100">
-      Dashboard Voting Results
-    </h1>
-    <p class="text-center text-gray-600 dark:text-gray-300 mb-6">
       Election Results by City
-    </p>
+    </h1>
 
-    <!-- Loading Spinner -->
+    <!-- Loading -->
     <div v-if="loading" class="text-center">
       <p>Loading...</p>
     </div>
 
-    <!-- Error Message -->
-    <div v-if="error" class="text-center text-red-500">
-      <p>{{ error }}</p>
+    <!-- Search Bar -->
+    <div class="search-bar mb-8">
+      <div class="max-w-md mx-auto">
+        <input
+            type="text"
+            v-model="searchQuery"
+            placeholder="Search for a city..."
+            class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-300 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100 dark:placeholder-gray-400"
+        />
+      </div>
     </div>
 
     <!-- Election Results by City -->
-    <div v-if="groupedResults.length" class="results-container">
-      <div v-for="city in groupedResults" :key="city.cityId" class="city-item mb-6">
-        <details class="group border rounded-md bg-gray-100 dark:bg-gray-800 p-4">
-          <summary class="cursor-pointer text-lg font-semibold text-gray-900 dark:text-gray-100">
+    <div v-if="filteredResults.length" class="results-container">
+      <div v-for="city in filteredResults" :key="city.cityId" class="city-item border-b border-gray-300 py-4 dark:border-gray-600">
+        <details class="group">
+          <summary class="cursor-pointer font-semibold text-lg text-gray-800 dark:text-gray-100 group-open:mb-2">
             City: {{ city.cityName }} (Total Votes: {{ city.totalVotes }})
           </summary>
           <div class="parties mt-4">
-            <h3 class="font-medium text-gray-800 dark:text-gray-300 mb-2">Parties:</h3>
             <ul>
               <li v-for="party in city.parties" :key="party.partyId" class="mb-4">
                 <details class="group">
@@ -48,6 +51,9 @@
         </details>
       </div>
     </div>
+
+    <!-- No Results Found Message -->
+    <p v-else class="text-center text-gray-500 dark:text-gray-400">No cities found.</p>
   </div>
 </template>
 
@@ -55,16 +61,20 @@
 export default {
   data() {
     return {
+      searchQuery: '',
       groupedResults: [],
       loading: false,
       error: null,
     };
   },
+  computed: {
+    filteredResults() {
+      return this.groupedResults.filter(city =>
+          city.cityName.toLowerCase().includes(this.searchQuery.toLowerCase())
+      );
+    },
+  },
   methods: {
-    /**
-     * Fetches the election results from the backend API.
-     * Sets the grouped results and handles loading/error states.
-     */
     async fetchElectionResults() {
       this.loading = true;
       this.error = null;
