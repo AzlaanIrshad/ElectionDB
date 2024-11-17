@@ -69,7 +69,7 @@
           <a href="/"><span class="font-bold text-xl lg:text-2xl">National Overview</span></a>
         </div>
         <div class="block w-full md:w-1/4 h-36 sm:h-44 flex justify-center items-center bg-blue-600 dark:bg-blue-700 text-center rounded-lg shadow-md cursor-pointer hover:bg-blue-800 dark:hover:bg-blue-600 transition-all text-white transform hover:scale-105">
-          <a href="/"><span class="font-bold text-xl lg:text-2xl">State-by-State Results</span></a>
+          <a href="/dashboard"><span class="font-bold text-xl lg:text-2xl">State-by-State Results</span></a>
         </div>
         <div class="block w-full md:w-1/4 h-36 sm:h-44 flex justify-center items-center bg-blue-600 dark:bg-blue-700 text-center rounded-lg shadow-md cursor-pointer hover:bg-blue-800 dark:hover:bg-blue-600 transition-all text-white transform hover:scale-105">
           <a href="/"><span class="font-bold text-xl lg:text-2xl">Candidate Profiles</span></a>
