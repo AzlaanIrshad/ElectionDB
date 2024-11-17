@@ -1,4 +1,4 @@
-package com.example.parser.model.election;
+package com.example.parser.model.tellingen;
 
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;

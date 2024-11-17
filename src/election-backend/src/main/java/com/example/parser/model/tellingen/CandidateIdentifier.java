@@ -1,16 +1,16 @@
-package com.example.parser.model.candidate;
+package com.example.parser.model.tellingen;
 
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
-import jakarta.xml.bind.annotation.XmlValue;
+import jakarta.xml.bind.annotation.XmlAttribute;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Locality {
+public class CandidateIdentifier {
 
-    @XmlValue
-    private String localityName;
+    @XmlAttribute(name = "Id")
+    private String id;
 }

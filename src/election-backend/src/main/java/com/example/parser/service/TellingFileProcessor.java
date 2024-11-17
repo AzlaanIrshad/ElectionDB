@@ -1,6 +1,6 @@
 package com.example.parser.service;
 
-import com.example.parser.model.election.Selection;
+import com.example.parser.model.tellingen.Selection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;

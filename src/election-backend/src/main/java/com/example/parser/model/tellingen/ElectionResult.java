@@ -1,6 +1,5 @@
-package com.example.parser.model.election;
+package com.example.parser.model.tellingen;
 
-import com.example.parser.model.affiliation.ManagingAuthority;
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlElement;

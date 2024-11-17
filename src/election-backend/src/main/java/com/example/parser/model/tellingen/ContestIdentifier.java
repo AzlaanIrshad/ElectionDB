@@ -1,4 +1,4 @@
-package com.example.parser.model.affiliation;
+package com.example.parser.model.tellingen;
 
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
@@ -10,11 +10,11 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @XmlAccessorType(XmlAccessType.FIELD)
-public class AffiliationIdentifier {
+public class ContestIdentifier {
 
     @XmlAttribute(name = "Id")
     private String id;
 
-    @XmlElement(name = "RegisteredName", namespace = "urn:oasis:names:tc:evs:schema:eml")
-    private String registeredName;
+    @XmlElement(name = "ContestName", namespace = "urn:oasis:names:tc:evs:schema:eml")
+    private String contestName;
 }

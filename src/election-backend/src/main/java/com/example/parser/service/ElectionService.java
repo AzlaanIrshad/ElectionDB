@@ -1,6 +1,6 @@
 package com.example.parser.service;
 
-import com.example.parser.model.election.ElectionResult;
+import com.example.parser.model.tellingen.ElectionResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
