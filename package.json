@@ -9,8 +9,7 @@
         "src/*"
     ],
     "scripts": {
-        "dev": "run-p dev:db dev:api dev:web",
-        "dev:db": "docker-compose -f docker-compose.yml up",
+        "dev": "run-p dev:api dev:web",
         "dev:api": "cd src/election-backend && (if exist mvnw.cmd (mvnw.cmd spring-boot:run) else (./mvnw spring-boot:run))",
         "dev:web": "cd src/election-frontend && npm run dev",
         "build": "run-p build:web build:api",
@@ -22,7 +21,6 @@
         "test": "npm run test -w src/tests",
         "typedoc": "typedoc"
     },
-
     "devDependencies": {
         "@types/node": "18.x",
         "@typescript-eslint/eslint-plugin": "6.20.0",
