@@ -1,5 +1,6 @@
 package com.example.controller;
 
+import com.example.dto.ThreadRequest;
 import com.example.entity.Thread;
 import com.example.entity.ThreadComment;
 import com.example.service.ThreadService;
@@ -35,8 +36,11 @@ public class ThreadController {
     }
 
     @PostMapping("/threads")
-    public ResponseEntity<Thread> createThread(@Valid @RequestBody Thread thread) {
-        Thread newThread = threadService.createThread(thread);
+    public ResponseEntity<Thread> createThread(@Valid @RequestBody ThreadRequest threadRequest) {
+        Thread newThread = threadService.createThread(
+                new Thread(threadRequest.getTitle(), threadRequest.getBody(), threadRequest.getDate(), threadRequest.getUser()),
+                threadRequest.getCategories()
+        );
         return ResponseEntity.ok(newThread);
     }
 

@@ -1,20 +1,20 @@
 package com.example.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
 import lombok.Setter;
+
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "thread")
 @Getter
 @Setter
-@AllArgsConstructor
 public class Thread implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -35,19 +35,22 @@ public class Thread implements Serializable {
     @Column(name = "date", length = 255, nullable = false)
     private String date;
 
-    @NotBlank(message = "Category is required")
-    @Column(name = "category", length = 255, nullable = false)
-    private String category;
+    @ManyToMany
+    @JoinTable(
+            name = "thread_category_map", // Join table name
+            joinColumns = @JoinColumn(name = "thread_id"), // Thread ID column
+            inverseJoinColumns = @JoinColumn(name = "category_id") // Category ID column
+    )
+    private Set<ThreadCategory> categories = new HashSet<>();
 
     public Thread() {
         // Default constructor
     }
 
-    public Thread(String title, String body, String date, String category, User user) {
+    public Thread(String title, String body, String date, User user) {
         this.title = title;
         this.body = body;
         this.date = date;
-        this.category = category;
         this.user = user;
     }
 }

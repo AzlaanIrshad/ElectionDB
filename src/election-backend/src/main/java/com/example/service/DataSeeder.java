@@ -55,9 +55,9 @@ public class DataSeeder implements CommandLineRunner {
 
         // Seed Threads if none exist
         if (threadRepository.count() == 0) {
-            Thread thread1 = new Thread("Thread 1", "Body 1", "2021-09-01", "Category 1", regularUser);
-            Thread thread2 = new Thread("Thread 2", "Body 2", "2021-09-02", "Category 2", modUser);
-            Thread thread3 = new Thread("Thread 3", "Body 3", "2021-09-03", "Category 3", adminUser);
+            Thread thread1 = new Thread("Thread 1", "Body 1", "2021-09-01", regularUser);
+            Thread thread2 = new Thread("Thread 2", "Body 2", "2021-09-02", modUser);
+            Thread thread3 = new Thread("Thread 3", "Body 3", "2021-09-03", adminUser);
 
             threadRepository.saveAll(Arrays.asList(thread1, thread2, thread3));
         } else {

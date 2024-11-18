@@ -34,8 +34,8 @@
               <input
                   type="text"
                   id="category"
-                  v-model="category"
-                  placeholder="Category"
+                  v-model="categoryInput"
+                  placeholder="Categories (comma-separated)"
                   class="w-full p-4 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring focus:ring-blue-300 dark:focus:ring-blue-500 text-gray-700 dark:text-gray-200 dark:bg-gray-700"
                   :class="{ 'border-red-500 dark:border-red-500': categoryError }"
               />
@@ -77,7 +77,7 @@ export default {
     return {
       title: '',
       body: '',
-      category: '',
+      categoryInput: '',
       titleError: '',
       bodyError: '',
       categoryError: '',
@@ -85,7 +85,7 @@ export default {
   },
   computed: {
     isFormValid() {
-      return this.title !== '' && this.body !== '' && this.category !== '';
+      return this.title !== '' && this.body !== '' && this.categoryInput !== '';
     },
   },
   methods: {
@@ -100,8 +100,8 @@ export default {
         this.bodyError = 'Body is required.';
       }
 
-      if (this.category === '') {
-        this.categoryError = 'Category is required.';
+      if (this.categoryInput === '') {
+        this.categoryError = 'At least one category is required.';
       }
 
       return !this.titleError && !this.bodyError && !this.categoryError;
@@ -125,10 +125,13 @@ export default {
             + `${String(now.getDate()).padStart(2, '0')} ${String(now.getHours()).padStart(2, '0')}:`
             + `${String(now.getMinutes()).padStart(2, '0')}`;
 
+        // Convert categoryInput to array
+        const categories = this.categoryInput.split(",").map((cat) => cat.trim());
+
         const threadData = {
           title: this.title,
           body: this.body,
-          category: this.category,
+          categories: categories, // Send as array
           date: formattedDate,
           user: dummyUser,
         };
