@@ -23,21 +23,29 @@ public class UserService {
         if (userOptional.isPresent()) {
             User user = userOptional.get();
             if (user.getPassword().equals(password)) {
-                return jwtUtil.generateToken(user.getEmail());
+                System.out.println("User Role: " + user.getRole().name());
+                return jwtUtil.generateToken(user.getEmail(), user.getRole().name());
             }
         }
         return null;
+    }
+
+    public void saveUser(User user) {
+        userRepository.save(user);
     }
 
     public List<User> getUsers() {
         return userRepository.findAll();
     }
 
-    public User deactivateUser(String email) {
-        Optional<User> userOptional = userRepository.findByEmail(email);
+    public boolean existsByEmail(String email) {
+        return userRepository.existsByEmail(email);
+    }
+    public User toggleActiveStatus(Long id) {
+        Optional<User> userOptional = userRepository.findById(id);
         if (userOptional.isPresent()) {
             User user = userOptional.get();
-            user.setActive(false);
+            user.setActive(!user.getActive());
             return userRepository.save(user);
         }
         return null;
@@ -46,12 +54,8 @@ public class UserService {
     public boolean deleteUser(Long id) {
         if (userRepository.existsById(id)) {
             userRepository.deleteById(id);
-            return true; // User deleted successfully
+            return true;
         }
-        return false; // User not found
-    }
-
-    public boolean existsByEmail(String email) {
-        return userRepository.existsByEmail(email);
+        return false;
     }
 }
