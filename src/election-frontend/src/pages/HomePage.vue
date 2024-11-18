@@ -1,16 +1,16 @@
 <template>
-  <div class="homepage bg-gray-100 font-sans">
+  <div class="homepage bg-gray-100 dark:bg-gray-900 font-sans text-gray-900 dark:text-gray-100">
     <!-- Hero Section -->
-    <section class="hero text-center py-12 lg:py-16 bg-white rounded-lg shadow-xl mt-5 mx-2 lg:mx-5">
-      <h1 class="text-3xl sm:text-4xl lg:text-6xl text-gray-800 mb-5 font-extrabold">
+    <section class="hero text-center py-12 lg:py-16 bg-white dark:bg-gray-800 rounded-lg shadow-xl mt-5 mx-2 lg:mx-5">
+      <h1 class="text-3xl sm:text-4xl lg:text-6xl text-gray-800 dark:text-gray-100 mb-5 font-extrabold">
         Welcome to Electiondb
       </h1>
-      <p class="text-sm sm:text-base lg:text-lg text-gray-700 my-6 sm:my-8 mx-4 sm:mx-12 lg:mx-24">
+      <p class="text-sm sm:text-base lg:text-lg text-gray-700 dark:text-gray-300 my-6 sm:my-8 mx-4 sm:mx-12 lg:mx-24">
         Stay ahead of the curve with Electiondb 2024, your ultimate hub for real-time election updates and expert analysis. From breaking news to in-depth forecasts, explore detailed candidate profiles and track every pivotal development in the 2024 election cycle.
       </p>
       <a href="/">
         <button
-            class="cta-button px-4 sm:px-6 py-2 sm:py-3 text-white bg-blue-700 hover:bg-blue-600 rounded-full transition-all shadow-lg transform hover:scale-105">
+            class="cta-button px-4 sm:px-6 py-2 sm:py-3 text-white bg-blue-700 dark:bg-blue-800 hover:bg-blue-600 dark:hover:bg-blue-700 rounded-full transition-all shadow-lg transform hover:scale-105">
           Election Dashboard
         </button>
       </a>
@@ -32,7 +32,7 @@
 
         <!-- Left Arrow -->
         <button
-            class="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white text-gray-800 p-2 rounded-full shadow-lg hover:bg-gray-200 transition"
+            class="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200 p-2 rounded-full shadow-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition"
             @click="prevImage"
         >
           &#10094;
@@ -40,7 +40,7 @@
 
         <!-- Right Arrow -->
         <button
-            class="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white text-gray-800 p-2 rounded-full shadow-lg hover:bg-gray-200 transition"
+            class="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200 p-2 rounded-full shadow-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition"
             @click="nextImage"
         >
           &#10095;
@@ -52,8 +52,8 @@
         <div
             v-for="(image, index) in featuredImages"
             :key="index"
-            class="tile w-1/4 sm:w-1/5 h-24 sm:h-32 lg:h-40 bg-gray-200 text-center rounded-lg shadow-md transition-all cursor-pointer hover:bg-blue-500 transform hover:scale-105"
-            :class="{ 'border-blue-500 border-4': activeIndex === index }"
+            class="tile w-1/4 sm:w-1/5 h-24 sm:h-32 lg:h-40 bg-gray-200 dark:bg-gray-700 text-center rounded-lg shadow-md transition-all cursor-pointer hover:bg-blue-500 dark:hover:bg-blue-600 transform hover:scale-105"
+            :class="{ 'border-blue-500 dark:border-blue-400 border-4': activeIndex === index }"
             @click="setActiveIndex(index)"
         >
           <img :src="image" alt="Thumbnail" class="w-full h-full object-cover rounded-lg" />
@@ -62,29 +62,29 @@
     </section>
 
     <!-- Categories Section -->
-    <section class="categories py-10 mb-10 bg-white rounded-lg shadow-lg mt-10 mx-2 lg:mx-5">
-      <h2 class="text-3xl lg:text-4xl text-center mb-8 font-extrabold text-gray-800">Election Categories</h2>
+    <section class="categories py-10 mb-10 bg-white dark:bg-gray-800 rounded-lg shadow-lg mt-10 mx-2 lg:mx-5">
+      <h2 class="text-3xl lg:text-4xl text-center mb-8 font-extrabold text-gray-800 dark:text-gray-100">Election Categories</h2>
       <div class="blocks flex flex-col md:flex-row justify-around gap-4 lg:gap-6 mx-4 sm:mx-6 lg:mx-10">
-        <div class="block w-full md:w-1/4 h-36 sm:h-44 flex justify-center items-center bg-blue-600 text-center rounded-lg shadow-md cursor-pointer hover:bg-blue-800 transition-all text-white transform hover:scale-105">
+        <div class="block w-full md:w-1/4 h-36 sm:h-44 flex justify-center items-center bg-blue-600 dark:bg-blue-700 text-center rounded-lg shadow-md cursor-pointer hover:bg-blue-800 dark:hover:bg-blue-600 transition-all text-white transform hover:scale-105">
           <a href="/"><span class="font-bold text-xl lg:text-2xl">National Overview</span></a>
         </div>
-        <div class="block w-full md:w-1/4 h-36 sm:h-44 flex justify-center items-center bg-blue-600 text-center rounded-lg shadow-md cursor-pointer hover:bg-blue-800 transition-all text-white transform hover:scale-105">
-          <a href="/"><span class="font-bold text-xl lg:text-2xl">State-by-State Results</span></a>
+        <div class="block w-full md:w-1/4 h-36 sm:h-44 flex justify-center items-center bg-blue-600 dark:bg-blue-700 text-center rounded-lg shadow-md cursor-pointer hover:bg-blue-800 dark:hover:bg-blue-600 transition-all text-white transform hover:scale-105">
+          <a href="/dashboard"><span class="font-bold text-xl lg:text-2xl">State-by-State Results</span></a>
         </div>
-        <div class="block w-full md:w-1/4 h-36 sm:h-44 flex justify-center items-center bg-blue-600 text-center rounded-lg shadow-md cursor-pointer hover:bg-blue-800 transition-all text-white transform hover:scale-105">
+        <div class="block w-full md:w-1/4 h-36 sm:h-44 flex justify-center items-center bg-blue-600 dark:bg-blue-700 text-center rounded-lg shadow-md cursor-pointer hover:bg-blue-800 dark:hover:bg-blue-600 transition-all text-white transform hover:scale-105">
           <a href="/"><span class="font-bold text-xl lg:text-2xl">Candidate Profiles</span></a>
         </div>
       </div>
       <div class="text-center mt-10">
         <a href="/threads">
-          <button class="cta-button px-6 sm:px-8 py-3 sm:py-4 text-white bg-blue-700 hover:bg-blue-900 rounded-full transition-all shadow-lg transform hover:scale-105">Election threads</button>
+          <button class="cta-button px-6 sm:px-8 py-3 sm:py-4 text-white bg-blue-700 dark:bg-blue-800 hover:bg-blue-900 dark:hover:bg-blue-700 rounded-full transition-all shadow-lg transform hover:scale-105">Election threads</button>
         </a>
       </div>
     </section>
-    
+
     <!-- News Section -->
-    <section class="news py-12 bg-white rounded-lg shadow-lg mx-2 lg:mx-5 mb-10">
-      <h2 class="text-3xl lg:text-4xl text-center mb-10 font-extrabold text-gray-800">Recent Election News</h2>
+    <section class="news py-12 bg-white dark:bg-gray-800 rounded-lg shadow-lg mx-2 lg:mx-5 mb-10">
+      <h2 class="text-3xl lg:text-4xl text-center mb-10 font-extrabold text-gray-800 dark:text-gray-100">Recent Election News</h2>
       <div class="news-content flex flex-col md:flex-row items-center gap-8 mx-4 sm:mx-6 lg:mx-10">
         <img
             src="https://media.gettyimages.com/id/1368872054/nl/vector/online-news-search-and-reading-news-updates-news-websites-information-on-newspapers-public.jpg?s=612x612&w=0&k=20&c=iZdnx4rKpTsJiSK8tFNyE1xztBXHXpHoBEXdDdT4ZFw="
@@ -92,8 +92,8 @@
             class="news-image w-full md:w-2/6 lg:mr-28 h-40 sm:h-60 object-cover rounded-lg shadow-md"
         />
         <div class="news-text w-full md:w-3/5">
-          <h3 class="text-2xl sm:text-3xl font-extrabold mb-5 text-gray-800">Dutch Elections See Surge in New Political Parties</h3>
-          <p class="mb-4 text-base sm:text-lg text-gray-600 leading-relaxed">
+          <h3 class="text-2xl sm:text-3xl font-extrabold mb-5 text-gray-800 dark:text-gray-100">Dutch Elections See Surge in New Political Parties</h3>
+          <p class="mb-4 text-base sm:text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
             The Netherlands is witnessing a rise in new political movements, challenging the traditional political landscape. These emerging parties are focusing on issues like housing, climate change, and immigration, which resonate strongly with younger voters.
           </p>
         </div>

@@ -38,16 +38,6 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public User deactivateUser(String email) {
-        Optional<User> userOptional = userRepository.findByEmail(email);
-        if (userOptional.isPresent()) {
-            User user = userOptional.get();
-            user.setActive(false);
-            return userRepository.save(user);
-        }
-        return null;
-    }
-
     public boolean existsByEmail(String email) {
         return userRepository.existsByEmail(email);
     }
@@ -55,7 +45,7 @@ public class UserService {
         Optional<User> userOptional = userRepository.findById(id);
         if (userOptional.isPresent()) {
             User user = userOptional.get();
-            user.setActive(!user.isActive());
+            user.setActive(!user.getActive());
             return userRepository.save(user);
         }
         return null;
@@ -67,19 +57,5 @@ public class UserService {
             return true;
         }
         return false;
-    }
-
-    public User toggleUserActive(Long id) {
-        Optional<User> userOptional = userRepository.findById(id);
-        if (userOptional.isPresent()) {
-            User user = userOptional.get();
-            if (user.isActive()) {
-                user.setActive(false);
-            } else {
-                user.setActive(true);
-            }
-            return userRepository.save(user);
-        }
-        return null;
     }
 }

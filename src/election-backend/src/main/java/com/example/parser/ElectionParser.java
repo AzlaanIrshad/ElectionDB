@@ -23,7 +23,9 @@
 //    @Override
 //    public void run(String... args) {
 //        System.out.println("Starting XML to JSON parsing process...");
-//        electionService.parseXmlToJson();
+//
+//        electionService.parseXmlFilesToJson();
+//
 //        System.out.println("Parsing process completed.");
 //
 //        SpringApplication.exit(context, () -> 0);

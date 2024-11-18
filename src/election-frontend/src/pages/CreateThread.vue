@@ -1,8 +1,8 @@
 <template>
-  <div class="homepage bg-gray-100 font-sans min-h-screen py-8">
+  <div class="homepage bg-gray-100 dark:bg-gray-900 font-sans min-h-screen py-8">
     <section class="mx-4 sm:mx-6 lg:mx-10">
-      <div class="threads py-12 bg-white rounded-lg shadow-lg mx-auto mb-10 max-w-4xl">
-        <h2 class="text-3xl lg:text-4xl text-center mb-8 font-extrabold text-gray-800">
+      <div class="threads py-12 bg-white dark:bg-gray-800 rounded-lg shadow-lg mx-auto mb-10 max-w-4xl">
+        <h2 class="text-3xl lg:text-4xl text-center mb-8 font-extrabold text-gray-800 dark:text-gray-100">
           Create a new election thread!
         </h2>
         <div class="threads-content flex flex-col md:flex-row items-center gap-8 px-4 sm:px-6 lg:px-8">
@@ -13,8 +13,8 @@
                   id="title"
                   v-model="title"
                   placeholder="Thread Title"
-                  class="w-full p-4 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-300 text-gray-700"
-                  :class="{ 'border-red-500': titleError }"
+                  class="w-full p-4 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring focus:ring-blue-300 dark:focus:ring-blue-500 text-gray-700 dark:text-gray-200 dark:bg-gray-700"
+                  :class="{ 'border-red-500 dark:border-red-500': titleError }"
               />
               <p v-if="titleError" class="text-red-500 text-sm mt-1">{{ titleError }}</p>
             </div>
@@ -24,8 +24,8 @@
                   id="body"
                   v-model="body"
                   placeholder="Thread Body"
-                  class="w-full p-4 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-300 text-gray-700 h-32 resize-none"
-                  :class="{ 'border-red-500': bodyError }"
+                  class="w-full p-4 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring focus:ring-blue-300 dark:focus:ring-blue-500 text-gray-700 dark:text-gray-200 dark:bg-gray-700 h-32 resize-none"
+                  :class="{ 'border-red-500 dark:border-red-500': bodyError }"
               ></textarea>
               <p v-if="bodyError" class="text-red-500 text-sm mt-1">{{ bodyError }}</p>
             </div>
@@ -36,8 +36,8 @@
                   id="category"
                   v-model="category"
                   placeholder="Category"
-                  class="w-full p-4 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-300 text-gray-700"
-                  :class="{ 'border-red-500': categoryError }"
+                  class="w-full p-4 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring focus:ring-blue-300 dark:focus:ring-blue-500 text-gray-700 dark:text-gray-200 dark:bg-gray-700"
+                  :class="{ 'border-red-500 dark:border-red-500': categoryError }"
               />
               <p v-if="categoryError" class="text-red-500 text-sm mt-1">{{ categoryError }}</p>
             </div>
@@ -53,14 +53,14 @@
     <section class="admin-panel text-center mb-10">
       <div class="flex justify-center gap-4">
         <button
-            class="cta-button px-8 py-4 text-white bg-green-600 hover:bg-green-700 focus:ring focus:ring-green-300 rounded-full transition-all shadow-lg transform hover:scale-105"
+            class="cta-button px-8 py-4 text-white bg-green-600 dark:bg-green-700 hover:bg-green-700 dark:hover:bg-green-800 focus:ring focus:ring-green-300 dark:focus:ring-green-500 rounded-full transition-all shadow-lg transform hover:scale-105"
             :disabled="!isFormValid"
             @click="createThread"
         >
           Create Thread
         </button>
         <button
-            class="cta-button px-8 py-4 text-white bg-gray-600 hover:bg-gray-700 focus:ring focus:ring-gray-300 rounded-full transition-all shadow-lg transform hover:scale-105"
+            class="cta-button px-8 py-4 text-white bg-gray-600 dark:bg-gray-700 hover:bg-gray-700 dark:hover:bg-gray-800 focus:ring focus:ring-gray-300 dark:focus:ring-gray-500 rounded-full transition-all shadow-lg transform hover:scale-105"
             @click="goBack"
         >
           Go Back

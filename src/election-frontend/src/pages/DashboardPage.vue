@@ -1,0 +1,157 @@
+<template>
+  <div class="dashboard-container max-w-6xl mx-auto py-12 px-4">
+    <h1 class="text-3xl font-bold text-center mb-6 text-gray-900 dark:text-gray-100">
+      Election Results by City
+    </h1>
+
+    <!-- Loading -->
+    <div v-if="loading" class="text-center">
+      <p>Loading...</p>
+    </div>
+
+    <!-- Search Bar -->
+    <div class="search-bar mb-8">
+      <div class="max-w-md mx-auto">
+        <input
+            type="text"
+            v-model="searchQuery"
+            placeholder="Search for a city..."
+            class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-300 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100 dark:placeholder-gray-400"
+        />
+      </div>
+    </div>
+
+    <!-- Election Results by City -->
+    <div v-if="filteredResults.length" class="results-container">
+      <div v-for="city in filteredResults" :key="city.cityId" class="city-item border-b border-gray-300 py-4 dark:border-gray-600">
+        <details class="group">
+          <summary class="cursor-pointer font-semibold text-lg text-gray-800 dark:text-gray-100 group-open:mb-2">
+            City: {{ city.cityName }} (Total Votes: {{ city.totalVotes }})
+          </summary>
+          <div class="parties mt-4">
+            <ul>
+              <li v-for="party in city.parties" :key="party.partyId" class="mb-4">
+                <details class="group">
+                  <summary class="cursor-pointer text-gray-800 dark:text-gray-300">
+                    Party: {{ party.partyName }} (Votes: {{ party.totalVotes }})
+                  </summary>
+                  <ul class="candidates pl-4 mt-2">
+                    <li
+                        v-for="candidate in party.candidates"
+                        :key="candidate.id"
+                        class="text-sm text-gray-700 dark:text-gray-400"
+                    >
+                      Candidate {{ candidate.id }}: {{ candidate.validVotes }} votes
+                    </li>
+                  </ul>
+                </details>
+              </li>
+            </ul>
+          </div>
+        </details>
+      </div>
+    </div>
+
+    <!-- No Results Found Message -->
+    <p v-else class="text-center text-gray-500 dark:text-gray-400">No cities found.</p>
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      searchQuery: '',
+      groupedResults: [],
+      loading: false,
+      error: null,
+    };
+  },
+  computed: {
+    filteredResults() {
+      return this.groupedResults.filter(city =>
+          city.cityName.toLowerCase().includes(this.searchQuery.toLowerCase())
+      );
+    },
+  },
+  methods: {
+    async fetchElectionResults() {
+      this.loading = true;
+      this.error = null;
+      try {
+        const response = await fetch("http://localhost:8080/api/election-results");
+        if (!response.ok) {
+          throw new Error("Failed to fetch election results");
+        }
+        const data = await response.json();
+        this.groupedResults = this.transformData(data);
+      } catch (err) {
+        this.error = err.message;
+      } finally {
+        this.loading = false;
+      }
+    },
+
+    /**
+     * Transforms raw election data into a structured format.
+     * Groups results by city and organizes parties with their candidates.
+     *
+     * @param {Array} data - The raw election data from the API.
+     * @returns {Array} Transformed data grouped by city.
+     */
+    transformData(data) {
+      return data.map((transaction) => {
+        const cityName = transaction.managingAuthority.authorityIdentifier.value;
+        const cityId = transaction.managingAuthority.authorityIdentifier.id;
+
+        const partiesMap = {};
+        let currentPartyId = null;
+
+        transaction.count.election.contests.contests.forEach((contest) => {
+          const contestId = contest.contestIdentifier.id;
+          const contestName = contest.contestName;
+
+          contest.totalVotes.selections.forEach((selection) => {
+            if (selection.affiliationIdentifier) {
+              currentPartyId = selection.affiliationIdentifier.id;
+              const partyName =
+                  selection.affiliationIdentifier.registeredName || contestName || "Unknown Party";
+
+              if (!partiesMap[currentPartyId]) {
+                partiesMap[currentPartyId] = {
+                  partyId: currentPartyId,
+                  partyName,
+                  totalVotes: selection.validVotes || 0,
+                  candidates: [],
+                };
+              }
+            } else if (
+                currentPartyId &&
+                selection.candidate?.candidateIdentifier?.id
+            ) {
+              partiesMap[currentPartyId].candidates.push({
+                id: selection.candidate.candidateIdentifier.id,
+                validVotes: selection.validVotes || 0,
+              });
+            }
+          });
+        });
+
+        const parties = Object.values(partiesMap);
+
+        const totalVotes = parties.reduce((sum, party) => sum + party.totalVotes, 0);
+
+        return {
+          cityId,
+          cityName,
+          totalVotes,
+          parties,
+        };
+      });
+    },
+  },
+  mounted() {
+    this.fetchElectionResults();
+  },
+};
+</script>
