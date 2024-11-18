@@ -1,3 +1,5 @@
+version: '3.8'
+
 services:
   backend:
     build:
@@ -7,19 +9,20 @@ services:
       SPRING_DATASOURCE_URL: jdbc:mysql://database:3306/zkaradue2
       SPRING_DATASOURCE_USERNAME: karadue2
       SPRING_DATASOURCE_PASSWORD: UJ5LSMo+z7.Qp2
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
     depends_on:
       - database
     ports:
-      - "8080:8080"
+      - "8000:8000"
 
   frontend:
     build:
       context: ./src/election-frontend
       dockerfile: Dockerfile
-    ports:
-      - "3000:3000"
     depends_on:
       - backend
+    ports:
+      - "8001:8001"
 
   database:
     image: mysql:8.0
@@ -28,5 +31,9 @@ services:
       MYSQL_DATABASE: zkaradue2
       MYSQL_USER: karadue2
       MYSQL_PASSWORD: UJ5LSMo+z7.Qp2
-    ports:
-      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+    command: --default-authentication-plugin=mysql_native_password
+
+volumes:
+  db_data:

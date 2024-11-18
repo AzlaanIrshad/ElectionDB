@@ -1,19 +1,90 @@
-# MkDocs Deployment Configuration
-pages:
-    image: python:3.9-slim
+stages:
+    - build
+    - test
+    - deploy
+
+variables:
+    DOCKER_DRIVER: overlay2
+    DOCKER_IMAGE_BACKEND: "election-backend"
+    DOCKER_IMAGE_FRONTEND: "election-frontend"
+    DOCKER_TAG: $CI_COMMIT_SHA
+
+build-backend:
+    image: docker:latest
+    services:
+        - docker:dind
+    stage: build
     before_script:
-        - apt-get update && apt-get install -y git
-        - pip install -r requirements.txt
-        - git clone https://uva-hva.gitlab.host/hbo-ict/mdocotion.git mdocotion
-        - cd mdocotion && python setup.py install && cd ..
-    stage: deploy
-    when: always
-    tags:
-        - hva
+        - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
     script:
-        - mkdocs build --site-dir public
+        - docker build -t $CI_REGISTRY_IMAGE/$DOCKER_IMAGE_BACKEND:$DOCKER_TAG ./src/election-backend
+        - docker push $CI_REGISTRY_IMAGE/$DOCKER_IMAGE_BACKEND:$DOCKER_TAG
+    tags:
+        - hv
     artifacts:
         paths:
-            - public
+            - backend-image.tar
+        expire_in: 1 week
+
+build-frontend:
+    image: docker:latest
+    services:
+        - docker:dind
+    stage: build
+    before_script:
+        - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+    script:
+        - docker build -t $CI_REGISTRY_IMAGE/$DOCKER_IMAGE_FRONTEND:$DOCKER_TAG ./src/election-frontend
+        - docker push $CI_REGISTRY_IMAGE/$DOCKER_IMAGE_FRONTEND:$DOCKER_TAG
+    tags:
+        - hv
+    artifacts:
+        paths:
+            - frontend-image.tar
+        expire_in: 1 week
+
+test-backend:
+    image: $CI_REGISTRY_IMAGE/$DOCKER_IMAGE_BACKEND:$DOCKER_TAG
+    stage: test
+    script:
+        - mvn test
+    tags:
+        - hv
+
+test-frontend:
+    image: $CI_REGISTRY_IMAGE/$DOCKER_IMAGE_FRONTEND:$DOCKER_TAG
+    stage: test
+    script:
+        - npm run test
+    tags:
+        - hv
+
+deploy:
+    image: node:18.16.0
+    stage: deploy
+    before_script:
+        - apt-get update
+        - apt-get install -y lftp wget
+    script:
+        - lftp -u "$HIC_SFTP_USERNAME","$HIC_SFTP_PASSWORD" -e "
+            set net:max-retries 3;
+            set ssl:verify-certificate no;
+            set ftp:ssl-allow yes;
+            set sftp:auto-confirm yes;
+            open sftp://$HIC_SFTP_HOST;
+            mirror --transfer-all -Rv dist/app/ ./ $HIC_ENVIRONMENT/app/ --ignore-time --parallel=10;
+            mirror --transfer-all -Rv dist/wwwroot/ ./ $HIC_ENVIRONMENT/wwwroot/ --ignore-time --parallel=10;
+            bye;"
+        - wget --header="Authorization: Bearer $HIC_API_KEY" "$HIC_API_URL/$HIC_ENVIRONMENT/restart"
+    tags:
+        - hv
     rules:
-        - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH && $DEPLOY_MKDOCS == "true"
+        - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH && $DEPLOY_HIC == "true"
+          variables:
+              HIC_ENVIRONMENT: "live"
+        - if: $CI_COMMIT_BRANCH == "dev" && $DEPLOY_HIC == "true"
+          variables:
+              HIC_ENVIRONMENT: "dev"
+        - if: $CI_COMMIT_BRANCH != $CI_DEFAULT_BRANCH && $CI_COMMIT_BRANCH != "dev" && $DEPLOY_HIC == "true"
+          variables:
+              HIC_ENVIRONMENT: "dev"

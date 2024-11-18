@@ -1,8 +1,9 @@
-FROM node:18 AS dev
+FROM node:18
 
 WORKDIR /app
 COPY package*.json ./
-RUN npm install && npm install -g nodemon
+RUN npm install
 COPY . .
-EXPOSE 3000
-CMD ["npm", "run", "dev"]
+RUN npm run build
+EXPOSE 8001 # Gebruik 8001 voor Oege-server
+CMD ["npx", "http-server", "dist", "-p", "8001"]

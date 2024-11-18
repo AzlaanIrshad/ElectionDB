@@ -51,12 +51,28 @@ export default {
   },
   methods: {
     async fetchFaqs() {
-      let url = 'http://localhost:8080/api/faqs';
+      let baseUrl;
+      if (window.location.hostname === "localhost") {
+        baseUrl = "http://localhost:8080/api/faqs";
+      } else {
+        baseUrl = "http://oege.ie.hva.nl:8000/api/faqs";
+      }
+
+      let url = baseUrl;
       if (this.searchQuery) {
         url += `/search?q=${encodeURIComponent(this.searchQuery)}`;
       }
-      const response = await fetch(url);
-      this.faqs = await response.json();
+
+      try {
+        const response = await fetch(url);
+        if (response.ok) {
+          this.faqs = await response.json();
+        } else {
+          console.error("Failed to fetch FAQs:", response.status);
+        }
+      } catch (error) {
+        console.error("Error fetching FAQs:", error);
+      }
     },
   },
   mounted() {
