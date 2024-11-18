@@ -1,45 +1,32 @@
-version: '3.8'
-
 services:
-  app:
-    build: .
+  backend:
+    build:
+      context: ./src/election-backend
+      dockerfile: Dockerfile
     environment:
-      DATABASE_HOST: oege.ie.hva.nl
-      DATABASE_PORT: 3306
-      DATABASE_NAME: zkaradue2
-      DATABASE_USER: karadue2
-      DATABASE_PASSWORD: Dt+0J3G9RXpWPWPq
+      SPRING_DATASOURCE_URL: jdbc:mysql://database:3306/zkaradue2
+      SPRING_DATASOURCE_USERNAME: karadue2
+      SPRING_DATASOURCE_PASSWORD: UJ5LSMo+z7.Qp2
+    depends_on:
+      - database
+    ports:
+      - "8080:8080"
+
+  frontend:
+    build:
+      context: ./src/election-frontend
+      dockerfile: Dockerfile
     ports:
       - "3000:3000"
+    depends_on:
+      - backend
 
-#  backend:
-#    build:
-#      context: ./src/election-backend
-#    ports:
-#      - "8080:8080"
-#    environment:
-#      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/sm3test
-#      SPRING_DATASOURCE_USERNAME: root
-#      SPRING_DATASOURCE_PASSWORD:  # Empty password
-#      SPRING_JPA_HIBERNATE_DDL_AUTO: update
-#    command: [ "sh", "-c", "until nc -z db 3306; do sleep 60; done; java -jar app.jar" ]
-#    healthcheck:
-#      test:  ["CMD-SHELL", "exit 0"]
-#      interval: 10s
-#      retries: 5
-#      start_period: 30s
-#    depends_on:
-#      db:
-#        condition: service_healthy
-#
-#  frontend:
-#    build:
-#      context: ./src/election-frontend
-#      dockerfile: Dockerfile
-#    ports:
-#      - "3000:80" # Port mapping
-#    depends_on:
-#      - backend
-#    volumes:
-#      - ./src/election-frontend/nginx.conf:/etc/nginx/conf.d/default.conf
-#    restart: always  # Restart the frontend service if it stops
+  database:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: zkaradue2
+      MYSQL_USER: karadue2
+      MYSQL_PASSWORD: UJ5LSMo+z7.Qp2
+    ports:
+      - "3306:3306"

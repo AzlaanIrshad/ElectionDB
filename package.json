@@ -9,9 +9,8 @@
         "src/*"
     ],
     "scripts": {
-        "dev": "run-p dev:api dev:web",
-        "dev:api": "cd src/election-backend && (if exist mvnw.cmd (mvnw.cmd spring-boot:run) else (./mvnw spring-boot:run))",
-        "dev:web": "cd src/election-frontend && npm run dev",
+        "dev": "docker-compose up --build",
+        "stop": "docker-compose down",
         "build": "run-p build:web build:api",
         "build:web": "npm run build -w src/election-frontend",
         "build:api": "cd src/election-backend && (if exist mvnw.cmd (mvnw.cmd clean install) else (./mvnw clean install))",
