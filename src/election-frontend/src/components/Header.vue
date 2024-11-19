@@ -1,10 +1,26 @@
 <template>
   <header class="bg-gray-800 dark:bg-gray-900 py-4 md:py-6 text-white shadow-lg">
-    <div class="container mx-auto flex justify-between items-center px-4 md:px-8">
+    <div class="container mx-auto flex flex-wrap md:flex-nowrap items-center justify-between px-4 md:px-8">
       <!-- Logo -->
       <router-link to="/" class="logo text-3xl font-bold tracking-wide text-blue-400 hover:text-blue-300 transition duration-200">
         Electiondb
       </router-link>
+
+      <!-- Search Bar -->
+      <div class="search-bar flex flex-grow md:flex-grow-0 justify-center mt-4 md:mt-0 mx-4 md:mx-8">
+        <input
+            v-model="searchQuery"
+            type="text"
+            placeholder="Search candidates or parties..."
+            class="w-full max-w-md px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+        <button
+            @click="performSearch"
+            class="ml-4 px-6 py-2 bg-blue-600 dark:bg-blue-700 text-white rounded-lg shadow-md hover:bg-blue-500 dark:hover:bg-blue-600 transition duration-200"
+        >
+          Search
+        </button>
+      </div>
 
       <div class="flex items-center space-x-4 md:space-x-6">
         <!-- Dark Mode Toggle -->
@@ -78,6 +94,7 @@ export default {
     return {
       isLoggedIn: false,
       isAdmin: false,
+      searchQuery: "",
     };
   },
   mounted() {
@@ -104,6 +121,14 @@ export default {
       this.isLoggedIn = false;
       this.isAdmin = false;
       this.$router.push("/login");
+    },
+    performSearch() {
+      if (this.searchQuery.trim() === "") {
+        alert("Please enter a search term.");
+        return;
+      }
+
+      this.$router.push({ path: "/search", query: { q: this.searchQuery } });
     },
   },
   watch: {
