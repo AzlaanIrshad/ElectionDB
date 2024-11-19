@@ -14,9 +14,7 @@
             class="mr-2"
         />
         <span
-            :style="{
-            backgroundColor: color,
-          }"
+            :style="{ backgroundColor: color }"
             class="w-4 h-4 rounded-full inline-block mr-4"
         ></span>
         {{ party }}
@@ -37,14 +35,12 @@ export default {
       map: null,
       markerLayer: null,
       electionData: [],
-      loading: true,
-      error: null,
       selectedParties: [],
       partyColors: {
         "PVV (Partij voor de Vrijheid)": "blue",
-        "VVD": "orange",
-        "D66": "yellow",
+        VVD: "orange",
         "GROENLINKS / Partij van de Arbeid (PvdA)": "green",
+        D66: "yellow",
       },
     };
   },
@@ -52,32 +48,20 @@ export default {
     this.initMap();
     this.fetchElectionResults();
   },
+  /**
+   * Fetches election results from the backend and updates the map with markers.
+   */
   methods: {
-    /**
-     * Fetches election results from the backend and updates the map with markers.
-     */
     async fetchElectionResults() {
-      this.loading = true;
-      this.error = null;
       try {
         const response = await fetch("http://localhost:8080/api/election-results");
-        if (!response.ok) {
-          throw new Error("Failed to fetch election results");
-        }
-        const data = await response.json();
-        this.electionData = data;
+        if (!response.ok) throw new Error("Failed to fetch election results");
+        this.electionData = await response.json();
         this.addMarkers();
       } catch (err) {
-        this.error = err.message;
         console.error("Error fetching election results:", err);
-      } finally {
-        this.loading = false;
       }
     },
-
-    /**
-     * Initializes the Leaflet map and adds a tile layer.
-     */
     initMap() {
       this.map = L.map("map").setView([52.3676, 4.9041], 7);
       L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
@@ -86,25 +70,14 @@ export default {
       }).addTo(this.map);
       this.markerLayer = L.layerGroup().addTo(this.map);
     },
-
-    /**
-     * Adds markers to the map based on election data and selected parties.
-     */
     addMarkers() {
-      if (!this.map || !this.markerLayer) {
-        console.warn("Map or marker layer is not initialized");
-        return;
-      }
+      if (!this.map || !this.markerLayer) return;
 
       this.markerLayer.clearLayers();
 
       this.electionData.forEach((transaction) => {
         const cityName = transaction?.managingAuthority?.authorityIdentifier?.value;
-
-        if (!cityName) {
-          console.warn("City name is undefined in transaction:", transaction);
-          return;
-        }
+        if (!cityName) return;
 
         const contests = transaction?.count?.election?.contests?.contests || [];
         let leadingParty = null;
@@ -113,36 +86,25 @@ export default {
           contest?.totalVotes?.selections?.forEach((selection) => {
             const partyName = selection?.affiliationIdentifier?.registeredName;
             const validVotes = selection?.validVotes || 0;
-
             if (!leadingParty || validVotes > (leadingParty.validVotes || 0)) {
-              leadingParty = {
-                name: partyName,
-                validVotes,
-              };
+              leadingParty = { name: partyName, validVotes };
             }
           });
         });
 
-        if (!leadingParty?.name) {
-          console.warn("Leading party could not be determined for:", cityName);
-          return;
-        }
-
         if (
-            this.selectedParties.length &&
-            !this.selectedParties.includes(leadingParty.name)
+            !leadingParty?.name ||
+            (this.selectedParties.length &&
+                !this.selectedParties.includes(leadingParty.name))
         ) {
           return;
         }
 
         const popupText = `<b>${cityName}</b><br>Leading Party: ${leadingParty.name}`;
         const color = this.partyColors[leadingParty.name] || "gray";
-
         const [lat, lng] = this.getCoordinatesForCity(cityName);
-        if (!lat || !lng) {
-          console.warn("Coordinates not found for city:", cityName);
-          return;
-        }
+
+        if (!lat || !lng) return;
 
         L.circleMarker([lat, lng], {
           color,
@@ -152,10 +114,7 @@ export default {
             .bindPopup(popupText)
             .addTo(this.markerLayer);
       });
-
-      this.markerLayer.addTo(this.map);
     },
-
     /**
      * Retrieves coordinates for a given city name.
      * @param {string} cityName - The name of the city.
@@ -188,9 +147,6 @@ export default {
     },
   },
   watch: {
-    /**
-     * Watches changes to the selected parties and updates the map markers.
-     */
     selectedParties() {
       this.addMarkers();
     },
