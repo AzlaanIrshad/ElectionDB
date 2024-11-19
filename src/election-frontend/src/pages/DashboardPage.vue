@@ -28,6 +28,12 @@
           <summary class="cursor-pointer font-semibold text-lg text-gray-800 dark:text-gray-100 group-open:mb-2">
             City: {{ city.cityName }} (Total Votes: {{ city.totalVotes }})
           </summary>
+
+          <!-- Chart -->
+          <div v-if="city.parties.length" class="city-chart my-6">
+            <TotalPartyVoteBarChart :data="generateChartData(city.parties)" />
+          </div>
+
           <div class="parties mt-4">
             <ul>
               <li v-for="party in city.parties" :key="party.partyId" class="mb-4">
@@ -40,7 +46,7 @@
                         v-for="candidate in party.candidates"
                         :key="candidate.id"
                         class="text-sm text-gray-700 dark:text-gray-400"
-                    >
+                    > <!-- moet candidate naam inplaats van id -->
                       Candidate {{ candidate.id }}: {{ candidate.validVotes }} votes
                     </li>
                   </ul>
@@ -58,7 +64,16 @@
 </template>
 
 <script>
+import { Bar } from 'vue-chartjs';
+import { Chart, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js';
+
+Chart.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale);
+
 export default {
+  name: "ElectionDashboard",
+  components: {
+    TotalPartyVoteBarChart: Bar,
+  },
   data() {
     return {
       searchQuery: '',
@@ -148,6 +163,19 @@ export default {
           parties,
         };
       });
+    },
+
+    generateChartData(parties) {
+      return {
+        labels: parties.map(party => party.partyName),
+        datasets: [{
+          label: 'Total Votes',
+          data: parties.map(party => party.totalVotes),
+          backgroundColor: parties.map(() => 'rgba(87,192,75,0.8)'),
+          borderColor: parties.map(() => 'rgba(0,0,0,1)'),
+          borderWidth: 1,
+        }],
+      };
     },
   },
   mounted() {
