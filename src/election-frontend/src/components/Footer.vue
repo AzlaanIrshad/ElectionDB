@@ -14,6 +14,8 @@
           <router-link to="/faq" class="text-white dark:text-gray-300 hover:text-gray-900 dark:hover:text-white mb-4 lg:mb-0">FAQ</router-link>
           <router-link to="/about" class="text-white dark:text-gray-300 hover:text-gray-900 dark:hover:text-white mb-4 lg:mb-0">About Us</router-link>
           <router-link to="/dashboard" class="text-white dark:text-gray-300 hover:text-gray-900 dark:hover:text-white mb-4 lg:mb-0">Dashboard</router-link>
+          <router-link to="/election-map" class="text-white dark:text-gray-300 hover:text-gray-900 dark:hover:text-white mb-4 lg:mb-0">Election Map</router-link>
+
         </div>
       </div>
 

@@ -9,6 +9,7 @@ import CreateThread from "@/pages/CreateThread.vue";
 import FaqPage from "@/pages/FaqPage.vue";
 import AboutPage from '@/pages/AboutPage.vue';
 import DashboardPage from '@/pages/DashboardPage.vue';
+import ElectionMap from '@/pages/ElectionMap.vue';
 
 
 // General authentication guard
@@ -47,6 +48,7 @@ const routes = [
     { path: '/faq', name: 'faq', component: FaqPage },
     { path: '/about', name: 'about', component: AboutPage },
     { path: '/dashboard', name: 'dashboard', component: DashboardPage },
+    { path: '/election-map', name: 'election-map', component: ElectionMap },
 ];
 
 const router = createRouter({
