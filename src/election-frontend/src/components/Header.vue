@@ -6,27 +6,31 @@
         Electiondb
       </router-link>
 
-      <!-- Search Bar -->
-      <div class="search-bar flex flex-grow md:flex-grow-0 justify-center mt-4 md:mt-0 mx-4 md:mx-8">
+      <!-- Search Bar with Dropdown -->
+      <div class="relative w-full max-w-md flex-grow md:flex-grow-0 justify-center mt-4 md:mt-0 mx-4 md:mx-8">
         <input
             v-model="searchQuery"
             type="text"
-            placeholder="Search candidates or parties..."
-            class="w-full max-w-md px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="Search election results..."
+            @input="searchResults"
+            class="w-full px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
-        <button
-            @click="performSearch"
-            class="ml-4 px-6 py-2 bg-blue-600 dark:bg-blue-700 text-white rounded-lg shadow-md hover:bg-blue-500 dark:hover:bg-blue-600 transition duration-200"
-        >
-          Search
-        </button>
+        <ul v-if="results.length > 0" class="absolute top-full left-0 w-full bg-gray-700 rounded-lg mt-1 max-h-60 overflow-auto dark:bg-gray-800">
+          <li
+              v-for="result in results"
+              :key="result.name"
+              @click="selectResult(result)"
+              class="cursor-pointer px-4 py-2 hover:bg-gray-600 dark:hover:bg-gray-600"
+          >
+            {{ result.name }}
+          </li>
+        </ul>
       </div>
 
+      <!-- Navigation and Actions -->
       <div class="flex items-center space-x-4 md:space-x-6">
-        <!-- Dark Mode Toggle -->
         <DarkModeToggle />
 
-        <!-- Links for All Users -->
         <router-link
             to="/faq"
             class="text-lg text-white hover:text-gray-300 transition duration-200 px-4 py-2 flex items-center space-x-2"
@@ -34,7 +38,6 @@
           <span>FAQ</span>
         </router-link>
 
-        <!-- About Link (Visible for both logged in and logged out users) -->
         <router-link
             to="/about"
             class="text-lg text-white hover:text-gray-300 transition duration-200 px-4 py-2 flex items-center space-x-2"
@@ -42,7 +45,6 @@
           <span>About Us</span>
         </router-link>
 
-        <!-- Conditional Links for Authentication -->
         <template v-if="!isLoggedIn">
           <router-link
               to="/login"
@@ -60,7 +62,6 @@
             <span>Threads</span>
           </router-link>
 
-          <!-- Admin Panel Link -->
           <button
               v-if="isAdmin"
               @click="$router.push('/admin')"
@@ -69,7 +70,6 @@
             <span>Admin Panel</span>
           </button>
 
-          <!-- Logout Button -->
           <button
               @click="logout"
               class="text-lg bg-red-600 hover:bg-red-500 rounded-full px-5 py-2 transition duration-300 flex items-center space-x-2"
@@ -86,7 +86,7 @@
 import DarkModeToggle from "./DarkModeToggle.vue";
 
 export default {
-  name: "HeaderComponent",
+  name: "Header",
   components: {
     DarkModeToggle,
   },
@@ -95,6 +95,7 @@ export default {
       isLoggedIn: false,
       isAdmin: false,
       searchQuery: "",
+      results: [],
     };
   },
   mounted() {
@@ -122,13 +123,23 @@ export default {
       this.isAdmin = false;
       this.$router.push("/login");
     },
-    performSearch() {
-      if (this.searchQuery.trim() === "") {
-        alert("Please enter a search term.");
-        return;
+    async searchResults() {
+      if (this.searchQuery.length > 1) {
+        try {
+          const response = await fetch("http://localhost:8080/api/election-results");
+          const data = await response.json();
+          this.results = data.filter((result) =>
+              result.name.toLowerCase().includes(this.searchQuery.toLowerCase())
+          );
+        } catch (error) {
+          console.error("Error fetching election results:", error);
+        }
+      } else {
+        this.results = [];
       }
-
-      this.$router.push({ path: "/search", query: { q: this.searchQuery } });
+    },
+    selectResult(result) {
+      this.$router.push({ name: "search-results", params: { query: result.name } });
     },
   },
   watch: {
