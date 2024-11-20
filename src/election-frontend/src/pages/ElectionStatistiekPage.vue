@@ -1,8 +1,8 @@
 <template>
   <div>
-    <h1 class="text-2xl font-bold mb-4">Election Statistiek</h1>
+    <h1 class="text-2xl font-bold mb-4">Verkiezingsstatistieken</h1>
 
-    <!-- Navigation Tabs -->
+    <!-- Navigatietabs -->
     <div class="flex space-x-4 border-b border-blue-500 mb-4">
       <button
           v-for="(tab, index) in tabs"
@@ -14,20 +14,20 @@
       </button>
     </div>
 
-    <!-- Render Components Based on Active Tab -->
+    <!-- Render Componenten Gebaseerd op Actieve Tab -->
     <div v-if="activeTab === 'Per Stemlocatie'">
       <ElectionMap />
     </div>
     <div v-else-if="activeTab === 'Per Verkiezing'">
       <div class="p-4 bg-gray-100 rounded-lg bg-white dark:bg-gray-700">
-        <h2 class="text-lg font-bold mb-2">Votes Distribution</h2>
+        <h2 class="text-lg font-bold mb-2">Stemmenverdeling</h2>
         <ElectionDonutChart :electionData="sampleElectionData" />
       </div>
     </div>
     <div v-else-if="activeTab === 'Per Partij'">
       <div class="p-4 bg-gray-100 rounded-lg">
         <h2 class="text-lg font-bold mb-2">Per Partij</h2>
-        <p>Data en statistieken per partij worden hier getoond.</p>
+        <p>Data en statistieken per partij worden hier weergegeven.</p>
       </div>
     </div>
   </div>

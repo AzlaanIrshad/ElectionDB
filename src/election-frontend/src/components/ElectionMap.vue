@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1 class="text-2xl font-bold mb-4">Election Map</h1>
+    <h1 class="text-2xl font-bold mb-4">Verkiezingskaart</h1>
     <div class="space-y-2">
       <label
           v-for="(color, party) in partyColors"
@@ -49,24 +49,24 @@ export default {
     this.fetchElectionResults();
   },
   /**
-   * Fetches election results from the backend and updates the map with markers.
+   * Haalt verkiezingsresultaten op van de backend en voegt markers toe aan de kaart.
    */
   methods: {
     async fetchElectionResults() {
       try {
         const response = await fetch("http://localhost:8080/api/election-results");
-        if (!response.ok) throw new Error("Failed to fetch election results");
+        if (!response.ok) throw new Error("Ophalen van verkiezingsresultaten mislukt");
         this.electionData = await response.json();
         this.addMarkers();
       } catch (err) {
-        console.error("Error fetching election results:", err);
+        console.error("Fout bij het ophalen van verkiezingsresultaten:", err);
       }
     },
     initMap() {
       this.map = L.map("map").setView([52.3676, 4.9041], 7);
       L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
         attribution:
-            '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+            '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> bijdragers',
       }).addTo(this.map);
       this.markerLayer = L.layerGroup().addTo(this.map);
     },
@@ -100,7 +100,7 @@ export default {
           return;
         }
 
-        const popupText = `<b>${cityName}</b><br>Leading Party: ${leadingParty.name}`;
+        const popupText = `<b>${cityName}</b><br>Leidende Partij: ${leadingParty.name}`;
         const color = this.partyColors[leadingParty.name] || "gray";
         const [lat, lng] = this.getCoordinatesForCity(cityName);
 
@@ -116,9 +116,9 @@ export default {
       });
     },
     /**
-     * Retrieves coordinates for a given city name.
-     * @param {string} cityName - The name of the city.
-     * @returns {Array} - Array containing latitude and longitude.
+     * Haalt coördinaten op voor een gegeven stadsnaam.
+     * @param {string} cityName - De naam van de stad.
+     * @returns {Array} - Array met breedte- en lengtegraad.
      */
     getCoordinatesForCity(cityName) {
       const coordinates = {

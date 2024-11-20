@@ -1,6 +1,6 @@
 <template>
   <div class="chart-container m-auto max-w-lg bg-white dark:bg-gray-700">
-    <h2 class="text-xl font-bold text-center mb-4">Total Votes Distribution</h2>
+    <h2 class="text-xl font-bold text-center mb-4">Totale Stemmen Nederland 2024</h2>
     <Chart :type="'doughnut'" :data="chartData" :options="chartOptions" />
   </div>
 </template>
@@ -24,7 +24,7 @@ export default {
     async fetchElectionResults() {
       try {
         const response = await fetch("http://localhost:8080/api/election-results");
-        if (!response.ok) throw new Error("Failed to fetch election results");
+        if (!response.ok) throw new Error("Ophalen van verkiezingsresultaten mislukt");
         const electionData = await response.json();
 
         // Berekening van de totale stemmen per partij
@@ -45,7 +45,7 @@ export default {
           });
         });
 
-        // Data voor donut chart
+        // Data voor donutgrafiek
         const labels = Object.keys(partyVotes);
         const data = Object.values(partyVotes);
         const backgroundColors = labels.map(
@@ -71,7 +71,7 @@ export default {
           },
         };
       } catch (err) {
-        console.error("Error fetching election results:", err);
+        console.error("Fout bij het ophalen van verkiezingsresultaten:", err);
       }
     },
   },
