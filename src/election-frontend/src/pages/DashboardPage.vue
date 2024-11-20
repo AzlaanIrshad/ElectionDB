@@ -30,10 +30,8 @@
           </summary>
 
           <!-- Chart -->
-          <div v-if="city.parties.length" class="city-chart my-6">
-            <TotalPartyVoteBarChart :data="generateChartData(city.parties)" />
-          </div>
-
+          <TotalPartyVoteBarChart :chartData="city.chartData" />
+          <!-- ---- -->
           <div class="parties mt-4">
             <ul>
               <li v-for="party in city.parties" :key="party.partyId" class="mb-4">
@@ -46,7 +44,7 @@
                         v-for="candidate in party.candidates"
                         :key="candidate.id"
                         class="text-sm text-gray-700 dark:text-gray-400"
-                    > <!-- moet candidate naam inplaats van id -->
+                    >
                       Candidate {{ candidate.id }}: {{ candidate.validVotes }} votes
                     </li>
                   </ul>
@@ -64,15 +62,12 @@
 </template>
 
 <script>
-import { Bar } from 'vue-chartjs';
-import { Chart, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js';
-
-Chart.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale);
+import TotalPartyVoteBarChart from '../components/TotalPartyVoteBarChart.vue';
 
 export default {
   name: "ElectionDashboard",
   components: {
-    TotalPartyVoteBarChart: Bar,
+    TotalPartyVoteBarChart,
   },
   data() {
     return {
@@ -123,15 +118,10 @@ export default {
         let currentPartyId = null;
 
         transaction.count.election.contests.contests.forEach((contest) => {
-          const contestId = contest.contestIdentifier.id;
-          const contestName = contest.contestName;
-
           contest.totalVotes.selections.forEach((selection) => {
             if (selection.affiliationIdentifier) {
               currentPartyId = selection.affiliationIdentifier.id;
-              const partyName =
-                  selection.affiliationIdentifier.registeredName || contestName || "Unknown Party";
-
+              const partyName = selection.affiliationIdentifier.registeredName || "Unknown Party";
               if (!partiesMap[currentPartyId]) {
                 partiesMap[currentPartyId] = {
                   partyId: currentPartyId,
@@ -140,10 +130,7 @@ export default {
                   candidates: [],
                 };
               }
-            } else if (
-                currentPartyId &&
-                selection.candidate?.candidateIdentifier?.id
-            ) {
+            } else if (currentPartyId && selection.candidate?.candidateIdentifier?.id) {
               partiesMap[currentPartyId].candidates.push({
                 id: selection.candidate.candidateIdentifier.id,
                 validVotes: selection.validVotes || 0,
@@ -153,19 +140,27 @@ export default {
         });
 
         const parties = Object.values(partiesMap);
-
         const totalVotes = parties.reduce((sum, party) => sum + party.totalVotes, 0);
+
+        const chartData = this.prepareChartData(parties);
 
         return {
           cityId,
           cityName,
           totalVotes,
           parties,
+          chartData,  // Add chart data to each city
         };
       });
     },
 
-    generateChartData(parties) {
+    /**
+     * Prepares the chart data for each city.
+     *
+     * @param {Array} parties - List of parties with vote data.
+     * @returns {Object} Chart data object.
+     */
+    prepareChartData(parties) {
       return {
         labels: parties.map(party => party.partyName),
         datasets: [{
