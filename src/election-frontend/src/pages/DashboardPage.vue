@@ -149,7 +149,7 @@ export default {
           cityName,
           totalVotes,
           parties,
-          chartData,  // Add chart data to each city
+          chartData,
         };
       });
     },

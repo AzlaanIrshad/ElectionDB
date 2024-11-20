@@ -14,7 +14,7 @@ import { Chart, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale }
 Chart.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale);
 
 export default {
-  name: 'TotalPartyVoteBarChart',
+  name: 'PartyCandidateHorizontalBarChart',
   components: {
     Bar,
   },
@@ -25,10 +25,16 @@ export default {
     return {
       chartOptions: {
         responsive: true,
+        indexAxis: 'y',
         plugins: {
           title: {
             display: true,
-            text: 'Election Results',
+            text: 'Top 10 Candidates by Party',
+          },
+        },
+        scales: {
+          x: {
+            beginAtZero: true,
           },
         },
       },
