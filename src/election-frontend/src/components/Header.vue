@@ -29,8 +29,10 @@
 
       <!-- Navigation and Actions -->
       <div class="flex items-center space-x-4 md:space-x-6">
+        <!-- Donkere Modus Toggle -->
         <DarkModeToggle />
 
+        <!-- Links voor alle gebruikers -->
         <router-link
             to="/faq"
             class="text-lg text-white hover:text-gray-300 transition duration-200 px-4 py-2 flex items-center space-x-2"
@@ -38,19 +40,21 @@
           <span>FAQ</span>
         </router-link>
 
+        <!-- Over Link (Zichtbaar voor zowel ingelogde als niet-ingelogde gebruikers) -->
         <router-link
             to="/about"
             class="text-lg text-white hover:text-gray-300 transition duration-200 px-4 py-2 flex items-center space-x-2"
         >
-          <span>About Us</span>
+          <span>Over Ons</span>
         </router-link>
 
+        <!-- Conditional Links for Authentication -->
         <template v-if="!isLoggedIn">
           <router-link
               to="/login"
               class="text-lg bg-blue-600 hover:bg-blue-500 rounded-full px-5 py-2 transition duration-300 flex items-center space-x-2"
           >
-            <span>Login</span>
+            <span>Inloggen</span>
           </router-link>
         </template>
 
@@ -59,22 +63,24 @@
               to="/threads"
               class="text-lg text-white hover:text-gray-300 transition duration-200 px-4 py-2 flex items-center space-x-2"
           >
-            <span>Threads</span>
+            <span>Discussies</span>
           </router-link>
 
+          <!-- Admin Panel Link -->
           <button
               v-if="isAdmin"
               @click="$router.push('/admin')"
               class="text-lg bg-blue-600 hover:bg-blue-500 rounded-full px-5 py-2 transition duration-300 flex items-center space-x-2"
           >
-            <span>Admin Panel</span>
+            <span>Admin Paneel</span>
           </button>
 
+          <!-- Logout Button -->
           <button
               @click="logout"
               class="text-lg bg-red-600 hover:bg-red-500 rounded-full px-5 py-2 transition duration-300 flex items-center space-x-2"
           >
-            <span>Logout</span>
+            <span>Uitloggen</span>
           </button>
         </template>
       </div>
@@ -86,7 +92,7 @@
 import DarkModeToggle from "./DarkModeToggle.vue";
 
 export default {
-  name: "Header",
+  name: "HeaderComponent",
   components: {
     DarkModeToggle,
   },
@@ -110,7 +116,7 @@ export default {
           this.isLoggedIn = true;
           this.isAdmin = payload.role === "ADMIN";
         } catch (error) {
-          console.error("Error decoding token payload:", error);
+          console.error("Fout bij het decoderen van de tokenpayload:", error);
         }
       } else {
         this.isLoggedIn = false;
