@@ -11,18 +11,23 @@
         <input
             v-model="searchQuery"
             type="text"
-            placeholder="Search election results..."
+            placeholder="Search election results by ID..."
             @input="searchResults"
             class="w-full px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
         <ul v-if="results.length > 0" class="absolute top-full left-0 w-full bg-gray-700 rounded-lg mt-1 max-h-60 overflow-auto dark:bg-gray-800">
           <li
               v-for="result in results"
-              :key="result.name"
+              :key="result.id"
               @click="selectResult(result)"
               class="cursor-pointer px-4 py-2 hover:bg-gray-600 dark:hover:bg-gray-600"
           >
-            {{ result.name }}
+            <span v-if="result.partyName">
+              Party: {{ result.partyName }} (ID: {{ result.id }})
+            </span>
+            <span v-else-if="result.candidateId">
+              Candidate ID: {{ result.candidateId }}
+            </span>
           </li>
         </ul>
       </div>
@@ -92,7 +97,7 @@
 import DarkModeToggle from "./DarkModeToggle.vue";
 
 export default {
-  name: "HeaderComponent",
+  name: "Header",
   components: {
     DarkModeToggle,
   },
@@ -102,12 +107,56 @@ export default {
       isAdmin: false,
       searchQuery: "",
       results: [],
+      electionData: [],
     };
   },
   mounted() {
     this.checkAuthStatus();
+    this.fetchElectionResults();
   },
   methods: {
+    async fetchElectionResults() {
+      try {
+        const response = await fetch("http://localhost:8080/api/election-results");
+        if (!response.ok) throw new Error("Failed to fetch election results");
+        const data = await response.json();
+
+        this.electionData = data;
+      } catch (err) {
+        console.error("Error fetching election results:", err);
+      }
+    },
+    searchResults() {
+      if (this.searchQuery.trim() !== "") {
+        this.results = this.electionData.flatMap((transaction) =>
+            transaction.count.election.contests.contests.flatMap((contest) =>
+                contest.totalVotes.selections.map((selection) => {
+                  const partyId = selection.affiliationIdentifier?.id || null;
+                  const partyName = selection.affiliationIdentifier?.registeredName || null;
+                  const candidateId = selection.identifier.candidateIdentifier?.id || null;
+
+                  if (
+                      partyId?.toString().includes(this.searchQuery) ||
+                      candidateId?.toString().includes(this.searchQuery)
+                  ) {
+                    return {
+                      id: partyId,
+                      partyName,
+                      candidateId,
+                    };
+                  }
+                  return null;
+                }).filter((result) => result !== null)
+            )
+        );
+      } else {
+        this.results = [];
+      }
+    },
+    selectResult(result) {
+      console.log("Selected result:", result);
+      this.$router.push({name: "search-results", params: {query: result.id || result.candidateId}});
+    },
     checkAuthStatus() {
       const token = localStorage.getItem("token");
       if (token) {
