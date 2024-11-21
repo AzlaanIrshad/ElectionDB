@@ -9,7 +9,8 @@ import CreateThread from "@/pages/CreateThread.vue";
 import FaqPage from "@/pages/FaqPage.vue";
 import AboutPage from '@/pages/AboutPage.vue';
 import DashboardPage from '@/pages/DashboardPage.vue';
-import ElectionStatistiekPage from '@/pages/ElectionStatistiekPage.vue';
+import SinglePartyPage from "@/pages/SinglePartyPage.vue";
+
 
 // General authentication guard
 function authGuard(to, from, next) {
@@ -47,7 +48,7 @@ const routes = [
     { path: '/faq', name: 'faq', component: FaqPage },
     { path: '/about', name: 'about', component: AboutPage },
     { path: '/dashboard', name: 'dashboard', component: DashboardPage },
-    { path: '/election-statistiek', name: 'election-statistiek', component: ElectionStatistiekPage },
+    { path: '/parties/:id', name: 'single-party', component: SinglePartyPage },
 ];
 
 const router = createRouter({
