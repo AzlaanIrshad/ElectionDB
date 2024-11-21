@@ -12,6 +12,7 @@
     "@primevue/themes": "^4.2.2",
     "axios": "^1.7.7",
     "chart.js": "^4.4.6",
+    "leaflet": "^1.9.4",
     "primeicons": "^7.0.0",
     "primevue": "^4.2.2",
     "vue": "^3.4.29",

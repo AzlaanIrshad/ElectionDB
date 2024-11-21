@@ -38,11 +38,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-.size-6 {
-  width: 1.5rem;
-  height: 1.5rem;
-  color: inherit;
-}
-</style>
