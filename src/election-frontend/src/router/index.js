@@ -10,6 +10,7 @@ import FaqPage from "@/pages/FaqPage.vue";
 import AboutPage from '@/pages/AboutPage.vue';
 import DashboardPage from '@/pages/DashboardPage.vue';
 import SinglePartyPage from "@/pages/SinglePartyPage.vue";
+import ElectionStatistiekPage from "@/pages/ElectionStatistiekPage.vue";
 
 
 // General authentication guard
@@ -49,6 +50,7 @@ const routes = [
     { path: '/about', name: 'about', component: AboutPage },
     { path: '/dashboard', name: 'dashboard', component: DashboardPage },
     { path: '/parties/:id', name: 'single-party', component: SinglePartyPage },
+    { path: '/election-statistiek', name: 'election-statistiek', component: ElectionStatistiekPage },
 ];
 
 const router = createRouter({
