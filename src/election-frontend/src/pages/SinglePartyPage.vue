@@ -2,12 +2,12 @@
   <div class="single-party-page">
     <h1>Party Details</h1>
 
-    <!-- Loading State -->
+
     <div v-if="loading" class="loading">
       <p>Loading party data...</p>
     </div>
 
-    <!-- Error State -->
+    <!-- Baka State -->
     <div v-if="error" class="error">
       <p>{{ error }}</p>
     </div>
@@ -17,7 +17,7 @@
       <h2>{{ partyData.partyName }}</h2>
       <p>Total Votes: {{ partyData.totalVotes }}</p>
 
-      <!-- Display Candidate Chart -->
+      <!-- Chart -->
       <div v-if="partyData.chartDataForCandidates">
         <h3>Top Candidates</h3>
         <PartyCandidateHorizontalBarChart
@@ -56,9 +56,7 @@ export default {
       this.error = null;
 
       try {
-        const response = await fetch(
-            "http://localhost:8080/api/election-results"
-        );
+        const response = await fetch("http://localhost:8080/api/election-results");
         if (!response.ok) {
           throw new Error("Failed to fetch election results");
         }
@@ -77,27 +75,52 @@ export default {
       }
     },
     findPartyById(data, partyId) {
-      for (const transaction of data) {
-        for (const contest of transaction.count.election.contests.contests) {
-          for (const selection of contest.totalVotes.selections) {
-            if (selection.affiliationIdentifier) {
-              const currentPartyId = selection.affiliationIdentifier.id;
-              const partyName =
-                  selection.affiliationIdentifier.registeredName || "Unknown Party";
+      let party = null;
+      const candidateVotesMap = {};
 
-              if (currentPartyId === partyId) {
-                return {
-                  partyName,
-                  totalVotes: selection.validVotes || 0,
-                  candidates: [],
+      //election data
+      for (const transaction of data) {
+        const contests = transaction?.count?.election?.contests?.contests || [];
+        contests.forEach((contest) => {
+          contest.totalVotes.selections.forEach((selection) => {
+            if (selection.affiliationIdentifier?.id === partyId) {
+              // Found the party
+              if (!party) {
+                party = {
+                  partyId,
+                  partyName: selection.affiliationIdentifier.registeredName || "Unknown Party",
+                  totalVotes: 0,
+                };
+              }
+
+              party.totalVotes += selection.validVotes || 0;
+            }
+
+            if (selection.candidate?.candidateIdentifier?.id) {
+              // Needs name
+              const candidateId = selection.candidate.candidateIdentifier.id;
+              const validVotes = selection.validVotes || 0;
+
+              if (candidateVotesMap[candidateId]) {
+                candidateVotesMap[candidateId].validVotes += validVotes;
+              } else {
+                candidateVotesMap[candidateId] = {
+                  id: candidateId,
+                  validVotes,
                 };
               }
             }
-          }
-        }
+          });
+        });
       }
-      return null;
+
+      if (party) {
+        party.candidates = Object.values(candidateVotesMap);
+      }
+
+      return party;
     },
+
     transformPartyData(party) {
       return {
         partyName: party.partyName,
@@ -106,14 +129,15 @@ export default {
         chartDataForCandidates: this.prepareChartData(party.candidates || []),
       };
     },
+
     prepareChartData(candidates) {
+      if (!candidates || candidates.length === 0) return null;
+
       const topCandidates = candidates
           .sort((a, b) => b.validVotes - a.validVotes)
           .slice(0, 10);
 
-      const chartLabels = topCandidates.map(
-          (candidate) => `Candidate ${candidate.id}`
-      );
+      const chartLabels = topCandidates.map((candidate) => `Candidate ${candidate.id}`);
       const chartData = topCandidates.map((candidate) => candidate.validVotes);
 
       return {
