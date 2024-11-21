@@ -1,50 +1,50 @@
 <template>
   <div class="flex flex-col items-center text-center p-6 min-h-screen bg-gray-100 dark:bg-gray-900">
-    <!-- Title -->
-    <h2 class="text-gray-900 dark:text-gray-100 text-5xl font-extrabold mb-8 mt-6">About Our Project</h2>
+    <!-- Titel -->
+    <h2 class="text-gray-900 dark:text-gray-100 text-5xl font-extrabold mb-8 mt-6">Over Ons Project</h2>
 
-    <!-- Project Introduction -->
+    <!-- Introductie van het project -->
     <div class="flex flex-col md:flex-row justify-center items-center mb-10 p-8 bg-white dark:bg-gray-800 rounded-xl shadow-lg transition-transform duration-200 hover:scale-105 hover:shadow-2xl w-full md:w-3/4 lg:w-2/3">
-      <img class="w-72 h-auto m-4 rounded-lg object-cover" src="https://images.pexels.com/photos/3184456/pexels-photo-3184456.jpeg" alt="Project Overview">
+      <img class="w-72 h-auto m-4 rounded-lg object-cover" src="https://images.pexels.com/photos/3184456/pexels-photo-3184456.jpeg" alt="Projectoverzicht">
       <div class="p-4 max-w-md">
-        <h3 class="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-4">What Our Project Offers</h3>
+        <h3 class="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-4">Wat Ons Project Biedt</h3>
         <p class="text-gray-700 dark:text-gray-300 text-lg leading-relaxed">
-          Our project is a comprehensive platform for viewing and discussing election results.
-          We aim to make election data accessible and create a space for meaningful conversations
-          and insights. Users can explore results, create threads for discussion, and engage with others.
+          Ons project is een uitgebreid platform voor het bekijken en bespreken van verkiezingsresultaten.
+          We streven ernaar om verkiezingsdata toegankelijk te maken en een ruimte te creëren voor zinvolle gesprekken
+          en inzichten. Gebruikers kunnen resultaten verkennen, discussies starten en met anderen in gesprek gaan.
         </p>
       </div>
     </div>
 
-    <!-- Election Results Section -->
+    <!-- Sectie Verkiezingsresultaten -->
     <div class="flex flex-col md:flex-row-reverse justify-center items-center mb-10 p-8 bg-white dark:bg-gray-800 rounded-xl shadow-lg transition-transform duration-200 hover:scale-105 hover:shadow-2xl w-full md:w-3/4 lg:w-2/3">
-      <img class="w-72 h-auto m-4 rounded-lg object-cover" src="https://images.pexels.com/photos/3184357/pexels-photo-3184357.jpeg" alt="Election Results">
+      <img class="w-72 h-auto m-4 rounded-lg object-cover" src="https://images.pexels.com/photos/3184357/pexels-photo-3184357.jpeg" alt="Verkiezingsresultaten">
       <div class="p-4 max-w-md">
-        <h3 class="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-4">View Election Results</h3>
+        <h3 class="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-4">Bekijk Verkiezingsresultaten</h3>
         <p class="text-gray-700 dark:text-gray-300 text-lg leading-relaxed">
-          Stay up-to-date with the latest election results through our dynamic dashboard.
-          We provide accurate and detailed data, making it easy to follow the outcome of elections
-          and analyze the results in depth.
+          Blijf op de hoogte van de laatste verkiezingsresultaten via ons dynamische dashboard.
+          Wij bieden nauwkeurige en gedetailleerde data, waardoor het eenvoudig is om de verkiezingsuitslagen
+          te volgen en grondig te analyseren.
         </p>
       </div>
     </div>
 
-    <!-- Discussion & Threads Section -->
+    <!-- Discussiesectie -->
     <div class="flex flex-col md:flex-row justify-center items-center mb-10 p-8 bg-white dark:bg-gray-800 rounded-xl shadow-lg transition-transform duration-200 hover:scale-105 hover:shadow-2xl w-full md:w-3/4 lg:w-2/3">
-      <img class="w-72 h-auto m-4 rounded-lg object-cover" src="https://images.pexels.com/photos/3184298/pexels-photo-3184298.jpeg" alt="Discussion Threads">
+      <img class="w-72 h-auto m-4 rounded-lg object-cover" src="https://images.pexels.com/photos/3184298/pexels-photo-3184298.jpeg" alt="Discussiedraden">
       <div class="p-4 max-w-md">
-        <h3 class="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-4">Engage in Discussions</h3>
+        <h3 class="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-4">Neem Deel aan Discussies</h3>
         <p class="text-gray-700 dark:text-gray-300 text-lg leading-relaxed">
-          Our platform allows users to create discussion threads and share their views on election topics.
-          Connect with like-minded individuals, exchange ideas, and delve deeper into the implications
-          of the election results in real-time.
+          Ons platform stelt gebruikers in staat om discussiedraden te starten en hun mening te delen over verkiezingsonderwerpen.
+          Verbind met gelijkgestemden, wissel ideeën uit en verdiep je in de implicaties
+          van de verkiezingsresultaten in real-time.
         </p>
       </div>
     </div>
 
-    <!-- Team Members Section -->
+    <!-- Teamleden Sectie -->
     <div class="text-center mb-10">
-      <h3 class="text-3xl font-bold text-gray-800 dark:text-gray-100 mb-6">Meet Our Team</h3>
+      <h3 class="text-3xl font-bold text-gray-800 dark:text-gray-100 mb-6">Ontmoet Ons Team</h3>
       <div class="flex flex-wrap justify-center gap-6">
         <div v-for="member in teamMembers" :key="member.name" class="flex flex-col items-center m-4 p-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg w-64 transition-transform duration-300 hover:-translate-y-2 hover:shadow-2xl">
           <img :src="member.photo" :alt="member.name" class="w-36 h-36 rounded-full object-cover mb-4 transition-transform duration-300 hover:scale-105">
