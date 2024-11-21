@@ -11,7 +11,10 @@
 
     <div v-if="loading" class="text-gray-500 dark:text-gray-400">Gebruikers laden...</div>
 
-    <table v-if="!loading && displayedUsers.length" class="min-w-full bg-gray-100 dark:bg-gray-700 rounded-lg shadow border-collapse">
+    <table
+        v-if="!loading && displayedUsers.length"
+        class="min-w-full bg-gray-100 dark:bg-gray-700 rounded-lg shadow border-collapse"
+    >
       <thead class="bg-gray-800 dark:bg-gray-900 text-white">
       <tr>
         <th class="px-4 py-2 text-center">ID</th>
@@ -22,10 +25,20 @@
       </tr>
       </thead>
       <tbody>
-      <tr v-for="user in displayedUsers" :key="user.id" class="hover:bg-gray-200 dark:hover:bg-gray-600">
-        <td class="px-4 py-2 text-center align-middle text-gray-800 dark:text-gray-200">{{ user.id }}</td>
-        <td class="px-4 py-2 text-center align-middle text-gray-800 dark:text-gray-200">{{ user.username }}</td>
-        <td class="px-4 py-2 text-center align-middle text-gray-800 dark:text-gray-200">{{ user.email }}</td>
+      <tr
+          v-for="user in displayedUsers"
+          :key="user.id"
+          class="hover:bg-gray-200 dark:hover:bg-gray-600"
+      >
+        <td class="px-4 py-2 text-center align-middle text-gray-800 dark:text-gray-200">
+          {{ user.id }}
+        </td>
+        <td class="px-4 py-2 text-center align-middle text-gray-800 dark:text-gray-200">
+          {{ user.username }}
+        </td>
+        <td class="px-4 py-2 text-center align-middle text-gray-800 dark:text-gray-200">
+          {{ user.email }}
+        </td>
         <td class="px-4 py-2 text-center align-middle">
           <span v-if="user.active" class="text-green-600 dark:text-green-400">Ja</span>
           <span v-else class="text-red-600 dark:text-red-400">Nee</span>
@@ -42,7 +55,10 @@
       </tbody>
     </table>
 
-    <div v-if="!loading && displayedUsers.length === 0" class="text-gray-500 dark:text-gray-400">
+    <div
+        v-if="!loading && displayedUsers.length === 0"
+        class="text-gray-500 dark:text-gray-400"
+    >
       Geen gebruikers gevonden.
     </div>
   </div>
@@ -62,12 +78,19 @@ export default {
     async fetchUsers() {
       this.loading = true;
       try {
-        const response = await fetch('http://localhost:8080/api/users');
+        const baseURL = window.location.hostname.includes("localhost")
+            ? "http://localhost:8080"
+            : "http://oege.ie.hva.nl:8000";
+
+        const response = await fetch(`${baseURL}/api/users`);
+        if (!response.ok) {
+          throw new Error("Fout bij het ophalen van gebruikers");
+        }
         const data = await response.json();
         this.users = data;
         this.displayedUsers = [...this.users];
       } catch (error) {
-        console.error('Fout bij het ophalen van gebruikers:', error);
+        console.error("Fout bij het ophalen van gebruikers:", error);
       } finally {
         this.loading = false;
       }
@@ -75,24 +98,32 @@ export default {
     async toggleActive(user) {
       user.active = !user.active;
       try {
-        await fetch(`http://localhost:8080/api/users/${user.id}`, {
-          method: 'POST',
-          headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify({active: user.active}),
+        const baseURL = window.location.hostname.includes("localhost")
+            ? "http://localhost:8080"
+            : "http://oege.ie.hva.nl:8000";
+
+        await fetch(`${baseURL}/api/users/${user.id}`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ active: user.active }),
         });
       } catch (error) {
-        console.error('Fout bij het bijwerken van de gebruikersstatus:', error);
+        console.error("Fout bij het bijwerken van de gebruikersstatus:", error);
       }
     },
     async deleteUser(userId) {
       try {
-        await fetch(`http://localhost:8080/api/users/${userId}`, {
-          method: 'DELETE',
+        const baseURL = window.location.hostname.includes("localhost")
+            ? "http://localhost:8080"
+            : "http://oege.ie.hva.nl:8000";
+
+        await fetch(`${baseURL}/api/users/${userId}`, {
+          method: "DELETE",
         });
         this.users = this.users.filter((user) => user.id !== userId);
         this.displayedUsers = this.users;
       } catch (error) {
-        console.error('Fout bij het verwijderen van de gebruiker:', error);
+        console.error("Fout bij het verwijderen van de gebruiker:", error);
       }
     },
     searchUsers(event) {

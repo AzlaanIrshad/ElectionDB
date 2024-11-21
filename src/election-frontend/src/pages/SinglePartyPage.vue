@@ -2,7 +2,7 @@
   <div class="single-party-page">
     <h1>Party Details</h1>
 
-
+    <!-- Loading State -->
     <div v-if="loading" class="loading">
       <p>Loading party data...</p>
     </div>
@@ -55,8 +55,12 @@ export default {
       this.loading = true;
       this.error = null;
 
+      const baseURL = window.location.hostname.includes('localhost')
+          ? 'http://localhost:8080'
+          : 'http://oege.ie.hva.nl:8000';
+
       try {
-        const response = await fetch("http://localhost:8080/api/election-results");
+        const response = await fetch(`${baseURL}/api/election-results`);
         if (!response.ok) {
           throw new Error("Failed to fetch election results");
         }

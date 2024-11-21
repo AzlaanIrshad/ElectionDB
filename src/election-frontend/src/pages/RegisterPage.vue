@@ -96,8 +96,13 @@ export default {
         this.errorMessage = "Wachtwoorden komen niet overeen";
         return;
       }
+
+      const baseURL = window.location.hostname.includes('localhost')
+          ? 'http://localhost:8080'
+          : 'http://oege.ie.hva.nl:8000';
+
       try {
-        const response = await fetch('http://localhost:8080/api/register', {
+        const response = await fetch(`${baseURL}/api/register`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

@@ -51,28 +51,16 @@ export default {
   },
   methods: {
     async fetchFaqs() {
-      let baseUrl;
-      if (window.location.hostname === "localhost") {
-        baseUrl = "http://localhost:8080/api/faqs";
-      } else {
-        baseUrl = "http://oege.ie.hva.nl:8000/api/faqs";
-      }
+      const baseURL = window.location.hostname.includes("localhost")
+          ? "http://localhost:8080"
+          : "http://oege.ie.hva.nl:8000";
 
-      let url = baseUrl;
+      let url = `${baseURL}/api/faqs`;
       if (this.searchQuery) {
         url += `/search?q=${encodeURIComponent(this.searchQuery)}`;
       }
-
-      try {
-        const response = await fetch(url);
-        if (response.ok) {
-          this.faqs = await response.json();
-        } else {
-          console.error("Failed to fetch FAQs:", response.status);
-        }
-      } catch (error) {
-        console.error("Error fetching FAQs:", error);
-      }
+      const response = await fetch(url);
+      this.faqs = await response.json();
     },
   },
   mounted() {

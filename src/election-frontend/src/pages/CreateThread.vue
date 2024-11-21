@@ -85,22 +85,20 @@ export default {
   },
   computed: {
     isFormValid() {
-      return this.title !== '' && this.body !== '' && this.category !== '';
+      return this.title && this.body && this.category;
     },
   },
   methods: {
     validateForm() {
       this.titleError = this.bodyError = this.categoryError = '';
 
-      if (this.title === '') {
+      if (!this.title) {
         this.titleError = 'Titel is verplicht.';
       }
-
-      if (this.body === '') {
+      if (!this.body) {
         this.bodyError = 'Inhoud is verplicht.';
       }
-
-      if (this.category === '') {
+      if (!this.category) {
         this.categoryError = 'Categorie is verplicht.';
       }
 
@@ -111,33 +109,31 @@ export default {
         return;
       }
 
-      try {
-        const dummyUser = {
-          id: 1,
-          username: 'googoo',
-          email: 'googoo@example.com',
-          password: 'password',
-          role: 'ADMIN'
-        };
+      const baseURL = window.location.hostname.includes('localhost')
+          ? 'http://localhost:8080'
+          : 'http://oege.ie.hva.nl:8000';
 
+      try {
         const now = new Date();
-        const formattedDate = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-`
-            + `${String(now.getDate()).padStart(2, '0')} ${String(now.getHours()).padStart(2, '0')}:`
-            + `${String(now.getMinutes()).padStart(2, '0')}`;
+        const formattedDate = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(
+            now.getDate()
+        ).padStart(2, '0')} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
 
         const threadData = {
           title: this.title,
           body: this.body,
           category: this.category,
           date: formattedDate,
-          user: dummyUser,
+          user: {
+            id: 1, // Dummy data
+            username: 'admin',
+            email: 'admin@example.com',
+          },
         };
 
-        const response = await fetch('http://localhost:8080/api/threads', {
+        const response = await fetch(`${baseURL}/api/threads`, {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: {'Content-Type': 'application/json'},
           body: JSON.stringify(threadData),
         });
 
@@ -152,7 +148,7 @@ export default {
     },
     goBack() {
       this.$router.go(-1);
-    }
+    },
   },
 };
 </script>

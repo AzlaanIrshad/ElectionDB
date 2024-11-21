@@ -91,11 +91,14 @@ export default {
   },
   methods: {
     async fetchThreads() {
-      const response = await fetch("http://localhost:8080/api/threads");
+      const baseURL = window.location.hostname.includes("localhost")
+          ? "http://localhost:8080"
+          : "http://oege.ie.hva.nl:8000";
+
+      const response = await fetch(`${baseURL}/api/threads`);
       this.threads = await response.json();
     },
     loadMoreThreads() {
-      // Verhoog het aantal zichtbare draadjes
       this.visibleThreadsCount += 3;
     },
   },

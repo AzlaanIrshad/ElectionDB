@@ -10,7 +10,7 @@ import Chart from "primevue/chart";
 
 export default {
   name: "ElectionDonutChart",
-  components: { Chart },
+  components: {Chart},
   data() {
     return {
       chartData: null,
@@ -23,16 +23,21 @@ export default {
   methods: {
     async fetchElectionResults() {
       try {
-        const response = await fetch("http://localhost:8080/api/election-results");
-        if (!response.ok) throw new Error("Ophalen van verkiezingsresultaten mislukt");
+        const baseURL = window.location.hostname.includes("localhost")
+            ? "http://localhost:8080"
+            : "http://oege.ie.hva.nl:8000";
+
+        const response = await fetch(`${baseURL}/api/election-results`);
+        if (!response.ok) throw new Error("Failed to fetch election results");
+
         const electionData = await response.json();
 
         // Berekening van de totale stemmen per partij
         const partyVotes = {};
-        electionData.forEach((transaction) => {
+        electionData.forEach(transaction => {
           const contests = transaction?.count?.election?.contests?.contests || [];
-          contests.forEach((contest) => {
-            contest.totalVotes.selections.forEach((selection) => {
+          contests.forEach(contest => {
+            contest.totalVotes.selections.forEach(selection => {
               const party = selection.affiliationIdentifier?.registeredName;
               const votes = selection.validVotes || 0;
               if (party) {
@@ -45,7 +50,7 @@ export default {
           });
         });
 
-        // Data voor donutgrafiek
+        // Data for donut chart
         const labels = Object.keys(partyVotes);
         const data = Object.values(partyVotes);
         const backgroundColors = labels.map(

@@ -45,7 +45,7 @@
                         :key="candidate.id"
                         class="text-sm text-gray-700 dark:text-gray-400"
                     >
-                      Candidate {{ candidate.id }}: {{ candidate.validVotes }} votes
+                      Kandidaat {{ candidate.id }}: {{ candidate.validVotes }} stemmen
                     </li>
                   </ul>
                 </details>
@@ -89,7 +89,11 @@ export default {
       this.loading = true;
       this.error = null;
       try {
-        const response = await fetch("http://localhost:8080/api/election-results");
+        const baseURL = window.location.hostname.includes("localhost")
+            ? "http://localhost:8080"
+            : "http://oege.ie.hva.nl:8000";
+
+        const response = await fetch(`${baseURL}/api/election-results`);
         if (!response.ok) {
           throw new Error("Ophalen van verkiezingsresultaten mislukt");
         }

@@ -48,18 +48,22 @@ export default {
     this.initMap();
     this.fetchElectionResults();
   },
-  /**
-   * Haalt verkiezingsresultaten op van de backend en voegt markers toe aan de kaart.
-   */
+/**
+ * Haalt verkiezingsresultaten op van de backend en voegt markers toe aan de kaart.
+ */
   methods: {
     async fetchElectionResults() {
       try {
-        const response = await fetch("http://localhost:8080/api/election-results");
-        if (!response.ok) throw new Error("Ophalen van verkiezingsresultaten mislukt");
+        const baseURL = window.location.hostname.includes("localhost")
+            ? "http://localhost:8080"
+            : "http://oege.ie.hva.nl:8000";
+
+        const response = await fetch(`${baseURL}/api/election-results`);
+        if (!response.ok) throw new Error("Failed to fetch election results");
         this.electionData = await response.json();
         this.addMarkers();
       } catch (err) {
-        console.error("Fout bij het ophalen van verkiezingsresultaten:", err);
+        console.error("Error fetching election results:", err);
       }
     },
     initMap() {

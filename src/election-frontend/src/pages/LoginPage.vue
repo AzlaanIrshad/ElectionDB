@@ -58,8 +58,12 @@ export default {
   methods: {
     async loginUser() {
       this.errorMessage = ''; // Reset foutmelding
+      const baseURL = window.location.hostname.includes('localhost')
+          ? 'http://localhost:8080'
+          : 'http://oege.ie.hva.nl:8000';
+
       try {
-        const response = await fetch('http://localhost:8080/api/login', {
+        const response = await fetch(`${baseURL}/api/login`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -81,7 +85,7 @@ export default {
       } catch (error) {
         this.errorMessage = error.message;
       }
-    }
-  }
+    },
+  },
 };
 </script>
