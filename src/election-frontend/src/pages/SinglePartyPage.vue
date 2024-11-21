@@ -2,12 +2,12 @@
   <div class="single-party-page">
     <h1>Party Details</h1>
 
-
+    <!-- Loading State -->
     <div v-if="loading" class="loading">
       <p>Loading party data...</p>
     </div>
 
-    <!-- Baka State -->
+    <!-- Error State -->
     <div v-if="error" class="error">
       <p>{{ error }}</p>
     </div>
@@ -55,8 +55,12 @@ export default {
       this.loading = true;
       this.error = null;
 
+      const baseURL = window.location.hostname.includes('localhost')
+          ? 'http://localhost:8080'
+          : 'http://oege.ie.hva.nl:8000';
+
       try {
-        const response = await fetch("http://localhost:8080/api/election-results");
+        const response = await fetch(`${baseURL}/api/election-results`);
         if (!response.ok) {
           throw new Error("Failed to fetch election results");
         }
@@ -78,13 +82,11 @@ export default {
       let party = null;
       const candidateVotesMap = {};
 
-      //election data
       for (const transaction of data) {
         const contests = transaction?.count?.election?.contests?.contests || [];
         contests.forEach((contest) => {
           contest.totalVotes.selections.forEach((selection) => {
             if (selection.affiliationIdentifier?.id === partyId) {
-              // Found the party
               if (!party) {
                 party = {
                   partyId,
@@ -97,7 +99,6 @@ export default {
             }
 
             if (selection.candidate?.candidateIdentifier?.id) {
-              // Needs name
               const candidateId = selection.candidate.candidateIdentifier.id;
               const validVotes = selection.validVotes || 0;
 

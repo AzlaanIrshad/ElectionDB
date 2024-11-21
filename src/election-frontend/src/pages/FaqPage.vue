@@ -51,7 +51,11 @@ export default {
   },
   methods: {
     async fetchFaqs() {
-      let url = 'http://localhost:8080/api/faqs';
+      const baseURL = window.location.hostname.includes("localhost")
+          ? "http://localhost:8080"
+          : "http://oege.ie.hva.nl:8000";
+
+      let url = `${baseURL}/api/faqs`;
       if (this.searchQuery) {
         url += `/search?q=${encodeURIComponent(this.searchQuery)}`;
       }

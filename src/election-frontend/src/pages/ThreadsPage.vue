@@ -81,21 +81,22 @@ export default {
   },
   computed: {
     paginatedThreads() {
-      // Toon alleen het zichtbare aantal draadjes
       return this.threads.slice(0, this.visibleThreadsCount);
     },
     hasMoreThreads() {
-      // Controleer of er meer draadjes beschikbaar zijn om te tonen
       return this.visibleThreadsCount < this.threads.length;
     },
   },
   methods: {
     async fetchThreads() {
-      const response = await fetch("http://localhost:8080/api/threads");
+      const baseURL = window.location.hostname.includes("localhost")
+          ? "http://localhost:8080"
+          : "http://oege.ie.hva.nl:8000";
+
+      const response = await fetch(`${baseURL}/api/threads`);
       this.threads = await response.json();
     },
     loadMoreThreads() {
-      // Verhoog het aantal zichtbare draadjes
       this.visibleThreadsCount += 3;
     },
   },

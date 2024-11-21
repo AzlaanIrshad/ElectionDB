@@ -31,7 +31,6 @@
 
           <!-- Chart -->
           <TotalPartyVoteBarChart :chartData="city.chartData" />
-          <!-- ---- -->
           <div class="parties mt-4">
             <ul>
               <li v-for="party in city.parties" :key="party.partyId" class="mb-4">
@@ -45,7 +44,7 @@
                         :key="candidate.id"
                         class="text-sm text-gray-700 dark:text-gray-400"
                     >
-                      Candidate {{ candidate.id }}: {{ candidate.validVotes }} votes
+                      Kandidaat {{ candidate.id }}: {{ candidate.validVotes }} stemmen
                     </li>
                   </ul>
                 </details>
@@ -89,7 +88,11 @@ export default {
       this.loading = true;
       this.error = null;
       try {
-        const response = await fetch("http://localhost:8080/api/election-results");
+        const baseURL = window.location.hostname.includes("localhost")
+            ? "http://localhost:8080"
+            : "http://oege.ie.hva.nl:8000";
+
+        const response = await fetch(`${baseURL}/api/election-results`);
         if (!response.ok) {
           throw new Error("Ophalen van verkiezingsresultaten mislukt");
         }
@@ -102,13 +105,6 @@ export default {
       }
     },
 
-    /**
-     * Transformeert de ruwe verkiezingsdata naar een gestructureerd formaat.
-     * Groepeert resultaten per stad en organiseert partijen met hun kandidaten.
-     *
-     * @param {Array} data - De ruwe verkiezingsdata van de API.
-     * @returns {Array} Getransformeerde data gegroepeerd per stad.
-     */
     transformData(data) {
       return data.map((transaction) => {
         const cityName = transaction.managingAuthority.authorityIdentifier.value;
@@ -154,12 +150,6 @@ export default {
       });
     },
 
-    /**
-     * Prepares the chart data for each city.
-     *
-     * @param {Array} parties - List of parties with vote data.
-     * @returns {Object} Chart data object.
-     */
     prepareChartData(parties) {
       return {
         labels: parties.map(party => party.partyName),
