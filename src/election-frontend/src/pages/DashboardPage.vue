@@ -28,6 +28,10 @@
           <summary class="cursor-pointer font-semibold text-lg text-gray-800 dark:text-gray-100 group-open:mb-2">
             City: {{ city.cityName }} (Total Votes: {{ city.totalVotes }})
           </summary>
+
+          <!-- Chart -->
+          <TotalPartyVoteBarChart :chartData="city.chartData" />
+          <!-- ---- -->
           <div class="parties mt-4">
             <ul>
               <li v-for="party in city.parties" :key="party.partyId" class="mb-4">
@@ -58,7 +62,13 @@
 </template>
 
 <script>
+import TotalPartyVoteBarChart from '../components/TotalPartyVoteBarChart.vue';
+
 export default {
+  name: "ElectionDashboard",
+  components: {
+    TotalPartyVoteBarChart,
+  },
   data() {
     return {
       searchQuery: '',
@@ -108,15 +118,10 @@ export default {
         let currentPartyId = null;
 
         transaction.count.election.contests.contests.forEach((contest) => {
-          const contestId = contest.contestIdentifier.id;
-          const contestName = contest.contestName;
-
           contest.totalVotes.selections.forEach((selection) => {
             if (selection.affiliationIdentifier) {
               currentPartyId = selection.affiliationIdentifier.id;
-              const partyName =
-                  selection.affiliationIdentifier.registeredName || contestName || "Unknown Party";
-
+              const partyName = selection.affiliationIdentifier.registeredName || "Unknown Party";
               if (!partiesMap[currentPartyId]) {
                 partiesMap[currentPartyId] = {
                   partyId: currentPartyId,
@@ -125,10 +130,7 @@ export default {
                   candidates: [],
                 };
               }
-            } else if (
-                currentPartyId &&
-                selection.candidate?.candidateIdentifier?.id
-            ) {
+            } else if (currentPartyId && selection.candidate?.candidateIdentifier?.id) {
               partiesMap[currentPartyId].candidates.push({
                 id: selection.candidate.candidateIdentifier.id,
                 validVotes: selection.validVotes || 0,
@@ -138,16 +140,37 @@ export default {
         });
 
         const parties = Object.values(partiesMap);
-
         const totalVotes = parties.reduce((sum, party) => sum + party.totalVotes, 0);
+
+        const chartData = this.prepareChartData(parties);
 
         return {
           cityId,
           cityName,
           totalVotes,
           parties,
+          chartData,
         };
       });
+    },
+
+    /**
+     * Prepares the chart data for each city.
+     *
+     * @param {Array} parties - List of parties with vote data.
+     * @returns {Object} Chart data object.
+     */
+    prepareChartData(parties) {
+      return {
+        labels: parties.map(party => party.partyName),
+        datasets: [{
+          label: 'Total Votes',
+          data: parties.map(party => party.totalVotes),
+          backgroundColor: parties.map(() => 'rgba(87,192,75,0.8)'),
+          borderColor: parties.map(() => 'rgba(0,0,0,1)'),
+          borderWidth: 1,
+        }],
+      };
     },
   },
   mounted() {

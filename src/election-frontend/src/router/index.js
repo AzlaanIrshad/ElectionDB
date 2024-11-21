@@ -9,6 +9,7 @@ import CreateThread from "@/pages/CreateThread.vue";
 import FaqPage from "@/pages/FaqPage.vue";
 import AboutPage from '@/pages/AboutPage.vue';
 import DashboardPage from '@/pages/DashboardPage.vue';
+import SinglePartyPage from "@/pages/SinglePartyPage.vue";
 
 
 // General authentication guard
@@ -47,6 +48,7 @@ const routes = [
     { path: '/faq', name: 'faq', component: FaqPage },
     { path: '/about', name: 'about', component: AboutPage },
     { path: '/dashboard', name: 'dashboard', component: DashboardPage },
+    { path: '/parties/:id', name: 'single-party', component: SinglePartyPage },
 ];
 
 const router = createRouter({
