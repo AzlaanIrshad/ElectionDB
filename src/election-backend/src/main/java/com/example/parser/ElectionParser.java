@@ -1,6 +1,7 @@
 //package com.example.parser;
 //
 //import com.example.parser.service.ElectionService;
+//import com.example.parser.service.KandidatenlijstenFileProcessor;
 //import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.boot.CommandLineRunner;
 //import org.springframework.boot.SpringApplication;
@@ -14,6 +15,9 @@
 //    private ElectionService electionService;
 //
 //    @Autowired
+//    private KandidatenlijstenFileProcessor kandidatenlijstenFileProcessor;
+//
+//    @Autowired
 //    private ApplicationContext context;
 //
 //    public static void main(String[] args) {
@@ -25,6 +29,8 @@
 //        System.out.println("Starting XML to JSON parsing process...");
 //
 //        electionService.parseXmlFilesToJson();
+//
+//        kandidatenlijstenFileProcessor.processKandidatenlijstenFiles();
 //
 //        System.out.println("Parsing process completed.");
 //
