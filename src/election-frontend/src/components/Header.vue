@@ -188,14 +188,19 @@ export default {
         this.isAdmin = false;
       }
     },
+    toggleMobileMenu() {
+      this.isMobileMenuOpen = !this.isMobileMenuOpen;
+    },
     logout() {
       localStorage.removeItem("token");
       this.isLoggedIn = false;
       this.isAdmin = false;
       this.$router.push("/login");
     },
-    toggleMobileMenu() {
-      this.isMobileMenuOpen = !this.isMobileMenuOpen;
+  },
+  watch: {
+    "$route"() {
+      this.checkAuthStatus();
     },
   },
 };
