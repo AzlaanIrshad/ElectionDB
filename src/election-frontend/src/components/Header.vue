@@ -11,30 +11,29 @@
         <input
             v-model="searchQuery"
             type="text"
-            placeholder="Search election results by ID..."
+            placeholder="Zoek naar verkiezingsresultaten..."
             @input="searchResults"
             class="w-full px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
         <ul v-if="results.length > 0" class="absolute top-full left-0 w-full bg-gray-700 rounded-lg mt-1 max-h-60 overflow-auto dark:bg-gray-800">
           <li
-              v-for="result in results"
-              :key="result.id"
+              v-for="(result, index) in results"
+              :key="result.id || index"
               @click="selectResult(result)"
               class="cursor-pointer px-4 py-2 hover:bg-gray-600 dark:hover:bg-gray-600"
           >
             <span v-if="result.partyName">
-              Party: {{ result.partyName }} (ID: {{ result.id }})
+              Partij: {{ result.partyName }}
             </span>
-            <span v-else-if="result.candidateId">
-              Candidate ID: {{ result.candidateId }}
+            <span v-else-if="result.candidateName">
+              Kandidaat: {{ result.candidateName }}
             </span>
           </li>
         </ul>
       </div>
 
-      <!-- Navigation and Actions -->
       <div class="flex items-center space-x-4 md:space-x-6">
-        <!-- Donkere Modus Toggle -->
+
         <DarkModeToggle />
 
         <!-- Links voor alle gebruikers -->
@@ -118,45 +117,62 @@ export default {
     async fetchElectionResults() {
       try {
         const response = await fetch("http://localhost:8080/api/election-results");
-        if (!response.ok) throw new Error("Failed to fetch election results");
+        if (!response.ok) throw new Error("Fout bij ophalen van verkiezingsresultaten");
         const data = await response.json();
-
         this.electionData = data;
       } catch (err) {
-        console.error("Error fetching election results:", err);
+        console.error("Fout bij ophalen van verkiezingsresultaten:", err);
       }
     },
+
     searchResults() {
       if (this.searchQuery.trim() !== "") {
+        const uniqueIds = new Set();
+
         this.results = this.electionData.flatMap((transaction) =>
             transaction.count.election.contests.contests.flatMap((contest) =>
-                contest.totalVotes.selections.map((selection) => {
-                  const partyId = selection.affiliationIdentifier?.id || null;
-                  const partyName = selection.affiliationIdentifier?.registeredName || null;
-                  const candidateId = selection.identifier.candidateIdentifier?.id || null;
+                contest.totalVotes.selections
+                    .map((selection) => {
+                      const partyId = selection.affiliationIdentifier?.id || null;
+                      const partyName = selection.affiliationIdentifier?.registeredName || null;
+                      const candidateId = selection.candidate?.candidateIdentifier?.id || null;
+                      const candidateName = selection.candidate?.name || null;
 
-                  if (
-                      partyId?.toString().includes(this.searchQuery) ||
-                      candidateId?.toString().includes(this.searchQuery)
-                  ) {
-                    return {
-                      id: partyId,
-                      partyName,
-                      candidateId,
-                    };
-                  }
-                  return null;
-                }).filter((result) => result !== null)
+                      if (
+                          (partyName?.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+                              candidateName?.toLowerCase().includes(this.searchQuery.toLowerCase()))
+                      ) {
+                        const id = partyId || candidateId;
+                        if (!uniqueIds.has(id)) {
+                          uniqueIds.add(id);
+                          return { id, partyName, candidateId, candidateName };
+                        }
+                      }
+                      return null;
+                    })
+                    .filter((result) => result !== null)
             )
         );
       } else {
         this.results = [];
       }
     },
+
     selectResult(result) {
-      console.log("Selected result:", result);
-      this.$router.push({name: "search-results", params: {query: result.id || result.candidateId}});
+      if (result.partyName) {
+        this.$router.push({ name: "single-party", params: { id: result.id } });
+      } else if (result.candidateName) {
+        this.$router.push({ name: "search-results", params: { query: result.candidateId } });
+      }
+
+      this.searchQuery = '';
+      this.results = [];
+
+      setTimeout(() => {
+        window.location.reload();
+      }, 300);
     },
+
     checkAuthStatus() {
       const token = localStorage.getItem("token");
       if (token) {
@@ -165,36 +181,19 @@ export default {
           this.isLoggedIn = true;
           this.isAdmin = payload.role === "ADMIN";
         } catch (error) {
-          console.error("Fout bij het decoderen van de tokenpayload:", error);
+          console.error("Fout bij decoderen van token payload:", error);
         }
       } else {
         this.isLoggedIn = false;
         this.isAdmin = false;
       }
     },
+
     logout() {
       localStorage.removeItem("token");
       this.isLoggedIn = false;
       this.isAdmin = false;
       this.$router.push("/login");
-    },
-    async searchResults() {
-      if (this.searchQuery.length > 1) {
-        try {
-          const response = await fetch("http://localhost:8080/api/election-results");
-          const data = await response.json();
-          this.results = data.filter((result) =>
-              result.name.toLowerCase().includes(this.searchQuery.toLowerCase())
-          );
-        } catch (error) {
-          console.error("Error fetching election results:", error);
-        }
-      } else {
-        this.results = [];
-      }
-    },
-    selectResult(result) {
-      this.$router.push({ name: "search-results", params: { query: result.name } });
     },
   },
   watch: {
@@ -204,3 +203,6 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+</style>

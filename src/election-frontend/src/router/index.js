@@ -12,7 +12,6 @@ import DashboardPage from '@/pages/DashboardPage.vue';
 import SinglePartyPage from "@/pages/SinglePartyPage.vue";
 import ElectionStatistiekPage from "@/pages/ElectionStatistiekPage.vue";
 
-import SearchResults from '@/pages/SearchResults.vue';
 
 // General authentication guard
 function authGuard(to, from, next) {
@@ -52,7 +51,6 @@ const routes = [
     { path: '/dashboard', name: 'dashboard', component: DashboardPage },
     { path: '/parties/:id', name: 'single-party', component: SinglePartyPage },
     { path: '/election-statistiek', name: 'election-statistiek', component: ElectionStatistiekPage },
-    { path: '/search/:query', name: 'search-results', component: SearchResults },
 ];
 
 const router = createRouter({
