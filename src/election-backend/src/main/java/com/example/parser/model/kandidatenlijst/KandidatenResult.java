@@ -9,9 +9,9 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-@XmlRootElement(name = "KandidatenlijstResult", namespace = "urn:oasis:names:tc:evs:schema:eml")
+@XmlRootElement(name = "EML", namespace = "urn:oasis:names:tc:evs:schema:eml")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class KandidatenlijstResult {
+public class KandidatenResult {
 
     @XmlElement(name = "TransactionId", namespace = "urn:oasis:names:tc:evs:schema:eml")
     private int transactionId;
@@ -19,6 +19,12 @@ public class KandidatenlijstResult {
     @XmlElement(name = "ManagingAuthority", namespace = "urn:oasis:names:tc:evs:schema:eml")
     private ManagingAuthority managingAuthority;
 
-    @XmlElement(name = "Election", namespace = "urn:oasis:names:tc:evs:schema:eml")
-    private Election election;
+    @XmlElement(name = "IssueDate", namespace = "urn:oasis:names:tc:evs:schema:eml")
+    private String issueDate;
+
+    @XmlElement(name = "CreationDateTime", namespace = "http://www.kiesraad.nl/extensions")
+    private String creationDateTime;
+
+    @XmlElement(name = "CandidateList", namespace = "urn:oasis:names:tc:evs:schema:eml")
+    private CandidateList candidateList;
 }

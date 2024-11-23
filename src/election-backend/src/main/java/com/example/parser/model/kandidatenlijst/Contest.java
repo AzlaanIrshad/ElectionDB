@@ -9,11 +9,8 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Election {
+public class Contest {
 
-    @XmlElement(name = "ElectionIdentifier", namespace = "urn:oasis:names:tc:evs:schema:eml")
-    private ElectionIdentifier electionIdentifier;
-
-    @XmlElement(name = "Contest", namespace = "urn:oasis:names:tc:evs:schema:eml")
-    private Contest contest;
+    @XmlElement(name = "ContestIdentifier", namespace = "urn:oasis:names:tc:evs:schema:eml")
+    private ContestIdentifier contestIdentifier;
 }

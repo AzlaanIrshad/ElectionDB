@@ -2,6 +2,7 @@ package com.example.parser.model.kandidatenlijst;
 
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlAttribute;
 import jakarta.xml.bind.annotation.XmlElement;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,11 +10,11 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Election {
+public class ContestIdentifier {
 
-    @XmlElement(name = "ElectionIdentifier", namespace = "urn:oasis:names:tc:evs:schema:eml")
-    private ElectionIdentifier electionIdentifier;
+    @XmlAttribute(name = "Id")
+    private String id;
 
-    @XmlElement(name = "Contest", namespace = "urn:oasis:names:tc:evs:schema:eml")
-    private Contest contest;
+    @XmlElement(name = "ContestName", namespace = "urn:oasis:names:tc:evs:schema:eml")
+    private String contestName;
 }
