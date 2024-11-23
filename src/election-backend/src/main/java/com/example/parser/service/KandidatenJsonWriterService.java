@@ -83,7 +83,8 @@ public class KandidatenJsonWriterService {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             File jsonFile = new File(JSON_OUTPUT_PATH);
-            objectMapper.writerWithDefaultPrettyPrinter().writeValue(jsonFile, results);
+            // kleiner maken van de JSON-bestand
+            objectMapper.writeValue(jsonFile, results);
             logger.info("Kandidatenlijsten resultaten geschreven naar JSON-bestand: {}", jsonFile.getAbsolutePath());
         } catch (IOException e) {
             logger.error("Fout bij het schrijven van de kandidatenlijsten naar JSON-bestand.", e);
