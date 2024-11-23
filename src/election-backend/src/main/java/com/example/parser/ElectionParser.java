@@ -30,8 +30,6 @@
 //
 //        electionService.parseXmlFilesToJson();
 //
-//        kandidatenlijstenFileProcessor.processKandidatenlijstenFiles();
-//
 //        System.out.println("Parsing process completed.");
 //
 //        SpringApplication.exit(context, () -> 0);

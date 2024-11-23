@@ -29,6 +29,7 @@ public class KandidatenlijstenFileProcessor {
             File[] matchedFiles = directory.listFiles((dir, name) ->
                     name.startsWith(FILE_PREFIX) && name.endsWith(".xml")
             );
+
             if (matchedFiles != null) {
                 for (File file : matchedFiles) {
                     files.add(file);
@@ -40,18 +41,5 @@ public class KandidatenlijstenFileProcessor {
         }
 
         return files;
-    }
-
-    public void processKandidatenlijstenFiles() {
-        List<File> files = getKandidatenlijstenFiles();
-
-        if (files.isEmpty()) {
-            logger.warn("Geen kandidatenlijsten bestanden gevonden.");
-            return;
-        }
-
-        for (File file : files) {
-            logger.info("Verwerken van bestand: {}", file.getName());
-        }
     }
 }
