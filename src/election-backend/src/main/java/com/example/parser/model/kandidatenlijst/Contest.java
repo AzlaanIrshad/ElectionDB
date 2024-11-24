@@ -6,6 +6,8 @@ import jakarta.xml.bind.annotation.XmlElement;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -15,5 +17,5 @@ public class Contest {
     private ContestIdentifier contestIdentifier;
 
     @XmlElement(name = "Affiliation", namespace = "urn:oasis:names:tc:evs:schema:eml")
-    private Affiliation affiliation;
+    private List<Affiliation> affiliations;
 }

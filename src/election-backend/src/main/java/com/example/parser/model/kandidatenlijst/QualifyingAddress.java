@@ -6,16 +6,11 @@ import jakarta.xml.bind.annotation.XmlElement;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Data
 @NoArgsConstructor
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Election {
+public class QualifyingAddress {
 
-    @XmlElement(name = "ElectionIdentifier", namespace = "urn:oasis:names:tc:evs:schema:eml")
-    private ElectionIdentifier electionIdentifier;
-
-    @XmlElement(name = "Contest", namespace = "urn:oasis:names:tc:evs:schema:eml")
-    private List<Contest> contests;
+    @XmlElement(name = "Locality", namespace = "urn:oasis:names:tc:ciq:xsdschema:xAL:2.0")
+    private Locality locality;
 }
