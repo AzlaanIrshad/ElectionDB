@@ -11,14 +11,21 @@ import java.nio.file.Path;
 public class ElectionController {
 
     @GetMapping("/election-results")
-    public String getElectionResults() throws Exception {
-        Path path = new ClassPathResource("election_results.json").getFile().toPath();
-        return Files.readString(path);
+    public String getElectionResults() {
+        try {
+            Path path = new ClassPathResource("election_results.json").getFile().toPath();
+            return Files.readString(path);
+        } catch (Exception e) {
+            return "Error: election_results.json not found in classpath or another error occurred.";
+        }
     }
 
     @GetMapping("/parties/{id}")
-    public String getSingleParty(@PathVariable Long id) throws Exception {
-        Path path = new ClassPathResource("election_results.json").getFile().toPath();
-        return Files.readString(path);
+    public String getSingleParty(@PathVariable Long id) {
+        try {
+            Path path = new ClassPathResource("election_results.json").getFile().toPath();
+            return Files.readString(path);
+        } catch (Exception e) {return "Error: election_results.json not found in classpath or another error occurred.";
+        }
     }
 }

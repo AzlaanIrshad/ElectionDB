@@ -91,8 +91,7 @@ public class TellingFileProcessor extends FileProcessingService {
     }
 
     private Selection parseSelection(File file) {
-        // Voeg hier de XML parsing-logica toe om Selection-objecten uit het bestand te halen
-        return null; // Placeholder voor daadwerkelijke parsing logica
+        return null;
     }
 
     @Override
