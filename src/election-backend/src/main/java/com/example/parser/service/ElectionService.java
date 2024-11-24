@@ -20,15 +20,12 @@ public class ElectionService {
 
     @Autowired
     private TellingFileProcessor tellingFileProcessor;
-//
-//    @Autowired
-//    private GemeenteTellingFileProcessor gemeenteTellingFileProcessor;
-//
-//    @Autowired
-//    private KandidatenlijstenFileProcessor kandidatenlijstenFileProcessor;
 
     @Autowired
     private JsonWriterService jsonWriterService;
+
+    @Autowired
+    private KandidatenJsonWriterService kandidatenJsonWriterService;
 
     public void parseXmlFilesToJson() {
         logger.info("Starten van het XML naar JSON verwerkingsproces...");
@@ -36,8 +33,6 @@ public class ElectionService {
         List<Future<ElectionResult>> futures = new ArrayList<>();
 
         futures.addAll(tellingFileProcessor.processFiles(executor));
-//        futures.addAll(gemeenteTellingFileProcessor.processFiles(executor));
-//        futures.addAll(kandidatenlijstenFileProcessor.processFiles(executor));
 
         List<ElectionResult> results = collectResults(futures);
         executor.shutdown();
@@ -51,6 +46,8 @@ public class ElectionService {
         }
 
         jsonWriterService.writeJsonToFile(results);
+
+        kandidatenJsonWriterService.writeKandidatenResultsToJson();
     }
 
     private List<ElectionResult> collectResults(List<Future<ElectionResult>> futures) {
