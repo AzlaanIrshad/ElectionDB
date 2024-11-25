@@ -1,7 +1,18 @@
-variables:
-    DEPLOY_MKDOCS: "true"
-    DEPLOY_HIC: "false"
+image: python:3.9-slim
 
-include:
-    - ".gitlab-ci.mkdocs.yml"
-    - ".gitlab-ci.hic.yml"
+stages:
+    - build
+    - deploy
+
+mkdocs:
+    stage: build
+    before_script:
+        - apt-get update && apt-get install -y git
+        - pip install -r requirements.txt
+    script:
+        - mkdocs build --site-dir public
+    artifacts:
+        paths:
+            - public
+    rules:
+        - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH && $DEPLOY_MKDOCS == "true"'
