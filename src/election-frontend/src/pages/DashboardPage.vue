@@ -63,6 +63,7 @@
 
 <script>
 import TotalPartyVoteBarChart from '../components/TotalPartyVoteBarChart.vue';
+import config from '../config';
 
 export default {
   name: "ElectionDashboard",
@@ -89,7 +90,7 @@ export default {
       this.loading = true;
       this.error = null;
       try {
-        const response = await fetch("http://localhost:8080/api/election-results");
+        const response = await fetch(`${config.apiBaseUrl}/api/election-results`);
         if (!response.ok) {
           throw new Error("Ophalen van verkiezingsresultaten mislukt");
         }
@@ -178,3 +179,4 @@ export default {
   },
 };
 </script>
+

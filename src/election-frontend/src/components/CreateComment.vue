@@ -42,6 +42,8 @@
 </template>
 
 <script>
+import config from '../config';
+
 export default {
   name: "CreateCommentComponent",
   data() {
@@ -71,7 +73,7 @@ export default {
           user: dummyUser,
         };
 
-        const response = await fetch(`http://localhost:8080/api/threads/${this.$route.params.id}/comments`, {
+        const response = await fetch(`${config.apiBaseUrl}/api/threads/${this.$route.params.id}/comments`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

@@ -71,6 +71,8 @@
 </template>
 
 <script>
+import config from '../config';
+
 export default {
   name: "CreateThreadPage",
   data() {
@@ -117,7 +119,7 @@ export default {
           username: 'googoo',
           email: 'googoo@example.com',
           password: 'password',
-          role: 'ADMIN'
+          role: 'ADMIN',
         };
 
         const now = new Date();
@@ -133,7 +135,7 @@ export default {
           user: dummyUser,
         };
 
-        const response = await fetch('http://localhost:8080/api/threads', {
+        const response = await fetch(`${config.apiBaseUrl}/api/threads`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -152,7 +154,7 @@ export default {
     },
     goBack() {
       this.$router.go(-1);
-    }
+    },
   },
 };
 </script>

@@ -7,6 +7,7 @@
 
 <script>
 import Chart from "primevue/chart";
+import config from '../config';
 
 export default {
   name: "ElectionDonutChart",
@@ -23,7 +24,7 @@ export default {
   methods: {
     async fetchElectionResults() {
       try {
-        const response = await fetch("http://localhost:8080/api/election-results");
+        const response = await fetch(`${config.apiBaseUrl}/api/election-results`); // Dynamische URL
         if (!response.ok) throw new Error("Ophalen van verkiezingsresultaten mislukt");
         const electionData = await response.json();
 
@@ -77,3 +78,4 @@ export default {
   },
 };
 </script>
+

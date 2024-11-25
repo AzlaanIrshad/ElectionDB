@@ -74,6 +74,8 @@
   </div>
 </template>
 <script>
+import config from '../config';
+
 export default {
   data() {
     return {
@@ -91,7 +93,7 @@ export default {
     async loginUser() {
       this.errorMessage = ''; // Reset foutmelding
       try {
-        const response = await fetch('http://localhost:8080/api/login', {
+        const response = await fetch(`${config.apiBaseUrl}/api/login`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

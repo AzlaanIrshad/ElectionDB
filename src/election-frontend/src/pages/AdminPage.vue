@@ -49,6 +49,7 @@
 </template>
 
 <script>
+import config from '../config';
 export default {
   name: "AdminPage",
   data() {
@@ -62,7 +63,7 @@ export default {
     async fetchUsers() {
       this.loading = true;
       try {
-        const response = await fetch('http://localhost:8080/api/users');
+        const response = await fetch(`${config.apiBaseUrl}/api/users`);
         const data = await response.json();
         this.users = data;
         this.displayedUsers = [...this.users];
@@ -75,7 +76,7 @@ export default {
     async toggleActive(user) {
       user.active = !user.active;
       try {
-        await fetch(`http://localhost:8080/api/users/${user.id}`, {
+        await fetch(`${config.apiBaseUrl}/api/users/${user.id}`, {
           method: 'POST',
           headers: {'Content-Type': 'application/json'},
           body: JSON.stringify({active: user.active}),
@@ -86,7 +87,7 @@ export default {
     },
     async deleteUser(userId) {
       try {
-        await fetch(`http://localhost:8080/api/users/${userId}`, {
+        await fetch(`${config.apiBaseUrl}/api/users/${userId}`, {
           method: 'DELETE',
         });
         this.users = this.users.filter((user) => user.id !== userId);

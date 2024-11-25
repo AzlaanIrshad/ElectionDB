@@ -27,6 +27,7 @@
 <script>
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
+import config from '../config';
 
 export default {
   name: "ElectionMap",
@@ -54,7 +55,7 @@ export default {
   methods: {
     async fetchElectionResults() {
       try {
-        const response = await fetch("http://localhost:8080/api/election-results");
+        const response = await fetch(`${config.apiBaseUrl}/api/election-results`);
         if (!response.ok) throw new Error("Ophalen van verkiezingsresultaten mislukt");
         this.electionData = await response.json();
         this.addMarkers();
@@ -94,8 +95,7 @@ export default {
 
         if (
             !leadingParty?.name ||
-            (this.selectedParties.length &&
-                !this.selectedParties.includes(leadingParty.name))
+            (this.selectedParties.length && !this.selectedParties.includes(leadingParty.name))
         ) {
           return;
         }
