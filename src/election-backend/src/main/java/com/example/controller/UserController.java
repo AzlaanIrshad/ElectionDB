@@ -28,12 +28,12 @@ public class UserController {
         User updatedUser = userService.toggleActiveStatus(id);
         return ResponseEntity.ok(updatedUser);
     }
-    @DeleteMapping("/users/{id}")
-    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
-        boolean isRemoved = userService.deleteUser(id);
-        if (!isRemoved) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok().build();
-    }
-}
+//    @DeleteMapping("/users/{id}")
+//    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
+//        boolean isRemoved = userService.deleteUser(id);
+//        if (!isRemoved) {
+//            return ResponseEntity.notFound().build();
+//        }
+//        return ResponseEntity.ok().build();
+//    }
+//}
