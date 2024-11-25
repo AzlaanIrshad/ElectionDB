@@ -1,31 +1,6 @@
-variables:
-    DEPLOY_MKDOCS: "true"
-    DEPLOY_HIC: "true"
-
 stages:
     - deploy
 
-# MkDocs Deployment Configuration
-deploy_mkdocs:
-    image: python:3.9-slim
-    before_script:
-        - apt-get update && apt-get install -y git
-        - pip install -r requirements.txt
-        - git clone https://uva-hva.gitlab.host/hbo-ict/mdocotion.git mdocotion
-        - cd mdocotion && python setup.py install && cd ..
-    stage: deploy
-    when: always
-    tags:
-        - hva
-    script:
-        - mkdocs build --site-dir public
-    artifacts:
-        paths:
-            - public
-    rules:
-        - if: $DEPLOY_MKDOCS == "true"
-
-# HIC Deployment Configuration
 deploy_hic:
     image: node:18.16.0
     before_script:
@@ -45,7 +20,7 @@ deploy_hic:
             - node_modules/
     script:
         - npm install
-        - npm run test
+        - echo "No tests to run"
         - npm run build
         - lftp -e "
             set net:max-retries 3;
@@ -55,13 +30,12 @@ deploy_hic:
             open -u $HIC_SFTP_USERNAME,$HIC_SFTP_PASSWORD $HIC_SFTP_HOST;
             mirror --transfer-all -Rv dist/api/. ./$HIC_ENVIRONMENT/app/ --ignore-time --parallel=10;
             mirror --transfer-all -Rv dist/web/. ./$HIC_ENVIRONMENT/wwwroot/ --ignore-time --parallel=10;"
-
         - 'wget --header="Authorization: $HIC_API_KEY" $HIC_API_URL/$HIC_ENVIRONMENT/Restart'
     artifacts:
         paths:
             - dist
     rules:
-        - if: $DEPLOY_HIC == "true"
+        - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH && $DEPLOY_HIC == "true"
           variables:
               HIC_ENVIRONMENT: "live"
         - if: $CI_COMMIT_BRANCH == "dev" && $DEPLOY_HIC == "true"
@@ -71,3 +45,11 @@ deploy_hic:
           when: manual
           variables:
               HIC_ENVIRONMENT: "dev"
+
+variables:
+    DEPLOY_MKDOCS: "true"
+    DEPLOY_HIC: "false"
+
+include:
+    - ".gitlab-ci.mkdocs.yml"
+    - ".gitlab-ci.hic.yml"
