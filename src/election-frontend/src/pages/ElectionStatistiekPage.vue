@@ -34,6 +34,7 @@
 </template>
 
 <script>
+import config from '../config';
 import ElectionMap from "@/components/ElectionMap.vue";
 import ElectionDonutChart from "@/components/ElectionDonutChart.vue";
 
@@ -44,13 +45,32 @@ export default {
     return {
       activeTab: "Per Stemlocatie",
       tabs: ["Per Verkiezing", "Per Stemlocatie", "Per Partij"],
-      sampleElectionData: [
-        { partyName: "VVD", totalVotes: 49517 },
-        { partyName: "D66", totalVotes: 41418 },
-        { partyName: "PVV", totalVotes: 37012 },
-        { partyName: "PvdA", totalVotes: 29015 },
-      ],
+      sampleElectionData: [],
+      loading: false,
+      error: null,
     };
+  },
+  methods: {
+    async fetchElectionData() {
+      this.loading = true;
+      this.error = null;
+      try {
+        const response = await fetch(`${config.apiBaseUrl}/api/election-statistics`);
+        if (!response.ok) {
+          throw new Error("Fout bij het ophalen van verkiezingsstatistieken");
+        }
+        const data = await response.json();
+        this.sampleElectionData = data;
+      } catch (err) {
+        this.error = err.message;
+        console.error("Fout bij het ophalen van verkiezingsdata:", err);
+      } finally {
+        this.loading = false;
+      }
+    },
+  },
+  mounted() {
+    this.fetchElectionData();
   },
 };
 </script>

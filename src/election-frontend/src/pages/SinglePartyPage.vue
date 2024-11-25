@@ -34,6 +34,7 @@
 </template>
 
 <script>
+import config from '../config';
 import PartyCandidateHorizontalBarChart from "../components/CandidateHorizontalBarChart.vue";
 
 export default {
@@ -56,7 +57,7 @@ export default {
       this.error = null;
 
       try {
-        const response = await fetch("http://localhost:8080/api/election-results");
+        const response = await fetch(`${config.apiBaseUrl}/api/election-results`);
         if (!response.ok) {
           throw new Error("Failed to fetch election results");
         }

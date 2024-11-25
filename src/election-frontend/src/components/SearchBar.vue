@@ -86,9 +86,9 @@ export default {
     },
     selectResult(result) {
       if (result.partyName) {
-        this.$router.push({ name: "single-party", params: { id: result.id } });
+        this.$router.push({ name: "single-party", params: { id: result.id }, query: { search: this.searchQuery } });
       } else if (result.candidateName) {
-        this.$router.push({ name: "search-results", params: { query: result.candidateId } });
+        this.$router.push({ name: "search-results", params: { query: result.candidateId }, query: { search: this.searchQuery } });
       }
       this.searchQuery = "";
       this.results = [];

@@ -67,6 +67,8 @@
 </template>
 
 <script>
+import config from '../config';
+
 export default {
   data() {
     return {
@@ -97,7 +99,7 @@ export default {
         return;
       }
       try {
-        const response = await fetch('http://localhost:8080/api/register', {
+        const response = await fetch(`${config.apiBaseUrl}/api/register`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -114,7 +116,8 @@ export default {
           throw new Error(errorData || 'Registratie mislukt');
         }
 
-        this.$router.push({name: 'login'});
+        // Doorsturen naar de loginpagina
+        this.$router.push({ name: 'login' });
       } catch (error) {
         this.errorMessage = error.message;
       }

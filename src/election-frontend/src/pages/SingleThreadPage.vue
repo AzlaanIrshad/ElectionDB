@@ -44,7 +44,9 @@
 </template>
 
 <script>
+import config from '../config';
 import CreateCommentComponent from "../components/CreateComment.vue";
+
 export default {
   name: "SingleThread",
   components: {
@@ -59,12 +61,12 @@ export default {
   },
   methods: {
     async fetchThread() {
-      const response = await fetch(`http://localhost:8080/api/threads/${this.$route.params.id}`);
+      const response = await fetch(`${config.apiBaseUrl}/api/threads/${this.$route.params.id}`);
       this.thread = await response.json();
       this.loading = false;
     },
     async fetchComments() {
-      const response = await fetch(`http://localhost:8080/api/threads/${this.$route.params.id}/comments`);
+      const response = await fetch(`${config.apiBaseUrl}/api/threads/${this.$route.params.id}/comments`);
       this.comments = await response.json();
     },
   },

@@ -158,6 +158,7 @@
 <script>
 import DarkModeToggle from "./DarkModeToggle.vue";
 import SearchBar from "./SearchBar.vue";
+import config from '../config';
 
 export default {
   name: "Header",
@@ -180,7 +181,7 @@ export default {
   methods: {
     async fetchElectionResults() {
       try {
-        const response = await fetch("http://localhost:8080/api/election-results");
+        const response = await fetch(`${config.apiBaseUrl}/api/election-results`); // Gebruik config voor API URL
         if (!response.ok) throw new Error("Failed to fetch election results");
         const data = await response.json();
         this.electionData = data;
@@ -210,12 +211,13 @@ export default {
       localStorage.removeItem("token");
       this.isLoggedIn = false;
       this.isAdmin = false;
-      this.$router.push("/login");
+      this.$router.replace("/login");
     },
   },
   watch: {
     "$route"() {
       this.checkAuthStatus();
+      this.isMobileMenuOpen = false;
     },
   },
 };

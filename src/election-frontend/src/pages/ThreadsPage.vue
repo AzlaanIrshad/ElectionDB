@@ -71,6 +71,8 @@
 </template>
 
 <script>
+import config from '../config';
+
 export default {
   name: "ThreadsPage",
   data() {
@@ -91,7 +93,7 @@ export default {
   },
   methods: {
     async fetchThreads() {
-      const response = await fetch("http://localhost:8080/api/threads");
+      const response = await fetch(`${config.apiBaseUrl}/api/threads`);
       this.threads = await response.json();
     },
     loadMoreThreads() {

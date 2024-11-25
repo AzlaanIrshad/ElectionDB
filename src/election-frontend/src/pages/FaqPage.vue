@@ -35,6 +35,8 @@
 </template>
 
 <script>
+import config from '../config';
+
 export default {
   data() {
     return {
@@ -51,12 +53,20 @@ export default {
   },
   methods: {
     async fetchFaqs() {
-      let url = 'http://localhost:8080/api/faqs';
+      let url = `${config.apiBaseUrl}/api/faqs`;
       if (this.searchQuery) {
         url += `/search?q=${encodeURIComponent(this.searchQuery)}`;
       }
-      const response = await fetch(url);
-      this.faqs = await response.json();
+
+      try {
+        const response = await fetch(url);
+        if (!response.ok) {
+          throw new Error("Fout bij het ophalen van FAQs");
+        }
+        this.faqs = await response.json();
+      } catch (error) {
+        console.error("Er is een fout opgetreden:", error);
+      }
     },
   },
   mounted() {
