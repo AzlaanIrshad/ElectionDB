@@ -47,8 +47,8 @@ deploy_hic:
               HIC_ENVIRONMENT: "dev"
 
 variables:
-    DEPLOY_MKDOCS: "true"
-    DEPLOY_HIC: "false"
+    DEPLOY_MKDOCS: "false"
+    DEPLOY_HIC: "true"
 
 include:
     - ".gitlab-ci.mkdocs.yml"
