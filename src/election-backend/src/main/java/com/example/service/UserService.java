@@ -38,6 +38,11 @@ public class UserService {
         return userRepository.findAll();
     }
 
+    public boolean existsByEmail(String email) {
+        return userRepository.existsByEmail(email);
+    }
+
+
     public User toggleActiveStatus(Long id) {
         Optional<User> userOptional = userRepository.findById(id);
         if (userOptional.isPresent()) {
@@ -48,11 +53,11 @@ public class UserService {
         return null;
     }
 
-    public boolean deleteUser(Long id) {
-        if (userRepository.existsById(id)) {
-            userRepository.deleteById(id);
-            return true;
-        }
-        return false;
-    }
+//    public boolean deleteUser(Long id) {
+//        if (userRepository.existsById(id)) {
+//            userRepository.deleteById(id);
+//            return true;
+//        }
+//        return false;
+//    }
 }
