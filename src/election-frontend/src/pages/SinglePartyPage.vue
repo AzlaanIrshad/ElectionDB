@@ -2,12 +2,12 @@
   <div class="single-party-page">
     <h1>Party Details</h1>
 
-
+    <!-- Loading State -->
     <div v-if="loading" class="loading">
       <p>Loading party data...</p>
     </div>
 
-    <!-- Baka State -->
+    <!-- Error State -->
     <div v-if="error" class="error">
       <p>{{ error }}</p>
     </div>
@@ -17,7 +17,7 @@
       <h2>{{ partyData.partyName }}</h2>
       <p>Total Votes: {{ partyData.totalVotes }}</p>
 
-      <!-- Chart -->
+      <!-- Display Candidate Chart -->
       <div v-if="partyData.chartDataForCandidates">
         <h3>Top Candidates</h3>
         <PartyCandidateHorizontalBarChart
@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import config from '../config';
+import config from "../config";
 import PartyCandidateHorizontalBarChart from "../components/CandidateHorizontalBarChart.vue";
 
 export default {
@@ -57,12 +57,22 @@ export default {
       this.error = null;
 
       try {
+        // Fetch election results
         const response = await fetch(`${config.apiBaseUrl}/api/election-results`);
         if (!response.ok) {
           throw new Error("Failed to fetch election results");
         }
 
+        // Fetch candidates data
+        const candidateResponse = await fetch(`${config.apiBaseUrl}/api/candidates`);
+        if (!candidateResponse.ok) {
+          throw new Error("Failed to fetch candidates");
+        }
+        const candidateData = await candidateResponse.json();
+        console.log("candidates", candidateData);
+
         const data = await response.json();
+        console.log("data", data);
         const party = this.findPartyById(data, partyId);
         if (party) {
           this.partyData = this.transformPartyData(party);
@@ -74,31 +84,35 @@ export default {
       } finally {
         this.loading = false;
       }
-    },
-    findPartyById(data, partyId) {
+    },findPartyById(data, partyId) {
       let party = null;
       const candidateVotesMap = {};
 
-      //election data
+      // Loop through the election data and contests
       for (const transaction of data) {
         const contests = transaction?.count?.election?.contests?.contests || [];
         contests.forEach((contest) => {
+          let currentPartyId = null;
+
           contest.totalVotes.selections.forEach((selection) => {
-            if (selection.affiliationIdentifier?.id === partyId) {
-              // Found the party
-              if (!party) {
-                party = {
-                  partyId,
-                  partyName: selection.affiliationIdentifier.registeredName || "Unknown Party",
-                  totalVotes: 0,
-                };
+
+            if (selection.affiliationIdentifier?.id) {
+              currentPartyId = selection.affiliationIdentifier.id;
+
+              if (currentPartyId === partyId) {
+                if (!party) {
+                  party = {
+                    partyId,
+                    partyName: selection.affiliationIdentifier.registeredName || "Unknown Party",
+                    totalVotes: 0,
+                    candidates: [],
+                  };
+                }
+
+                party.totalVotes += selection.validVotes || 0;
               }
-
-              party.totalVotes += selection.validVotes || 0;
             }
-
-            if (selection.candidate?.candidateIdentifier?.id) {
-              // Needs name
+            if (currentPartyId === partyId && selection.candidate?.candidateIdentifier?.id) {
               const candidateId = selection.candidate.candidateIdentifier.id;
               const validVotes = selection.validVotes || 0;
 
@@ -116,8 +130,12 @@ export default {
       }
 
       if (party) {
-        party.candidates = Object.values(candidateVotesMap);
+        party.candidates = Object.values(candidateVotesMap); // Convert map to array
       }
+
+      // Debugging logs
+      console.log("Candidate Votes Map:", candidateVotesMap);
+      console.log("Accumulated Party Data:", party);
 
       return party;
     },
@@ -134,6 +152,7 @@ export default {
     prepareChartData(candidates) {
       if (!candidates || candidates.length === 0) return null;
 
+      // Sort candidates by votes and take top 10
       const topCandidates = candidates
           .sort((a, b) => b.validVotes - a.validVotes)
           .slice(0, 10);
