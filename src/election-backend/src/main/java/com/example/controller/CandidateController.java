@@ -3,8 +3,9 @@ package com.example.controller;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.web.bind.annotation.*;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
+import java.util.Scanner;
 
 @RequestMapping("/api")
 @RestController
@@ -12,21 +13,21 @@ public class CandidateController {
 
     @GetMapping("/candidates")
     public String getCandidates() {
-        try {
-            Path path = new ClassPathResource("kandidatenlijsten_results.json").getFile().toPath();
-            return Files.readString(path);
+        try (InputStream inputStream = new ClassPathResource("kandidatenlijsten_results.json").getInputStream()) {
+            Scanner scanner = new Scanner(inputStream, StandardCharsets.UTF_8.name());
+            return scanner.useDelimiter("\\A").next();
         } catch (Exception e) {
-            return "Error: candidates_results.json not found in classpath";
+            return "Error: kandidatenlijsten_results.json not found in classpath or could not be read";
         }
     }
 
     @GetMapping("/candidates/{id}")
     public String getSingleCandidate(@PathVariable Long id) {
-        try {
-            Path path = new ClassPathResource("kandidatenlijsten_results.json").getFile().toPath();
-            return Files.readString(path);
+        try (InputStream inputStream = new ClassPathResource("kandidatenlijsten_results.json").getInputStream()) {
+            Scanner scanner = new Scanner(inputStream, StandardCharsets.UTF_8.name());
+            return scanner.useDelimiter("\\A").next();
         } catch (Exception e) {
-            return "Error: candidates_results.json not found in classpath";
+            return "Error: kandidatenlijsten_results.json not found in classpath or could not be read";
         }
     }
 }
