@@ -1,14 +1,16 @@
 package com.example.service;
 
-import com.example.entity.ThreadComment;
-import com.example.entity.User;
+import com.example.entity.*;
 import com.example.entity.Thread;
-import com.example.repository.UserRepository;
+import com.example.repository.FaqRepository;
 import com.example.repository.ThreadRepository;
 import com.example.repository.ThreadCommentRepository;
+import com.example.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
+
+import java.util.Arrays;
 
 @Component
 public class DataSeeder implements CommandLineRunner {
@@ -22,52 +24,77 @@ public class DataSeeder implements CommandLineRunner {
     @Autowired
     private ThreadCommentRepository threadCommentRepository;
 
+    @Autowired
+    private FaqRepository faqRepository;
+
     @Override
     public void run(String... args) {
         seedData();
     }
 
     private void seedData() {
-        // The tables are automatically dropped and recreated, no need to delete them manually.
+        // Declare users outside of the if block for broader scope
+        User regularUser;
+        User modUser;
+        User adminUser;
 
-        // Create users with appropriate roles
-        User regularUser = new User("test", "test@test", "test", User.Role.USER);
-        User modUser = new User("modUser", "mod@example.com", "modpw", User.Role.MODERATOR);
-        User adminUser = new User("adminUser", "admin@example.com", "adminpw", User.Role.ADMIN);
-        User regularerUser = new User("regularerUser", "regularerUser@test", "test", User.Role.USER);
-        User verymoddyUser = new User("verymoddyUser", "verymoddyUser@example.com", "modpw", User.Role.MODERATOR);
-        User megaadminUser = new User("megaadminUser", "megaadminUser@example.com", "adminpw", User.Role.ADMIN);
-        User nogregularerUser = new User("nogregularerUser", "nogregularerUser@test", "test", User.Role.USER);
-        User supermodUser = new User("supermodUser", "supermodUser@example.com", "modpw", User.Role.MODERATOR);
-        User verysuperadminUser = new User("verysuperadminUsersuperadminUser", "verysuperadminUser@example.com", "adminpw", User.Role.ADMIN);
+        // Seed Users, check if they already exist to avoid duplication
+        if (userRepository.count() == 0) {
+            regularUser = new User("gebruiker", "test@test", "test", Role.USER);
+            modUser = new User("moderator", "moderator@test.nl", "mod123", Role.MODERATOR);
+            adminUser = new User("beheerder", "beheerder@test.nl", "admin123", Role.ADMIN);
 
-        User[] users = {regularUser, modUser, adminUser, regularerUser, verymoddyUser, megaadminUser, nogregularerUser, supermodUser, verysuperadminUser};
-
-        // Save all users
-        for (User user : users) {
-            userRepository.save(user);
+            // Save all users in one batch operation
+            userRepository.saveAll(Arrays.asList(regularUser, modUser, adminUser));
+        } else {
+            // Retrieve existing users from the database
+            regularUser = userRepository.findByUsername("gebruiker").orElseThrow();
+            modUser = userRepository.findByUsername("moderator").orElseThrow();
+            adminUser = userRepository.findByUsername("beheerder").orElseThrow();
         }
 
-        // Create placeholder threads
-        Thread thread1 = new Thread("Thread 1", "Body 1", "2021-09-01", "Category 1", regularUser);
-        Thread thread2 = new Thread("Thread 2", "Body 2", "2021-09-02", "Category 2", modUser);
-        Thread thread3 = new Thread("Thread 3", "Body 3", "2021-09-03", "Category 3", adminUser);
+        // Seed Threads if none exist
+        if (threadRepository.count() == 0) {
+            Thread thread1 = new Thread("Discussie over Verkiezingen 2023", "Wat is jouw mening over de uitslag?", "2023-11-20", "Politiek", regularUser);
+            Thread thread2 = new Thread("Klimaatbeleid en Toekomst", "Hoe belangrijk is klimaatverandering voor jou?", "2023-11-18", "Klimaat", modUser);
+            Thread thread3 = new Thread("Economie en Belastingen", "Wat vind je van de huidige belastingtarieven?", "2023-11-17", "Economie", adminUser);
+            Thread thread4 = new Thread("Onderwijs in Nederland", "Discussieer over de uitdagingen in het onderwijs", "2023-11-19", "Onderwijs", regularUser);
 
-        // Save all threads
-        threadRepository.save(thread1);
-        threadRepository.save(thread2);
-        threadRepository.save(thread3);
+            threadRepository.saveAll(Arrays.asList(thread1, thread2, thread3, thread4));
+        } else {
+            System.out.println("Threads bestaan al, overslaan.");
+        }
 
-        // Create placeholder comments
-        ThreadComment comment1 = new ThreadComment(regularUser, thread1, "Comment 1", "2021-09-01", "Category 1");
-        ThreadComment comment2 = new ThreadComment(modUser, thread2, "Comment 2", "2021-09-02", "Category 2");
-        ThreadComment comment3 = new ThreadComment(adminUser, thread3, "Comment 3", "2021-09-03", "Category 3");
+        // Seed Thread Comments if none exist
+        if (threadCommentRepository.count() == 0) {
+            Thread thread1 = threadRepository.findByTitle("Discussie over Verkiezingen 2023").orElseThrow();
+            Thread thread2 = threadRepository.findByTitle("Klimaatbeleid en Toekomst").orElseThrow();
+            Thread thread3 = threadRepository.findByTitle("Economie en Belastingen").orElseThrow();
 
-        // Save all comments
-        threadCommentRepository.save(comment1);
-        threadCommentRepository.save(comment2);
-        threadCommentRepository.save(comment3);
+            ThreadComment comment1 = new ThreadComment(regularUser, thread1, "Ik vond de verkiezingen eerlijk verlopen.", "2023-11-20", "Politiek");
+            ThreadComment comment2 = new ThreadComment(modUser, thread2, "Klimaatverandering moet de hoogste prioriteit krijgen!", "2023-11-18", "Klimaat");
+            ThreadComment comment3 = new ThreadComment(adminUser, thread3, "Belastingverlaging is noodzakelijk voor de middenklasse.", "2023-11-17", "Economie");
+            ThreadComment comment4 = new ThreadComment(regularUser, thread1, "Ik denk dat er betere alternatieven waren.", "2023-11-21", "Politiek");
 
-        System.out.println("Users, Threads, and ThreadComments saved successfully!");
+            threadCommentRepository.saveAll(Arrays.asList(comment1, comment2, comment3, comment4));
+        } else {
+            System.out.println("Thread Reacties bestaan al, overslaan.");
+        }
+
+        // Seed FAQs if none exist
+        if (faqRepository.count() == 0) {
+            Faq faq1 = new Faq("Wat is VerkiezingsDB?", "VerkiezingsDB is een platform voor real-time verkiezingsupdates en discussies.");
+            Faq faq2 = new Faq("Hoe kan ik deelnemen?", "Registreer je en doe mee aan discussies over verschillende verkiezingsthema's.");
+            Faq faq3 = new Faq("Is VerkiezingsDB gratis?", "Ja, VerkiezingsDB is gratis voor alle gebruikers.");
+            Faq faq4 = new Faq("Hoe rapporteer ik een gebruiker?", "Klik op het profiel van de gebruiker en selecteer 'Rapporteer Gebruiker'.");
+            Faq faq5 = new Faq("Hoe kan ik moderator worden?", "Neem contact op met de beheerder om te solliciteren als moderator.");
+            Faq faq6 = new Faq("Hoe neem ik contact op met de support?", "Stuur een e-mail naar support@verkiezingsdb.nl voor hulp.");
+
+            faqRepository.saveAll(Arrays.asList(faq1, faq2, faq3, faq4, faq5, faq6));
+        } else {
+            System.out.println("FAQs bestaan al, overslaan.");
+        }
+
+        System.out.println("Gebruikers, Threads, Reacties en FAQs succesvol gezaaid als ze niet al bestonden!");
     }
 }

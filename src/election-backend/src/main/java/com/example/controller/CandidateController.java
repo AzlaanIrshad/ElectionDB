@@ -1,21 +1,33 @@
 package com.example.controller;
 
-import com.example.entity.Candidate;
-import com.example.repository.CandidateRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
+import java.util.Scanner;
 
-@RestController
 @RequestMapping("/api")
+@RestController
 public class CandidateController {
 
-    @Autowired
-    private CandidateRepository candidateRepository;
-
     @GetMapping("/candidates")
-    public List<Candidate> getAllCandidates() {
-        return candidateRepository.findAll();
+    public String getCandidates() {
+        try (InputStream inputStream = new ClassPathResource("kandidatenlijsten_results.json").getInputStream()) {
+            Scanner scanner = new Scanner(inputStream, StandardCharsets.UTF_8.name());
+            return scanner.useDelimiter("\\A").next();
+        } catch (Exception e) {
+            return "Error: kandidatenlijsten_results.json not found in classpath or could not be read";
+        }
+    }
+
+    @GetMapping("/candidates/{id}")
+    public String getSingleCandidate(@PathVariable Long id) {
+        try (InputStream inputStream = new ClassPathResource("kandidatenlijsten_results.json").getInputStream()) {
+            Scanner scanner = new Scanner(inputStream, StandardCharsets.UTF_8.name());
+            return scanner.useDelimiter("\\A").next();
+        } catch (Exception e) {
+            return "Error: kandidatenlijsten_results.json not found in classpath or could not be read";
+        }
     }
 }
