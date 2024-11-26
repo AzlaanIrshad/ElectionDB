@@ -1,12 +1,13 @@
 package com.example.controller;
 
-import com.example.service.UserService;
 import com.example.entity.User;
+import com.example.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import jakarta.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -27,19 +28,12 @@ public class UserController {
         User updatedUser = userService.toggleActiveStatus(id);
         return ResponseEntity.ok(updatedUser);
     }
-
     @DeleteMapping("/users/{id}")
-    public ResponseEntity<?> deleteUser(@PathVariable Long id) {
-        try {
-            boolean deleted = userService.deleteUser(id);
-            if (deleted) {
-                return ResponseEntity.ok().body("User deleted successfully.");
-            } else {
-                return ResponseEntity.status(404).body("User not found.");
-            }
-        } catch (Exception e) {
-            return ResponseEntity.status(500).body("An error occurred while deleting the user.");
+    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
+        boolean isRemoved = userService.deleteUser(id);
+        if (!isRemoved) {
+            return ResponseEntity.notFound().build();
         }
+        return ResponseEntity.ok().build();
     }
-
 }

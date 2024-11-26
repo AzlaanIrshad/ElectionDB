@@ -35,13 +35,7 @@
               @click="toggleActive(user)"
               class="bg-blue-500 hover:bg-blue-600 dark:bg-blue-700 dark:hover:bg-blue-600 text-white font-bold py-1 px-4 rounded w-32"
           >
-            {{ user.active ? "Deactiveren" : "Activeren" }}
-          </button>
-          <button
-              @click="promptDelete(user)"
-              class="bg-red-500 hover:bg-red-600 dark:bg-red-700 dark:hover:bg-red-600 text-white font-bold py-1 px-4 rounded w-32"
-          >
-            Verwijderen
+            {{ user.active ? 'Deactiveren' : 'Activeren' }}
           </button>
         </td>
       </tr>
@@ -51,26 +45,11 @@
     <div v-if="!loading && displayedUsers.length === 0" class="text-gray-500 dark:text-gray-400">
       Geen gebruikers gevonden.
     </div>
-
-    <!-- Delete Confirmation Modal -->
-    <div v-if="showDeleteModal" class="modal-overlay fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-      <div class="modal-content bg-white dark:bg-gray-800 p-6 rounded shadow-md w-1/3">
-        <h2 class="text-xl font-bold mb-4 text-gray-800 dark:text-gray-100">Bevestig Verwijdering</h2>
-        <p class="mb-4 text-gray-700 dark:text-gray-300">
-          Weet u zeker dat u de gebruiker <strong>{{ selectedUser?.username }}</strong> wilt verwijderen?
-        </p>
-        <div class="flex justify-end space-x-2 mt-4">
-          <button @click="cancelDelete" class="bg-gray-500 hover:bg-gray-600 text-white py-1 px-4 rounded">Nee</button>
-          <button @click="confirmDelete" class="bg-red-500 hover:bg-red-600 text-white py-1 px-4 rounded">Ja</button>
-        </div>
-      </div>
-    </div>
   </div>
 </template>
 
 <script>
-import config from "../config";
-
+import config from '../config';
 export default {
   name: "AdminPage",
   data() {
@@ -78,8 +57,6 @@ export default {
       users: [],
       displayedUsers: [],
       loading: false,
-      showDeleteModal: false,
-      selectedUser: null,
     };
   },
   methods: {
@@ -91,7 +68,7 @@ export default {
         this.users = data;
         this.displayedUsers = [...this.users];
       } catch (error) {
-        console.error("Fout bij het ophalen van gebruikers:", error);
+        console.error('Fout bij het ophalen van gebruikers:', error);
       } finally {
         this.loading = false;
       }
@@ -100,39 +77,23 @@ export default {
       user.active = !user.active;
       try {
         await fetch(`${config.apiBaseUrl}/api/users/${user.id}`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ active: user.active }),
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({active: user.active}),
         });
       } catch (error) {
-        console.error("Fout bij het bijwerken van de gebruikersstatus:", error);
+        console.error('Fout bij het bijwerken van de gebruikersstatus:', error);
       }
     },
-    promptDelete(user) {
-      this.selectedUser = user;
-      this.showDeleteModal = true;
-    },
-    cancelDelete() {
-      this.showDeleteModal = false;
-      this.selectedUser = null;
-    },
-    async confirmDelete() {
+    async deleteUser(userId) {
       try {
-        const response = await fetch(`${config.apiBaseUrl}/api/users/${this.selectedUser.id}`, {
-          method: "DELETE",
+        await fetch(`${config.apiBaseUrl}/api/users/${userId}`, {
+          method: 'DELETE',
         });
-        if (response.ok) {
-          this.users = this.users.filter((user) => user.id !== this.selectedUser.id);
-          this.displayedUsers = this.users;
-          alert("User deleted successfully.");
-        } else {
-          alert("Error deleting user.");
-        }
+        this.users = this.users.filter((user) => user.id !== userId);
+        this.displayedUsers = this.users;
       } catch (error) {
-        console.error("Error deleting user:", error);
-        alert("An error occurred.");
-      } finally {
-        this.cancelDelete();
+        console.error('Fout bij het verwijderen van de gebruiker:', error);
       }
     },
     searchUsers(event) {
