@@ -116,17 +116,7 @@ export default {
         console.error('Fout bij het bijwerken van de gebruikersstatus:', error);
       }
     },
-    async deleteUser(userId) {
-      try {
-        await fetch(`${config.apiBaseUrl}/api/users/${userId}`, {
-          method: 'DELETE',
-        });
-        this.users = this.users.filter((user) => user.id !== userId);
-        this.displayedUsers = this.users;
-      } catch (error) {
-        console.error('Fout bij het verwijderen van de gebruiker:', error);
-      }
-    },
+
     searchUsers(event) {
       const query = event.target.value.toLowerCase();
       if (query) {
@@ -142,8 +132,8 @@ export default {
     async deleteUser() {
       if (this.userToDelete) {
         try {
-          await fetch(`${config.apiBaseUrl}/api/users/${this.userToDelete.id}`, {
-            method: 'DELETE',
+          const response = await fetch(`${config.apiBaseUrl}/api/users/delete/${this.userToDelete.id}`, {
+            method: 'GET',
             headers: { 'Content-Type': 'application/json' },
           });
 
