@@ -68,12 +68,11 @@ export default {
         if (!candidateResponse.ok) {
           throw new Error("Failed to fetch candidates");
         }
-        const candidateData = await candidateResponse.json();
-        console.log("candidates", candidateData);
 
         const data = await response.json();
-        console.log("data", data);
-        const party = this.findPartyById(data, partyId);
+        const candidateData = await candidateResponse.json();
+        console.log("Candidate Data:", candidateData);
+        const party = this.findPartyById(data, partyId, candidateData);
         if (party) {
           this.partyData = this.transformPartyData(party);
         } else {
@@ -84,18 +83,18 @@ export default {
       } finally {
         this.loading = false;
       }
-    },findPartyById(data, partyId) {
+    },
+
+    findPartyById(data, partyId, candidateData) {
       let party = null;
       const candidateVotesMap = {};
 
-      // Loop through the election data and contests
       for (const transaction of data) {
         const contests = transaction?.count?.election?.contests?.contests || [];
         contests.forEach((contest) => {
           let currentPartyId = null;
 
           contest.totalVotes.selections.forEach((selection) => {
-
             if (selection.affiliationIdentifier?.id) {
               currentPartyId = selection.affiliationIdentifier.id;
 
@@ -108,10 +107,10 @@ export default {
                     candidates: [],
                   };
                 }
-
                 party.totalVotes += selection.validVotes || 0;
               }
             }
+
             if (currentPartyId === partyId && selection.candidate?.candidateIdentifier?.id) {
               const candidateId = selection.candidate.candidateIdentifier.id;
               const validVotes = selection.validVotes || 0;
@@ -122,6 +121,7 @@ export default {
                 candidateVotesMap[candidateId] = {
                   id: candidateId,
                   validVotes,
+                  name: `Candidate ${candidateId}`, // Default name for fallback
                 };
               }
             }
@@ -130,10 +130,27 @@ export default {
       }
 
       if (party) {
-        party.candidates = Object.values(candidateVotesMap); // Convert map to array
+        console.log("a", candidateData);
+        for (const biglist of candidateData) {
+          console.log("b", biglist.candidateList);
+            const affiliation = biglist?.candidateList?.election?.contests[0]?.affiliations?.find(
+                (aff) => aff.affiliationIdentifier?.id === partyId
+            );
+            console.log(affiliation);
+          if (affiliation) {
+            affiliation.candidates.forEach((candidate) => {
+              const candidateId = candidate.candidateIdentifier.id;
+              if (candidateVotesMap[candidateId]) {
+                const firstName = candidate.candidateFullName.personName.firstName;
+                const lastName = candidate.candidateFullName.personName.lastName;
+                candidateVotesMap[candidateId].name = `${firstName} ${lastName}`;
+              }
+            });
+           }
+          }
+        party.candidates = Object.values(candidateVotesMap);
       }
 
-      // Debugging logs
       console.log("Candidate Votes Map:", candidateVotesMap);
       console.log("Accumulated Party Data:", party);
 
@@ -152,12 +169,11 @@ export default {
     prepareChartData(candidates) {
       if (!candidates || candidates.length === 0) return null;
 
-      // Sort candidates by votes and take top 10
       const topCandidates = candidates
           .sort((a, b) => b.validVotes - a.validVotes)
           .slice(0, 10);
 
-      const chartLabels = topCandidates.map((candidate) => `Candidate ${candidate.id}`);
+      const chartLabels = topCandidates.map((candidate) => candidate.name);
       const chartData = topCandidates.map((candidate) => candidate.validVotes);
 
       return {
@@ -172,6 +188,7 @@ export default {
       };
     },
   },
+
   mounted() {
     this.fetchPartyData();
   },
