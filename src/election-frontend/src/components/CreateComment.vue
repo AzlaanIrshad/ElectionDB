@@ -1,30 +1,30 @@
 <template>
   <div class="create-comment-container max-w-4xl mx-auto py-12 px-6 bg-white dark:bg-gray-700 rounded-lg shadow-xl">
-    <h1 class="text-3xl font-extrabold text-gray-800 dark:text-gray-100 mb-8 text-center">Create a New Comment</h1>
+    <h1 class="text-3xl font-extrabold text-gray-800 dark:text-gray-100 mb-8 text-center">Maak een Nieuwe Reactie</h1>
 
     <div>
       <form @submit.prevent="createComment" class="space-y-8">
         <div>
-          <label for="comment" class="block text-lg font-semibold text-gray-700 dark:text-gray-200 mb-3">Comment:</label>
+          <label for="comment" class="block text-lg font-semibold text-gray-700 dark:text-gray-200 mb-3">Reactie:</label>
           <textarea
               v-model="body"
               id="comment"
               name="comment"
               rows="4"
               class="w-full p-4 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-500 focus:border-transparent transition duration-300 bg-gray-50 dark:bg-gray-700 text-gray-800 dark:text-gray-100"
-              placeholder="Write your comment..."
+              placeholder="Schrijf je reactie..."
           ></textarea>
         </div>
 
         <div>
-          <label for="category" class="block text-lg font-semibold text-gray-700 dark:text-gray-200 mb-3">Category:</label>
+          <label for="category" class="block text-lg font-semibold text-gray-700 dark:text-gray-200 mb-3">Categorie:</label>
           <input
               v-model="category"
               id="category"
               name="category"
               type="text"
               class="w-full p-4 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-500 focus:border-transparent transition duration-300 bg-gray-50 dark:bg-gray-700 text-gray-800 dark:text-gray-100"
-              placeholder="Enter category..."
+              placeholder="Voer een categorie in..."
           />
         </div>
 
@@ -33,7 +33,7 @@
               class="w-full sm:w-auto px-8 py-4 text-white bg-blue-600 dark:bg-blue-700 hover:bg-blue-700 dark:hover:bg-blue-600 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-500 rounded-full transition-all shadow-md transform hover:scale-105"
               type="submit"
           >
-            Submit Comment
+            Reactie Indienen
           </button>
         </div>
       </form>
@@ -42,6 +42,8 @@
 </template>
 
 <script>
+import config from '../config';
+
 export default {
   name: "CreateCommentComponent",
   data() {
@@ -71,7 +73,7 @@ export default {
           user: dummyUser,
         };
 
-        const response = await fetch(`http://localhost:8080/api/threads/${this.$route.params.id}/comments`, {
+        const response = await fetch(`${config.apiBaseUrl}/api/threads/${this.$route.params.id}/comments`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -80,13 +82,13 @@ export default {
         });
 
         if (!response.ok) {
-          console.error('Error creating comment:', response.statusText);
+          console.error('Fout bij het maken van de reactie:', response.statusText);
           return;
         }
 
-        console.log('Comment created:', commentData);
+        console.log('Reactie aangemaakt:', commentData);
       } catch (error) {
-        console.error('Error:', error);
+        console.error('Fout:', error);
       }
       this.$router.go();
     },

@@ -1,32 +1,35 @@
-# Use Maven with OpenJDK 17
-FROM maven:3.9.0 AS build
+# Stage 1: Build stage
+FROM openjdk:21-jdk-slim AS build
 
-# Set the working directory inside the container
+# Install Maven
+RUN apt-get update && apt-get install -y maven
+
+# Set the working directory
 WORKDIR /app
 
-# Copy the Maven project files
-COPY pom.xml .
+# Copy the Maven project descriptor
+COPY pom.xml ./
 
-# Download Maven dependencies (caching layer)
+# Download Maven dependencies
 RUN mvn dependency:go-offline
 
-# Copy the source code into the container
+# Copy the entire project (source code)
 COPY src ./src
 
 # Build the application
-RUN mvn clean install
+RUN mvn clean package -DskipTests
 
-# Use OpenJDK 17 for the runtime
-FROM openjdk:17-jdk-slim
+# Stage 2: Runtime stage
+FROM openjdk:21-jdk-slim
 
-# Set the working directory inside the container
+# Set the working directory
 WORKDIR /app
 
-# Copy the built jar from the build image
-COPY --from=build /app/target/*.jar app.jar
+# Copy the built jar file from the build stage
+COPY --from=build /app/target/election-backend-1.0-SNAPSHOT.jar app.jar
 
 # Expose the application port
 EXPOSE 8080
 
-# Run the application
+# Set the entry point
 ENTRYPOINT ["java", "-jar", "app.jar"]
