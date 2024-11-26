@@ -37,6 +37,13 @@
           >
             {{ user.active ? 'Deactiveren' : 'Activeren' }}
           </button>
+          <button
+              @click="confirmDelete(user)"
+              class="bg-red-500 hover:bg-red-600 dark:bg-red-700 dark:hover:bg-red-600 text-white font-bold py-1 px-4 rounded w-32"
+          >
+            Verwijderen
+          </button>
+
         </td>
       </tr>
       </tbody>
@@ -45,6 +52,27 @@
     <div v-if="!loading && displayedUsers.length === 0" class="text-gray-500 dark:text-gray-400">
       Geen gebruikers gevonden.
     </div>
+    <!-- Delete Confirmation Modal -->
+    <div v-if="showDeleteModal" class="fixed inset-0 bg-gray-500 bg-opacity-50 flex items-center justify-center z-50">
+      <div class="bg-white dark:bg-gray-800 rounded-lg p-6">
+        <h3 class="text-xl font-bold text-gray-800 dark:text-gray-100">Weet je zeker dat je deze gebruiker wilt verwijderen?</h3>
+        <div class="mt-4 flex justify-end space-x-4">
+          <button
+              @click="deleteUser"
+              class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded"
+          >
+            Ja
+          </button>
+          <button
+              @click="cancelDelete"
+              class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded"
+          >
+            Nee
+          </button>
+        </div>
+      </div>
+    </div>
+
   </div>
 </template>
 
@@ -57,6 +85,9 @@ export default {
       users: [],
       displayedUsers: [],
       loading: false,
+      showDeleteModal: false,
+      userToDelete: null,
+
     };
   },
   methods: {
@@ -85,17 +116,7 @@ export default {
         console.error('Fout bij het bijwerken van de gebruikersstatus:', error);
       }
     },
-    async deleteUser(userId) {
-      try {
-        await fetch(`${config.apiBaseUrl}/api/users/${userId}`, {
-          method: 'DELETE',
-        });
-        this.users = this.users.filter((user) => user.id !== userId);
-        this.displayedUsers = this.users;
-      } catch (error) {
-        console.error('Fout bij het verwijderen van de gebruiker:', error);
-      }
-    },
+
     searchUsers(event) {
       const query = event.target.value.toLowerCase();
       if (query) {
@@ -108,9 +129,47 @@ export default {
         this.displayedUsers = [...this.users];
       }
     },
+
+    confirmDelete(user) {
+      this.userToDelete = user;
+      this.showDeleteModal = true;
+    },
+
+    async deleteUser() {
+      if (this.userToDelete) {
+        try {
+          const response = await fetch(`${config.apiBaseUrl}/api/users/delete/${this.userToDelete.id}`, {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' },
+          });
+
+          if (response.ok) {
+            this.users = this.users.filter(user => user.id !== this.userToDelete.id);
+            this.displayedUsers = [...this.users];
+
+            this.showDeleteModal = false;
+            this.userToDelete = null;
+            alert('User deleted successfully!');
+          } else {
+            alert('Failed to delete the user');
+          }
+        } catch (error) {
+          console.error('Error deleting user:', error);
+        }
+      }
+    },
+
+    cancelDelete() {
+      this.showDeleteModal = false;
+      this.userToDelete = null;
+    }
   },
   mounted() {
     this.fetchUsers();
   },
 };
 </script>
+
+<style scoped>
+
+</style>
