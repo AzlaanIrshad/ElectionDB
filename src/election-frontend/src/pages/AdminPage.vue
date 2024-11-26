@@ -120,6 +120,12 @@ export default {
     searchUsers(event) {
       const query = event.target.value.toLowerCase();
       if (query) {
+        this.displayedUsers = this.users.filter(
+            (user) =>
+                user.username.toLowerCase().includes(query) ||
+                user.email.toLowerCase().includes(query)
+        );
+      } else {
         this.displayedUsers = [...this.users];
       }
     },
