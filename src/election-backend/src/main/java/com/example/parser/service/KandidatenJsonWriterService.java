@@ -19,16 +19,13 @@ public class KandidatenJsonWriterService {
 
     private static final Logger logger = LoggerFactory.getLogger(KandidatenJsonWriterService.class);
 
-    private static final String JSON_OUTPUT_PATH = "src/election-backend/src/main/resources/kandidatenlijsten_results.json";
-
     @Autowired
     private KandidatenlijstenFileProcessor kandidatenlijstenFileProcessor;
 
-    /**
-     * Verwerkt kandidatenlijsten en schrijft de resultaten naar een JSON-bestand.
-     */
-    public void writeKandidatenResultsToJson() {
-        List<File> files = kandidatenlijstenFileProcessor.getKandidatenlijstenFiles();
+    public void writeKandidatenResultsToJson(int year) {
+        String jsonOutputPath = "src/election-backend/src/main/resources/ParsedJson/" + year + "/kandidatenlijsten_results.json";
+
+        List<File> files = kandidatenlijstenFileProcessor.getKandidatenlijstenFiles(year);
 
         if (files.isEmpty()) {
             logger.warn("Geen kandidatenlijsten bestanden gevonden.");
@@ -42,7 +39,7 @@ public class KandidatenJsonWriterService {
             return;
         }
 
-        writeJsonToFile(kandidatenResults);
+        writeJsonToFile(kandidatenResults, jsonOutputPath);
     }
 
     /**
@@ -79,11 +76,10 @@ public class KandidatenJsonWriterService {
      *
      * @param results Lijst van geparste resultaten.
      */
-    private void writeJsonToFile(List<KandidatenResult> results) {
+    private void writeJsonToFile(List<KandidatenResult> results, String jsonOutputPath) {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
-            File jsonFile = new File(JSON_OUTPUT_PATH);
-            // kleiner maken van de JSON-bestand
+            File jsonFile = new File(jsonOutputPath);
             objectMapper.writeValue(jsonFile, results);
             logger.info("Kandidatenlijsten resultaten geschreven naar JSON-bestand: {}", jsonFile.getAbsolutePath());
         } catch (IOException e) {

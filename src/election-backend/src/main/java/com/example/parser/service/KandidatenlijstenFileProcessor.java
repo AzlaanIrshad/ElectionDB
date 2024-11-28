@@ -12,22 +12,27 @@ import java.util.List;
 public class KandidatenlijstenFileProcessor {
 
     private static final Logger logger = LoggerFactory.getLogger(KandidatenlijstenFileProcessor.class);
-    private static final String DIRECTORY_PATH = "src/election-backend/src/main/resources/ElectionResults/Verkiezingsuitslag Tweede Kamer 2023 (Deel 1)/Kandidatenlijsten";
-    private static final String FILE_PREFIX = "Kandidatenlijsten_TK2023_";
 
-    public List<File> getKandidatenlijstenFiles() {
-        List<File> files = getFiles();
+    public List<File> getKandidatenlijstenFiles(int year) {
+        List<File> files = new ArrayList<>();
+
+        String directoryPath1 = "src/election-backend/src/main/resources/ElectionResults/" + year + "/Verkiezingsuitslag Tweede Kamer " + year + " (Deel 1)/Kandidatenlijsten";
+        files.addAll(getFiles(directoryPath1));
+
+        String directoryPath2 = "src/election-backend/src/main/resources/ElectionResults/" + year + "/EML_bestanden_TK" + year + "_deel_1";
+        files.addAll(getFiles(directoryPath2));
+
         logger.info("Aantal kandidatenlijsten bestanden gevonden voor verwerking: {}", files.size());
         return files;
     }
 
-    private List<File> getFiles() {
+    private List<File> getFiles(String directoryPath) {
         List<File> files = new ArrayList<>();
-        File directory = new File(DIRECTORY_PATH);
+        File directory = new File(directoryPath);
 
         if (directory.exists() && directory.isDirectory()) {
             File[] matchedFiles = directory.listFiles((dir, name) ->
-                    name.startsWith(FILE_PREFIX) && name.endsWith(".xml")
+                    name.startsWith("Kandidatenlijsten_TK2021_") && name.endsWith(".xml")
             );
 
             if (matchedFiles != null) {
@@ -37,7 +42,7 @@ public class KandidatenlijstenFileProcessor {
                 }
             }
         } else {
-            logger.warn("Directory niet gevonden: {}", DIRECTORY_PATH);
+            logger.warn("Directory niet gevonden: {}", directoryPath);
         }
 
         return files;
