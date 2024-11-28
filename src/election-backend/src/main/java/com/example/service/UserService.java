@@ -56,6 +56,12 @@ public class UserService {
         return exists;
     }
 
+    public boolean existsByUsername(String username) {
+        boolean exists = userRepository.existsByUsername(username);
+        logger.info("Checked if username exists: {} - Result: {}", username, exists);
+        return exists;
+    }
+
     public User toggleActiveStatus(Long id) {
         logger.info("Attempting to toggle active status for user with ID: {}", id);
         Optional<User> userOptional = userRepository.findById(id);

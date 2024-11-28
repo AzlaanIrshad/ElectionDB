@@ -16,14 +16,23 @@ public class RegisterController {
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@Valid @RequestBody User user) {
+        if (userService.existsByUsername(user.getUsername())) {
+            return ResponseEntity.badRequest().body("Gebruikersnaam is al in gebruik.");
+        }
         if (userService.existsByEmail(user.getEmail())) {
-            return ResponseEntity.badRequest().body("Email is already taken");
+            return ResponseEntity.badRequest().body("E-mailadres is al in gebruik.");
         }
         if (user.getPassword().length() < 6) {
-            return ResponseEntity.badRequest().body("Password must be at least 6 characters long");
+            return ResponseEntity.badRequest().body("Wachtwoord moet minimaal 6 tekens bevatten.");
+        }
+        if (!user.getPassword().matches(".*[A-Z].*")) {
+            return ResponseEntity.badRequest().body("Wachtwoord moet minimaal één hoofdletter bevatten.");
+        }
+        if (!user.getPassword().matches(".*[0-9!@#$%^&*].*")) {
+            return ResponseEntity.badRequest().body("Wachtwoord moet minimaal één cijfer of speciaal teken bevatten.");
         }
 
         userService.saveUser(user);
-        return ResponseEntity.ok("User registered successfully");
+        return ResponseEntity.ok("Gebruiker succesvol geregistreerd.");
     }
 }
