@@ -2,6 +2,7 @@ package com.example.parser.service;
 
 import com.example.parser.model.kandidatenlijst.KandidatenResult;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.Unmarshaller;
 import org.slf4j.Logger;
@@ -78,8 +79,11 @@ public class KandidatenJsonWriterService {
      */
     private void writeJsonToFile(List<KandidatenResult> results, String jsonOutputPath) {
         ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+
         try {
             File jsonFile = new File(jsonOutputPath);
+            jsonFile.getParentFile().mkdirs();
             objectMapper.writeValue(jsonFile, results);
             logger.info("Kandidatenlijsten resultaten geschreven naar JSON-bestand: {}", jsonFile.getAbsolutePath());
         } catch (IOException e) {
