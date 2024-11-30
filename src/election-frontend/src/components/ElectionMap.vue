@@ -49,13 +49,17 @@ export default {
     this.initMap();
     this.fetchElectionResults();
   },
-  /**
-   * Haalt verkiezingsresultaten op van de backend en voegt markers toe aan de kaart.
-   */
   methods: {
+    /**
+     * Haalt verkiezingsresultaten op van de backend en voegt markers toe aan de kaart.
+     */
     async fetchElectionResults() {
       try {
-        const response = await fetch(`${config.apiBaseUrl}/api/election-results`);
+        const year = 2023;
+        const partiesQuery = this.selectedParties.join(",");
+        const response = await fetch(
+            `${config.apiBaseUrl}/api/map-results?year=${year}&parties=${encodeURIComponent(partiesQuery)}`
+        );
         if (!response.ok) throw new Error("Ophalen van verkiezingsresultaten mislukt");
         this.electionData = await response.json();
         this.addMarkers();
@@ -64,7 +68,7 @@ export default {
       }
     },
     initMap() {
-      this.map = L.map("map").setView([52.3676, 4.9041], 7);
+      this.map = L.map("map").setView([52.3676, 4.9041], 7); // Startpunt op Nederland
       L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
         attribution:
             '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> bijdragers',
@@ -77,31 +81,18 @@ export default {
       this.markerLayer.clearLayers();
 
       this.electionData.forEach((transaction) => {
-        const cityName = transaction?.managingAuthority?.authorityIdentifier?.value;
+        const cityName = transaction.cityName;
         if (!cityName) return;
 
-        const contests = transaction?.count?.election?.contests?.contests || [];
-        let leadingParty = null;
+        const leadingParty = transaction.leadingParty;
+        const votes = transaction.votes;
 
-        contests.forEach((contest) => {
-          contest?.totalVotes?.selections?.forEach((selection) => {
-            const partyName = selection?.affiliationIdentifier?.registeredName;
-            const validVotes = selection?.validVotes || 0;
-            if (!leadingParty || validVotes > (leadingParty.validVotes || 0)) {
-              leadingParty = { name: partyName, validVotes };
-            }
-          });
-        });
-
-        if (
-            !leadingParty?.name ||
-            (this.selectedParties.length && !this.selectedParties.includes(leadingParty.name))
-        ) {
+        if (!leadingParty || (this.selectedParties.length && !this.selectedParties.includes(leadingParty))) {
           return;
         }
 
-        const popupText = `<b>${cityName}</b><br>Leidende Partij: ${leadingParty.name}`;
-        const color = this.partyColors[leadingParty.name] || "gray";
+        const popupText = `<b>${cityName}</b><br>Leidende Partij: ${leadingParty}<br>Stemmen: ${votes}`;
+        const color = this.partyColors[leadingParty] || "gray";
         const [lat, lng] = this.getCoordinatesForCity(cityName);
 
         if (!lat || !lng) return;
@@ -148,7 +139,7 @@ export default {
   },
   watch: {
     selectedParties() {
-      this.addMarkers();
+      this.fetchElectionResults();
     },
   },
 };
