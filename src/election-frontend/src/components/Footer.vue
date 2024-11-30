@@ -1,5 +1,5 @@
 <template>
-  <footer class="bg-gray-800 rounded-lg shadow dark:bg-gray-900 mt-4 py-8 border-t border-gray-300 dark:border-gray-700">
+  <footer class="bg-gray-800 rounded-lg shadow dark:bg-gray-900 py-8 border-t border-gray-300 dark:border-gray-700">
     <div class="w-full max-w-screen-xl mx-auto p-4">
       <div class="sm:flex sm:items-center sm:justify-between">
         <!-- Logo en Beschrijving -->
