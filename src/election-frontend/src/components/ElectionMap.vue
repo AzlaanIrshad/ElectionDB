@@ -1,33 +1,44 @@
 <template>
-  <div>
-    <h1 class="text-2xl font-bold mb-4">Verkiezingskaart</h1>
-    <div class="space-y-2">
-      <label
-          v-for="(color, party) in partyColors"
-          :key="party"
-          class="flex items-center"
-      >
-        <input
-            type="checkbox"
-            v-model="selectedParties"
-            :value="party"
-            class="mr-2"
-        />
-        <span
-            :style="{ backgroundColor: color }"
-            class="w-4 h-4 rounded-full inline-block mr-4"
-        ></span>
-        {{ party }}
-      </label>
+  <div class="flex">
+    <!-- Checkboxes sectie -->
+    <div class="w-1/4 p-4 border-r border-gray-300">
+      <h2 class="text-lg font-bold mb-4">Selecteer Partijen</h2>
+      <div class="space-y-2">
+        <label
+            v-for="(color, party) in partyColors"
+            :key="party"
+            class="flex items-center"
+        >
+          <input
+              type="checkbox"
+              v-model="selectedParties"
+              :value="party"
+              class="mr-2"
+          />
+          <span
+              :style="{ backgroundColor: color }"
+              class="w-4 h-4 rounded-full inline-block mr-4"
+          ></span>
+          {{ party }}
+        </label>
+      </div>
     </div>
-    <div id="map" class="w-full h-[600px] mt-4"></div>
+
+    <!-- Kaart sectie -->
+    <div class="w-3/4 p-4">
+      <h1 class="text-xl font-bold mb-4 text-center">Verkiezingsstatistieken Steden</h1>
+      <div
+          id="map"
+          class="w-full h-[600px] border border-gray-300 rounded shadow-md"
+      ></div>
+    </div>
   </div>
 </template>
 
 <script>
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
-import config from '../config';
+import config from "../config";
 
 export default {
   name: "ElectionMap",
@@ -49,17 +60,19 @@ export default {
     this.initMap();
     this.fetchElectionResults();
   },
+  watch: {
+    selectedParties() {
+      this.addMarkers();
+    },
+  },
   methods: {
     /**
-     * Haalt verkiezingsresultaten op van de backend en voegt markers toe aan de kaart.
+     * Haalt verkiezingsresultaten op van de backend
      */
     async fetchElectionResults() {
       try {
         const year = 2023;
-        const partiesQuery = this.selectedParties.join(",");
-        const response = await fetch(
-            `${config.apiBaseUrl}/api/map-results?year=${year}&parties=${encodeURIComponent(partiesQuery)}`
-        );
+        const response = await fetch(`${config.apiBaseUrl}/api/map-results?year=${year}`);
         if (!response.ok) throw new Error("Ophalen van verkiezingsresultaten mislukt");
         this.electionData = await response.json();
         this.addMarkers();
@@ -67,14 +80,20 @@ export default {
         console.error("Fout bij het ophalen van verkiezingsresultaten:", err);
       }
     },
+    /**
+     * Initialiseer de Leaflet kaart
+     */
     initMap() {
-      this.map = L.map("map").setView([52.3676, 4.9041], 7); // Startpunt op Nederland
+      this.map = L.map("map").setView([52.3676, 4.9041], 7); // Nederland als startpunt
       L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
         attribution:
-            '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> bijdragers',
+            '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
       }).addTo(this.map);
       this.markerLayer = L.layerGroup().addTo(this.map);
     },
+    /**
+     * Voeg markers toe aan de kaart, gefilterd op geselecteerde partijen
+     */
     addMarkers() {
       if (!this.map || !this.markerLayer) return;
 
@@ -82,34 +101,36 @@ export default {
 
       this.electionData.forEach((transaction) => {
         const cityName = transaction.cityName;
-        if (!cityName) return;
-
         const leadingParty = transaction.leadingParty;
         const votes = transaction.votes;
 
-        if (!leadingParty || (this.selectedParties.length && !this.selectedParties.includes(leadingParty))) {
-          return;
+        if (
+            !cityName ||
+            (!this.selectedParties.length || this.selectedParties.includes(leadingParty))
+        ) {
+          const popupText = `<b>${cityName}</b><br>Leidende Partij: ${leadingParty}<br>Stemmen: ${votes}`;
+          const color = this.partyColors[leadingParty] || "gray";
+          const [lat, lng] = this.getCoordinatesForCity(cityName);
+
+          if (!lat || !lng) return;
+
+          L.marker([lat, lng], { icon: this.createIcon(color) })
+              .bindPopup(popupText)
+              .addTo(this.markerLayer);
         }
-
-        const popupText = `<b>${cityName}</b><br>Leidende Partij: ${leadingParty}<br>Stemmen: ${votes}`;
-        const color = this.partyColors[leadingParty] || "gray";
-        const [lat, lng] = this.getCoordinatesForCity(cityName);
-
-        if (!lat || !lng) return;
-
-        L.circleMarker([lat, lng], {
-          color,
-          radius: 10,
-          fillOpacity: 0.4,
-        })
-            .bindPopup(popupText)
-            .addTo(this.markerLayer);
       });
     },
     /**
-     * Haalt coördinaten op voor een gegeven stadsnaam.
-     * @param {string} cityName - De naam van de stad.
-     * @returns {Array} - Array met breedte- en lengtegraad.
+     * Maak een Leaflet DivIcon met een specifieke kleur
+     */
+    createIcon(color) {
+      return L.divIcon({
+        className: "custom-icon",
+        html: `<div style="background-color: ${color}; width: 12px; height: 12px; border-radius: 50%;"></div>`,
+      });
+    },
+    /**
+     * Haalt coördinaten op voor een stad
      */
     getCoordinatesForCity(cityName) {
       const coordinates = {
@@ -137,10 +158,6 @@ export default {
       return coordinates[cityName] || [52.3676, 4.9041];
     },
   },
-  watch: {
-    selectedParties() {
-      this.fetchElectionResults();
-    },
-  },
 };
+
 </script>
