@@ -69,7 +69,7 @@ export default {
       selectedParties: [],
       partyColors: {},
       selectedYear: 2023,
-      availableYears: [2023, 2021],
+      availableYears: [2023, 2021, 2017],
       predefinedColors: ["blue", "green", "yellow", "orange", "purple", "red"],
     };
   },
