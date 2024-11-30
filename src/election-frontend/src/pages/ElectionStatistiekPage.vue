@@ -1,11 +1,38 @@
 <template>
-  <div class="flex">
+  <div class="flex flex-col md:flex-row h-screen">
     <!-- Sidebar Menu -->
-    <div class="w-64 bg-gray-900 text-gray-300 h-screen shadow-lg flex flex-col border-r border-white">
-      <h2 class="text-xl font-bold p-4 border-b border-gray-600">
-        Statistieken
-      </h2>
-      <ul class="mt-4 space-y-1 px-4">
+    <div
+        class="w-full md:w-64 bg-gray-900 text-gray-300 shadow-lg flex flex-col border-r border-white md:h-screen"
+    >
+      <div class="flex justify-between items-center p-4 md:border-b border-gray-600">
+        <h2 class="text-xl font-bold">Statistieken</h2>
+        <!-- Toggle Button for Mobile -->
+        <button
+            class="md:hidden text-gray-300 hover:text-white focus:outline-none"
+            @click="isSidebarOpen = !isSidebarOpen"
+        >
+          <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+          >
+            <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 6h16M4 12h16m-7 6h7"
+            />
+          </svg>
+        </button>
+      </div>
+      <ul
+          :class="[
+          'mt-4 space-y-1 px-4 transition-all duration-200',
+          isSidebarOpen ? 'block' : 'hidden md:block'
+        ]"
+      >
         <li v-for="(tab, index) in tabs" :key="index">
           <button
               @click="activeTab = tab.name"
@@ -15,7 +42,6 @@
             ]"
           >
             <span class="inline-flex justify-center items-center w-6 h-6 rounded-full text-blue-300">
-              <!-- Dynamisch SVG-icoon -->
               <span v-html="tab.icon"></span>
             </span>
             <span>{{ tab.name }}</span>
@@ -25,7 +51,7 @@
     </div>
 
     <!-- Main Content -->
-    <div class="flex-1 p-6">
+    <div class="flex-1 p-4 md:p-6 overflow-y-auto">
       <h1 class="text-2xl font-bold mb-6">
         Verkiezingsstatistieken
       </h1>
@@ -36,13 +62,17 @@
       </div>
       <div v-else-if="activeTab === 'Per Verkiezing'">
         <div class="p-6 dark:bg-gray-800 rounded-lg shadow-md">
-          <h2 class="text-lg font-semibold mb-4">Stemmenverdeling</h2>
+          <h2 class="text-lg font-semibold mb-4 text-gray-200">
+            Stemmenverdeling
+          </h2>
           <ElectionDonutChart :electionData="sampleElectionData" />
         </div>
       </div>
       <div v-else-if="activeTab === 'Per Partij'">
         <div class="p-6 bg-gray-800 rounded-lg shadow-md">
-          <h2 class="text-lg font-semibold mb-4 text-gray-200">Per Partij</h2>
+          <h2 class="text-lg font-semibold mb-4 text-gray-200">
+            Per Partij
+          </h2>
           <p class="text-gray-400">
             Data en statistieken per partij worden hier weergegeven.
           </p>
@@ -51,6 +81,7 @@
     </div>
   </div>
 </template>
+
 <script>
 import ElectionMap from "@/components/ElectionMap.vue";
 import ElectionDonutChart from "@/components/ElectionDonutChart.vue";
@@ -61,6 +92,7 @@ export default {
   data() {
     return {
       activeTab: "Per Stemlocatie",
+      isSidebarOpen: false,
       tabs: [
         {
           name: "Per Stemlocatie",

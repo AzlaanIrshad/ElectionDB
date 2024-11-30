@@ -1,8 +1,10 @@
 <template>
-  <div class="charts-container grid grid-cols-1 gap-8 lg:grid-cols-2 m-auto max-w-5xl bg-white dark:bg-gray-700 p-4 rounded-lg">
+  <div class="charts-container grid grid-cols-1 sm:grid-cols-2 gap-8 max-w-7xl mx-auto bg-white dark:bg-gray-700 p-6 rounded-lg">
     <div v-for="(chart, index) in charts" :key="index" class="chart-container">
-      <h2 class="text-xl font-bold text-center mb-4">Totale Stemmen Nederland {{ chart.year }}</h2>
-      <Chart :type="'doughnut'" :data="chart.data" :options="chart.options" />
+      <h2 class="text-lg md:text-xl font-bold text-center mb-4 text-gray-800 dark:text-gray-100">
+        Totale Stemmen Nederland {{ chart.year }}
+      </h2>
+      <Chart :type="'doughnut'" :data="chart.data" :options="chart.options" class="max-w-full" />
     </div>
   </div>
 </template>
