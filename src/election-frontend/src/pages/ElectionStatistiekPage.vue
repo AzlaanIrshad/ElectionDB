@@ -52,9 +52,6 @@
 
     <!-- Main Content -->
     <div class="flex-1 p-4 md:p-6 overflow-y-auto">
-      <h1 class="text-2xl font-bold mb-6">
-        Verkiezingsstatistieken
-      </h1>
 
       <!-- Render Componenten Gebaseerd op Actieve Tab -->
       <div v-if="activeTab === 'Per Stemlocatie'">
@@ -62,9 +59,6 @@
       </div>
       <div v-else-if="activeTab === 'Per Verkiezing'">
         <div class="p-6 dark:bg-gray-800 rounded-lg shadow-md">
-          <h2 class="text-lg font-semibold mb-4 text-gray-200">
-            Stemmenverdeling
-          </h2>
           <ElectionDonutChart :electionData="sampleElectionData" />
         </div>
       </div>

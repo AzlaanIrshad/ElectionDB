@@ -1,5 +1,5 @@
 <template>
-  <footer class="bg-gray-800 rounded-lg shadow dark:bg-gray-900 py-8 border-t border-gray-300 dark:border-gray-700">
+  <footer class="bg-gray-800 shadow dark:bg-gray-900 py-8 dark:border-t dark:border-gray-700">
     <div class="w-full max-w-screen-xl mx-auto p-4">
       <!-- Flex container voor logo en navigatie -->
       <!-- Azlaan do be smelly -->
