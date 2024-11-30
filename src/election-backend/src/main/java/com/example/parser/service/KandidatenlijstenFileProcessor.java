@@ -16,13 +16,20 @@ public class KandidatenlijstenFileProcessor {
     public List<File> getKandidatenlijstenFiles(int year) {
         List<File> files = new ArrayList<>();
 
+        // 2023
         String directoryPath1 = "src/election-backend/src/main/resources/ElectionResults/" + year +
                 "/Verkiezingsuitslag Tweede Kamer " + year + " (Deel 1)/Kandidatenlijsten";
         files.addAll(getFiles(directoryPath1, year));
 
+        // 2021
         String directoryPath2 = "src/election-backend/src/main/resources/ElectionResults/" + year +
                 "/EML_bestanden_TK" + year + "_deel_1";
         files.addAll(getFiles(directoryPath2, year));
+
+        // 2017
+        String directoryPath3 = "src/election-backend/src/main/resources/ElectionResults/" + year +
+                "/CSB_uitslag";
+        files.addAll(getFiles(directoryPath3, year));
 
         logger.info("Aantal kandidatenlijsten bestanden gevonden voor verwerking: {}", files.size());
         return files;
