@@ -10,49 +10,59 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/election-results")
 public class ElectionController {
 
-    @GetMapping("/{year}")
-    public ResponseEntity<Object> getElectionResults(
-            @PathVariable int year,
-            @RequestParam(value = "party", required = false) String party) {
-        String filePath = "ParsedJson/" + year + "/tellingen_results.json";
+    @GetMapping
+    public ResponseEntity<Object> getTotalVotesPerYears(
+            @RequestParam(value = "years", required = false) List<Integer> years) {
 
-        try (InputStream inputStream = new ClassPathResource(filePath).getInputStream()) {
-            ObjectMapper objectMapper = new ObjectMapper();
-            JsonNode root = objectMapper.readTree(inputStream);
+        // standaardjaar 2023
+        if (years == null || years.isEmpty()) {
+            years = List.of(2023);
+        }
 
-            if (party != null && !party.isEmpty()) {
-                ArrayNode filteredResults = objectMapper.createArrayNode();
+        Map<String, Map<String, Integer>> resultsByYear = new HashMap<>();
 
+        for (Integer year : years) {
+            String basePath = "ParsedJson/";
+            String filePath = basePath + year + "/tellingen_results.json";
+
+            try (InputStream inputStream = new ClassPathResource(filePath).getInputStream()) {
+                ObjectMapper objectMapper = new ObjectMapper();
+                JsonNode root = objectMapper.readTree(inputStream);
+
+                // Totale stemmen per partij berekenen
+                Map<String, Integer> partyVotes = new HashMap<>();
                 for (JsonNode transaction : root) {
                     JsonNode contests = transaction.path("count").path("election").path("contests").path("contests");
                     for (JsonNode contest : contests) {
                         JsonNode selections = contest.path("totalVotes").path("selections");
                         for (JsonNode selection : selections) {
-                            String partyName = selection.path("identifier").path("registeredName").asText();
-                            if (party.equalsIgnoreCase(partyName)) {
-                                filteredResults.add(selection);
+                            String party = selection.path("affiliationIdentifier").path("registeredName").asText();
+                            int votes = selection.path("validVotes").asInt(0);
+
+                            if (party != null && !party.isEmpty()) {
+                                partyVotes.put(party, partyVotes.getOrDefault(party, 0) + votes);
                             }
                         }
                     }
                 }
 
-                if (filteredResults.isEmpty()) {
-                    return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                            .body("Geen resultaten gevonden voor partij: " + party);
-                }
-                return ResponseEntity.ok(filteredResults);
-            }
+                resultsByYear.put(year.toString(), partyVotes);
 
-            // Als er geen party error
-            return ResponseEntity.ok(root);
-        } catch (IOException e) {
-            String errorMessage = "Error: resultatenbestand voor jaar " + year + " niet gevonden of een fout opgetreden.";
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorMessage);
+            } catch (IOException e) {
+                String errorMessage = "Error: resultatenbestand niet gevonden voor jaar " + year + ".";
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorMessage);
+            }
         }
+
+        return ResponseEntity.ok(resultsByYear);
     }
 }

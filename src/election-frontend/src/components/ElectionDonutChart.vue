@@ -1,21 +1,22 @@
 <template>
-  <div class="chart-container m-auto max-w-lg bg-white dark:bg-gray-700">
-    <h2 class="text-xl font-bold text-center mb-4">Totale Stemmen Nederland 2024</h2>
-    <Chart :type="'doughnut'" :data="chartData" :options="chartOptions" />
+  <div class="charts-container grid grid-cols-1 gap-8 lg:grid-cols-2 m-auto max-w-5xl bg-white dark:bg-gray-700 p-4 rounded-lg">
+    <div v-for="(chart, index) in charts" :key="index" class="chart-container">
+      <h2 class="text-xl font-bold text-center mb-4">Totale Stemmen Nederland {{ chart.year }}</h2>
+      <Chart :type="'doughnut'" :data="chart.data" :options="chart.options" />
+    </div>
   </div>
 </template>
 
 <script>
 import Chart from "primevue/chart";
-import config from '../config';
+import config from "../config";
 
 export default {
-  name: "ElectionDonutChart",
+  name: "ElectionDonutCharts",
   components: { Chart },
   data() {
     return {
-      chartData: null,
-      chartOptions: null,
+      charts: [], // Opslag voor de data van afzonderlijke charts
     };
   },
   mounted() {
@@ -24,53 +25,40 @@ export default {
   methods: {
     async fetchElectionResults() {
       try {
-        const response = await fetch(`${config.apiBaseUrl}/api/election-results`); // Dynamische URL
+        const years = [2021, 2023];
+        const response = await fetch(`${config.apiBaseUrl}/api/election-results?years=${years.join(",")}`);
         if (!response.ok) throw new Error("Ophalen van verkiezingsresultaten mislukt");
         const electionData = await response.json();
 
-        // Berekening van de totale stemmen per partij
-        const partyVotes = {};
-        electionData.forEach((transaction) => {
-          const contests = transaction?.count?.election?.contests?.contests || [];
-          contests.forEach((contest) => {
-            contest.totalVotes.selections.forEach((selection) => {
-              const party = selection.affiliationIdentifier?.registeredName;
-              const votes = selection.validVotes || 0;
-              if (party) {
-                if (!partyVotes[party]) {
-                  partyVotes[party] = 0;
-                }
-                partyVotes[party] += votes;
-              }
-            });
-          });
+        this.charts = years.map((year) => {
+          const yearData = electionData[year] || {};
+          const labels = Object.keys(yearData);
+          const data = Object.values(yearData);
+          const backgroundColors = labels.map(
+              (_, index) => `hsl(${(index / labels.length) * 360}, 70%, 70%)`
+          );
+
+          return {
+            year,
+            data: {
+              labels,
+              datasets: [
+                {
+                  data,
+                  backgroundColor: backgroundColors,
+                },
+              ],
+            },
+            options: {
+              responsive: true,
+              plugins: {
+                legend: {
+                  position: "top",
+                },
+              },
+            },
+          };
         });
-
-        // Data voor donutgrafiek
-        const labels = Object.keys(partyVotes);
-        const data = Object.values(partyVotes);
-        const backgroundColors = labels.map(
-            (_, index) => `hsl(${(index / labels.length) * 360}, 70%, 70%)`
-        );
-
-        this.chartData = {
-          labels,
-          datasets: [
-            {
-              data,
-              backgroundColor: backgroundColors,
-            },
-          ],
-        };
-
-        this.chartOptions = {
-          responsive: true,
-          plugins: {
-            legend: {
-              position: "top",
-            },
-          },
-        };
       } catch (err) {
         console.error("Fout bij het ophalen van verkiezingsresultaten:", err);
       }
@@ -78,4 +66,3 @@ export default {
   },
 };
 </script>
-
