@@ -34,36 +34,8 @@
     </div>
 
     <!-- Dropdown voor jaarselectie -->
-    <div class="mb-6">
-      <label for="year" class="block font-bold mb-2 text-gray-800 dark:text-gray-100">Selecteer Jaar:</label>
-      <select
-          id="year"
-          v-model="selectedYear"
-          @change="onYearChange"
-          class="bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded px-2 py-1 w-full"
-      >
-        <option
-            v-for="year in availableYears"
-            :key="year"
-            :value="year"
-        >
-          {{ year }}
-        </option>
-      </select>
-    </div>
 
-    <!-- Chart sectie -->
-    <div v-if="currentChart && currentChart.data.datasets[0].data.some(value => value > 0)" class="chart-container">
-      <h2 class="text-lg md:text-xl font-bold text-center mb-4 text-gray-800 dark:text-gray-100">
-        Zetels per Partij {{ selectedYear }}
-      </h2>
-      <Chart
-          :type="'bar'"
-          :data="currentChart.data"
-          :options="currentChart.options"
-          class="max-w-full"
-      />
-    </div>
+
   </div>
 </template>
 
