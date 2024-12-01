@@ -3,7 +3,8 @@
     <!-- Hero Sectie -->
     <section class="hero text-center py-12 lg:py-16 bg-white dark:bg-gray-800 rounded-lg shadow-xl mt-5 mx-2 lg:mx-5">
       <h1 class="text-3xl sm:text-4xl lg:text-6xl text-gray-800 dark:text-gray-100 mb-5 font-extrabold">
-        Welkom bij VerkiezingsDB
+        Welkom bij Electiondb
+
       </h1>
       <p class="text-sm sm:text-base lg:text-lg text-gray-700 dark:text-gray-300 my-6 sm:my-8 mx-4 sm:mx-12 lg:mx-24">
         Blijf op de hoogte met VerkiezingsDB 2024, jouw ultieme platform voor real-time verkiezingsupdates en deskundige analyses. Verken gedetailleerde kandidatenprofielen en volg elke belangrijke ontwikkeling in de verkiezingscyclus van 2024.
@@ -66,7 +67,7 @@
       <h2 class="text-3xl lg:text-4xl text-center mb-8 font-extrabold text-gray-800 dark:text-gray-100">Verkiezingscategorieën</h2>
       <div class="blocks flex flex-col md:flex-row justify-around gap-4 lg:gap-6 mx-4 sm:mx-6 lg:mx-10">
         <div class="block w-full md:w-1/4 h-36 sm:h-44 flex justify-center items-center bg-blue-600 dark:bg-blue-700 text-center rounded-lg shadow-md cursor-pointer hover:bg-blue-800 dark:hover:bg-blue-600 transition-all text-white transform hover:scale-105">
-          <a href="/"><span class="font-bold text-xl lg:text-2xl">Nationaal Overzicht</span></a>
+          <a href="/election-statistiek"><span class="font-bold text-xl lg:text-2xl">Statistieken</span></a>
         </div>
         <div class="block w-full md:w-1/4 h-36 sm:h-44 flex justify-center items-center bg-blue-600 dark:bg-blue-700 text-center rounded-lg shadow-md cursor-pointer hover:bg-blue-800 dark:hover:bg-blue-600 transition-all text-white transform hover:scale-105">
           <a href="/dashboard"><span class="font-bold text-xl lg:text-2xl">Resultaten per Staat</span></a>
@@ -77,7 +78,7 @@
       </div>
       <div class="text-center mt-10">
         <a href="/threads">
-          <button class="cta-button px-6 sm:px-8 py-3 sm:py-4 text-white bg-blue-700 dark:bg-blue-800 hover:bg-blue-900 dark:hover:bg-blue-700 rounded-full transition-all shadow-lg transform hover:scale-105">Discussie Draadjes</button>
+          <button class="cta-button px-6 sm:px-8 py-3 sm:py-4 text-white bg-blue-700 dark:bg-blue-800 hover:bg-blue-900 dark:hover:bg-blue-700 rounded-full transition-all shadow-lg transform hover:scale-105">Discussies</button>
         </a>
       </div>
     </section>

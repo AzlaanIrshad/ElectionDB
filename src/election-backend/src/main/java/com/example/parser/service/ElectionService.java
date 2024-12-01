@@ -22,19 +22,23 @@ public class ElectionService {
     private TellingFileProcessor tellingFileProcessor;
 
     @Autowired
-    private JsonWriterService jsonWriterService;
-
-    @Autowired
     private KandidatenJsonWriterService kandidatenJsonWriterService;
 
-    public void parseXmlFilesToJson() {
-        logger.info("Starten van het XML naar JSON verwerkingsproces...");
+    @Autowired
+    private TellingenJsonWriterService tellingenJsonWriterService;
+
+    public void parseXmlFilesToJson(int year) {
+        logger.info("Starten van het XML naar JSON verwerkingsproces voor jaar {}", year);
         ExecutorService executor = Executors.newFixedThreadPool(5);
         List<Future<ElectionResult>> futures = new ArrayList<>();
 
-        futures.addAll(tellingFileProcessor.processFiles(executor));
+        futures.addAll(tellingFileProcessor.processFiles(executor, year));
 
+        // Ophalen en loggen van resultaten
         List<ElectionResult> results = collectResults(futures);
+        logger.info("Aantal succesvol verwerkte tellingen bestanden: {}", results.size());
+
+        // Afsluiten van de executor
         executor.shutdown();
         try {
             if (!executor.awaitTermination(60, TimeUnit.SECONDS)) {
@@ -45,9 +49,11 @@ public class ElectionService {
             Thread.currentThread().interrupt();
         }
 
-        jsonWriterService.writeJsonToFile(results);
+        // tellingen naar JSON-bestand
+        tellingenJsonWriterService.writeTellingResultsToJson(year);
 
-        kandidatenJsonWriterService.writeKandidatenResultsToJson();
+        // kandidatenlijsten naar JSON-bestand
+        kandidatenJsonWriterService.writeKandidatenResultsToJson(year);
     }
 
     private List<ElectionResult> collectResults(List<Future<ElectionResult>> futures) {
@@ -55,7 +61,9 @@ public class ElectionService {
         for (Future<ElectionResult> future : futures) {
             try {
                 ElectionResult result = future.get();
-                if (result != null) results.add(result);
+                if (result != null) {
+                    results.add(result);
+                }
             } catch (Exception e) {
                 logger.error("Fout bij het ophalen van resultaat uit future.", e);
             }

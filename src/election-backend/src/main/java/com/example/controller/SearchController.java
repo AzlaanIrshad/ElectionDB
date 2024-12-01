@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 @RestController
 public class SearchController {
 
-    @GetMapping("/api/search")
+    @GetMapping("/search")
     public List<Map<String, Object>> searchElectionResults(@RequestParam("q") String query) throws Exception {
         Path path = new ClassPathResource("election_results.json").getFile().toPath();
         String jsonContent = Files.readString(path);

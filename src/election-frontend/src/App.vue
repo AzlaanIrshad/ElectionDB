@@ -4,7 +4,7 @@
     <HeaderComponent />
 
     <!-- Main Content -->
-    <main class="flex-grow my-8">
+    <main class="flex-grow">
       <router-view />
     </main>
 
