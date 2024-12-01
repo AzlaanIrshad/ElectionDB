@@ -1,5 +1,5 @@
 <template>
-  <div class="charts-container max-w-7xl mx-auto bg-white dark:bg-gray-700 p-6 rounded-lg w-2/5">
+  <div class="charts-container max-w-full sm:max-w-7xl mx-auto bg-white dark:bg-gray-700 p-6 rounded-lg lg:w-2/5 sm:w-full">
     <!-- Dropdown voor jaarselectie -->
     <div class="mb-6">
       <label for="year" class="block font-bold mb-2 text-gray-800 dark:text-gray-100">Selecteer Jaar:</label>
@@ -21,7 +21,7 @@
 
     <!-- Chart sectie -->
     <div class="chart-container">
-      <h2 class="text-lg md:text-xl font-bold text-center mb-4 text-gray-800 dark:text-gray-100">
+      <h2 class="text-lg sm:text-xl font-bold text-center mb-4 text-gray-800 dark:text-gray-100">
         Totale Stemmen Nederland {{ selectedYear }}
       </h2>
       <Chart

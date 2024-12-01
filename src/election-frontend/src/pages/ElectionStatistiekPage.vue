@@ -1,8 +1,8 @@
 <template>
-  <div class="flex flex-col md:flex-row h-screen">
+  <div class="flex flex-col md:flex-row lg:max-h-fit">
     <!-- Sidebar Menu -->
     <div
-        class="w-full md:w-64 bg-gray-900 text-gray-300 shadow-lg flex flex-col border-r border-white md:h-screen"
+        class="w-full md:w-64 bg-gray-900 text-gray-300 shadow-lg flex flex-col border-r border-white md:h-auto"
     >
       <div class="flex justify-between items-center p-4 md:border-b border-gray-600">
         <h2 class="text-xl font-bold">Statistieken</h2>

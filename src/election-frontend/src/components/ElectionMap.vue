@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col lg:flex-row">
     <!-- Checkboxes sectie -->
-    <div class="w-full lg:w-1/4 p-4 border-b lg:border-b-0 lg:border-r border-gray-300 bg-gray-50 dark:bg-gray-800">
+    <div class="w-full lg:w-1/4 p-4 border-b lg:border-b-0 lg:border-r border-gray-300 bg-gray-50 dark:bg-gray-800 rounded-lg">
       <!-- Dropdown voor jaartal -->
       <div class="mb-4">
         <label for="year" class="block font-bold mb-2 text-gray-800 dark:text-gray-100">Selecteer Jaar:</label>
