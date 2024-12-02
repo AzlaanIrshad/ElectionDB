@@ -2,12 +2,14 @@ package com.example.service;
 
 import com.example.entity.User;
 import com.example.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import com.example.util.JwtUtil;
-
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -22,13 +24,15 @@ public class UserService {
     @Autowired
     private JwtUtil jwtUtil;
 
+    private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
     public String authenticate(String email, String password) {
         logger.info("Attempting authentication for email: {}", email);
 
         Optional<User> userOptional = userRepository.findByEmail(email);
         if (userOptional.isPresent()) {
             User user = userOptional.get();
-            if (user.getPassword().equals(password)) {
+            if (passwordEncoder.matches(password, user.getPassword())) {
                 logger.info("Authentication successful for email: {}", email);
                 return jwtUtil.generateToken(user.getEmail(), user.getRole().name());
             } else {
@@ -42,6 +46,7 @@ public class UserService {
 
     public void saveUser(User user) {
         logger.info("Saving new user with email: {}", user.getEmail());
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
     }
 
