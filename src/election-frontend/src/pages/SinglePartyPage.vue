@@ -182,7 +182,7 @@ export default {
           {
             label: "Votes",
             data: chartData,
-            backgroundColor: "rgba(87,192,75,0.8)",
+            backgroundColor: "#06b6d4",
           },
         ],
       };
