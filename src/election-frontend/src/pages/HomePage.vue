@@ -27,9 +27,8 @@
           </a>
         </div>
 
-        <!-- Routes onder de bovenste tekst -->
-        <div class="absolute top-1/2 left-0 right-0 p-4 sm:p-6 lg:p-8 flex flex-wrap justify-between gap-6">
-          <!-- De vier route links in een flex-row voor grotere schermen -->
+        <!-- Routes onder de bovenste tekst-->
+        <div class="absolute top-1/2 left-0 right-0 p-4 sm:p-6 lg:p-8 flex flex-wrap justify-between gap-6 hidden lg:block">
           <div class="flex w-full justify-around gap-6 lg:flex-row flex-col">
             <router-link
                 to="/election-statistiek/per-stemlocatie"
