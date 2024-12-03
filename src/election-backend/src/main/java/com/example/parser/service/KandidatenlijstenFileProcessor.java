@@ -31,6 +31,16 @@ public class KandidatenlijstenFileProcessor {
                 "/CSB_uitslag";
         files.addAll(getFiles(directoryPath3, year));
 
+        // 2012
+        String directoryPath4 = "src/election-backend/src/main/resources/ElectionResults/" + year +
+                "/EML_bestanden_TK2012";
+        files.addAll(getFiles(directoryPath4, year));
+
+        // 2010
+        String directoryPath5 = "src/election-backend/src/main/resources/ElectionResults/" + year +
+                "/EML_bestanden_TK2010";
+        files.addAll(getFiles(directoryPath5, year));
+
         logger.info("Aantal kandidatenlijsten bestanden gevonden voor verwerking: {}", files.size());
         return files;
     }
