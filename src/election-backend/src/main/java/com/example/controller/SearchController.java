@@ -35,3 +35,6 @@ public class SearchController {
                 .collect(Collectors.toList());
     }
 }
+
+
+

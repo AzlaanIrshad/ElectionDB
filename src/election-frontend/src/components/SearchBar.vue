@@ -29,12 +29,11 @@
     >
       <li
           v-for="(result, index) in results"
-          :key="result.id || index"
+          :key="result.partyName || index"
           @click="selectResult(result)"
           class="cursor-pointer text-white px-4 py-2 hover:bg-gray-600 dark:hover:bg-gray-600 transition duration-200 ease-in-out"
       >
-        <span v-if="result.partyName">Partij: {{ result.partyName }}</span>
-        <span v-else-if="result.candidateName">Kandidaat: {{ result.candidateName }}</span>
+        <span>Partij: {{ result.partyName }}</span>
       </li>
     </ul>
   </div>
@@ -43,7 +42,10 @@
 <script>
 export default {
   props: {
-    electionData: Array,
+    electionData: {
+      type: Object, // Accepts object
+      required: true,
+    },
   },
   data() {
     return {
@@ -53,43 +55,51 @@ export default {
   },
   methods: {
     searchResults() {
+      console.log("Election Data:", this.electionData); // Debug log
+
+      // Check if electionData is valid and has the expected structure
+      if (!this.electionData || typeof this.electionData !== "object") {
+        console.error("electionData is undefined or not an object.");
+        return;
+      }
+
+      // Get the actual data inside the year key (e.g., 2023)
+      const yearData = this.electionData[Object.keys(this.electionData)[0]]; // This assumes only one year key is present
+
+      if (!yearData || typeof yearData !== "object") {
+        console.error("Year data is not valid.");
+        return;
+      }
+
+      // If the search query is not empty
       if (this.searchQuery.trim() !== "") {
-        const uniqueIds = new Set();
+        const query = this.searchQuery.toLowerCase();
+        const allParties = Object.keys(yearData);
 
-        this.results = this.electionData.flatMap((transaction) =>
-            transaction.count.election.contests.contests.flatMap((contest) =>
-                contest.totalVotes.selections
-                    .map((selection) => {
-                      const partyId = selection.affiliationIdentifier?.id || null;
-                      const partyName = selection.affiliationIdentifier?.registeredName || null;
-                      const candidateId = selection.candidate?.candidateIdentifier?.id || null;
-                      const candidateName = selection.candidate?.name || null;
+        console.log("All Parties:", allParties); // Debug log
 
-                      if (
-                          (partyName?.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-                              candidateName?.toLowerCase().includes(this.searchQuery.toLowerCase()))
-                      ) {
-                        const id = partyId || candidateId;
-                        if (!uniqueIds.has(id)) {
-                          uniqueIds.add(id);
-                          return { id, partyName, candidateId, candidateName };
-                        }
-                      }
-                      return null;
-                    })
-                    .filter((result) => result !== null)
-            )
-        );
+        // Filter parties based on the search query and map to desired format
+        this.results = allParties
+            .filter((partyName) => partyName.toLowerCase().includes(query))
+            .map((partyName) => ({
+              partyName,
+              votes: yearData[partyName], // Get vote count
+            }));
+
+        console.log("Filtered Results:", this.results); // Debug log
       } else {
+        // Clear results when the search query is empty
         this.results = [];
       }
     },
+
+
     selectResult(result) {
-      if (result.partyName) {
-        this.$router.push({ name: "single-party", params: { id: result.id }, query: { search: this.searchQuery } });
-      } else if (result.candidateName) {
-        this.$router.push({ name: "search-results", params: { query: result.candidateId }, query: { search: this.searchQuery } });
-      }
+      this.$router.push({
+        name: "single-party",
+        params: { id: result.partyName },
+        query: { search: this.searchQuery },
+      });
       this.searchQuery = "";
       this.results = [];
     },
