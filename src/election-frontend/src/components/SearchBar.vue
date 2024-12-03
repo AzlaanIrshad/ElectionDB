@@ -77,6 +77,9 @@ export default {
       });
       this.searchQuery = "";
       this.results = [];
+      setTimeout(() => {
+        window.location.reload();
+      }, 100);
     },
   },
 };
