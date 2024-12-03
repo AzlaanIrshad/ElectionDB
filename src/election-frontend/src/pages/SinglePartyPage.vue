@@ -44,7 +44,7 @@ export default {
   },
   data() {
     return {
-      partyName: "",
+      partyId: this.$route.params.id, // Use partyId directly from route
       partyData: null,
       loading: false,
       error: null,
@@ -52,32 +52,20 @@ export default {
   },
   methods: {
     async fetchPartyData() {
-      const partyId = this.$route.params.id;
       this.loading = true;
       this.error = null;
 
       try {
-        // Fetch election results
-        const response = await fetch(`${config.apiBaseUrl}/api/election-results`);
+        // Fetch party data from the backend
+        const response = await fetch(`${config.apiBaseUrl}/api/party-result/${this.partyId}`);
         if (!response.ok) {
-          throw new Error("Failed to fetch election results");
-        }
-
-        // Fetch candidates data
-        const candidateResponse = await fetch(`${config.apiBaseUrl}/api/candidates`);
-        if (!candidateResponse.ok) {
-          throw new Error("Failed to fetch candidates");
+          throw new Error("Failed to fetch party data");
         }
 
         const data = await response.json();
-        const candidateData = await candidateResponse.json();
-        console.log("Candidate Data:", candidateData);
-        const party = this.findPartyById(data, partyId, candidateData);
-        if (party) {
-          this.partyData = this.transformPartyData(party);
-        } else {
-          throw new Error("Party not found");
-        }
+        console.log("Party Data:", data);
+        // Use the data directly for rendering
+        this.partyData = this.transformPartyData(data);
       } catch (err) {
         this.error = err.message;
       } finally {
@@ -85,84 +73,17 @@ export default {
       }
     },
 
-    findPartyById(data, partyId, candidateData) {
-      let party = null;
-      const candidateVotesMap = {};
+    transformPartyData(data) {
+      // Directly process the data received from the backend
+      const years = Object.keys(data);
+      if (years.length === 0) return null;
 
-      for (const transaction of data) {
-        const contests = transaction?.count?.election?.contests?.contests || [];
-        contests.forEach((contest) => {
-          let currentPartyId = null;
-
-          contest.totalVotes.selections.forEach((selection) => {
-            if (selection.affiliationIdentifier?.id) {
-              currentPartyId = selection.affiliationIdentifier.id;
-
-              if (currentPartyId === partyId) {
-                if (!party) {
-                  party = {
-                    partyId,
-                    partyName: selection.affiliationIdentifier.registeredName || "Unknown Party",
-                    totalVotes: 0,
-                    candidates: [],
-                  };
-                }
-                party.totalVotes += selection.validVotes || 0;
-              }
-            }
-
-            if (currentPartyId === partyId && selection.candidate?.candidateIdentifier?.id) {
-              const candidateId = selection.candidate.candidateIdentifier.id;
-              const validVotes = selection.validVotes || 0;
-
-              if (candidateVotesMap[candidateId]) {
-                candidateVotesMap[candidateId].validVotes += validVotes;
-              } else {
-                candidateVotesMap[candidateId] = {
-                  id: candidateId,
-                  validVotes,
-                  name: `Candidate ${candidateId}`, // Default name for fallback
-                };
-              }
-            }
-          });
-        });
-      }
-
-      if (party) {
-        console.log("a", candidateData);
-        for (const biglist of candidateData) {
-          console.log("b", biglist.candidateList);
-            const affiliation = biglist?.candidateList?.election?.contests[0]?.affiliations?.find(
-                (aff) => aff.affiliationIdentifier?.id === partyId
-            );
-            console.log(affiliation);
-          if (affiliation) {
-            affiliation.candidates.forEach((candidate) => {
-              const candidateId = candidate.candidateIdentifier.id;
-              if (candidateVotesMap[candidateId]) {
-                const firstName = candidate.candidateFullName.personName.firstName;
-                const lastName = candidate.candidateFullName.personName.lastName;
-                candidateVotesMap[candidateId].name = `${firstName} ${lastName}`;
-              }
-            });
-           }
-          }
-        party.candidates = Object.values(candidateVotesMap);
-      }
-
-      console.log("Candidate Votes Map:", candidateVotesMap);
-      console.log("Accumulated Party Data:", party);
-
-      return party;
-    },
-
-    transformPartyData(party) {
+      const partyData = data[years[0]];
       return {
-        partyName: party.partyName,
-        totalVotes: party.totalVotes,
-        candidates: party.candidates || [],
-        chartDataForCandidates: this.prepareChartData(party.candidates || []),
+        partyName: partyData.partyName,
+        totalVotes: partyData.totalVotes,
+        candidates: partyData.candidates || [],
+        chartDataForCandidates: this.prepareChartData(partyData.candidates || []),
       };
     },
 
@@ -182,7 +103,7 @@ export default {
           {
             label: "Votes",
             data: chartData,
-            backgroundColor: "rgba(87,192,75,0.8)",
+            backgroundColor: "#06b6d4",
           },
         ],
       };
