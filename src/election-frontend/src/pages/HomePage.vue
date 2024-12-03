@@ -1,11 +1,10 @@
 <template>
   <div class="homepage bg-gray-100 dark:bg-gray-900 font-sans text-gray-900 dark:text-gray-100">
     <!-- Hero Sectie -->
-    <!-- Hero Sectie -->
     <section class="relative flex items-center justify-center" :style="{ height: `calc(100vh - 4rem)` }">
       <div
           class="relative w-full h-full bg-cover bg-center shadow-lg flex flex-col lg:flex-row"
-          style="background-image: url('https://r.mobirisesite.com/963736/assets/images/photo-1631039302236-14327f30683a.jpeg');"
+          style="background-image: url('https://www.tweedekamer.nl/sites/default/files/styles/huge/public/2024-11/20240918%20APB%20dag%201%20.JPG?itok=bx6EaQ_-');"
       >
         <div class="absolute inset-0 bg-black bg-opacity-30"></div>
 
@@ -32,9 +31,9 @@
           <div class="flex w-full justify-around gap-6 lg:flex-row flex-col">
             <router-link
                 to="/election-statistiek/per-stemlocatie"
-                class="flex flex-col bg-opacity-90 p-4 sm:p-6 rounded-lg shadow-md bg-gray-800 text-white w-full sm:w-48 lg:w-52 h-64"
+                class="flex flex-col bg-opacity-100 p-4 sm:p-6 rounded-lg shadow-md bg-gray-800 text-white w-full sm:w-48 lg:w-1/6 h-max"
             >
-              <span class="text-2xl sm:text-3xl font-bold">01</span>
+              <span class="text-2xl sm:text-3xl font-bold pb-1">01</span>
               <h2 class="text-sm sm:text-base md:text-lg font-bold dark:text-white mb-1">Interactieve Kaarten</h2>
               <p class="text-xs sm:text-sm dark:text-white">
                 Navigeer door onze dynamische kaart die verkiezingsresultaten per stad weergeeft en de leidende partij van de verkiezingen zien .
@@ -43,9 +42,9 @@
 
             <router-link
                 to="/election-statistiek/per-verkiezing"
-                class="flex flex-col bg-opacity-90 p-4 sm:p-6 rounded-lg shadow-md bg-gray-800 text-white w-full sm:w-48 lg:w-52 h-64"
+                class="flex flex-col bg-opacity-100 p-4 sm:p-6 rounded-lg shadow-md bg-gray-800 text-white w-full sm:w-48 lg:w-1/6 h-max"
             >
-              <span class="text-2xl sm:text-3xl font-bold">02</span>
+              <span class="text-2xl sm:text-3xl font-bold pb-2">02</span>
               <h2 class="text-sm sm:text-base md:text-lg font-bold text-white mb-1">Totaal Stemmen Nederland</h2>
               <p class="text-xs sm:text-sm text-white">
                 Zie hier de totale stemmen per verkiezingsjaar in Nederland van meerdere jaren.
@@ -54,9 +53,9 @@
 
             <router-link
                 to="/election-statistiek/zetels-per-partij"
-                class="flex flex-col bg-opacity-90 p-4 sm:p-6 rounded-lg shadow-md bg-gray-800 text-white w-full sm:w-48 lg:w-52 h-64"
+                class="flex flex-col bg-opacity-100 p-4 sm:p-6 rounded-lg shadow-md bg-gray-800 text-white w-full sm:w-48 lg:w-1/6 h-max"
             >
-              <span class="text-2xl sm:text-3xl font-bold">03</span>
+              <span class="text-2xl sm:text-3xl font-bold pb-2">03</span>
               <h2 class="text-sm sm:text-base md:text-lg font-bold text-white mb-1">Aantal Zetels Per Partij</h2>
               <p class="text-xs sm:text-sm text-white">
                 Hier vind je de zetels per partij over de jaren heen en hoe deze zich hebben ontwikkeld.
@@ -65,9 +64,9 @@
 
             <router-link
                 to="/election-statistiek/zetels-per-jaar"
-                class="flex flex-col bg-opacity-90 p-4 sm:p-6 rounded-lg shadow-md bg-gray-800 text-white w-full sm:w-48 lg:w-52 h-64"
+                class="flex flex-col bg-opacity-100 p-4 sm:p-6 rounded-lg shadow-md bg-gray-800 text-white w-full sm:w-48 lg:w-1/6 h-max"
             >
-              <span class="text-2xl sm:text-3xl font-bold">04</span>
+              <span class="text-2xl sm:text-3xl font-bold pb-2">04</span>
               <h2 class="text-sm sm:text-base md:text-lg font-bold text-white mb-1">Aantal Zetels Per Jaar</h2>
               <p class="text-xs sm:text-sm text-white">
                 Hier vind hoeveel zetels er per jaar zijn behaald en hoe deze zich hebben ontwikkeld.
@@ -85,7 +84,7 @@
         <h2 class="text-3xl lg:text-4xl text-center mb-8 font-extrabold text-gray-800 dark:text-gray-100">Verkiezingscategorieën</h2>
         <div class="blocks flex flex-col md:flex-row justify-around gap-4 lg:gap-6 mx-4 sm:mx-6 lg:mx-10">
           <div class="block w-full md:w-1/4 h-36 sm:h-44 flex justify-center items-center bg-blue-600 dark:bg-blue-700 text-center rounded-lg shadow-md cursor-pointer hover:bg-blue-800 dark:hover:bg-blue-600 transition-all text-white transform hover:scale-105">
-            <a href="/"><span class="font-bold text-xl lg:text-2xl">Nationaal Overzicht</span></a>
+            <a href="/threads"><span class="font-bold text-xl lg:text-2xl">Election Discussies</span></a>
           </div>
           <div class="block w-full md:w-1/4 h-36 sm:h-44 flex justify-center items-center bg-blue-600 dark:bg-blue-700 text-center rounded-lg shadow-md cursor-pointer hover:bg-blue-800 dark:hover:bg-blue-600 transition-all text-white transform hover:scale-105">
             <a href="/dashboard"><span class="font-bold text-xl lg:text-2xl">Resultaten per Staat</span></a>
@@ -95,37 +94,7 @@
           </div>
         </div>
       </section>
-    <!-- Carrousel Sectie -->
-    <div class="carousel my-8 relative overflow-hidden mx-4 sm:mx-8 md:scroll-mx-24 lg:mx-48 rounded-lg shadow-lg">
-      <div
-          class="carousel-images flex transition-transform duration-500"
-          :style="{ transform: `translateX(-${activeIndex * 100}%)` }"
-      >
-        <img
-            v-for="(image, index) in featuredImages"
-            :key="index"
-            :src="image"
-            class="hero-image w-full h-48 sm:h-64 lg:h-80 object-fill rounded-lg shadow-md"
-            alt="Uitgelichte Afbeelding"
-        />
-      </div>
 
-      <!-- Linker Pijl -->
-      <button
-          class="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200 p-2 rounded-full shadow-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition"
-          @click="prevImage"
-      >
-        &#10094;
-      </button>
-
-      <!-- Rechter Pijl -->
-      <button
-          class="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200 p-2 rounded-full shadow-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition"
-          @click="nextImage"
-      >
-        &#10095;
-      </button>
-    </div>
 
     <!-- Tegels Sectie -->
     <div class="tiles flex justify-center mt-5 gap-2 sm:gap-4 pb-8">
@@ -133,8 +102,6 @@
           v-for="(image, index) in featuredImages"
           :key="index"
           class="tile w-1/4 sm:w-1/5 h-24 sm:h-32 lg:h-40 bg-gray-200 dark:bg-gray-700 text-center rounded-lg shadow-md transition-all cursor-pointer hover:bg-blue-500 dark:hover:bg-blue-600 transform hover:scale-105"
-          :class="{ 'border-blue-500 dark:border-blue-400 border-4': activeIndex === index }"
-          @click="setActiveIndex(index)"
       >
         <img :src="image" alt="Thumbnail" class="w-full h-full object-cover rounded-lg" />
       </div>
@@ -169,7 +136,6 @@
 export default {
   data() {
     return {
-      activeIndex: 0,
       featuredImages: [
         "https://media.gettyimages.com/id/1327961273/nl/foto/the-hague-netherlands-general-interior-view-of-the-tweede-kamer-building-is-seen-during-the.jpg?s=612x612&w=0&k=20&c=FZv3KDWl4flKiXpm49-0QwZvXB9Sp2Cry3artg0Uw9o=",
         "https://media.gettyimages.com/id/1793796325/nl/foto/the-hague-netherlands-a-woman-walks-past-campaign-posters-on-november-20-2023-in-the-hague.jpg?s=612x612&w=0&k=20&c=tyylwgIawxWevTh-6WcVutNA-yhlPcz9GLWkT6Lwzc8=",
@@ -179,23 +145,9 @@ export default {
     };
   },
   methods: {
-    nextImage() {
-      this.activeIndex = (this.activeIndex + 1) % this.featuredImages.length;
-    },
-    prevImage() {
-      this.activeIndex = (this.activeIndex - 1 + this.featuredImages.length) % this.featuredImages.length;
-    },
-    setActiveIndex(index) {
-      this.activeIndex = index;
-    },
-  },
+
   mounted() {
-    // Automatische rotatie van de carrousel
-    this.carouselInterval = setInterval(this.nextImage, 5000); // Elke 5 seconden
   },
-  beforeDestroy() {
-    // Stop de intervaltimer wanneer de component wordt vernietigd
-    clearInterval(this.carouselInterval);
   },
 };
 </script>

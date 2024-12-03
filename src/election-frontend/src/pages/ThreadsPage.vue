@@ -13,7 +13,7 @@
           </p>
         </div>
         <img
-            src="https://via.placeholder.com/400x250.png?text=Verkiezings+Draadjes"
+            src="https://r.mobirisesite.com/963736/assets/images/g84b669d2938ac3ebdc84de8e5a10-h_m48kfvnb.jpg"
             alt="Draadjes Placeholder"
             class="threads-image mt-8 lg:mt-0 w-full lg:w-1/2 rounded-lg shadow-md"
         />
