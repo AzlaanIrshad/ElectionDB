@@ -20,7 +20,6 @@ public class PartyController {
             @PathVariable String partyId,
             @RequestParam(value = "years", required = false) List<Integer> years) {
 
-        // Default year to 2023 if no years are provided
         if (years == null || years.isEmpty()) {
             years = List.of(2023);
         }
@@ -29,12 +28,18 @@ public class PartyController {
         ObjectMapper objectMapper = new ObjectMapper();
 
         for (Integer year : years) {
-            String filePath = "ParsedJson/" + year + "/tellingen_results.json";
+            String partyFilePath = "ParsedJson/" + year + "/tellingen_results.json";
+            String candidateFilePath = "ParsedJson/" + year + "/kandidatenlijsten_results.json";
 
-            try (InputStream inputStream = new ClassPathResource(filePath).getInputStream()) {
-                JsonNode root = objectMapper.readTree(inputStream);
+            try (InputStream partyInputStream = new ClassPathResource(partyFilePath).getInputStream();
+                 InputStream candidateInputStream = new ClassPathResource(candidateFilePath).getInputStream()) {
 
-                Map<String, Object> partyData = extractPartyData(root, partyId);
+                JsonNode partyRoot = objectMapper.readTree(partyInputStream);
+                JsonNode candidateRoot = objectMapper.readTree(candidateInputStream);
+
+                Map<String, Map<String, String>> partyCandidatesMap = extractCandidateData(candidateRoot);
+
+                Map<String, Object> partyData = extractPartyData(partyRoot, partyId, partyCandidatesMap);
                 if (partyData != null) {
                     resultsByYear.put(year.toString(), partyData);
                 } else {
@@ -50,11 +55,44 @@ public class PartyController {
         return ResponseEntity.ok(resultsByYear);
     }
 
-    private Map<String, Object> extractPartyData(JsonNode root, String partyId) {
+    private Map<String, Map<String, String>> extractCandidateData(JsonNode root) {
+        Map<String, Map<String, String>> partyCandidatesMap = new HashMap<>();
+
+        for (JsonNode transaction : root) {
+            JsonNode contests = transaction.path("candidateList").path("election").path("contests");
+
+            for (JsonNode contest : contests) {
+                JsonNode affiliations = contest.path("affiliations");
+
+                for (JsonNode affiliation : affiliations) {
+                    String partyId = affiliation.path("affiliationIdentifier").path("id").asText();
+                    JsonNode candidates = affiliation.path("candidates");
+
+                    Map<String, String> candidatesForParty = partyCandidatesMap.computeIfAbsent(partyId, k -> new HashMap<>());
+
+                    for (JsonNode candidate : candidates) {
+                        String candidateId = candidate.path("candidateIdentifier").path("id").asText();
+                        String firstName = candidate.path("candidateFullName").path("personName").path("firstName").asText("");
+                        String lastName = candidate.path("candidateFullName").path("personName").path("lastName").asText("");
+
+                        if (!candidateId.isEmpty()) {
+                            candidatesForParty.put(candidateId, firstName + " " + lastName);
+                        }
+                    }
+                }
+            }
+        }
+
+        return partyCandidatesMap;
+    }
+
+    private Map<String, Object> extractPartyData(JsonNode root, String partyId, Map<String, Map<String, String>> partyCandidatesMap) {
         Map<String, Object> partyData = null;
-        Map<String, Map<String, Object>> candidateVotesMap = new HashMap<>();
         List<Map<String, Object>> candidates = new ArrayList<>();
+        Map<String, Map<String, Object>> candidateVotesMap = new HashMap<>();
         int accumulatedTotalVotes = 0;
+
+        Map<String, String> candidateNameMap = partyCandidatesMap.getOrDefault(partyId, new HashMap<>());
 
         for (JsonNode transaction : root) {
             JsonNode contests = transaction.path("count").path("election").path("contests").path("contests");
@@ -64,7 +102,6 @@ public class PartyController {
                 String currentPartyId = null;
 
                 for (JsonNode selection : selections) {
-                    // Check for party data
                     if (selection.has("affiliationIdentifier")) {
                         currentPartyId = selection.path("affiliationIdentifier").path("id").asText();
                         if (partyId.equals(currentPartyId)) {
@@ -77,7 +114,7 @@ public class PartyController {
                                 partyData.put("partyName", partyName);
                                 partyData.put("candidates", candidates);
                             }
-                            accumulatedTotalVotes += totalVotes; // Add votes to accumulated total
+                            accumulatedTotalVotes += totalVotes;
                         }
                     }
 
@@ -85,14 +122,17 @@ public class PartyController {
                         String candidateId = selection.path("candidate").path("candidateIdentifier").path("id").asText();
                         int candidateVotes = selection.path("validVotes").asInt(0);
 
-                        Map<String, Object> candidateData = candidateVotesMap.computeIfAbsent(candidateId, k -> new HashMap<>());
+                        Map<String, Object> candidateData = candidateVotesMap.computeIfAbsent(candidateId, k -> {
+                            Map<String, Object> newCandidateData = new HashMap<>();
+                            String candidateName = candidateNameMap.getOrDefault(candidateId, "Unknown Candidate");
+                            newCandidateData.put("candidateId", candidateId);
+                            newCandidateData.put("name", candidateName);
+                            newCandidateData.put("validVotes", 0);
+                            return newCandidateData;
+                        });
 
-                        int existingVotes = (int) candidateData.getOrDefault("validVotes", 0);
+                        int existingVotes = (int) candidateData.get("validVotes");
                         candidateData.put("validVotes", existingVotes + candidateVotes);
-
-                        String firstName = selection.path("candidate").path("candidateFullName").path("personName").path("firstName").asText("");
-                        String lastName = selection.path("candidate").path("candidateFullName").path("personName").path("lastName").asText("");
-                        candidateData.put("name", firstName + " " + lastName);
 
                         if (!candidates.contains(candidateData)) {
                             candidates.add(candidateData);
@@ -103,7 +143,6 @@ public class PartyController {
         }
 
         if (partyData != null) {
-            // Accumulate total votes for the party
             partyData.put("totalVotes", accumulatedTotalVotes);
         }
 
