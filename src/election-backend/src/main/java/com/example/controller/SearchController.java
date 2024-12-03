@@ -13,7 +13,6 @@ import org.springframework.core.io.ClassPathResource;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/search")
@@ -35,26 +34,31 @@ public class SearchController {
                 for (JsonNode contest : contests) {
                     JsonNode selections = contest.path("totalVotes").path("selections");
                     for (JsonNode selection : selections) {
+                        String partyId = selection.path("affiliationIdentifier").path("id").asText();
                         String partyName = selection.path("affiliationIdentifier").path("registeredName").asText("Unknown Party");
-                        if (partyName.toLowerCase().contains(query.toLowerCase())) {
-                            String partyId = selection.path("affiliationIdentifier").path("id").asText();
-                            int validVotes = selection.path("validVotes").asInt(0);
+                        int validVotes = selection.path("validVotes").asInt(0);
 
-                            // Accumulate votes for unique party names
-                            partiesMap.putIfAbsent(partyName, new HashMap<>());
-                            Map<String, Object> partyData = partiesMap.get(partyName);
-                            partyData.put("partyName", partyName);
+                        if (partyName.toLowerCase().contains(query.toLowerCase())) {
+
+                            partiesMap.putIfAbsent(partyId, new HashMap<>());
+                            Map<String, Object> partyData = partiesMap.get(partyId);
                             partyData.put("partyId", partyId);
+                            partyData.put("partyName", partyName);
                             partyData.put("totalVotes", (int) partyData.getOrDefault("totalVotes", 0) + validVotes);
                         }
                     }
                 }
             }
 
-            List<Map<String, Object>> filteredParties = new ArrayList<>(partiesMap.values());
-            filteredParties.sort((p1, p2) -> Integer.compare((int) p2.get("totalVotes"), (int) p1.get("totalVotes")));
+            List<Map<String, Object>> parties = new ArrayList<>(partiesMap.values());
+            parties.sort((p1, p2) -> Integer.compare((int) p2.get("totalVotes"), (int) p1.get("totalVotes")));
 
-            return ResponseEntity.ok(filteredParties);
+
+            if (!parties.isEmpty()) {
+                parties.remove(0);
+            }
+
+            return ResponseEntity.ok(parties);
 
         } catch (IOException e) {
             String errorMessage = "Error: resultatenbestand niet gevonden voor 2023.";

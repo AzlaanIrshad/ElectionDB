@@ -29,7 +29,7 @@
     >
       <li
           v-for="(result, index) in results"
-          :key="result.partyName || index"
+          :key="result.partyId || index"
           @click="selectResult(result)"
           class="cursor-pointer text-white px-4 py-2 hover:bg-gray-600 dark:hover:bg-gray-600 transition duration-200 ease-in-out"
       >
@@ -72,7 +72,7 @@ export default {
     selectResult(result) {
       this.$router.push({
         name: "single-party",
-        params: { id: result.partyName },
+        params: { id: result.partyId },
         query: { search: this.searchQuery },
       });
       this.searchQuery = "";
