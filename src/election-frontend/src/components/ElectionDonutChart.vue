@@ -31,6 +31,9 @@
           :options="currentChart.options"
           class="max-w-full"
       />
+      <div v-else class="text-center text-gray-500 dark:text-gray-300">
+        Geen gegevens beschikbaar voor het geselecteerde jaar.
+      </div>
     </div>
   </div>
 </template>
@@ -100,7 +103,9 @@ export default {
       }
     },
     onYearChange() {
+      console.log(`Jaar gewijzigd naar: ${this.selectedYear}`);
     },
   },
 };
 </script>
+
