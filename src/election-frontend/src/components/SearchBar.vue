@@ -29,12 +29,11 @@
     >
       <li
           v-for="(result, index) in results"
-          :key="result.id || index"
+          :key="result.partyId || index"
           @click="selectResult(result)"
           class="cursor-pointer text-white px-4 py-2 hover:bg-gray-600 dark:hover:bg-gray-600 transition duration-200 ease-in-out"
       >
-        <span v-if="result.partyName">Partij: {{ result.partyName }}</span>
-        <span v-else-if="result.candidateName">Kandidaat: {{ result.candidateName }}</span>
+        <span>Partij: {{ result.partyName }}</span>
       </li>
     </ul>
   </div>
@@ -42,9 +41,6 @@
 
 <script>
 export default {
-  props: {
-    electionData: Array,
-  },
   data() {
     return {
       searchQuery: "",
@@ -52,44 +48,33 @@ export default {
     };
   },
   methods: {
-    searchResults() {
+    async searchResults() {
       if (this.searchQuery.trim() !== "") {
-        const uniqueIds = new Set();
+        try {
+          const response = await fetch(
+              `http://localhost:8080/api/search/2023?query=${encodeURIComponent(this.searchQuery)}`
+          );
 
-        this.results = this.electionData.flatMap((transaction) =>
-            transaction.count.election.contests.contests.flatMap((contest) =>
-                contest.totalVotes.selections
-                    .map((selection) => {
-                      const partyId = selection.affiliationIdentifier?.id || null;
-                      const partyName = selection.affiliationIdentifier?.registeredName || null;
-                      const candidateId = selection.candidate?.candidateIdentifier?.id || null;
-                      const candidateName = selection.candidate?.name || null;
-
-                      if (
-                          (partyName?.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-                              candidateName?.toLowerCase().includes(this.searchQuery.toLowerCase()))
-                      ) {
-                        const id = partyId || candidateId;
-                        if (!uniqueIds.has(id)) {
-                          uniqueIds.add(id);
-                          return { id, partyName, candidateId, candidateName };
-                        }
-                      }
-                      return null;
-                    })
-                    .filter((result) => result !== null)
-            )
-        );
+          if (!response.ok) {
+            console.error("Failed to fetch results:", response.statusText);
+            return;
+          }
+          this.results = await response.json();
+          console.log("Filtered Results:", this.results);
+        } catch (error) {
+          console.error("Error fetching search results:", error);
+        }
       } else {
         this.results = [];
       }
     },
+
     selectResult(result) {
-      if (result.partyName) {
-        this.$router.push({ name: "single-party", params: { id: result.id }, query: { search: this.searchQuery } });
-      } else if (result.candidateName) {
-        this.$router.push({ name: "search-results", params: { query: result.candidateId }, query: { search: this.searchQuery } });
-      }
+      this.$router.push({
+        name: "single-party",
+        params: { id: result.partyId },
+        query: { search: this.searchQuery },
+      });
       this.searchQuery = "";
       this.results = [];
     },
