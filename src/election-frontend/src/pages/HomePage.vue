@@ -1,75 +1,85 @@
 <template>
   <div class="homepage bg-gray-100 dark:bg-gray-900 font-sans text-gray-900 dark:text-gray-100">
     <!-- Hero Sectie -->
-    <section class="relative max-h-[97vh] h-screen flex items-center justify-center">
+    <!-- Hero Sectie -->
+    <section class="relative flex items-center justify-center" :style="{ height: `calc(100vh - 4rem)` }">
       <div
           class="relative w-full h-full bg-cover bg-center shadow-lg flex flex-col lg:flex-row"
           style="background-image: url('https://r.mobirisesite.com/963736/assets/images/photo-1631039302236-14327f30683a.jpeg');"
       >
         <div class="absolute inset-0 bg-black bg-opacity-30"></div>
 
-        <div class="bg-blue-700 dark:bg-blue-800 absolute bottom-8 left-8 z-10 bg-opacity-90 p-6 sm:p-8 rounded-lg shadow-md max-w-[40rem] w-full">
+        <!-- Informatie boven de routes, dichter bij boven -->
+        <div class="mt-16 absolute top-1/6 left-1/2 transform -translate-x-1/2 -translate-y-1/6 z-10 text-center p-6 sm:p-8 rounded-lg shadow-md max-w-[40rem] w-full bg-opacity-90 bg-gray-800">
           <p class="text-sm sm:text-base font-medium text-white mb-2">Jouw Election Hub</p>
-          <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white mb-4 leading-tight">
+          <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4 leading-tight">
             Welkom bij ElectionDB
           </h1>
           <p class="text-sm sm:text-base text-white mb-6">
             Blijf op de hoogte met VerkiezingsDB 2024, jouw ultieme platform voor real-time verkiezingsupdates en deskundige analyses.
           </p>
+<!--    ദ്ദി(˵ •̀ ᴗ - ˵ ) ✧-->
           <a
               href="/dashboard"
-              class="bg-blue-6\700 text-white px-4 py-2 rounded-full text-sm sm:text-base font-medium hover:bg-blue-700 transition duration-300 border border-white"
+              class="bg-blue-600 text-white dark:text-white px-4 py-2 rounded-full text-sm sm:text-base font-medium hover:bg-gray-900 transition duration-300 border border-gray-700"
           >
             Dashboard
           </a>
         </div>
 
-        <div class="absolute top-0 right-0 p-4 sm:p-6 lg:p-8 flex flex-col space-y-6 w-full sm:w-3/4 lg:w-1/2">
-          <router-link
-              to="/election-statistiek/per-stemlocatie"
-              class="bg-opacity-90 p-4 sm:p-6 rounded-lg shadow-md bg-blue-700 dark:bg-blue-800 text-white"
-          >
-            <span class="text-2xl sm:text-3xl font-bold">01</span>
-            <h2 class="text-sm sm:text-base md:text-lg font-bold dark:text-white mb-1">Interactieve Kaarten</h2>
-            <p class="text-xs sm:text-sm dark:text-white">
-              Navigeer door onze dynamische kaart die verkiezingsresultaten per stad weergeeft en de leidende partij van de verkiezingen zien .
-            </p>
-          </router-link>
+        <!-- Routes onder de bovenste tekst -->
+        <div class="absolute top-1/2 left-0 right-0 p-4 sm:p-6 lg:p-8 flex flex-wrap justify-between gap-6">
+          <!-- De vier route links in een flex-row voor grotere schermen -->
+          <div class="flex w-full justify-around gap-6 lg:flex-row flex-col">
+            <router-link
+                to="/election-statistiek/per-stemlocatie"
+                class="flex flex-col bg-opacity-90 p-4 sm:p-6 rounded-lg shadow-md bg-gray-800 text-white w-full sm:w-48 lg:w-52 h-64"
+            >
+              <span class="text-2xl sm:text-3xl font-bold">01</span>
+              <h2 class="text-sm sm:text-base md:text-lg font-bold dark:text-white mb-1">Interactieve Kaarten</h2>
+              <p class="text-xs sm:text-sm dark:text-white">
+                Navigeer door onze dynamische kaart die verkiezingsresultaten per stad weergeeft en de leidende partij van de verkiezingen zien .
+              </p>
+            </router-link>
 
-          <router-link
-              to="/election-statistiek/per-verkiezing"
-              class="bg-opacity-90 p-4 sm:p-6 rounded-lg shadow-md bg-blue-700 dark:bg-blue-800"
-          >
-            <span class="text-2xl sm:text-3xl font-bold text-white">02</span>
-            <h2 class="text-sm sm:text-base md:text-lg font-bold text-white mb-1">Totaal Stemmen Nederland</h2>
-            <p class="text-xs sm:text-sm text-white">
-              Zie hier de totale stemmen per verkiezingsjaar in Nederland van meerdere jaren.
-            </p>
-          </router-link>
+            <router-link
+                to="/election-statistiek/per-verkiezing"
+                class="flex flex-col bg-opacity-90 p-4 sm:p-6 rounded-lg shadow-md bg-gray-800 text-white w-full sm:w-48 lg:w-52 h-64"
+            >
+              <span class="text-2xl sm:text-3xl font-bold">02</span>
+              <h2 class="text-sm sm:text-base md:text-lg font-bold text-white mb-1">Totaal Stemmen Nederland</h2>
+              <p class="text-xs sm:text-sm text-white">
+                Zie hier de totale stemmen per verkiezingsjaar in Nederland van meerdere jaren.
+              </p>
+            </router-link>
 
-          <router-link
-              to="/election-statistiek/zetels-per-partij"
-              class="bg-blue-700 dark:bg-blue-800 bg-opacity-90 p-4 sm:p-6 rounded-lg shadow-md"
-          >
-            <span class="text-2xl sm:text-3xl font-bold text-white">03</span>
-            <h2 class="text-sm sm:text-base md:text-lg font-bold text-white mb-1">Aantal Zetels Per Partij</h2>
-            <p class="text-xs sm:text-sm text-white">
-              Hier vind je de zetels per partij over de jaren heen en hoe deze zich hebben ontwikkeld.
-            </p>
-          </router-link>
-          <router-link
-              to="/election-statistiek/zetels-per-jaar"
-              class="bg-blue-700 dark:bg-blue-800 bg-opacity-90 p-4 sm:p-6 rounded-lg shadow-md"
-          >
-            <span class="text-2xl sm:text-3xl font-bold text-white">04</span>
-            <h2 class="text-sm sm:text-base md:text-lg font-bold text-white mb-1">Aantal Zetels Per Jaar</h2>
-            <p class="text-xs sm:text-sm text-white">
-              Hier vind hoeveel zetels er per jaar zijn behaald en hoe deze zich hebben ontwikkeld.
-            </p>
-          </router-link>
+            <router-link
+                to="/election-statistiek/zetels-per-partij"
+                class="flex flex-col bg-opacity-90 p-4 sm:p-6 rounded-lg shadow-md bg-gray-800 text-white w-full sm:w-48 lg:w-52 h-64"
+            >
+              <span class="text-2xl sm:text-3xl font-bold">03</span>
+              <h2 class="text-sm sm:text-base md:text-lg font-bold text-white mb-1">Aantal Zetels Per Partij</h2>
+              <p class="text-xs sm:text-sm text-white">
+                Hier vind je de zetels per partij over de jaren heen en hoe deze zich hebben ontwikkeld.
+              </p>
+            </router-link>
+
+            <router-link
+                to="/election-statistiek/zetels-per-jaar"
+                class="flex flex-col bg-opacity-90 p-4 sm:p-6 rounded-lg shadow-md bg-gray-800 text-white w-full sm:w-48 lg:w-52 h-64"
+            >
+              <span class="text-2xl sm:text-3xl font-bold">04</span>
+              <h2 class="text-sm sm:text-base md:text-lg font-bold text-white mb-1">Aantal Zetels Per Jaar</h2>
+              <p class="text-xs sm:text-sm text-white">
+                Hier vind hoeveel zetels er per jaar zijn behaald en hoe deze zich hebben ontwikkeld.
+              </p>
+            </router-link>
+          </div>
         </div>
       </div>
     </section>
+
+
     <section>
       <!-- Categorieën Sectie -->
       <section class="categories py-10 mb-10 bg-white dark:bg-gray-800 rounded-lg shadow-lg mt-10 mx-2 lg:mx-5">
