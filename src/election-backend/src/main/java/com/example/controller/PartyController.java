@@ -54,7 +54,7 @@ public class PartyController {
         Map<String, Object> partyData = null;
         Map<String, Map<String, Object>> candidateVotesMap = new HashMap<>();
         List<Map<String, Object>> candidates = new ArrayList<>();
-        int accumulatedTotalVotes = 0; // Variable to accumulate total votes for the party
+        int accumulatedTotalVotes = 0;
 
         for (JsonNode transaction : root) {
             JsonNode contests = transaction.path("count").path("election").path("contests").path("contests");
@@ -71,7 +71,6 @@ public class PartyController {
                             String partyName = selection.path("affiliationIdentifier").path("registeredName").asText("Unknown Party");
                             int totalVotes = selection.path("validVotes").asInt(0);
 
-                            // Accumulate total votes if party is already found
                             if (partyData == null) {
                                 partyData = new HashMap<>();
                                 partyData.put("partyId", currentPartyId);
@@ -82,27 +81,21 @@ public class PartyController {
                         }
                     }
 
-                    // Check for candidate data
                     if (selection.has("candidate") && currentPartyId != null && currentPartyId.equals(partyId)) {
                         String candidateId = selection.path("candidate").path("candidateIdentifier").path("id").asText();
                         int candidateVotes = selection.path("validVotes").asInt(0);
 
-                        // Avoid duplicate candidate entries
                         Map<String, Object> candidateData = candidateVotesMap.computeIfAbsent(candidateId, k -> new HashMap<>());
-                        candidateData.put("candidateId", candidateId);
-                        candidateData.put("validVotes", candidateVotes);
 
-                        // Add name details if available
+                        int existingVotes = (int) candidateData.getOrDefault("validVotes", 0);
+                        candidateData.put("validVotes", existingVotes + candidateVotes);
+
                         String firstName = selection.path("candidate").path("candidateFullName").path("personName").path("firstName").asText("");
                         String lastName = selection.path("candidate").path("candidateFullName").path("personName").path("lastName").asText("");
                         candidateData.put("name", firstName + " " + lastName);
 
-                        // Add candidate to the list if not already added
                         if (!candidates.contains(candidateData)) {
                             candidates.add(candidateData);
-                        } else {
-                            // Accumulate candidate votes if they already exist in the list
-                            candidateData.put("validVotes", (int) candidateData.get("validVotes") + candidateVotes);
                         }
                     }
                 }
