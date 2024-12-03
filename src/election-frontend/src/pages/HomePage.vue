@@ -31,7 +31,7 @@
           <div class="flex w-full justify-around gap-6 lg:flex-row flex-col">
             <router-link
                 to="/election-statistiek/per-stemlocatie"
-                class="flex flex-col bg-opacity-100 p-4 sm:p-6 rounded-lg shadow-md bg-gray-800 text-white w-full sm:w-48 lg:w-1/6 h-max"
+                class="flex flex-col bg-opacity-100 p-4 sm:p-6 rounded-lg shadow-md bg-gray-800 text-white w-full sm:w-48 lg:w-1/6 h-max transform transition-transform duration-300 hover:scale-105"
             >
               <span class="text-2xl sm:text-3xl font-bold pb-1">01</span>
               <h2 class="text-sm sm:text-base md:text-lg font-bold dark:text-white mb-1">Interactieve Kaarten</h2>
@@ -42,7 +42,7 @@
 
             <router-link
                 to="/election-statistiek/per-verkiezing"
-                class="flex flex-col bg-opacity-100 p-4 sm:p-6 rounded-lg shadow-md bg-gray-800 text-white w-full sm:w-48 lg:w-1/6 h-max"
+                class="flex flex-col bg-opacity-100 p-4 sm:p-6 rounded-lg shadow-md bg-gray-800 text-white w-full sm:w-48 lg:w-1/6 h-max transform transition-transform duration-300 hover:scale-105"
             >
               <span class="text-2xl sm:text-3xl font-bold pb-2">02</span>
               <h2 class="text-sm sm:text-base md:text-lg font-bold text-white mb-1">Totaal Stemmen Nederland</h2>
@@ -53,7 +53,7 @@
 
             <router-link
                 to="/election-statistiek/zetels-per-partij"
-                class="flex flex-col bg-opacity-100 p-4 sm:p-6 rounded-lg shadow-md bg-gray-800 text-white w-full sm:w-48 lg:w-1/6 h-max"
+                class="flex flex-col bg-opacity-100 p-4 sm:p-6 rounded-lg shadow-md bg-gray-800 text-white w-full sm:w-48 lg:w-1/6 h-max transform transition-transform duration-300 hover:scale-105"
             >
               <span class="text-2xl sm:text-3xl font-bold pb-2">03</span>
               <h2 class="text-sm sm:text-base md:text-lg font-bold text-white mb-1">Aantal Zetels Per Partij</h2>
@@ -64,7 +64,7 @@
 
             <router-link
                 to="/election-statistiek/zetels-per-jaar"
-                class="flex flex-col bg-opacity-100 p-4 sm:p-6 rounded-lg shadow-md bg-gray-800 text-white w-full sm:w-48 lg:w-1/6 h-max"
+                class="flex flex-col bg-opacity-100 p-4 sm:p-6 rounded-lg shadow-md bg-gray-800 text-white w-full sm:w-48 lg:w-1/6 h-max transform transition-transform duration-300 hover:scale-105"
             >
               <span class="text-2xl sm:text-3xl font-bold pb-2">04</span>
               <h2 class="text-sm sm:text-base md:text-lg font-bold text-white mb-1">Aantal Zetels Per Jaar</h2>
