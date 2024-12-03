@@ -16,7 +16,7 @@ import java.util.*;
 public class PartyController {
 
     @GetMapping("/{partyId}")
-    public ResponseEntity<Object> GetSpecifiedParty(
+    public ResponseEntity<Object> getSpecifiedParty(
             @PathVariable String partyId,
             @RequestParam(value = "years", required = false) List<Integer> years) {
 
@@ -26,74 +26,15 @@ public class PartyController {
         }
 
         Map<String, Object> resultsByYear = new HashMap<>();
+        ObjectMapper objectMapper = new ObjectMapper();
 
         for (Integer year : years) {
-            String basePath = "ParsedJson/";
-            String filePath = basePath + year + "/tellingen_results.json";
+            String filePath = "ParsedJson/" + year + "/tellingen_results.json";
 
             try (InputStream inputStream = new ClassPathResource(filePath).getInputStream()) {
-                ObjectMapper objectMapper = new ObjectMapper();
                 JsonNode root = objectMapper.readTree(inputStream);
 
-                Map<String, Object> partyData = null;
-
-                // Loop through all transactions in the data
-                for (JsonNode transaction : root) {
-                    JsonNode contests = transaction.path("count").path("election").path("contests").path("contests");
-
-                    for (JsonNode contest : contests) {
-                        JsonNode selections = contest.path("totalVotes").path("selections");
-                        String currentPartyId = null;
-                        List<Map<String, Object>> candidates = new ArrayList<>();
-
-                        // Create a map to store candidate vote data
-                        Map<String, Map<String, Object>> candidateVotesMap = new HashMap<>();
-
-                        for (JsonNode selection : selections) {
-                            // Handle affiliation (party) information
-                            if (selection.has("affiliationIdentifier")) {
-                                currentPartyId = selection.path("affiliationIdentifier").path("id").asText();
-                                if (partyId.equals(currentPartyId)) {
-                                    String partyName = selection.path("affiliationIdentifier").path("registeredName").asText("Unknown Party");
-                                    int totalVotes = selection.path("validVotes").asInt(0);
-
-                                    // Initialize partyData map
-                                    partyData = new HashMap<>();
-                                    partyData.put("partyId", currentPartyId);
-                                    partyData.put("partyName", partyName);
-                                    partyData.put("totalVotes", totalVotes);
-                                    partyData.put("candidates", candidateVotesMap);
-                                }
-                            }
-
-                            // Handle candidate data
-                            if (selection.has("candidate") && currentPartyId != null && currentPartyId.equals(partyId)) {
-                                String candidateId = selection.path("candidate").path("candidateIdentifier").path("id").asText();
-                                int candidateVotes = selection.path("validVotes").asInt(0);
-
-                                Map<String, Object> candidateData = candidateVotesMap.computeIfAbsent(candidateId, k -> new HashMap<>());
-                                candidateData.put("candidateId", candidateId);
-                                candidateData.put("validVotes", candidateVotes);
-                            }
-                        }
-
-                        // Now populate candidate names and finalize the data
-                        if (partyData != null) {
-                            // Add candidates to the party
-                            for (Map.Entry<String, Map<String, Object>> entry : candidateVotesMap.entrySet()) {
-                                Map<String, Object> candidateData = entry.getValue();
-                                String candidateId = (String) candidateData.get("candidateId");
-                                String firstName = "First Name"; // You can replace with actual logic for name mapping
-                                String lastName = "Last Name";  // Replace with actual logic if available
-                                candidateData.put("name", firstName + " " + lastName);
-                                candidates.add(candidateData);
-                            }
-                        }
-
-                    }
-                }
-
-                // If we found data for the party, return it
+                Map<String, Object> partyData = extractPartyData(root, partyId);
                 if (partyData != null) {
                     resultsByYear.put(year.toString(), partyData);
                 } else {
@@ -107,5 +48,72 @@ public class PartyController {
         }
 
         return ResponseEntity.ok(resultsByYear);
+    }
+
+    private Map<String, Object> extractPartyData(JsonNode root, String partyId) {
+        Map<String, Object> partyData = null;
+        Map<String, Map<String, Object>> candidateVotesMap = new HashMap<>();
+        List<Map<String, Object>> candidates = new ArrayList<>();
+        int accumulatedTotalVotes = 0; // Variable to accumulate total votes for the party
+
+        for (JsonNode transaction : root) {
+            JsonNode contests = transaction.path("count").path("election").path("contests").path("contests");
+
+            for (JsonNode contest : contests) {
+                JsonNode selections = contest.path("totalVotes").path("selections");
+                String currentPartyId = null;
+
+                for (JsonNode selection : selections) {
+                    // Check for party data
+                    if (selection.has("affiliationIdentifier")) {
+                        currentPartyId = selection.path("affiliationIdentifier").path("id").asText();
+                        if (partyId.equals(currentPartyId)) {
+                            String partyName = selection.path("affiliationIdentifier").path("registeredName").asText("Unknown Party");
+                            int totalVotes = selection.path("validVotes").asInt(0);
+
+                            // Accumulate total votes if party is already found
+                            if (partyData == null) {
+                                partyData = new HashMap<>();
+                                partyData.put("partyId", currentPartyId);
+                                partyData.put("partyName", partyName);
+                                partyData.put("candidates", candidates);
+                            }
+                            accumulatedTotalVotes += totalVotes; // Add votes to accumulated total
+                        }
+                    }
+
+                    // Check for candidate data
+                    if (selection.has("candidate") && currentPartyId != null && currentPartyId.equals(partyId)) {
+                        String candidateId = selection.path("candidate").path("candidateIdentifier").path("id").asText();
+                        int candidateVotes = selection.path("validVotes").asInt(0);
+
+                        // Avoid duplicate candidate entries
+                        Map<String, Object> candidateData = candidateVotesMap.computeIfAbsent(candidateId, k -> new HashMap<>());
+                        candidateData.put("candidateId", candidateId);
+                        candidateData.put("validVotes", candidateVotes);
+
+                        // Add name details if available
+                        String firstName = selection.path("candidate").path("candidateFullName").path("personName").path("firstName").asText("");
+                        String lastName = selection.path("candidate").path("candidateFullName").path("personName").path("lastName").asText("");
+                        candidateData.put("name", firstName + " " + lastName);
+
+                        // Add candidate to the list if not already added
+                        if (!candidates.contains(candidateData)) {
+                            candidates.add(candidateData);
+                        } else {
+                            // Accumulate candidate votes if they already exist in the list
+                            candidateData.put("validVotes", (int) candidateData.get("validVotes") + candidateVotes);
+                        }
+                    }
+                }
+            }
+        }
+
+        if (partyData != null) {
+            // Accumulate total votes for the party
+            partyData.put("totalVotes", accumulatedTotalVotes);
+        }
+
+        return partyData;
     }
 }
