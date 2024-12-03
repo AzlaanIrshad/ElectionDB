@@ -28,6 +28,14 @@ public class TellingFileProcessor extends FileProcessingService {
         String directoryPath2 = "src/election-backend/src/main/resources/ElectionResults/" + year + "/CSB_uitslag";
         tellingFiles.addAll(getMatchingFiles(directoryPath2, year));
 
+        //2012
+        String directoryPath3 = "src/election-backend/src/main/resources/ElectionResults/" + year + "/EML_bestanden_TK2012";
+        tellingFiles.addAll(getMatchingFiles(directoryPath3, year));
+
+        // 2010
+        String directoryPath4 = "src/election-backend/src/main/resources/ElectionResults/" + year + "/EML_bestanden_TK2010";
+        tellingFiles.addAll(getMatchingFiles(directoryPath4, year));
+
         // Logt het aantal gevonden bestanden
         logger.info("Aantal tellingen bestanden gevonden voor verwerking: {}", tellingFiles.size());
 

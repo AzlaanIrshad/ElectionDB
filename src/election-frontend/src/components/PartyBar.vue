@@ -49,7 +49,7 @@ export default {
       lineChartData: null,
       selectedParty: null,
       selectedYear: 2023,
-      availableYears: [2017, 2021, 2023],
+      availableYears: [2023, 2021, 2017, 2012, 2010],
       availableParties: [],
       charts: [],
     };

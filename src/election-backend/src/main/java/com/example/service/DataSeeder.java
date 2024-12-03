@@ -40,9 +40,12 @@ public class DataSeeder implements CommandLineRunner {
 
         // Seed Users, check if they already exist to avoid duplication
         if (userRepository.count() == 0) {
-            regularUser = new User("gebruiker", "test@test", "test", Role.USER);
-            modUser = new User("moderator", "moderator@test.nl", "mod123", Role.MODERATOR);
-            adminUser = new User("beheerder", "beheerder@test.nl", "admin123", Role.ADMIN);
+            regularUser = new User("gebruiker", "test@test.nl", "$2a$10$wboelo8zLJjg9ZGbqcavm.v5BbCAf6sYpRN5.WyR3txhFo5UnMa7a", Role.USER);
+            modUser = new User("moderator", "moderator@test.nl", "$2a$10$GxsRveGw0cW3UXtQdRmf1.Qzn/rkzcUGoq6g13tW2vVeWNZHuZ5ii", Role.MODERATOR);
+            adminUser = new User("beheerder", "beheerder@test.nl", "$2a$10$VUQXHMqh7s9uWuQUoMk.LONFk0IZO5CltVL8r8G0s5JIARBtzQOH6", Role.ADMIN);
+            // Password van User: Test123
+            // Password van Moderator: Mod123
+            // Password van Admin: Admin123
 
             // Save all users in one batch operation
             userRepository.saveAll(Arrays.asList(regularUser, modUser, adminUser));
@@ -55,10 +58,10 @@ public class DataSeeder implements CommandLineRunner {
 
         // Seed Threads if none exist
         if (threadRepository.count() == 0) {
-            Thread thread1 = new Thread("Discussie over Verkiezingen 2023", "Wat is jouw mening over de uitslag?", "2023-11-20", "Politiek", regularUser);
-            Thread thread2 = new Thread("Klimaatbeleid en Toekomst", "Hoe belangrijk is klimaatverandering voor jou?", "2023-11-18", "Klimaat", modUser);
-            Thread thread3 = new Thread("Economie en Belastingen", "Wat vind je van de huidige belastingtarieven?", "2023-11-17", "Economie", adminUser);
-            Thread thread4 = new Thread("Onderwijs in Nederland", "Discussieer over de uitdagingen in het onderwijs", "2023-11-19", "Onderwijs", regularUser);
+            Thread thread1 = new Thread("Discussie over Verkiezingen 2024", "Wat is jouw mening over de uitslag?", "2024-11-20", "Politiek", regularUser);
+            Thread thread2 = new Thread("Klimaatbeleid en Toekomst", "Hoe belangrijk is klimaatverandering voor jou?", "2024-11-18", "Klimaat", modUser);
+            Thread thread3 = new Thread("Economie en Belastingen", "Wat vind je van de huidige belastingtarieven?", "2024-11-17", "Economie", adminUser);
+            Thread thread4 = new Thread("Onderwijs in Nederland", "Discussieer over de uitdagingen in het onderwijs", "2024-11-19", "Onderwijs", regularUser);
 
             threadRepository.saveAll(Arrays.asList(thread1, thread2, thread3, thread4));
         } else {
@@ -67,14 +70,14 @@ public class DataSeeder implements CommandLineRunner {
 
         // Seed Thread Comments if none exist
         if (threadCommentRepository.count() == 0) {
-            Thread thread1 = threadRepository.findByTitle("Discussie over Verkiezingen 2023").orElseThrow();
+            Thread thread1 = threadRepository.findByTitle("Discussie over Verkiezingen 2024").orElseThrow();
             Thread thread2 = threadRepository.findByTitle("Klimaatbeleid en Toekomst").orElseThrow();
             Thread thread3 = threadRepository.findByTitle("Economie en Belastingen").orElseThrow();
 
-            ThreadComment comment1 = new ThreadComment(regularUser, thread1, "Ik vond de verkiezingen eerlijk verlopen.", "2023-11-20", "Politiek");
-            ThreadComment comment2 = new ThreadComment(modUser, thread2, "Klimaatverandering moet de hoogste prioriteit krijgen!", "2023-11-18", "Klimaat");
-            ThreadComment comment3 = new ThreadComment(adminUser, thread3, "Belastingverlaging is noodzakelijk voor de middenklasse.", "2023-11-17", "Economie");
-            ThreadComment comment4 = new ThreadComment(regularUser, thread1, "Ik denk dat er betere alternatieven waren.", "2023-11-21", "Politiek");
+            ThreadComment comment1 = new ThreadComment(regularUser, thread1, "Ik vond de verkiezingen eerlijk verlopen.", "2024-11-20", "Politiek");
+            ThreadComment comment2 = new ThreadComment(modUser, thread2, "Klimaatverandering moet de hoogste prioriteit krijgen!", "2024-11-18", "Klimaat");
+            ThreadComment comment3 = new ThreadComment(adminUser, thread3, "Belastingverlaging is noodzakelijk voor de middenklasse.", "2024-11-17", "Economie");
+            ThreadComment comment4 = new ThreadComment(regularUser, thread1, "Ik denk dat er betere alternatieven waren.", "2024-11-21", "Politiek");
 
             threadCommentRepository.saveAll(Arrays.asList(comment1, comment2, comment3, comment4));
         } else {

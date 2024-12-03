@@ -22,7 +22,7 @@
     <!-- Line Chart voor Zetels per Partij over de jaren -->
     <div class="chart-container mt-6">
       <h2 class="text-lg md:text-xl font-bold text-center mb-4 text-gray-800 dark:text-gray-100">
-        Zetels per Partij (2017-2023)
+        Zetels per Partij (2010-2023)
       </h2>
       <Chart
           v-if="lineChartData"
@@ -52,7 +52,7 @@ export default {
       lineChartData: null,
       selectedParty: null,
       selectedYear: 2023,
-      availableYears: [2017, 2021, 2023],
+      availableYears: [2010, 2012, 2017, 2021, 2023],
       availableParties: [],
       charts: [],
     };
