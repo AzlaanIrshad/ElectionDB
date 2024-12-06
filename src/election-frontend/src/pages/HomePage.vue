@@ -1,7 +1,7 @@
 <template>
   <div class="homepage bg-gray-100 dark:bg-gray-900 font-sans text-gray-900 dark:text-gray-100">
     <!-- Countdown Timer Section -->
-    <section class="countdown-section bg-blue-600 text-white py-4 text-center">
+    <section class="countdown-section bg-blue-600 dark:bg-blue-800 text-white py-4 text-center">
       <div class="countdown-container">
         <h2 class="text-xl font-bold mb-2">Tijd tot de volgende verkiezingen</h2>
         <div class="flex justify-center space-x-4">

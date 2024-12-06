@@ -1,12 +1,8 @@
 package com.example.controller;
 
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.Duration;
-import java.time.Instant;
-import java.time.ZonedDateTime;
-import java.time.ZoneId;
+import java.time.*;
 
 @RestController
 @RequestMapping("/countdown")
@@ -14,10 +10,10 @@ public class CountdownController {
 
     private static final ZonedDateTime TARGET_DATE = ZonedDateTime.of(
             2027, 11, 27, 0, 0, 0, 0,
-            ZoneId.systemDefault()
+            ZoneId.of("Europe/Amsterdam")
     );
 
-    @GetMapping("/")
+    @GetMapping
     public CountdownResponse getCountdownTime() {
         Instant now = Instant.now();
         Instant targetInstant = TARGET_DATE.toInstant();
@@ -31,7 +27,6 @@ public class CountdownController {
         return new CountdownResponse(days, hours, minutes, seconds, targetInstant.toEpochMilli());
     }
 
-    // Inner class to represent the response
     public static class CountdownResponse {
         private long days;
         private long hours;
