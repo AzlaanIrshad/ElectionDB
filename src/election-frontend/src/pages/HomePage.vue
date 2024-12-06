@@ -1,5 +1,30 @@
 <template>
   <div class="homepage bg-gray-100 dark:bg-gray-900 font-sans text-gray-900 dark:text-gray-100">
+    <!-- Countdown Timer Section -->
+    <section class="countdown-section bg-blue-600 dark:bg-blue-800 text-white py-4 text-center">
+      <div class="countdown-container">
+        <h2 class="text-xl font-bold mb-2">Tijd tot de volgende verkiezingen</h2>
+        <div class="flex justify-center space-x-4">
+          <div class="countdown-item">
+            <span class="text-3xl font-bold">{{ countdown.days }}</span>
+            <p class="text-sm">Dagen</p>
+          </div>
+          <div class="countdown-item">
+            <span class="text-3xl font-bold">{{ countdown.hours }}</span>
+            <p class="text-sm">Uren</p>
+          </div>
+          <div class="countdown-item">
+            <span class="text-3xl font-bold">{{ countdown.minutes }}</span>
+            <p class="text-sm">Minuten</p>
+          </div>
+          <div class="countdown-item">
+            <span class="text-3xl font-bold">{{ countdown.seconds }}</span>
+            <p class="text-sm">Seconden</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Hero Sectie -->
     <section class="relative flex items-center justify-center" :style="{ height: `calc(100vh - 4rem)` }">
       <div
@@ -17,7 +42,6 @@
           <p class="text-sm sm:text-base text-white mb-6">
             Blijf op de hoogte met VerkiezingsDB 2024, jouw ultieme platform voor real-time verkiezingsupdates en deskundige analyses.
           </p>
-<!--    ദ്ദി(˵ •̀ ᴗ - ˵ ) ✧-->
           <a
               href="/dashboard"
               class="bg-blue-600 text-white dark:text-white px-4 py-2 rounded-full text-sm sm:text-base font-medium hover:bg-gray-900 transition duration-300 border border-gray-700"
@@ -77,24 +101,21 @@
       </div>
     </section>
 
-
-    <section>
-      <!-- Categorieën Sectie -->
-      <section class="categories py-10 mb-10 bg-white dark:bg-gray-800 rounded-lg shadow-lg mt-10 mx-2 lg:mx-5">
-        <h2 class="text-3xl lg:text-4xl text-center mb-8 font-extrabold text-gray-800 dark:text-gray-100">Verkiezingscategorieën</h2>
-        <div class="blocks flex flex-col md:flex-row justify-around gap-4 lg:gap-6 mx-4 sm:mx-6 lg:mx-10">
-          <div class="block w-full md:w-1/4 h-36 sm:h-44 flex justify-center items-center bg-blue-600 dark:bg-blue-700 text-center rounded-lg shadow-md cursor-pointer hover:bg-blue-800 dark:hover:bg-blue-600 transition-all text-white transform hover:scale-105">
-            <a href="/threads"><span class="font-bold text-xl lg:text-2xl">Election Discussies</span></a>
-          </div>
-          <div class="block w-full md:w-1/4 h-36 sm:h-44 flex justify-center items-center bg-blue-600 dark:bg-blue-700 text-center rounded-lg shadow-md cursor-pointer hover:bg-blue-800 dark:hover:bg-blue-600 transition-all text-white transform hover:scale-105">
-            <a href="/dashboard"><span class="font-bold text-xl lg:text-2xl">Resultaten per Staat</span></a>
-          </div>
-          <div class="block w-full md:w-1/4 h-36 sm:h-44 flex justify-center items-center bg-blue-600 dark:bg-blue-700 text-center rounded-lg shadow-md cursor-pointer hover:bg-blue-800 dark:hover:bg-blue-600 transition-all text-white transform hover:scale-105">
-            <a href="/"><span class="font-bold text-xl lg:text-2xl">Kandidatenprofielen</span></a>
-          </div>
+    <!-- Categorieën Sectie -->
+    <section class="categories py-10 mb-10 bg-white dark:bg-gray-800 rounded-lg shadow-lg mt-10 mx-2 lg:mx-5">
+      <h2 class="text-3xl lg:text-4xl text-center mb-8 font-extrabold text-gray-800 dark:text-gray-100">Verkiezingscategorieën</h2>
+      <div class="blocks flex flex-col md:flex-row justify-around gap-4 lg:gap-6 mx-4 sm:mx-6 lg:mx-10">
+        <div class="block w-full md:w-1/4 h-36 sm:h-44 flex justify-center items-center bg-blue-600 dark:bg-blue-700 text-center rounded-lg shadow-md cursor-pointer hover:bg-blue-800 dark:hover:bg-blue-600 transition-all text-white transform hover:scale-105">
+          <a href="/threads"><span class="font-bold text-xl lg:text-2xl">Election Discussies</span></a>
         </div>
-      </section>
-
+        <div class="block w-full md:w-1/4 h-36 sm:h-44 flex justify-center items-center bg-blue-600 dark:bg-blue-700 text-center rounded-lg shadow-md cursor-pointer hover:bg-blue-800 dark:hover:bg-blue-600 transition-all text-white transform hover:scale-105">
+          <a href="/dashboard"><span class="font-bold text-xl lg:text-2xl">Resultaten per Staat</span></a>
+        </div>
+        <div class="block w-full md:w-1/4 h-36 sm:h-44 flex justify-center items-center bg-blue-600 dark:bg-blue-700 text-center rounded-lg shadow-md cursor-pointer hover:bg-blue-800 dark:hover:bg-blue-600 transition-all text-white transform hover:scale-105">
+          <a href="/"><span class="font-bold text-xl lg:text-2xl">Kandidatenprofielen</span></a>
+        </div>
+      </div>
+    </section>
 
     <!-- Tegels Sectie -->
     <div class="tiles flex justify-center mt-5 gap-2 sm:gap-4 pb-8">
@@ -106,7 +127,6 @@
         <img :src="image" alt="Thumbnail" class="w-full h-full object-cover rounded-lg" />
       </div>
     </div>
-    </section>
 
     <!-- Nieuws Sectie -->
     <section class="news py-12 bg-white dark:bg-gray-800 rounded-lg shadow-lg mx-2 lg:mx-5 mb-10">
@@ -132,7 +152,9 @@
     </section>
   </div>
 </template>
+
 <script>
+import config from "../config";
 export default {
   data() {
     return {
@@ -141,13 +163,39 @@ export default {
         "https://media.gettyimages.com/id/1793796325/nl/foto/the-hague-netherlands-a-woman-walks-past-campaign-posters-on-november-20-2023-in-the-hague.jpg?s=612x612&w=0&k=20&c=tyylwgIawxWevTh-6WcVutNA-yhlPcz9GLWkT6Lwzc8=",
         "https://media.gettyimages.com/id/1165687569/nl/foto/voting-box-and-election-image-election.jpg?s=612x612&w=0&k=20&c=Xu3sE7U-wgcL-xWrS41yGXhMl6NLqw7xqsGNHIPzRbI=",
       ],
-
+      countdown: {
+        days: 0,
+        hours: 0,
+        minutes: 0,
+        seconds: 0
+      }
     };
   },
   methods: {
-
+    async fetchCountdown() {
+      try {
+        const response = await fetch(`${config.apiBaseUrl}/api/countdown`);
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        this.countdown = {
+          days: data.days,
+          hours: data.hours,
+          minutes: data.minutes,
+          seconds: data.seconds
+        };
+      } catch (error) {
+        console.error('Error fetching countdown:', error);
+      }
+    },
+    startCountdown() {
+      this.fetchCountdown();
+      setInterval(this.fetchCountdown, 1000);
+    }
+  },
   mounted() {
-  },
-  },
+    this.startCountdown();
+  }
 };
 </script>
