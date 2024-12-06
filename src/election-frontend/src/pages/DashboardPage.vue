@@ -51,12 +51,13 @@
           <div class="parties mt-4">
             <ul>
               <li v-for="party in city.parties" :key="party.partyId" class="mb-4">
-                  <summary class=" text-gray-800 dark:text-gray-300">
-                    Partij: {{ party.partyName }} (Stemmen: {{ party.totalVotes }})
-                  </summary>
+                <div class="text-gray-800 dark:text-gray-300">
+                  Partij: {{ party.partyName }} (Stemmen: {{ party.totalVotes }})
+                </div>
               </li>
             </ul>
           </div>
+
         </details>
       </div>
     </div>
@@ -82,7 +83,7 @@ export default {
       loading: false,
       error: null,
       selectedYear: 2023,
-      availableYears: [2023, 2021, 2017],
+      availableYears: [2023, 2021, 2017, 2012, 2010],
     };
   },
   computed: {
