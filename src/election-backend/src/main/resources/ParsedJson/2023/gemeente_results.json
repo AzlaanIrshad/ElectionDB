@@ -1,0 +1,4817 @@
+[ {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0358",
+      "value" : "Aalsmeer"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "10",
+            "contestName" : "Haarlem"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0197",
+      "value" : "Aalten"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "7",
+            "contestName" : "Arnhem"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "1680",
+      "value" : "Aa en Hunze"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "3",
+            "contestName" : "Assen"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0059",
+      "value" : "Achtkarspelen"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "2",
+            "contestName" : "Leeuwarden"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0482",
+      "value" : "Alblasserdam"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "14",
+            "contestName" : "Dordrecht"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0613",
+      "value" : "Albrandswaard"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "14",
+            "contestName" : "Dordrecht"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0361",
+      "value" : "Alkmaar"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "11",
+            "contestName" : "Den Helder"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0141",
+      "value" : "Almelo"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "4",
+            "contestName" : "Zwolle"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0034",
+      "value" : "Almere"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "5",
+            "contestName" : "Lelystad"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "1723",
+      "value" : "Alphen-Chaam"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "17",
+            "contestName" : "Tilburg"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0484",
+      "value" : "Alphen aan den Rijn"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "15",
+            "contestName" : "Leiden"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "1959",
+      "value" : "Altena"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "17",
+            "contestName" : "Tilburg"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0060",
+      "value" : "Ameland"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "2",
+            "contestName" : "Leeuwarden"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0307",
+      "value" : "Amersfoort"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "8",
+            "contestName" : "Utrecht"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0362",
+      "value" : "Amstelveen"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "10",
+            "contestName" : "Haarlem"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0363",
+      "value" : "Amsterdam"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "9",
+            "contestName" : "Amsterdam"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0200",
+      "value" : "Apeldoorn"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "7",
+            "contestName" : "Arnhem"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0202",
+      "value" : "Arnhem"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "7",
+            "contestName" : "Arnhem"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0106",
+      "value" : "Assen"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "3",
+            "contestName" : "Assen"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0743",
+      "value" : "Asten"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "18",
+            "contestName" : "'s-Hertogenbosch"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0744",
+      "value" : "Baarle-Nassau"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "17",
+            "contestName" : "Tilburg"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0308",
+      "value" : "Baarn"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "8",
+            "contestName" : "Utrecht"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0489",
+      "value" : "Barendrecht"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "14",
+            "contestName" : "Dordrecht"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0203",
+      "value" : "Barneveld"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "7",
+            "contestName" : "Arnhem"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0888",
+      "value" : "Beek"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "19",
+            "contestName" : "Maastricht"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "1954",
+      "value" : "Beekdaelen"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "19",
+            "contestName" : "Maastricht"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0889",
+      "value" : "Beesel"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "19",
+            "contestName" : "Maastricht"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "1724",
+      "value" : "Bergeijk"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "18",
+            "contestName" : "'s-Hertogenbosch"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0893",
+      "value" : "Bergen (L)"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "19",
+            "contestName" : "Maastricht"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0373",
+      "value" : "Bergen (NH)"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "11",
+            "contestName" : "Den Helder"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0748",
+      "value" : "Bergen op Zoom"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "17",
+            "contestName" : "Tilburg"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "1945",
+      "value" : "Berg en Dal"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "6",
+            "contestName" : "Nijmegen"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "1859",
+      "value" : "Berkelland"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "7",
+            "contestName" : "Arnhem"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "1721",
+      "value" : "Bernheze"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "18",
+            "contestName" : "'s-Hertogenbosch"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0753",
+      "value" : "Best"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "18",
+            "contestName" : "'s-Hertogenbosch"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0209",
+      "value" : "Beuningen"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "6",
+            "contestName" : "Nijmegen"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0375",
+      "value" : "Beverwijk"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "10",
+            "contestName" : "Haarlem"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "1728",
+      "value" : "Bladel"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "18",
+            "contestName" : "'s-Hertogenbosch"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0376",
+      "value" : "Blaricum"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "10",
+            "contestName" : "Haarlem"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0377",
+      "value" : "Bloemendaal"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "10",
+            "contestName" : "Haarlem"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "1901",
+      "value" : "Bodegraven-Reeuwijk"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "15",
+            "contestName" : "Leiden"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0755",
+      "value" : "Boekel"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "18",
+            "contestName" : "'s-Hertogenbosch"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "1681",
+      "value" : "Borger-Odoorn"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "3",
+            "contestName" : "Assen"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0147",
+      "value" : "Borne"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "4",
+            "contestName" : "Zwolle"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0654",
+      "value" : "Borsele"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "16",
+            "contestName" : "Middelburg"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0757",
+      "value" : "Boxtel"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "18",
+            "contestName" : "'s-Hertogenbosch"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0758",
+      "value" : "Breda"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "17",
+            "contestName" : "Tilburg"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "1876",
+      "value" : "Bronckhorst"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "7",
+            "contestName" : "Arnhem"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0213",
+      "value" : "Brummen"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "7",
+            "contestName" : "Arnhem"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0899",
+      "value" : "Brunssum"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "19",
+            "contestName" : "Maastricht"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0312",
+      "value" : "Bunnik"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "8",
+            "contestName" : "Utrecht"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0313",
+      "value" : "Bunschoten"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "8",
+            "contestName" : "Utrecht"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0214",
+      "value" : "Buren"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "6",
+            "contestName" : "Nijmegen"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0502",
+      "value" : "Capelle aan den IJssel"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "15",
+            "contestName" : "Leiden"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0383",
+      "value" : "Castricum"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "11",
+            "contestName" : "Den Helder"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0109",
+      "value" : "Coevorden"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "3",
+            "contestName" : "Assen"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "1706",
+      "value" : "Cranendonck"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "18",
+            "contestName" : "'s-Hertogenbosch"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0216",
+      "value" : "Culemborg"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "6",
+            "contestName" : "Nijmegen"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0148",
+      "value" : "Dalfsen"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "4",
+            "contestName" : "Zwolle"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "1891",
+      "value" : "Dantumadiel"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "2",
+            "contestName" : "Leeuwarden"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0503",
+      "value" : "Delft"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "14",
+            "contestName" : "Dordrecht"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0400",
+      "value" : "Den Helder"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "11",
+            "contestName" : "Den Helder"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0762",
+      "value" : "Deurne"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "18",
+            "contestName" : "'s-Hertogenbosch"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0150",
+      "value" : "Deventer"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "4",
+            "contestName" : "Zwolle"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0310",
+      "value" : "De Bilt"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "8",
+            "contestName" : "Utrecht"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "1940",
+      "value" : "De Fryske Marren"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "2",
+            "contestName" : "Leeuwarden"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0736",
+      "value" : "De Ronde Venen"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "8",
+            "contestName" : "Utrecht"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "1690",
+      "value" : "De Wolden"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "3",
+            "contestName" : "Assen"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0384",
+      "value" : "Diemen"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "10",
+            "contestName" : "Haarlem"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "1980",
+      "value" : "Dijk en Waard"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "11",
+            "contestName" : "Den Helder"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "1774",
+      "value" : "Dinkelland"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "4",
+            "contestName" : "Zwolle"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0221",
+      "value" : "Doesburg"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "7",
+            "contestName" : "Arnhem"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0222",
+      "value" : "Doetinchem"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "7",
+            "contestName" : "Arnhem"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0766",
+      "value" : "Dongen"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "17",
+            "contestName" : "Tilburg"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0505",
+      "value" : "Dordrecht"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "14",
+            "contestName" : "Dordrecht"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0498",
+      "value" : "Drechterland"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "11",
+            "contestName" : "Den Helder"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "1719",
+      "value" : "Drimmelen"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "17",
+            "contestName" : "Tilburg"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0303",
+      "value" : "Dronten"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "5",
+            "contestName" : "Lelystad"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0225",
+      "value" : "Druten"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "6",
+            "contestName" : "Nijmegen"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0226",
+      "value" : "Duiven"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "7",
+            "contestName" : "Arnhem"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "1711",
+      "value" : "Echt-Susteren"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "19",
+            "contestName" : "Maastricht"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0385",
+      "value" : "Edam-Volendam"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "11",
+            "contestName" : "Den Helder"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0228",
+      "value" : "Ede"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "7",
+            "contestName" : "Arnhem"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0317",
+      "value" : "Eemnes"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "8",
+            "contestName" : "Utrecht"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "1979",
+      "value" : "Eemsdelta"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "1",
+            "contestName" : "Groningen"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0770",
+      "value" : "Eersel"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "18",
+            "contestName" : "'s-Hertogenbosch"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "1903",
+      "value" : "Eijsden-Margraten"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "19",
+            "contestName" : "Maastricht"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0772",
+      "value" : "Eindhoven"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "18",
+            "contestName" : "'s-Hertogenbosch"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0230",
+      "value" : "Elburg"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "7",
+            "contestName" : "Arnhem"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0114",
+      "value" : "Emmen"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "3",
+            "contestName" : "Assen"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0388",
+      "value" : "Enkhuizen"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "11",
+            "contestName" : "Den Helder"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0153",
+      "value" : "Enschede"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "4",
+            "contestName" : "Zwolle"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0232",
+      "value" : "Epe"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "7",
+            "contestName" : "Arnhem"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0233",
+      "value" : "Ermelo"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "7",
+            "contestName" : "Arnhem"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0777",
+      "value" : "Etten-Leur"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "17",
+            "contestName" : "Tilburg"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0779",
+      "value" : "Geertruidenberg"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "17",
+            "contestName" : "Tilburg"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "1771",
+      "value" : "Geldrop-Mierlo"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "18",
+            "contestName" : "'s-Hertogenbosch"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "1652",
+      "value" : "Gemert-Bakel"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "18",
+            "contestName" : "'s-Hertogenbosch"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0907",
+      "value" : "Gennep"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "19",
+            "contestName" : "Maastricht"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0784",
+      "value" : "Gilze en Rijen"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "17",
+            "contestName" : "Tilburg"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "1924",
+      "value" : "Goeree-Overflakkee"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "14",
+            "contestName" : "Dordrecht"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0664",
+      "value" : "Goes"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "16",
+            "contestName" : "Middelburg"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0785",
+      "value" : "Goirle"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "17",
+            "contestName" : "Tilburg"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "1942",
+      "value" : "Gooise Meren"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "10",
+            "contestName" : "Haarlem"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0512",
+      "value" : "Gorinchem"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "14",
+            "contestName" : "Dordrecht"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0513",
+      "value" : "Gouda"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "15",
+            "contestName" : "Leiden"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0014",
+      "value" : "Groningen"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "1",
+            "contestName" : "Groningen"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "1729",
+      "value" : "Gulpen-Wittem"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "19",
+            "contestName" : "Maastricht"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0158",
+      "value" : "Haaksbergen"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "4",
+            "contestName" : "Zwolle"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0392",
+      "value" : "Haarlem"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "10",
+            "contestName" : "Haarlem"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0394",
+      "value" : "Haarlemmermeer"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "10",
+            "contestName" : "Haarlem"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "1655",
+      "value" : "Halderberge"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "17",
+            "contestName" : "Tilburg"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0160",
+      "value" : "Hardenberg"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "4",
+            "contestName" : "Zwolle"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0243",
+      "value" : "Harderwijk"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "7",
+            "contestName" : "Arnhem"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0523",
+      "value" : "Hardinxveld-Giessendam"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "14",
+            "contestName" : "Dordrecht"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0072",
+      "value" : "Harlingen"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "2",
+            "contestName" : "Leeuwarden"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0244",
+      "value" : "Hattem"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "7",
+            "contestName" : "Arnhem"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0396",
+      "value" : "Heemskerk"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "10",
+            "contestName" : "Haarlem"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0397",
+      "value" : "Heemstede"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "10",
+            "contestName" : "Haarlem"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0246",
+      "value" : "Heerde"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "7",
+            "contestName" : "Arnhem"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0074",
+      "value" : "Heerenveen"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "2",
+            "contestName" : "Leeuwarden"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0917",
+      "value" : "Heerlen"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "19",
+            "contestName" : "Maastricht"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "1658",
+      "value" : "Heeze-Leende"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "18",
+            "contestName" : "'s-Hertogenbosch"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0399",
+      "value" : "Heiloo"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "11",
+            "contestName" : "Den Helder"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0163",
+      "value" : "Hellendoorn"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "4",
+            "contestName" : "Zwolle"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0794",
+      "value" : "Helmond"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "18",
+            "contestName" : "'s-Hertogenbosch"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0531",
+      "value" : "Hendrik-Ido-Ambacht"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "14",
+            "contestName" : "Dordrecht"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0164",
+      "value" : "Hengelo (O)"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "4",
+            "contestName" : "Zwolle"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "1966",
+      "value" : "Het Hogeland"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "1",
+            "contestName" : "Groningen"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0252",
+      "value" : "Heumen"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "6",
+            "contestName" : "Nijmegen"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0797",
+      "value" : "Heusden"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "18",
+            "contestName" : "'s-Hertogenbosch"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0534",
+      "value" : "Hillegom"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "15",
+            "contestName" : "Leiden"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0798",
+      "value" : "Hilvarenbeek"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "17",
+            "contestName" : "Tilburg"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0402",
+      "value" : "Hilversum"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "10",
+            "contestName" : "Haarlem"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "1963",
+      "value" : "Hoeksche Waard"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "14",
+            "contestName" : "Dordrecht"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "1735",
+      "value" : "Hof van Twente"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "4",
+            "contestName" : "Zwolle"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "1911",
+      "value" : "Hollands Kroon"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "11",
+            "contestName" : "Den Helder"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0118",
+      "value" : "Hoogeveen"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "3",
+            "contestName" : "Assen"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0405",
+      "value" : "Hoorn"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "11",
+            "contestName" : "Den Helder"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "1507",
+      "value" : "Horst aan de Maas"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "19",
+            "contestName" : "Maastricht"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0321",
+      "value" : "Houten"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "8",
+            "contestName" : "Utrecht"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0406",
+      "value" : "Huizen"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "10",
+            "contestName" : "Haarlem"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0677",
+      "value" : "Hulst"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "16",
+            "contestName" : "Middelburg"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0353",
+      "value" : "IJsselstein"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "8",
+            "contestName" : "Utrecht"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "1884",
+      "value" : "Kaag en Braassem"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "15",
+            "contestName" : "Leiden"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0166",
+      "value" : "Kampen"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "4",
+            "contestName" : "Zwolle"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0678",
+      "value" : "Kapelle"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "16",
+            "contestName" : "Middelburg"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0537",
+      "value" : "Katwijk"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "15",
+            "contestName" : "Leiden"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0928",
+      "value" : "Kerkrade"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "19",
+            "contestName" : "Maastricht"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "1598",
+      "value" : "Koggenland"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "11",
+            "contestName" : "Den Helder"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "1931",
+      "value" : "Krimpenerwaard"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "15",
+            "contestName" : "Leiden"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0542",
+      "value" : "Krimpen aan den IJssel"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "15",
+            "contestName" : "Leiden"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "1659",
+      "value" : "Laarbeek"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "18",
+            "contestName" : "'s-Hertogenbosch"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0882",
+      "value" : "Landgraaf"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "19",
+            "contestName" : "Maastricht"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0415",
+      "value" : "Landsmeer"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "11",
+            "contestName" : "Den Helder"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "1982",
+      "value" : "Land van Cuijk"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "18",
+            "contestName" : "'s-Hertogenbosch"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "1621",
+      "value" : "Lansingerland"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "15",
+            "contestName" : "Leiden"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0417",
+      "value" : "Laren"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "10",
+            "contestName" : "Haarlem"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0080",
+      "value" : "Leeuwarden"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "2",
+            "contestName" : "Leeuwarden"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0546",
+      "value" : "Leiden"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "15",
+            "contestName" : "Leiden"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0547",
+      "value" : "Leiderdorp"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "15",
+            "contestName" : "Leiden"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "1916",
+      "value" : "Leidschendam-Voorburg"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "15",
+            "contestName" : "Leiden"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0995",
+      "value" : "Lelystad"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "5",
+            "contestName" : "Lelystad"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "1640",
+      "value" : "Leudal"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "19",
+            "contestName" : "Maastricht"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0327",
+      "value" : "Leusden"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "8",
+            "contestName" : "Utrecht"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "1705",
+      "value" : "Lingewaard"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "7",
+            "contestName" : "Arnhem"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0553",
+      "value" : "Lisse"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "15",
+            "contestName" : "Leiden"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0262",
+      "value" : "Lochem"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "7",
+            "contestName" : "Arnhem"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0809",
+      "value" : "Loon op Zand"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "17",
+            "contestName" : "Tilburg"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0331",
+      "value" : "Lopik"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "8",
+            "contestName" : "Utrecht"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0168",
+      "value" : "Losser"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "4",
+            "contestName" : "Zwolle"
+          }
+        } ]
+      }
+    }
+  }
+}, {
+  "transactionId" : 1,
+  "managingAuthority" : {
+    "authorityIdentifier" : {
+      "id" : "0263",
+      "value" : "Maasdriel"
+    },
+    "authorityAddress" : ""
+  },
+  "count" : {
+    "election" : {
+      "electionIdentifier" : {
+        "id" : "TK2023",
+        "electionName" : "Tweede Kamer der Staten-Generaal 2023",
+        "electionCategory" : "TK",
+        "electionSubcategory" : "TK",
+        "electionDate" : "2023-11-22"
+      },
+      "contests" : {
+        "contests" : [ {
+          "contestIdentifier" : {
+            "id" : "6",
+            "contestName" : "Nijmegen"
+          }
+        } ]
+      }
+    }
+  }
+} ]
