@@ -1,46 +1,88 @@
 <template>
-  <div class="single-party-page">
-    <h1>Party Details</h1>
+  <div class="single-party-page p-5 dark:text-white">
+    <h1 class="text-3xl font-bold mb-6 text-gray-800 dark:text-white">Party Details</h1>
 
     <!-- Loading State -->
-    <div v-if="loading" class="loading">
+    <div v-if="loading" class="text-center text-blue-500 dark:text-blue-300">
       <p>Loading party data...</p>
     </div>
 
     <!-- Error State -->
-    <div v-if="error" class="error">
+    <div v-if="error" class="text-center text-red-500 dark:text-red-300">
       <p>{{ error }}</p>
     </div>
 
     <!-- Party Data -->
     <div v-if="partyData && !loading" class="party-data">
-      <h2>{{ partyData.partyName }}</h2>
-      <p>Total Votes: {{ partyData.totalVotes }}</p>
+      <h2 class="text-2xl font-semibold text-gray-700 dark:text-white">{{ partyData.partyName }}</h2>
+      <p class="text-lg text-gray-600 dark:text-gray-300">Total Votes: {{ partyData.totalVotes }}</p>
 
       <!-- Display Candidate Chart -->
-      <div v-if="partyData.chartDataForCandidates">
-        <h3>Top Candidates</h3>
+      <div v-if="partyData.chartDataForCandidates" class="mt-6">
         <PartyCandidateHorizontalBarChart
             :chart-data="partyData.chartDataForCandidates"
         />
       </div>
 
       <!-- No Candidates -->
-      <div v-else>
+      <div v-else class="mt-4 text-gray-500 dark:text-gray-400">
         <p>No candidates found for this party.</p>
+      </div>
+
+      <!-- Candidate Table -->
+      <div class="candidate-table mt-8">
+        <h3 class="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-4">All Candidates</h3>
+        <div class="overflow-x-auto bg-white dark:bg-gray-800 rounded-lg shadow">
+          <DataTable
+              :value="partyData.candidates"
+              :rows="5"
+              class="custom table-auto w-full text-sm text-gray-800 bg-white dark:text-white dark:bg-gray-800"
+              paginator
+              :paginatorTemplate="'FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown'"
+          >
+            <Column
+                field="candidateId"
+                header="ID"
+                sortable
+                class="px-4 py-2 text-center"
+            />
+            <Column
+                field="name"
+                header="Name"
+                sortable
+                class="px-4 py-2 text-left"
+            />
+            <Column
+                field="validVotes"
+                header="Votes"
+                sortable
+                class="px-4 py-2 text-right"
+            />
+          </DataTable>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
+
+
 <script>
 import config from "../config";
 import PartyCandidateHorizontalBarChart from "../components/CandidateHorizontalBarChart.vue";
+
+import DataTable from 'primevue/datatable';
+import Column from 'primevue/column';
+import Row from 'primevue/row';
+
 
 export default {
   name: "SinglePartyPage",
   components: {
     PartyCandidateHorizontalBarChart,
+    DataTable,
+    Column,
+    Row,
   },
   data() {
     return {
@@ -115,25 +157,7 @@ export default {
   },
 };
 </script>
-
 <style scoped>
-.single-party-page {
-  padding: 20px;
-}
 
-.loading,
-.error {
-  color: red;
-  font-size: 18px;
-  margin: 10px 0;
-}
-
-.party-data h2 {
-  color: #333;
-}
-
-.party-data h3 {
-  margin-top: 20px;
-  color: #555;
-}
 </style>
+
