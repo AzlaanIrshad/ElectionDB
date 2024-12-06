@@ -14,6 +14,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.*;
 
 @Service
 public class TellingenJsonWriterService {
@@ -33,36 +34,56 @@ public class TellingenJsonWriterService {
             return;
         }
 
-        List<ElectionResult> tellingenResults = parseTellingFiles(files);
+        ExecutorService executor = Executors.newFixedThreadPool(5);
+        List<Future<ElectionResult>> futures = new ArrayList<>();
+
+        for (File file : files) {
+            futures.add(executor.submit(() -> parseTellingFile(file)));
+        }
+
+        List<ElectionResult> tellingenResults = collectResults(futures);
 
         if (tellingenResults.isEmpty()) {
             logger.warn("Geen data gevonden in de tellingen bestanden.");
-            return;
+        } else {
+            writeJsonToFile(tellingenResults, jsonOutputPath);
         }
 
-        writeJsonToFile(tellingenResults, jsonOutputPath);
+        // Shut down de executor service
+        executor.shutdown();
     }
 
-    private List<ElectionResult> parseTellingFiles(List<File> files) {
+    private ElectionResult parseTellingFile(File file) {
+        try {
+            JAXBContext context = JAXBContext.newInstance(ElectionResult.class);
+            Unmarshaller unmarshaller = context.createUnmarshaller();
+            ElectionResult result = (ElectionResult) unmarshaller.unmarshal(file);
+
+            if (result != null) {
+                logger.info("Geparste gegevens van bestand: {}", file.getName());
+                return result;
+            } else {
+                logger.warn("Lege data gevonden in bestand: {}", file.getName());
+                return null;
+            }
+        } catch (Exception e) {
+            logger.error("Fout bij het verwerken van bestand: {}", file.getName(), e);
+            return null;
+        }
+    }
+
+    private List<ElectionResult> collectResults(List<Future<ElectionResult>> futures) {
         List<ElectionResult> results = new ArrayList<>();
-
-        for (File file : files) {
+        for (Future<ElectionResult> future : futures) {
             try {
-                JAXBContext context = JAXBContext.newInstance(ElectionResult.class);
-                Unmarshaller unmarshaller = context.createUnmarshaller();
-                ElectionResult result = (ElectionResult) unmarshaller.unmarshal(file);
-
+                ElectionResult result = future.get();
                 if (result != null) {
                     results.add(result);
-                    logger.info("Geparste gegevens van bestand: {}", file.getName());
-                } else {
-                    logger.warn("Lege data gevonden in bestand: {}", file.getName());
                 }
             } catch (Exception e) {
-                logger.error("Fout bij het verwerken van bestand: {}", file.getName(), e);
+                logger.error("Fout bij het ophalen van resultaat uit future.", e);
             }
         }
-
         return results;
     }
 

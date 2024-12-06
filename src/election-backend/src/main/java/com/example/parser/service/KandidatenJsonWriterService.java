@@ -14,6 +14,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.*;
 
 @Service
 public class KandidatenJsonWriterService {
@@ -33,50 +34,61 @@ public class KandidatenJsonWriterService {
             return;
         }
 
-        List<KandidatenResult> kandidatenResults = parseKandidatenFiles(files);
+        // Gebruik van een ExecutorService voor multi-threaded verwerking
+        ExecutorService executor = Executors.newFixedThreadPool(5);
+        List<Future<KandidatenResult>> futures = new ArrayList<>();
+
+        // Voeg taken toe aan de executor voor elke file
+        for (File file : files) {
+            futures.add(executor.submit(() -> parseKandidatenFile(file)));
+        }
+
+        List<KandidatenResult> kandidatenResults = collectResults(futures);
 
         if (kandidatenResults.isEmpty()) {
             logger.warn("Geen data gevonden in de kandidatenlijsten.");
-            return;
+        } else {
+            writeJsonToFile(kandidatenResults, jsonOutputPath);
         }
 
-        writeJsonToFile(kandidatenResults, jsonOutputPath);
+        // Shut down de executor service
+        executor.shutdown();
     }
 
-    /**
-     * Parseert de kandidatenlijsten bestanden naar objecten van type KandidatenResult.
-     *
-     * @param files Lijst van XML-bestanden.
-     * @return Geparste resultaten.
-     */
-    private List<KandidatenResult> parseKandidatenFiles(List<File> files) {
+    private KandidatenResult parseKandidatenFile(File file) {
+        try {
+            JAXBContext context = JAXBContext.newInstance(KandidatenResult.class);
+            Unmarshaller unmarshaller = context.createUnmarshaller();
+            KandidatenResult result = (KandidatenResult) unmarshaller.unmarshal(file);
+
+            if (result != null) {
+                logger.info("Geparste gegevens van bestand: {}", file.getName());
+                return result;
+            } else {
+                logger.warn("Lege data gevonden in bestand: {}", file.getName());
+                return null;
+            }
+        } catch (Exception e) {
+            logger.error("Fout bij het verwerken van bestand: {}", file.getName(), e);
+            return null;
+        }
+    }
+
+    private List<KandidatenResult> collectResults(List<Future<KandidatenResult>> futures) {
         List<KandidatenResult> results = new ArrayList<>();
-
-        for (File file : files) {
+        for (Future<KandidatenResult> future : futures) {
             try {
-                JAXBContext context = JAXBContext.newInstance(KandidatenResult.class);
-                Unmarshaller unmarshaller = context.createUnmarshaller();
-                KandidatenResult result = (KandidatenResult) unmarshaller.unmarshal(file);
-
+                KandidatenResult result = future.get();
                 if (result != null) {
                     results.add(result);
-                    logger.info("Geparste gegevens van bestand: {}", file.getName());
-                } else {
-                    logger.warn("Lege data gevonden in bestand: {}", file.getName());
                 }
             } catch (Exception e) {
-                logger.error("Fout bij het verwerken van bestand: {}", file.getName(), e);
+                logger.error("Fout bij het ophalen van resultaat uit future.", e);
             }
         }
-
         return results;
     }
 
-    /**
-     * Schrijft de geparste resultaten naar een JSON-bestand.
-     *
-     * @param results Lijst van geparste resultaten.
-     */
     private void writeJsonToFile(List<KandidatenResult> results, String jsonOutputPath) {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.enable(SerializationFeature.INDENT_OUTPUT);

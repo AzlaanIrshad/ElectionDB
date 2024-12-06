@@ -27,6 +27,9 @@ public class ElectionService {
     @Autowired
     private TellingenJsonWriterService tellingenJsonWriterService;
 
+    @Autowired
+    private GemeenteJsonWriterService gemeenteJsonWriterService;
+
     public void parseXmlFilesToJson(int year) {
         logger.info("Starten van het XML naar JSON verwerkingsproces voor jaar {}", year);
         ExecutorService executor = Executors.newFixedThreadPool(5);
@@ -54,6 +57,9 @@ public class ElectionService {
 
         // kandidatenlijsten naar JSON-bestand
         kandidatenJsonWriterService.writeKandidatenResultsToJson(year);
+
+        // Gemeentes naar JSON-bestand
+         gemeenteJsonWriterService.writeGemeenteResultsToJson(year);
     }
 
     private List<ElectionResult> collectResults(List<Future<ElectionResult>> futures) {
