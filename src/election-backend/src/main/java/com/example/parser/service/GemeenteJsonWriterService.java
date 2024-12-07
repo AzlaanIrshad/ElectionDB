@@ -34,8 +34,10 @@ public class GemeenteJsonWriterService {
             return;
         }
 
+        logger.info("Verwerken van de volgende bestanden: {}", files.size());
+
         // Gebruik van een ExecutorService voor multi-threaded verwerking
-        ExecutorService executor = Executors.newFixedThreadPool(5);
+        ExecutorService executor = Executors.newFixedThreadPool(10);
         List<Future<GemeenteResult>> futures = new ArrayList<>();
 
         // Voeg taken toe aan de executor
@@ -48,6 +50,7 @@ public class GemeenteJsonWriterService {
         if (gemeenteResults.isEmpty()) {
             logger.warn("Geen data gevonden in de gemeente bestanden.");
         } else {
+            logger.info("Aantal verwerkte gemeente resultaten: {}", gemeenteResults.size());
             writeJsonToFile(gemeenteResults, jsonOutputPath);
         }
 
@@ -90,7 +93,8 @@ public class GemeenteJsonWriterService {
 
     private void writeJsonToFile(List<GemeenteResult> results, String jsonOutputPath) {
         ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+
+        objectMapper.configure(SerializationFeature.INDENT_OUTPUT, false);
 
         try {
             File jsonFile = new File(jsonOutputPath);
