@@ -7,6 +7,8 @@ import jakarta.xml.bind.annotation.XmlRootElement;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Collection;
+
 @Data
 @NoArgsConstructor
 @XmlRootElement(name = "EML", namespace = "urn:oasis:names:tc:evs:schema:eml")

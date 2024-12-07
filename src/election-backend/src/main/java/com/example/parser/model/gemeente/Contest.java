@@ -13,4 +13,7 @@ public class Contest {
 
     @XmlElement(name = "ContestIdentifier", namespace = "urn:oasis:names:tc:evs:schema:eml")
     private ContestIdentifier contestIdentifier;
+
+    @XmlElement(name = "TotalVotes", namespace = "urn:oasis:names:tc:evs:schema:eml")
+    private TotalVotes totalVotes;
 }
