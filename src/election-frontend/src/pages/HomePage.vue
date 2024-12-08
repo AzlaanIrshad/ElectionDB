@@ -117,16 +117,26 @@
       </div>
     </section>
 
-    <!-- Tegels Sectie -->
-    <div class="tiles flex justify-center mt-5 gap-2 sm:gap-4 pb-8">
-      <div
-          v-for="(image, index) in featuredImages"
-          :key="index"
-          class="tile w-1/4 sm:w-1/5 h-24 sm:h-32 lg:h-40 bg-gray-200 dark:bg-gray-700 text-center rounded-lg shadow-md transition-all cursor-pointer hover:bg-blue-500 dark:hover:bg-blue-600 transform hover:scale-105"
-      >
-        <img :src="image" alt="Thumbnail" class="w-full h-full object-cover rounded-lg" />
+<!-- Logo Carousel -->
+    <section class="logo py-12 bg-white dark:bg-gray-800 rounded-lg shadow-lg mx-2 lg:mx-5 mb-10">
+    <h2 class="text-3xl lg:text-4xl text-center mb-8 font-extrabold text-gray-800 dark:text-gray-100">Top Politieke Partijen</h2>
+    <section class="categories py-8 mb-10 bg-white dark:bg-gray-800 rounded-lg shadow-lg mt-10 mx-auto max-w-7xl relative">
+      <div class="logo-carousel overflow-hidden w-full h-28 sm:h-32">
+        <div class="logo-track flex items-center space-x-4">
+          <div
+              v-for="(image, index) in [...featuredImages, ...featuredImages]"
+              :key="index"
+              class="tile w-24 sm:w-32 h-24 sm:h-32 text-center flex-shrink-0"
+          >
+            <img :src="image" alt="Thumbnail" class="w-full h-full object-contain rounded-lg" />
+          </div>
+        </div>
       </div>
-    </div>
+      <!-- Schaduw op de zijkanten -->
+      <div class="absolute top-0 left-0 w-8 h-full bg-gradient-to-r from-gray-300 via-transparent"></div>
+      <div class="absolute top-0 right-0 w-8 h-full bg-gradient-to-l from-gray-300 via-transparent"></div>
+    </section>
+    </section>
 
     <!-- Nieuws Sectie -->
     <section class="news py-12 bg-white dark:bg-gray-800 rounded-lg shadow-lg mx-2 lg:mx-5 mb-10">
@@ -155,14 +165,20 @@
 
 <script>
 import config from "../config";
+import cda from "@/assets/partyLogo/cda.webp";
+import bbb from "@/assets/partyLogo/bbb.webp";
+import d66 from "@/assets/partyLogo/d66.webp";
+import msc from "@/assets/partyLogo/msc.webp";
+import pvv from "@/assets/partyLogo/pvv.webp";
+import sp from "@/assets/partyLogo/sp.webp";
+import vvd from "@/assets/partyLogo/vvd.webp";
+import pvda from "@/assets/partyLogo/pvda.webp";
+
 export default {
   data() {
     return {
-      featuredImages: [
-        "https://media.gettyimages.com/id/1327961273/nl/foto/the-hague-netherlands-general-interior-view-of-the-tweede-kamer-building-is-seen-during-the.jpg?s=612x612&w=0&k=20&c=FZv3KDWl4flKiXpm49-0QwZvXB9Sp2Cry3artg0Uw9o=",
-        "https://media.gettyimages.com/id/1793796325/nl/foto/the-hague-netherlands-a-woman-walks-past-campaign-posters-on-november-20-2023-in-the-hague.jpg?s=612x612&w=0&k=20&c=tyylwgIawxWevTh-6WcVutNA-yhlPcz9GLWkT6Lwzc8=",
-        "https://media.gettyimages.com/id/1165687569/nl/foto/voting-box-and-election-image-election.jpg?s=612x612&w=0&k=20&c=Xu3sE7U-wgcL-xWrS41yGXhMl6NLqw7xqsGNHIPzRbI=",
-      ],
+      featuredImages: [cda, bbb, d66, msc, pvv, sp, vvd, pvda],
+
       countdown: {
         days: 0,
         hours: 0,

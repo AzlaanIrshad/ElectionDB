@@ -9,11 +9,18 @@ body {
   padding: 0;
 }
 
-.carousel-images {
+/*Logo Carousel*/
+.logo-track {
   display: flex;
+  width: max-content;
+  animation: scroll-continuous 10s linear infinite;
 }
 
-.carousel-images img {
-  width: 100%;
-  flex-shrink: 0; /* Prevent images from shrinking */
+@keyframes scroll-continuous {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
 }
