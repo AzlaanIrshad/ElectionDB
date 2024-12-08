@@ -117,24 +117,25 @@
       </div>
     </section>
 
-<!-- Logo Carousel -->
+    <!-- Logo Carousel -->
     <section class="logo py-12 bg-white dark:bg-gray-800 rounded-lg shadow-lg mx-2 lg:mx-5 mb-10">
     <h2 class="text-3xl lg:text-4xl text-center mb-8 font-extrabold text-gray-800 dark:text-gray-100">Top Politieke Partijen</h2>
     <section class="categories py-8 mb-10 bg-white dark:bg-gray-800 rounded-lg shadow-lg mt-10 mx-auto max-w-7xl relative">
       <div class="logo-carousel overflow-hidden w-full h-28 sm:h-32">
         <div class="logo-track flex items-center space-x-4">
+           <!-- azlaan freaky -->
           <div
               v-for="(image, index) in [...featuredImages, ...featuredImages]"
               :key="index"
-              class="tile w-24 sm:w-32 h-24 sm:h-32 text-center flex-shrink-0"
+              class="tile w-24 sm:w-32 h-24 sm:h-32 text-center flex-shrink-0 p-2"
           >
             <img :src="image" alt="Thumbnail" class="w-full h-full object-contain rounded-lg" />
           </div>
         </div>
       </div>
       <!-- Schaduw op de zijkanten -->
-      <div class="absolute top-0 left-0 w-8 h-full bg-gradient-to-r from-gray-300 via-transparent"></div>
-      <div class="absolute top-0 right-0 w-8 h-full bg-gradient-to-l from-gray-300 via-transparent"></div>
+      <div class="absolute top-0 left-0 w-8 h-full bg-gradient-to-r from-gray-300 via-transparent dark:from-gray-900"></div>
+      <div class="absolute top-0 right-0 w-8 h-full bg-gradient-to-l from-gray-300 via-transparent dark:from-gray-900"></div>
     </section>
     </section>
 
@@ -165,19 +166,14 @@
 
 <script>
 import config from "../config";
-import cda from "@/assets/partyLogo/cda.webp";
-import bbb from "@/assets/partyLogo/bbb.webp";
-import d66 from "@/assets/partyLogo/d66.webp";
-import msc from "@/assets/partyLogo/msc.webp";
-import pvv from "@/assets/partyLogo/pvv.webp";
-import sp from "@/assets/partyLogo/sp.webp";
-import vvd from "@/assets/partyLogo/vvd.webp";
-import pvda from "@/assets/partyLogo/pvda.webp";
+
+// Dynamisch importeren van alle logos
+const partyLogos = import.meta.glob('@/assets/partyLogo/*.webp', { eager: true });
 
 export default {
   data() {
     return {
-      featuredImages: [cda, bbb, d66, msc, pvv, sp, vvd, pvda],
+      featuredImages: Object.values(partyLogos).map(logo => logo.default),
 
       countdown: {
         days: 0,
