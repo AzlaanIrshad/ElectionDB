@@ -30,9 +30,9 @@
       </div>
 
       <!-- Candidate Table -->
-      <div class="candidate-table mt-8">
+      <div class="candidate-table mt-8 flex justify-center flex-col items-center">
         <h3 class="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-4">All Candidates</h3>
-        <div class="overflow-x-auto bg-white dark:bg-gray-800 rounded-lg shadow">
+        <div class="overflow-x-auto bg-white dark:bg-gray-800 rounded-lg shadow w-1/2 ">
           <DataTable
               :value="partyData.candidates"
               :rows="5"
@@ -44,19 +44,19 @@
                 field="candidateId"
                 header="ID"
                 sortable
-                class="px-4 py-2 text-center"
+                class="tablecolumn px-0 py-0 text-center"
             />
             <Column
                 field="name"
                 header="Name"
                 sortable
-                class="px-4 py-2 text-left"
+                class="tablecolumn px-0 py-0 text-left"
             />
             <Column
                 field="validVotes"
                 header="Votes"
                 sortable
-                class="px-4 py-2 text-right"
+                class="tablecolumn px-0 py-0 text-right"
             />
           </DataTable>
         </div>
@@ -158,6 +158,5 @@ export default {
 };
 </script>
 <style scoped>
-
 </style>
 
