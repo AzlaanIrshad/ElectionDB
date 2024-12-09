@@ -131,7 +131,17 @@ export default {
             !cityName ||
             (!this.selectedParties.length || this.selectedParties.includes(leadingParty))
         ) {
-          const popupText = `<b>${cityName}</b><br>Leidende Partij: ${leadingParty}<br>Stemmen: ${votes}`;
+          const popupText = `
+            <b>${cityName}</b><br>
+            Leidende Partij: ${leadingParty}<br>
+            Stemmen: ${votes}<br>
+            <button
+              class="mt-2 px-4 py-2 bg-blue-500 text-white border-none rounded cursor-pointer"
+              @click="showCityInfo('${cityName}')"
+            >
+              Toon Stad Informatie
+            </button>
+          `;
           const color = this.partyColors[leadingParty] || "gray";
           const [lat, lng] = this.getCoordinatesForCity(cityName);
 
