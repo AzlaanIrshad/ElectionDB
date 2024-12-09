@@ -11,7 +11,24 @@
     <div v-if="error" class="text-center text-red-500 dark:text-red-300">
       <p>{{ error }}</p>
     </div>
-
+    <!-- Year Selector -->
+    <div class="mb-4">
+      <label for="year" class="block font-bold mb-2 text-gray-800 dark:text-gray-100">Selecteer Jaar:</label>
+      <select
+          id="year"
+          v-model="selectedYear"
+          @change="onYearChange"
+          class="bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded px-2 py-1 w-full"
+      >
+        <option
+            v-for="year in availableYears"
+            :key="year"
+            :value="year"
+        >
+          {{ year }}
+        </option>
+      </select>
+    </div>
     <!-- Party Data -->
     <div v-if="partyData && !loading" class="party-data">
       <h2 class="text-2xl font-semibold text-gray-700 dark:text-white">{{ partyData.partyName }}</h2>
@@ -65,16 +82,12 @@
   </div>
 </template>
 
-
-
 <script>
 import config from "../config";
 import PartyCandidateHorizontalBarChart from "../components/CandidateHorizontalBarChart.vue";
-
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import Row from 'primevue/row';
-
 
 export default {
   name: "SinglePartyPage",
@@ -90,6 +103,8 @@ export default {
       partyData: null,
       loading: false,
       error: null,
+      selectedYear: 2023,
+      availableYears: [2023, 2021, 2017, 2012, 2010],
     };
   },
   methods: {
@@ -98,15 +113,12 @@ export default {
       this.error = null;
 
       try {
-        // Fetch party data from the backend
-        const response = await fetch(`${config.apiBaseUrl}/api/party-result/${this.partyId}`);
+        const response = await fetch(`${config.apiBaseUrl}/api/party-result/${this.partyId}?years=${this.selectedYear}`);
         if (!response.ok) {
           throw new Error("Failed to fetch party data");
         }
 
         const data = await response.json();
-        console.log("Party Data:", data);
-        // Use the data directly for rendering
         this.partyData = this.transformPartyData(data);
       } catch (err) {
         this.error = err.message;
@@ -116,7 +128,6 @@ export default {
     },
 
     transformPartyData(data) {
-      // Directly process the data received from the backend
       const years = Object.keys(data);
       if (years.length === 0) return null;
 
@@ -150,6 +161,10 @@ export default {
         ],
       };
     },
+
+    onYearChange() {
+      this.fetchPartyData();
+    },
   },
 
   mounted() {
@@ -159,4 +174,3 @@ export default {
 </script>
 <style scoped>
 </style>
-
