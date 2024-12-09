@@ -13,7 +13,7 @@
               class="bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded px-2 py-1 flex-1"
           >
             <option
-                v-for="partyOption in availableParties"
+                v-for="partyOption in availableParties.filter(p => !selectedParties.includes(p) || p === party)"
                 :key="partyOption"
                 :value="partyOption"
             >
