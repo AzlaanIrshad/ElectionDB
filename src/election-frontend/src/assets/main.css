@@ -9,8 +9,11 @@ body {
   padding: 0;
 }
 
-.carousel-images {
+/*Logo Carousel*/
+.logo-track {
   display: flex;
+  width: max-content;
+  animation: scroll-continuous 20s linear infinite;
 }
 
 .carousel-images img {
