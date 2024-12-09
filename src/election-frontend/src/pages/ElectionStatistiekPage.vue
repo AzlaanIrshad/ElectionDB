@@ -45,46 +45,8 @@
 
     <!-- Main Content -->
     <div class="flex-1 p-4 md:p-6 overflow-y-auto">
-      <!-- Breadcrumbs at the top of the content area -->
-      <div class="mb-4 bg-white dark:bg-gray-800 rounded">
-        <Breadcrumb :home="home" :model="breadcrumbItems" class="mb-4">
-          <template #homeicon>
-            <a
-                @click="home.command"
-                class="cursor-pointer hover:opacity-75"
-                title="Ga naar Home"
-            >
-              <span v-html="home.icon"></span>
-            </a>
-          </template>
-          <template #item="{ item, props }">
-            <router-link
-                v-if="item.route"
-                v-slot="{ href, navigate }"
-                :to="item.route"
-                custom
-            >
-              <a :href="href" v-bind="props.action" @click="navigate">
-                <span v-html="item.icon"></span>
-                <span class="text-primary font-semibold">{{ item.label }}</span>
-              </a>
-            </router-link>
-            <a
-                v-else
-                :href="item.url"
-                :target="item.target"
-                v-bind="props.action"
-            >
-              <span v-html="item.icon"></span>
-              <span class="text-surface-700 dark:text-surface-0">
-        {{ item.label }}
-      </span>
-            </a>
-          </template>
-        </Breadcrumb>
-
-
-      </div>
+      <!-- Breadcrumbs -->
+      <BreadcrumbComponent :home="home" />
 
       <!-- Page Content -->
       <router-view />
@@ -93,13 +55,12 @@
 </template>
 
 <script>
-import Breadcrumb from 'primevue/breadcrumb';
-import { useRoute, useRouter } from 'vue-router';
+import BreadcrumbComponent from "@/components/BreadcrumbComponent.vue";
 
 export default {
   name: "ElectionStatistiekPage",
   components: {
-    Breadcrumb,
+    BreadcrumbComponent,
   },
   data() {
     return {
@@ -120,55 +81,14 @@ export default {
         { name: "Zetels Per Partij", routeName: "zetels-per-partij", icon: `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
               <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3v11.25A2.25 2.25 0 0 0 6 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0 1 18 16.5h-2.25m-7.5 0h7.5m-7.5 0-1 3m8.5-3 1 3m0 0 .5 1.5m-.5-1.5h-9.5m0 0-.5 1.5m.75-9 3-3 2.148 2.148A12.061 12.061 0 0 1 16.5 7.605" />
             </svg>` },
-      ],
-      breadcrumbItems: [],
-      home: {
+      ],      home: {
         icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6 mb-[3px]">
   <path d="M11.47 3.841a.75.75 0 0 1 1.06 0l8.69 8.69a.75.75 0 1 0 1.06-1.061l-8.689-8.69a2.25 2.25 0 0 0-3.182 0l-8.69 8.69a.75.75 0 1 0 1.061 1.06l8.69-8.689Z" />
   <path d="m12 5.432 8.159 8.159c.03.03.06.058.091.086v6.198c0 1.035-.84 1.875-1.875 1.875H15a.75.75 0 0 1-.75-.75v-4.5a.75.75 0 0 0-.75-.75h-3a.75.75 0 0 0-.75.75V21a.75.75 0 0 1-.75.75H5.625a1.875 1.875 0 0 1-1.875-1.875v-6.198a2.29 2.29 0 0 0 .091-.086L12 5.432Z" />
 </svg>`,
         command: () => this.$router.push({ name: "home" }),
       },
-
     };
-  },
-  setup() {
-    const route = useRoute();
-    const router = useRouter();
-    return { route, router };
-  },
-  methods: {
-    updateBreadcrumbs() {
-      this.breadcrumbItems = this.route.matched.map((route) => ({
-        label: route.meta.breadcrumb || route.name,
-        command: () => this.$router.push(route.path),
-      }));
-    },
-  },
-  created() {
-    this.updateBreadcrumbs();
-  },
-  watch: {
-    $route() {
-      this.updateBreadcrumbs();
-    },
   },
 };
 </script>
-
-<style scoped>
-.p-breadcrumb {
-  background-color: transparent;
-}
-.p-breadcrumb-item-link {
-  color: #000000;
-}
-.dark .p-breadcrumb-item-link {
-  color: #ffffff;
-}
-.p-breadcrumb-item-link:hover {
-  text-decoration: underline;
-  cursor: pointer;
-
-}
-</style>
