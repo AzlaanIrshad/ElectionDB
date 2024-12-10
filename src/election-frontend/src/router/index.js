@@ -17,6 +17,7 @@ import ElectionDonutChart from "@/components/ElectionDonutChart.vue";
 import PartyBar from "@/components/PartyBar.vue";
 import PartyLine from "@/components/PartyLine.vue";
 import NotFoundPage from "@/pages/NotFoundPage.vue";
+import ProfilePage from "@/pages/ProfilePage.vue";
 
 // General authentication guard
 function authGuard(to, from, next) {
@@ -75,10 +76,11 @@ const routes = [
     { path: '/about', name: 'about', component: AboutPage, meta: { breadcrumb: "Over Ons" } },
     { path: '/dashboard', name: 'dashboard', component: DashboardPage, meta: { breadcrumb: "Dashboard" } },
     {
-        path: '/parties/:id',
-        name: 'single-party',
-        component: SinglePartyPage,
-        meta: { breadcrumb: "Partij Details" }
+        path: '/profile',
+        name: 'profile',
+        component: ProfilePage,
+        beforeEnter: authGuard,
+        meta: { breadcrumb: "Mijn Profiel" }
     },
     {
         path: '/election-statistiek',
