@@ -1,70 +1,71 @@
 <template>
-  <div class="flex flex-col md:flex-row h-screen">
-    <!-- Sidebar Menu -->
-    <SidebarMenu
-        :tabs="tabs"
-        :isSidebarOpen="isSidebarOpen"
-        @toggleSidebar="isSidebarOpen = !isSidebarOpen"
-    />
+  <div class="p-4">
+    <h1 class="text-2xl font-bold mb-4 text-center text-gray-800 dark:text-gray-100">Stad Statistieken: {{ cityName }}</h1>
 
-    <!-- Main Content -->
-    <div class="flex-1 p-4 md:p-6 overflow-y-auto">
-      <!-- Breadcrumbs -->
-      <BreadcrumbComponent :home="home" />  
+    <div v-if="cityData" class="bg-white dark:bg-gray-800 shadow-lg p-4 rounded-lg">
+      <h2 class="text-xl font-semibold text-gray-800 dark:text-gray-100 mb-4">Verkiezingsresultaten voor {{ cityName }}</h2>
 
-      <!-- Page Content -->
-      <router-view />
+      <div class="space-y-4">
+        <div>
+          <h3 class="font-semibold text-gray-800 dark:text-gray-100">Leidende Partij:</h3>
+          <p>{{ cityData }}</p>
+        </div>
+
+        <div>
+          <h3 class="font-semibold text-gray-800 dark:text-gray-100">Aantal Stemmen:</h3>
+          <p>{{ cityData }}</p>
+        </div>
+
+        <div>
+          <h3 class="font-semibold text-gray-800 dark:text-gray-100">Opkomstpercentage:</h3>
+          <p>{{ cityData }}%</p>
+        </div>
+
+        <div>
+          <h3 class="font-semibold text-gray-800 dark:text-gray-100">Aantal Zetels:</h3>
+          <p>{{ cityData }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div v-else class="text-center mt-4 text-gray-500 dark:text-gray-300">
+      <p>Geen gegevens beschikbaar voor deze stad.</p>
     </div>
   </div>
 </template>
 
 <script>
-import BreadcrumbComponent from "@/components/BreadcrumbComponent.vue";
-import SidebarMenu from "@/components/SidebarMenu.vue";
+import config from "../config";
 
 export default {
   name: "CityStatistiekPage",
-  components: {
-    BreadcrumbComponent,
-    SidebarMenu,
-  },
   data() {
     return {
-      isSidebarOpen: false,
-     tabs: [
-        {
-          name: "Introductie", routeName: "introductie", icon: `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-            <path stroke-linecap="round" stroke-linejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" />
-          </svg>`
-        },
-        {
-          name: "Per Stemlocatie", routeName: "per-stemlocatie", icon: `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M9 6.75V15m6-6v8.25m.503 3.498 4.875-2.437c.381-.19.622-.58.622-1.006V4.82c0-.836-.88-1.38-1.628-1.006l-3.869 1.934c-.317.159-.69.159-1.006 0L9.503 3.252a1.125 1.125 0 0 0-1.006 0L3.622 5.689C3.24 5.88 3 6.27 3 6.695V19.18c0 .836.88 1.38 1.628 1.006l3.869-1.934c.317-.159.69-.159 1.006 0l4.994 2.497c.317.158.69.158 1.006 0Z" />
-            </svg>`
-        },
-        {
-          name: "Per Verkiezing", routeName: "per-verkiezing", icon: `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M6 6.878V6a2.25 2.25 0 0 1 2.25-2.25h7.5A2.25 2.25 0 0 1 18 6v.878m-12 0c.235-.083.487-.128.75-.128h10.5c.263 0 .515.045.75.128m-12 0A2.25 2.25 0 0 0 4.5 9v.878m13.5-3A2.25 2.25 0 0 1 19.5 9v.878m0 0a2.246 2.246 0 0 0-.75-.128H5.25c-.263 0-.515.045-.75.128m15 0A2.25 2.25 0 0 1 21 12v6a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 18v-6c0-.98.626-1.813 1.5-2.122" />
-            </svg>`
-        },
-        {
-          name: "Zetels Per Jaar", routeName: "zetels-per-jaar", icon: `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3v11.25A2.25 2.25 0 0 0 6 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0 1 18 16.5h-2.25m-7.5 0h7.5m-7.5 0-1 3m8.5-3 1 3m0 0 .5 1.5m-.5-1.5h-9.5m0 0-.5 1.5M9 11.25v1.5M12 9v3.75m3-6v6" />
-              </svg>`
-        },
-        {
-          name: "Zetels Per Partij", routeName: "zetels-per-partij", icon: `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3v11.25A2.25 2.25 0 0 0 6 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0 1 18 16.5h-2.25m-7.5 0h7.5m-7.5 0-1 3m8.5-3 1 3m0 0 .5 1.5m-.5-1.5h-9.5m0 0-.5 1.5m.75-9 3-3 2.148 2.148A12.061 12.061 0 0 1 16.5 7.605" />
-            </svg>`
-        },
-      ], home: {
-        icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6 mb-[3px]">
-  <path d="M11.47 3.841a.75.75 0 0 1 1.06 0l8.69 8.69a.75.75 0 1 0 1.06-1.061l-8.689-8.69a2.25 2.25 0 0 0-3.182 0l-8.69 8.69a.75.75 0 1 0 1.061 1.06l8.69-8.689Z" />
-  <path d="m12 5.432 8.159 8.159c.03.03.06.058.091.086v6.198c0 1.035-.84 1.875-1.875 1.875H15a.75.75 0 0 1-.75-.75v-4.5a.75.75 0 0 0-.75-.75h-3a.75.75 0 0 0-.75.75V21a.75.75 0 0 1-.75.75H5.625a1.875 1.875 0 0 1-1.875-1.875v-6.198a2.29 2.29 0 0 0 .091-.086L12 5.432Z" />
-</svg>`,
-        route: { name: "home" },
-      },
+      cityData: null,
+      cityName: this.$route.params.cityName,
     };
+  },
+  mounted() {
+    this.fetchCityData();
+  },
+  watch: {
+    "$route.params.cityName"() {
+      this.cityName = this.$route.params.cityName;
+      this.fetchCityData();
+    },
+  },
+  methods: {
+    async fetchCityData() {
+      try {
+        //const response = await fetch(`${config.apiBaseUrl}/api/map-results`);
+        if (!response.ok) throw new Error("Fout bij het ophalen van stadsgegevens");
+
+        const data = await response.json();
+        this.cityData = data;
+      } catch (error) {
+        console.error("Fout bij het ophalen van stadstatistieken:", error);
+      }
+    },
   },
 };
 </script>
