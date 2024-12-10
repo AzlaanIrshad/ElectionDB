@@ -17,6 +17,7 @@ import ElectionDonutChart from "@/components/ElectionDonutChart.vue";
 import PartyBar from "@/components/PartyBar.vue";
 import PartyLine from "@/components/PartyLine.vue";
 import NotFoundPage from "@/pages/NotFoundPage.vue";
+import CityStatistiekPage from "@/components/CityStatistiekPage.vue";
 
 // General authentication guard
 function authGuard(to, from, next) {
@@ -81,6 +82,12 @@ const routes = [
         meta: { breadcrumb: "Partij Details" }
     },
     {
+        path: '/city-statistieken/:cityName',
+        name: 'city-statistieken',
+        component: CityStatistiekPage,
+        meta: { breadcrumb: "Stad Statistieken" }
+    },
+    {
         path: '/election-statistiek',
         name: 'election-statistiek',
         component: ElectionStatistiekPage,
@@ -97,7 +104,7 @@ const routes = [
                 path: 'per-stemlocatie',
                 name: 'per-stemlocatie',
                 component: ElectionMap,
-                meta: { breadcrumb: "Per Stemlocatie" }
+                meta: { breadcrumb: "Per Stemlocatie" },
             },
             {
                 path: 'per-verkiezing',

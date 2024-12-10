@@ -118,8 +118,6 @@ export default {
       this.markerLayer = L.layerGroup().addTo(this.map);
     },
     addMarkers() {
-      if (!this.map || !this.markerLayer) return;
-
       this.markerLayer.clearLayers();
 
       this.electionData.forEach((transaction) => {
@@ -127,17 +125,13 @@ export default {
         const leadingParty = transaction.leadingParty;
         const votes = transaction.votes;
 
-        if (
-            !cityName ||
-            (!this.selectedParties.length || this.selectedParties.includes(leadingParty))
-        ) {
+        if (cityName && (this.selectedParties.length === 0 || this.selectedParties.includes(leadingParty))) {
           const popupText = `
             <b>${cityName}</b><br>
             Leidende Partij: ${leadingParty}<br>
             Stemmen: ${votes}<br>
             <button
-              class="mt-2 px-4 py-2 bg-blue-500 text-white border-none rounded cursor-pointer"
-              @click="showCityInfo('${cityName}')"
+              class="to-info-button mt-2 px-4 py-2 bg-blue-500 text-white border-none rounded cursor-pointer"
             >
               Toon Stad Informatie
             </button>
@@ -147,12 +141,34 @@ export default {
 
           if (!lat || !lng) return;
 
-          L.marker([lat, lng], { icon: this.createIcon(color) })
+          const marker = L.marker([lat, lng], {icon: this.createIcon(color)})
               .bindPopup(popupText)
               .addTo(this.markerLayer);
+
+          marker.on("popupopen", (event) => {
+            const button = event.popup._contentNode.querySelector(".to-info-button");
+            if (button) {
+              button.addEventListener("click", () => {
+                this.showCityInfo(cityName);
+              });
+            }
+          });
+
         }
       });
     },
+    showCityInfo(cityName) {
+      try {
+        this.$router.push({
+          name: "city-statistieken",
+          params: { cityName }
+        });
+        console.log("Navigeren naar stad:", cityName);
+      } catch (error) {
+        console.error("Navigatiefout:", error);
+      }
+    },
+
     createIcon(color) {
       return L.divIcon({
         className: "custom-icon",

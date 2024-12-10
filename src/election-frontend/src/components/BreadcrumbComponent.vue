@@ -2,23 +2,29 @@
   <div class="mb-4 bg-white dark:bg-gray-800 rounded p-4">
     <Breadcrumb :home="home" :model="breadcrumbItems">
       <template #homeicon>
-        <a @click="home.command" class="cursor-pointer hover:opacity-75" title="Ga naar Home">
+        <router-link
+            :to="home.route"
+            class="cursor-pointer hover:opacity-75"
+            title="Ga naar Home"
+        >
           <span v-html="home.icon"></span>
-        </a>
+        </router-link>
       </template>
       <template #item="{ item, props }">
         <router-link
             v-if="item.route"
-            v-slot="{ href, navigate }"
             :to="item.route"
-            custom
+            class="cursor-pointer"
         >
-          <a :href="href" v-bind="props.action" @click="navigate">
-            <span v-html="item.icon"></span>
-            <span class="text-primary font-semibold">{{ item.label }}</span>
-          </a>
+          <span v-html="item.icon"></span>
+          <span class="text-primary font-semibold">{{ item.label }}</span>
         </router-link>
-        <a v-else :href="item.url" :target="item.target" v-bind="props.action">
+        <a
+            v-else
+            :href="item.url"
+            :target="item.target"
+            class="cursor-pointer"
+        >
           <span v-html="item.icon"></span>
           <span class="text-surface-700 dark:text-surface-0">{{ item.label }}</span>
         </a>
@@ -29,7 +35,8 @@
 
 <script>
 import Breadcrumb from "primevue/breadcrumb";
-import { useRoute, useRouter } from "vue-router";
+import { useRoute } from "vue-router";
+import { reactive, watch } from "vue";
 
 export default {
   name: "BreadcrumbComponent",
@@ -42,31 +49,29 @@ export default {
       required: true,
     },
   },
-  data() {
-    return {
-      breadcrumbItems: [],
-    };
-  },
   setup() {
     const route = useRoute();
-    const router = useRouter();
-    return { route, router };
-  },
-  methods: {
-    updateBreadcrumbs() {
-      this.breadcrumbItems = this.route.matched.map((route) => ({
-        label: route.meta.breadcrumb || route.name,
-        command: () => this.$router.push(route.path),
-      }));
-    },
-  },
-  watch: {
-    $route() {
-      this.updateBreadcrumbs();
-    },
-  },
-  created() {
-    this.updateBreadcrumbs();
+    const breadcrumbItems = reactive([]);
+
+    const updateBreadcrumbs = () => {
+      breadcrumbItems.length = 0; // Leeg de lijst eerst
+      let path = "";
+      route.matched.forEach((matchedRoute, index) => {
+        path += matchedRoute.meta.breadcrumb + (index < route.matched.length - 1 ? " > " : "");
+        breadcrumbItems.push({
+          label: matchedRoute.meta.breadcrumb, // Gebruik verkorte breadcrumb
+          route: matchedRoute.path,
+          icon: matchedRoute.meta.icon || "",
+        });
+      });
+    };
+
+    watch(route, updateBreadcrumbs, { immediate: true });
+
+    return {
+      breadcrumbItems,
+      updateBreadcrumbs,
+    };
   },
 };
 </script>
