@@ -82,12 +82,6 @@ const routes = [
         meta: { breadcrumb: "Partij Details" }
     },
     {
-        path: '/city-statistieken/:cityName',
-        name: 'city-statistieken',
-        component: CityStatistiekPage,
-        meta: { breadcrumb: "Stad Statistieken" }
-    },
-    {
         path: '/election-statistiek',
         name: 'election-statistiek',
         component: ElectionStatistiekPage,
@@ -105,6 +99,14 @@ const routes = [
                 name: 'per-stemlocatie',
                 component: ElectionMap,
                 meta: { breadcrumb: "Per Stemlocatie" },
+                children: [
+                    {
+                        path: ':cityName',
+                        name: 'city-statistieken-per-stemlocatie',
+                        component: CityStatistiekPage,
+                        meta: { breadcrumb: "Stad Statistieken" }
+                    },
+                ],
             },
             {
                 path: 'per-verkiezing',
