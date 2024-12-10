@@ -51,7 +51,6 @@
           v-if="lineChartData"
           :type="'line'"
           :data="lineChartData"
-          :options="lineChartOptions"
           class="max-w-4xl mx-auto"
       />
     </div>
