@@ -8,22 +8,12 @@
       <div class="space-y-4">
         <div>
           <h3 class="font-semibold text-gray-800 dark:text-gray-100">Leidende Partij:</h3>
-          <p>{{ cityData }}</p>
+          <p>{{ cityData.leadingParty }}</p>
         </div>
 
         <div>
           <h3 class="font-semibold text-gray-800 dark:text-gray-100">Aantal Stemmen:</h3>
-          <p>{{ cityData }}</p>
-        </div>
-
-        <div>
-          <h3 class="font-semibold text-gray-800 dark:text-gray-100">Opkomstpercentage:</h3>
-          <p>{{ cityData }}%</p>
-        </div>
-
-        <div>
-          <h3 class="font-semibold text-gray-800 dark:text-gray-100">Aantal Zetels:</h3>
-          <p>{{ cityData }}</p>
+          <p>{{ cityData.votes }}</p>
         </div>
       </div>
     </div>
@@ -57,11 +47,16 @@ export default {
   methods: {
     async fetchCityData() {
       try {
-        //const response = await fetch(`${config.apiBaseUrl}/api/map-results`);
+        const response = await fetch(`${config.apiBaseUrl}/api/map-results`);
+
         if (!response.ok) throw new Error("Fout bij het ophalen van stadsgegevens");
 
         const data = await response.json();
-        this.cityData = data;
+        this.cityData = data.find(city => city.cityName === this.cityName);
+
+        if (!this.cityData) {
+          this.cityData = null;
+        }
       } catch (error) {
         console.error("Fout bij het ophalen van stadstatistieken:", error);
       }
