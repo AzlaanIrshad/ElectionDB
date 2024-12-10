@@ -1,8 +1,7 @@
 <template>
   <div class="flex flex-col lg:flex-row">
-    <!-- Checkboxes sectie -->
-    <div class="w-full lg:w-1/4 p-4 border-b lg:border-b-0 lg:border-r border-gray-300 bg-gray-50 dark:bg-gray-800 rounded-lg">
-      <!-- Dropdown voor jaartal -->
+    <!-- Checkboxes sectie: Alleen zichtbaar als we niet op de CityStatistiekPage zijn -->
+    <div v-if="!isCityStatistiekPage" class="w-full lg:w-1/4 p-4 border-b lg:border-b-0 lg:border-r border-gray-300 bg-gray-50 dark:bg-gray-800 rounded-lg">
       <div class="mb-4">
         <label for="year" class="block font-bold mb-2 text-gray-800 dark:text-gray-100">Selecteer Jaar:</label>
         <select
@@ -43,14 +42,16 @@
       </div>
     </div>
 
-    <!-- Kaart sectie -->
-    <div class="w-full lg:w-3/4 p-4">
+    <!-- Kaart sectie: Alleen zichtbaar als we niet op de CityStatistiekPage zijn -->
+    <div v-if="!isCityStatistiekPage" class="w-full lg:w-3/4 p-4">
       <h1 class="text-xl font-bold mb-4 text-center text-gray-800 dark:text-gray-100">Verkiezingsstatistieken Steden</h1>
       <div
           id="map"
           class="w-full h-[400px] sm:h-[500px] lg:h-[600px] border border-gray-300 rounded shadow-md"
       ></div>
     </div>
+<!-- FreakBob -->
+    <router-view />
   </div>
 </template>
 
@@ -59,7 +60,6 @@ import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import config from "../config";
 import cityCoordinates from "../util/cityCoordinates";
-
 
 export default {
   name: "ElectionMap",
@@ -75,9 +75,25 @@ export default {
       predefinedColors: ["blue", "green", "yellow", "orange", "purple", "red"],
     };
   },
+  computed: {
+    isCityStatistiekPage() {
+      return this.$route.name === 'city-statistieken-per-stemlocatie';
+    }
+  },
   mounted() {
-    this.initMap();
-    this.fetchElectionResults();
+    if (!this.isCityStatistiekPage) {
+      this.$nextTick(() => {
+        if (document.getElementById("map")) {
+          this.initMap();
+          this.fetchElectionResults();
+        }
+      });
+    }
+  },
+  beforeDestroy() {
+    if (this.map) {
+      this.map.remove();
+    }
   },
   watch: {
     selectedParties() {
@@ -143,9 +159,7 @@ export default {
 
           if (!lat || !lng) return;
 
-          const marker = L.marker([lat, lng], {icon: this.createIcon(color)})
-              .bindPopup(popupText)
-              .addTo(this.markerLayer);
+          const marker = L.marker([lat, lng], {icon: this.createIcon(color)}).bindPopup(popupText).addTo(this.markerLayer);
 
           marker.on("popupopen", (event) => {
             const button = event.popup._contentNode.querySelector(".to-info-button");
@@ -155,15 +169,14 @@ export default {
               });
             }
           });
-
         }
       });
     },
     showCityInfo(cityName) {
       try {
         this.$router.push({
-          name: "city-statistieken",
-          params: { cityName }
+          name: "city-statistieken-per-stemlocatie",
+          params: { cityName },
         });
         console.log("Navigeren naar stad:", cityName);
       } catch (error) {
