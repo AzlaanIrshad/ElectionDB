@@ -46,6 +46,7 @@
     <div v-if="!isCityStatistiekPage" class="w-full lg:w-3/4 p-4">
       <h1 class="text-xl font-bold mb-4 text-center text-gray-800 dark:text-gray-100">Verkiezingsstatistieken Steden</h1>
       <div
+          :key="mapKey"
           id="map"
           class="w-full h-[400px] sm:h-[500px] lg:h-[600px] border border-gray-300 rounded shadow-md"
       ></div>
@@ -73,12 +74,13 @@ export default {
       selectedYear: 2023,
       availableYears: [2023, 2021, 2017, 2012, 2010],
       predefinedColors: ["blue", "green", "yellow", "orange", "purple", "red"],
+      mapKey: 0,
     };
   },
   computed: {
     isCityStatistiekPage() {
-      return this.$route.name === 'city-statistieken-per-stemlocatie';
-    }
+      return this.$route.name === "city-statistieken-per-stemlocatie";
+    },
   },
   mounted() {
     if (!this.isCityStatistiekPage) {
@@ -98,6 +100,18 @@ export default {
   watch: {
     selectedParties() {
       this.addMarkers();
+    },
+    // dit is om kaart te refreshen
+    $route(to, from) {
+      if (!this.isCityStatistiekPage) {
+        this.mapKey++;
+        this.$nextTick(() => {
+          if (document.getElementById("map")) {
+            this.initMap();
+            this.fetchElectionResults();
+          }
+        });
+      }
     },
   },
   methods: {
@@ -159,7 +173,7 @@ export default {
 
           if (!lat || !lng) return;
 
-          const marker = L.marker([lat, lng], {icon: this.createIcon(color)}).bindPopup(popupText).addTo(this.markerLayer);
+          const marker = L.marker([lat, lng], { icon: this.createIcon(color) }).bindPopup(popupText).addTo(this.markerLayer);
 
           marker.on("popupopen", (event) => {
             const button = event.popup._contentNode.querySelector(".to-info-button");
