@@ -50,6 +50,11 @@ public class UserService {
         userRepository.save(user);
     }
 
+    public User getUserById(Long id) {
+        Optional<User> userOptional = userRepository.findById(id);
+        return userOptional.orElse(null);
+    }
+
     public List<User> getUsers() {
         logger.info("Fetching all users from the database");
         return userRepository.findAll();
