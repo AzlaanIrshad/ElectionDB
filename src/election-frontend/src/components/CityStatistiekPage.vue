@@ -16,6 +16,24 @@
           <p>{{ cityData.votes }}</p>
         </div>
       </div>
+
+      <div class="mb-6">
+        <label for="year" class="block font-bold mb-2 text-gray-800 dark:text-gray-100">Selecteer Jaar:</label>
+        <select
+            id="year"
+            v-model="selectedYear"
+            @change="onYearChange"
+            class="bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded px-2 py-1 w-full"
+        >
+          <option
+              v-for="year in availableYears"
+              :key="year"
+              :value="year"
+          >
+            {{ year }}
+          </option>
+        </select>
+      </div>
     </div>
 
     <div v-else class="text-center mt-4 text-gray-500 dark:text-gray-300">
@@ -33,6 +51,8 @@ export default {
     return {
       cityData: null,
       cityName: this.$route.params.cityName,
+      selectedYear: 2023,
+      availableYears: [2023, 2021, 2017, 2012, 2010],
     };
   },
   mounted() {
@@ -43,11 +63,16 @@ export default {
       this.cityName = this.$route.params.cityName;
       this.fetchCityData();
     },
+    selectedYear() {
+      this.fetchCityData();
+    },
   },
   methods: {
     async fetchCityData() {
       try {
-        const response = await fetch(`${config.apiBaseUrl}/api/map-results`);
+        const response = await fetch(
+            `${config.apiBaseUrl}/api/map-results?year=${this.selectedYear}`
+        );
 
         if (!response.ok) throw new Error("Fout bij het ophalen van stadsgegevens");
 
@@ -60,6 +85,9 @@ export default {
       } catch (error) {
         console.error("Fout bij het ophalen van stadstatistieken:", error);
       }
+    },
+    onYearChange() {
+      console.log(`Jaar gewijzigd naar: ${this.selectedYear}`);
     },
   },
 };
