@@ -29,6 +29,7 @@
           :type="'doughnut'"
           :data="currentChart.data"
           :options="currentChart.options"
+          :fontColor ="'#000'"
           class="max-w-full"
       />
       <div v-else class="text-center text-gray-500 dark:text-gray-300">
@@ -53,8 +54,16 @@ export default {
     };
   },
   computed: {
+    isDarkMode() {
+      return document.documentElement.classList.contains('dark');
+    },
     currentChart() {
       return this.charts.find((chart) => chart.year === this.selectedYear) || null;
+    },
+  },
+  watch: {
+    isDarkMode() {
+      this.updateChartColors();
     },
   },
   mounted() {
@@ -93,13 +102,38 @@ export default {
               plugins: {
                 legend: {
                   position: "top",
+                  labels: {
+                    color: this.isDarkMode ? '#ffffff' : '#000000',
+                  },
+                },
+                datalabels: {
+                  color: this.isDarkMode ? '#ffffff' : '#000000',
+                  font: {
+                    weight: 'bold',
+                  },
                 },
               },
+              elements: {
+                arc: {
+                  borderWidth: 1,
+                },
+              },
+              animation: {
+                animateRotate: true,
+                animateScale: true,
+              },
             },
+
           };
         });
       } catch (err) {
         console.error("Fout bij het ophalen van verkiezingsresultaten:", err);
+      }
+    },
+    updateChartColors() {
+      if (this.currentChart) {
+        this.currentChart.options.plugins.legend.labels.color = this.isDarkMode ? '#ffffff' : '#000000';
+        this.currentChart.options.plugins.datalabels.color = this.isDarkMode ? '#ffffff' : '#000000';
       }
     },
     onYearChange() {
@@ -108,4 +142,3 @@ export default {
   },
 };
 </script>
-
