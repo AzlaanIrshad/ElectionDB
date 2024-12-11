@@ -161,7 +161,7 @@ export default {
           const popupText = `
             <b>${cityName}</b><br>
             Leidende Partij: ${leadingParty}<br>
-            Stemmen: ${votes}<br>
+            Totaal stemmen van ${cityName}: ${votes}<br>
             <button
               class="to-info-button mt-2 px-4 py-2 bg-blue-500 text-white border-none rounded cursor-pointer"
             >

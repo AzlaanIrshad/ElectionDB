@@ -83,6 +83,28 @@ public class MapController {
         return ResponseEntity.ok(totalVotesPerYear);
     }
 
+    @GetMapping("/city-total-votes")
+    public ResponseEntity<Object> getCityTotalVotes(
+            @RequestParam(value = "year", required = false, defaultValue = "2023") Integer year) {
+
+        String filePath = "ParsedJson/" + year + "/tellingen_results.json";
+
+        try (InputStream inputStream = new ClassPathResource(filePath).getInputStream()) {
+            ObjectMapper objectMapper = new ObjectMapper();
+            JsonNode root = objectMapper.readTree(inputStream);
+
+            List<Map<String, Object>> cityVotes = calculateCityTotalVotes(root);
+
+            Map<String, Object> response = new HashMap<>();
+            response.put("year", year);
+            response.put("cities", cityVotes);
+
+            return ResponseEntity.ok(response);
+        } catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Error: resultatenbestand niet gevonden of een fout opgetreden.");
+        }
+    }
+
     private int calculateTotalVotes(JsonNode root) {
         int totalVotes = 0;
 
@@ -105,6 +127,24 @@ public class MapController {
         }
 
         return totalVotes;
+    }
+
+    private List<Map<String, Object>> calculateCityTotalVotes(JsonNode root) {
+        List<Map<String, Object>> cityVotes = new ArrayList<>();
+
+        for (JsonNode transaction : root) {
+            String cityName = getCityName(transaction);
+            if (cityName != null && !cityName.isEmpty()) {
+                int totalVotes = calculateVotesFromContests(transaction.path("count").path("election").path("contests").path("contests"));
+
+                Map<String, Object> cityResult = new HashMap<>();
+                cityResult.put("cityName", cityName);
+                cityResult.put("totalVotes", totalVotes);
+                cityVotes.add(cityResult);
+            }
+        }
+
+        return cityVotes;
     }
 
     private List<Map<String, Object>> processTransactions(JsonNode root, List<String> parties) {
