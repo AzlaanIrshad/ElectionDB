@@ -104,8 +104,11 @@ const routes = [
                         path: ':cityName',
                         name: 'city-statistieken-per-stemlocatie',
                         component: CityStatistiekPage,
-                        meta: { breadcrumb: "Stad Statistieken" }
-                    },
+                        meta: {
+                            breadcrumb: (route) => route.params.cityName || "Stad Statistieken",
+                        },
+                    }
+                    ,
                 ],
             },
             {

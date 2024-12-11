@@ -55,12 +55,15 @@ export default {
 
     const updateBreadcrumbs = () => {
       breadcrumbItems.length = 0; // Leeg de lijst eerst
-      let path = "";
-      route.matched.forEach((matchedRoute, index) => {
-        path += matchedRoute.meta.breadcrumb + (index < route.matched.length - 1 ? " > " : "");
+      route.matched.forEach((matchedRoute) => {
+        const label =
+            typeof matchedRoute.meta.breadcrumb === "function"
+                ? matchedRoute.meta.breadcrumb(route)
+                : matchedRoute.meta.breadcrumb;
+
         breadcrumbItems.push({
-          label: matchedRoute.meta.breadcrumb, // Gebruik verkorte breadcrumb
-          route: matchedRoute.path,
+          label: label,
+          route: matchedRoute.path !== route.path ? matchedRoute.path : null,
           icon: matchedRoute.meta.icon || "",
         });
       });
