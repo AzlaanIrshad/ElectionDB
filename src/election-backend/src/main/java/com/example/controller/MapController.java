@@ -56,6 +56,33 @@ public class MapController {
         }
     }
 
+    @GetMapping("/total-votes-all")
+    public ResponseEntity<Object> getTotalVotesAll(
+            @RequestParam(value = "years", required = false) List<Integer> years) {
+
+        if (years == null || years.isEmpty()) {
+            years = Arrays.asList(2023, 2021, 2017, 2012, 2010);
+        }
+
+        Map<Integer, Integer> totalVotesPerYear = new HashMap<>();
+
+        for (Integer year : years) {
+            String filePath = "ParsedJson/" + year + "/tellingen_results.json";
+
+            try (InputStream inputStream = new ClassPathResource(filePath).getInputStream()) {
+                ObjectMapper objectMapper = new ObjectMapper();
+                JsonNode root = objectMapper.readTree(inputStream);
+
+                int totalVotes = calculateTotalVotes(root);
+                totalVotesPerYear.put(year, totalVotes);
+            } catch (IOException e) {
+                totalVotesPerYear.put(year, 0); // Set to 0 if the file is not found or another error occurs
+            }
+        }
+
+        return ResponseEntity.ok(totalVotesPerYear);
+    }
+
     private int calculateTotalVotes(JsonNode root) {
         int totalVotes = 0;
 
