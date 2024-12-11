@@ -36,7 +36,7 @@ th, td, .p-paginator {
 }
 .p-paginator-page, .p-paginator-first, .p-paginator-prev, .p-paginator-next, .p-paginator-last {
     background-color: lightgray !important;
-    color: white !important;
+    color: black !important;
 }
 
 .p-paginator-page-selected{
