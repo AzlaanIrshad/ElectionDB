@@ -11,7 +11,7 @@
         "src/test"
     ],
     "scripts": {
-        "dev": "run-s dev:test dev:db dev:api dev:web",
+        "dev": "run-p dev:test dev:db dev:api dev:web",
         "dev:db": "docker-compose -f docker-compose.yml up",
         "dev:api": "cd src/election-backend && (if exist mvnw.cmd (mvnw.cmd spring-boot:run) else (./mvnw spring-boot:run))",
         "dev:web": "cd src/election-frontend && npm run dev",
