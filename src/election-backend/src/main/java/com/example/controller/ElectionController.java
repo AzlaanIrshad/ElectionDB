@@ -162,6 +162,8 @@ public class ElectionController {
                             Map.of(
                                     "label", "Totaal Stemmen",
                                     "data", data,
+                                    "backgroundColor", labels.stream().map(label -> "#06b6d4").toArray(),
+                                    "borderColor", labels.stream().map(label -> "rgba(0,0,0,1)").toArray(),
                                     "borderWidth", 1
                             )
                     )
