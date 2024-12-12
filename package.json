@@ -6,13 +6,16 @@
         "node": "18"
     },
     "workspaces": [
-        "src/*"
+        "src/election-backend",
+        "src/election-frontend",
+        "src/test"
     ],
     "scripts": {
-        "dev": "run-p dev:db dev:api dev:web",
+        "dev": "run-s dev:test dev:db dev:api dev:web",
         "dev:db": "docker-compose -f docker-compose.yml up",
         "dev:api": "cd src/election-backend && (if exist mvnw.cmd (mvnw.cmd spring-boot:run) else (./mvnw spring-boot:run))",
         "dev:web": "cd src/election-frontend && npm run dev",
+        "dev:test": "cd src/election-backend && mvn test",
         "build": "run-p build:web build:api build:docker",
         "build:web": "npm run build -w src/election-frontend",
         "build:api": "cd src/election-backend && (if exist mvnw.cmd (mvnw.cmd clean install) else (./mvnw clean install))",
@@ -20,7 +23,6 @@
         "preview": "run-p preview:api preview:web",
         "preview:api": "cd src/election-backend && (if exist mvnw.cmd (mvnw.cmd spring-boot:run) else (./mvnw spring-boot:run))",
         "preview:web": "npm run preview -w src/election-frontend",
-        "test": "npm run test -w src/tests",
         "typedoc": "typedoc"
     },
     "devDependencies": {
