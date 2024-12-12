@@ -57,13 +57,19 @@ export default {
   methods: {
     async fetchUserProfile() {
       try {
-        const userId = 1; 
-        const response = await fetch(`/users/profile?userId=${userId}`);
+        const response = await fetch('/users');
         if (response.ok) {
-          const data = await response.json();
-          this.user = data;
+          const users = await response.json();
+          const userId = this.$route.params.id;
+          const user = users.find(u => u.id === userId);
+
+          if (user) {
+            this.user = user;
+          } else {
+            console.error(`User with ID ${userId} not found`);
+          }
         } else {
-          console.error("Failed to fetch user profile");
+          console.error("Failed to fetch user list");
         }
       } catch (error) {
         console.error("Error fetching user profile:", error);
@@ -91,5 +97,5 @@ export default {
 </script>
 
 <style scoped>
-/* Add any additional styles if needed */
+
 </style>
