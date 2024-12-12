@@ -40,6 +40,8 @@
 </template>
 
 <script>
+import config from "../config";
+
 export default {
   data() {
     return {
@@ -52,7 +54,7 @@ export default {
       if (this.searchQuery.trim() !== "") {
         try {
           const response = await fetch(
-              `http://localhost:8080/api/search/2023?query=${encodeURIComponent(this.searchQuery)}`
+              `${config.apiBaseUrl}/api/search/2023?query=${encodeURIComponent(this.searchQuery)}`
           );
 
           if (!response.ok) {
