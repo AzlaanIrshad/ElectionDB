@@ -116,18 +116,6 @@ public class MapController {
                 .sum();
     }
 
-    private int calculateVotesFromContests(JsonNode contests) {
-        int totalVotes = 0;
-
-        for (JsonNode contest : contests) {
-            JsonNode selections = contest.path("totalVotes").path("selections");
-            for (JsonNode selection : selections) {
-                totalVotes += selection.path("validVotes").asInt(0);
-            }
-        }
-
-        return totalVotes;
-    }
 
     private List<Map<String, Object>> calculateCityTotalVotes(JsonNode root) {
         List<Map<String, Object>> cityVotes = new ArrayList<>();
@@ -210,8 +198,7 @@ public class MapController {
 
         return buildCityResult(cityName, leadingParty, maxVotes);
     }
-
-
+    
     // Verwerkt de selectie van partijen binnen een contest
     private Map<String, Object> processSelections(JsonNode selections, List<String> parties) {
         List<Map<String, Object>> partyVotes = new ArrayList<>();
