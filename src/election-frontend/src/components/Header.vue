@@ -10,6 +10,14 @@
 
       <!-- Center: Search bar and Navigation -->
       <div class="flex-1 flex flex-col md:flex-row items-center justify-center space-y-4 md:space-y-0 md:space-x-6 mx-2">
+
+        <!-- Mobile Hamburger Menu SVG -->
+        <div class="lg:hidden flex items-center space-x-2 z-20">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-6 w-6 text-white cursor-pointer" @click="toggleMobileMenu">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+          </svg>
+        </div>
+
         <!-- Search Bar Component -->
         <SearchBar :electionData="electionData" />
 

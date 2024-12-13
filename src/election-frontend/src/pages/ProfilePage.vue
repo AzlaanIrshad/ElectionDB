@@ -57,7 +57,7 @@ export default {
   methods: {
     async fetchUserProfile() {
       try {
-        const response = await fetch('/users');
+        const response = await fetch('/api/users');
         if (response.ok) {
           const users = await response.json();
           const userId = this.$route.params.id;
@@ -77,7 +77,7 @@ export default {
     },
     async toggleActiveStatus() {
       try {
-        const response = await fetch(`/users/${this.user.id}`, {
+        const response = await fetch(`/api/users/${this.user.id}`, {
           method: 'POST',
         });
 
