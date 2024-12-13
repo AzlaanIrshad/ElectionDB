@@ -34,6 +34,12 @@
       <h2 class="text-2xl font-semibold text-gray-700 dark:text-white">{{ partyData.partyName }}</h2>
       <p class="text-lg text-gray-600 dark:text-gray-300">Total Votes: {{ partyData.totalVotes }}</p>
 
+      <!-- Description Section -->
+      <div class="mt-4">
+        <h3 class="text-lg font-medium text-gray-700 dark:text-gray-200">Description</h3>
+        <p class="text-md text-gray-600 dark:text-gray-300">{{ partyData.description }}</p>
+      </div>
+
       <!-- Display Candidate Chart -->
       <div v-if="partyData.chartDataForCandidates" class="mt-6">
         <PartyCandidateHorizontalBarChart
@@ -135,6 +141,7 @@ export default {
       return {
         partyName: partyData.partyName,
         totalVotes: partyData.totalVotes,
+        description: partyData.description,
         candidates: partyData.candidates || [],
         chartDataForCandidates: this.prepareChartData(partyData.candidates || []),
       };
@@ -172,5 +179,3 @@ export default {
   },
 };
 </script>
-<style scoped>
-</style>

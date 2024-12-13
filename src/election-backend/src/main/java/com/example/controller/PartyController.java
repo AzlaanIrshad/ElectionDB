@@ -6,6 +6,10 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.example.entity.Party;
+import com.example.repository.PartyRepository;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -14,6 +18,9 @@ import java.util.*;
 @RestController
 @RequestMapping("/party-result")
 public class PartyController {
+
+    @Autowired
+    private PartyRepository partyRepository;
 
     @GetMapping("/{partyId}")
     public ResponseEntity<Object> getSpecifiedParty(
@@ -102,11 +109,22 @@ public class PartyController {
                             String partyId = selection.path("affiliationIdentifier").path("id").asText();
                             int totalVotes = selection.path("validVotes").asInt(0);
 
+                            Optional<Party> optionalParty = partyRepository.findByName(partyName);
+                            String entityParty;
+
+                            if (optionalParty.isPresent()) {
+                                Party party = optionalParty.get();
+                                entityParty = party.getDescription();
+                            } else {
+                                entityParty = "Party not found";
+                            }
+
                             if (partyData==null) {
                                 partyData = new HashMap<>();
                                 partyData.put("partyId", partyId);
                                 partyData.put("partyName", partyName);
                                 partyData.put("candidates", candidates);
+                                partyData.put("description", entityParty);
                             }
 
                             accumulatedTotalVotes += totalVotes;

@@ -50,7 +50,7 @@ public class ThreadServiceTest {
 
         Thread createThread = threadService.createThread(thread);
 
-        assertNotNull(createThread);  // Fixed assertion
+        assertNotNull(createThread);
         assertEquals("test thread", createThread.getTitle());
         verify(threadRepository, times(1)).save(thread);
     }
