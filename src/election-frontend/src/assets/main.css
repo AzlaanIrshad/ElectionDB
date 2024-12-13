@@ -15,10 +15,13 @@ body {
   width: max-content;
   animation: scroll-continuous 20s linear infinite;
 }
-
-.carousel-images img {
-  width: 100%;
-  flex-shrink: 0; /* Prevent images from shrinking */
+@keyframes scroll-continuous {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
 }
 
 /* Part for table in singlepartypage.vue */
