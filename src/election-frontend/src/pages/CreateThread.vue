@@ -83,6 +83,9 @@ export default {
       titleError: '',
       bodyError: '',
       categoryError: '',
+      isLoggedIn: false,
+      isAdmin: false,
+      userEmail: null,
     };
   },
   computed: {
@@ -91,6 +94,28 @@ export default {
     },
   },
   methods: {
+    // Method to check authentication status
+    checkAuthStatus() {
+      const token = localStorage.getItem("token");
+      if (token) {
+        try {
+          const payload = JSON.parse(atob(token.split(".")[1]));
+          console.log("Decoded token payload:", payload);
+          this.isLoggedIn = true;
+          this.isAdmin = payload.role === "ADMIN";
+          this.userEmail = payload.sub;
+        } catch (error) {
+          console.error("Error decoding token payload:", error);
+          this.isLoggedIn = false;
+          this.isAdmin = false;
+        }
+      } else {
+        this.isLoggedIn = false;
+        this.isAdmin = false;
+      }
+    },
+
+    // Validate form inputs
     validateForm() {
       this.titleError = this.bodyError = this.categoryError = '';
 
@@ -108,34 +133,42 @@ export default {
 
       return !this.titleError && !this.bodyError && !this.categoryError;
     },
+
+    // Method to create a thread
     async createThread() {
+      this.checkAuthStatus(); // Check authentication status
+
+      if (!this.isLoggedIn) {
+        console.error("User is not logged in");
+        return;
+      }
+
       if (!this.validateForm()) {
         return;
       }
 
       try {
-        const dummyUser = {
-          id: 1,
-          username: 'googoo',
-          email: 'googoo@example.com',
-          password: 'password',
-          role: 'ADMIN'
-        };
-
         const now = new Date();
         const formattedDate = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-`
             + `${String(now.getDate()).padStart(2, '0')} ${String(now.getHours()).padStart(2, '0')}:`
             + `${String(now.getMinutes()).padStart(2, '0')}`;
 
-        // Convert categoryInput to array
-        const categories = this.categoryInput.split(",").map((cat) => cat.trim());
+        const categories = this.categoryInput
+            .split(",")
+            .map((cat) => cat.trim())
+            .filter((cat) => cat !== ""); // Remove empty categories
+
+        if (categories.length === 0) {
+          this.categoryError = 'Categorie is verplicht.';
+          return;
+        }
 
         const threadData = {
           title: this.title,
           body: this.body,
           categories: categories, // Send as array
           date: formattedDate,
-          user: dummyUser,
+          email: this.userEmail,
         };
 
         const response = await threadService.createThread(threadData);
@@ -149,9 +182,14 @@ export default {
         console.error('Fout bij het aanmaken van de draad:', error);
       }
     },
+
     goBack() {
       this.$router.go(-1);
     }
+  },
+  mounted() {
+    this.checkAuthStatus(); // Check auth status when the component is mounted
   }
 };
+
 </script>

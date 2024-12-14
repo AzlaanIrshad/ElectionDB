@@ -3,9 +3,11 @@ package com.example.service;
 import com.example.entity.Thread;
 import com.example.entity.ThreadComment;
 import com.example.entity.ThreadCategory;
+import com.example.entity.User;
 import com.example.repository.ThreadRepository;
 import com.example.repository.ThreadCommentRepository;
 import com.example.repository.ThreadCategoryRepository;
+import com.example.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,15 +20,18 @@ import java.util.Set;
 public class ThreadService {
 
     @Autowired
-    private ThreadRepository ThreadRepository;
+    private ThreadRepository threadRepository;
 
     @Autowired
-    private ThreadCommentRepository ThreadCommentRepository;
+    private ThreadCommentRepository threadCommentRepository;
 
     @Autowired
     private ThreadCategoryRepository threadCategoryRepository;
 
-    public Thread createThread(Thread thread, List<String> categoryNames) {
+    @Autowired
+    private UserRepository userRepository;
+
+    public Thread createThread(String title, String body, String date, List<String> categoryNames, String userEmail) {
         // Handle category association
         Set<ThreadCategory> categories = new HashSet<>();
 
@@ -37,17 +42,28 @@ public class ThreadService {
             categories.add(category);
         }
 
+        // Fetch the user by email
+        Optional<User> userOptional = userRepository.findByEmail(userEmail);
+        if (userOptional.isEmpty()) {
+            throw new RuntimeException("User not found");
+        }
+        User user = userOptional.get();
+
+        // Create a new thread
+        Thread thread = new Thread(title, body, date, user);
         thread.setCategories(categories);
-        return ThreadRepository.save(thread);
+
+        // Save the thread
+        return threadRepository.save(thread);
     }
 
 
     public List<Thread> getThreads() {
-        return ThreadRepository.findAll();
+        return threadRepository.findAll();
     }
 
     public Thread getThreadById(Long id) {
-        Optional<Thread> optionalThread = ThreadRepository.findById(id);
+        Optional<Thread> optionalThread = threadRepository.findById(id);
 
         if (optionalThread.isPresent()) {
             return optionalThread.get();
@@ -57,21 +73,21 @@ public class ThreadService {
     }
 
     public boolean deleteThread(Long id) {
-        if (ThreadRepository.existsById(id)) {
-            ThreadRepository.deleteById(id);
+        if (threadRepository.existsById(id)) {
+            threadRepository.deleteById(id);
             return true;
         }
         return false;
     }
 
     public List<ThreadComment> getComments(Long threadId) {
-        return ThreadCommentRepository.findByThreadId(threadId);
+        return threadCommentRepository.findByThreadId(threadId);
     }
 
     public ThreadComment createComment(Long threadId, ThreadComment comment) {
-        Thread thread = ThreadRepository.findById(threadId)
+        Thread thread = threadRepository.findById(threadId)
                 .orElseThrow(() -> new IllegalArgumentException("Thread not found with id: " + threadId));
         comment.setThread(thread);
-        return ThreadCommentRepository.save(comment);
+        return threadCommentRepository.save(comment);
     }
 }

@@ -13,7 +13,7 @@ public class ThreadRequest {
     private String title;
     private String body;
     private String date;
-    private User user;
+    private String email;
     private List<String> categories;  // List of category names
 }
 
