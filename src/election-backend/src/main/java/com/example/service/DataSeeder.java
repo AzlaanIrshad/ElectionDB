@@ -238,8 +238,13 @@ public class DataSeeder implements CommandLineRunner {
                     "Samen voor Nederland is een partij die zich richt op het bevorderen van sociale samenwerking, het versterken van de economie, en het verbeteren van de levenskwaliteit voor iedereen. De partij pleit " +
                             "voor meer nadruk op werkgelegenheid, onderwijs, en zorg, en wil de kloof tussen arm en rijk verkleinen.");
 
+            Party party28 = new Party("VVD",
+                    "De Volkspartij voor Vrijheid en Democratie (VVD) is een liberale politieke partij die zich richt op individuele vrijheid, verantwoordelijkheid en het versterken van de Nederlandse economie. " +
+                            "De partij pleit voor belastingverlagingen, minder bureaucratie, en een efficiënter overheidsbeleid. VVD wil ook een sterke en stabiele internationale positie voor Nederland, met een focus op " +
+                            "veiligheid, rechtsstaat, en Europese samenwerking.");
+
             // Save all parties
-            partyRepository.saveAll(Arrays.asList(party1, party2, party3, party4, party5, party6, party7, party8, party9, party10, party11, party12, party13, party14, party15, party16, party17, party18, party19, party20, party21, party22, party23, party24, party25, party26, party27));
+            partyRepository.saveAll(Arrays.asList(party1, party2, party3, party4, party5, party6, party7, party8, party9, party10, party11, party12, party13, party14, party15, party16, party17, party18, party19, party20, party21, party22, party23, party24, party25, party26, party27, party28));
         } else {
             System.out.println("Partijen bestaan al, overslaan.");
         }
