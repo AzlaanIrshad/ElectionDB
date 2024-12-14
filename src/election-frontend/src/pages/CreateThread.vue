@@ -71,7 +71,7 @@
 </template>
 
 <script>
-import config from '../config';
+import { threadService } from '../services/threadService';
 
 export default {
   name: "CreateThreadPage",
@@ -113,35 +113,29 @@ export default {
         return;
       }
 
+      const dummyUser = {
+        id: 1,
+        username: 'googoo',
+        email: 'googoo@example.com',
+        password: 'password',
+        role: 'ADMIN',
+      };
+
+      const now = new Date();
+      const formattedDate = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-`
+          + `${String(now.getDate()).padStart(2, '0')} ${String(now.getHours()).padStart(2, '0')}:`
+          + `${String(now.getMinutes()).padStart(2, '0')}`;
+
+      const threadData = {
+        title: this.title,
+        body: this.body,
+        category: this.category,
+        date: formattedDate,
+        user: dummyUser,
+      };
+
       try {
-        const dummyUser = {
-          id: 1,
-          username: 'googoo',
-          email: 'googoo@example.com',
-          password: 'password',
-          role: 'ADMIN',
-        };
-
-        const now = new Date();
-        const formattedDate = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-`
-            + `${String(now.getDate()).padStart(2, '0')} ${String(now.getHours()).padStart(2, '0')}:`
-            + `${String(now.getMinutes()).padStart(2, '0')}`;
-
-        const threadData = {
-          title: this.title,
-          body: this.body,
-          category: this.category,
-          date: formattedDate,
-          user: dummyUser,
-        };
-
-        const response = await fetch(`${config.apiBaseUrl}/api/threads`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(threadData),
-        });
+        const response = await threadService.createThread(threadData);
 
         if (response.ok) {
           this.$router.push('/threads');
@@ -158,3 +152,4 @@ export default {
   },
 };
 </script>
+
