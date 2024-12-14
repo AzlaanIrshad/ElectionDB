@@ -32,28 +32,25 @@ public class ThreadService {
     private UserRepository userRepository;
 
     public Thread createThread(String title, String body, String date, List<String> categoryNames, String userEmail) {
-        // Handle category association
+
         Set<ThreadCategory> categories = new HashSet<>();
 
         for (String categoryName : categoryNames) {
-            // Check if category exists, if not, create it
+
             ThreadCategory category = threadCategoryRepository.findByName(categoryName)
                     .orElseGet(() -> threadCategoryRepository.save(new ThreadCategory(categoryName)));
             categories.add(category);
         }
 
-        // Fetch the user by email
         Optional<User> userOptional = userRepository.findByEmail(userEmail);
         if (userOptional.isEmpty()) {
             throw new RuntimeException("User not found");
         }
         User user = userOptional.get();
 
-        // Create a new thread
         Thread thread = new Thread(title, body, date, user);
         thread.setCategories(categories);
 
-        // Save the thread
         return threadRepository.save(thread);
     }
 
@@ -68,7 +65,7 @@ public class ThreadService {
         if (optionalThread.isPresent()) {
             return optionalThread.get();
         } else {
-            throw new RuntimeException("Thread not found with id: " + id);  // Handle appropriately
+            throw new RuntimeException("Thread not found with id: " + id);
         }
     }
 
@@ -84,10 +81,23 @@ public class ThreadService {
         return threadCommentRepository.findByThreadId(threadId);
     }
 
-    public ThreadComment createComment(Long threadId, ThreadComment comment) {
+    public ThreadComment createComment(Long threadId, String body, String date, String email) {
+        Optional<User> userOptional = userRepository.findByEmail(email);
+        if (userOptional.isEmpty()) {
+            System.out.println("User not found for email: " + email);
+            throw new RuntimeException("User not found");
+        }
+
+        User user = userOptional.get();
         Thread thread = threadRepository.findById(threadId)
                 .orElseThrow(() -> new IllegalArgumentException("Thread not found with id: " + threadId));
+
+        ThreadComment comment = new ThreadComment();
+        comment.setBody(body);
+        comment.setDate(date);
+        comment.setUser(user);
         comment.setThread(thread);
+
         return threadCommentRepository.save(comment);
     }
 }

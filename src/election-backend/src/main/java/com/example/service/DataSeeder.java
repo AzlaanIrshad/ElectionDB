@@ -110,10 +110,10 @@ public class DataSeeder implements CommandLineRunner {
             Thread thread2 = threadRepository.findByTitle("Klimaatbeleid en Toekomst").orElseThrow();
             Thread thread3 = threadRepository.findByTitle("Economie en Belastingen").orElseThrow();
 
-            ThreadComment comment1 = new ThreadComment(regularUser, thread1, "Ik vond de verkiezingen eerlijk verlopen.", "2024-11-20", "Politiek");
-            ThreadComment comment2 = new ThreadComment(modUser, thread2, "Klimaatverandering moet de hoogste prioriteit krijgen!", "2024-11-18", "Klimaat");
-            ThreadComment comment3 = new ThreadComment(adminUser, thread3, "Belastingverlaging is noodzakelijk voor de middenklasse.", "2024-11-17", "Economie");
-            ThreadComment comment4 = new ThreadComment(regularUser, thread1, "Ik denk dat er betere alternatieven waren.", "2024-11-21", "Politiek");
+            ThreadComment comment1 = new ThreadComment(regularUser, thread1, "Ik vond de verkiezingen eerlijk verlopen.", "2024-11-20");
+            ThreadComment comment2 = new ThreadComment(modUser, thread2, "Klimaatverandering moet de hoogste prioriteit krijgen!", "2024-11-18");
+            ThreadComment comment3 = new ThreadComment(adminUser, thread3, "Belastingverlaging is noodzakelijk voor de middenklasse.", "2024-11-17");
+            ThreadComment comment4 = new ThreadComment(regularUser, thread1, "Ik denk dat er betere alternatieven waren.", "2024-11-21");
 
             threadCommentRepository.saveAll(Arrays.asList(comment1, comment2, comment3, comment4));
         } else {
