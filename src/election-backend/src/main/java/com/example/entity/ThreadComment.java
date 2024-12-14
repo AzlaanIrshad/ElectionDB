@@ -34,19 +34,14 @@ public class ThreadComment implements Serializable {
     @Column(name = "date", length = 255, nullable = false)
     private String date;
 
-    @NotBlank(message = "Category is required")
-    @Column(name = "category", length = 255, nullable = false)
-    private String category;
-
     public ThreadComment() {
         // Default constructor
     }
 
-    public ThreadComment(User user, Thread thread, String body, String date, String category) {
+    public ThreadComment(User user, Thread thread, String body, String date) {
         this.user = user;
         this.thread = thread;
         this.body = body;
         this.date = date;
-        this.category = category;
     }
 }

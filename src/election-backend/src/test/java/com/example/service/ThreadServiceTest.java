@@ -1,10 +1,12 @@
 package com.example.service;
 
 import com.example.entity.Thread;
-import com.example.entity.ThreadComment;
+import com.example.entity.ThreadCategory;
 import com.example.entity.User;
 import com.example.repository.ThreadRepository;
+import com.example.repository.ThreadCategoryRepository;
 import com.example.repository.ThreadCommentRepository;
+import com.example.repository.UserRepository;
 import com.example.util.JwtUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,9 +14,13 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import com.example.entity.ThreadComment;
 
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -26,12 +32,20 @@ public class ThreadServiceTest {
     private ThreadRepository threadRepository;
 
     @Mock
-    private ThreadCommentRepository threadCommentRepository;
+    private ThreadCategoryRepository threadCategoryRepository;
+
+    @Mock
+    private  ThreadCommentRepository threadCommentRepository;
+
+    @Mock
+    private UserRepository userRepository;
 
     @InjectMocks
     private ThreadService threadService;
 
     private Thread thread;
+
+    private ThreadComment threadcomment;
 
     @BeforeEach
     void setUp() {
@@ -46,19 +60,44 @@ public class ThreadServiceTest {
         thread.setUser(dummyUser);
         thread.setTitle("test thread");
         thread.setBody("This is a test thread");
-        thread.setCategory("cat1");
     }
 
     @Test
     void testCreateThread() {
-        when(threadRepository.save(thread)).thenReturn(thread);
 
-        Thread createdThread = threadService.createThread(thread);
+        List<String> categoryNames = Arrays.asList("cat1", "cat2");
+        String title = "test thread";
+        String body = "This is a test thread";
+        String date = "2024-12-15 00:00";
+        String userEmail = "googoo@example.com";
+
+        Set<ThreadCategory> categories = new HashSet<>();
+        ThreadCategory category1 = new ThreadCategory("cat1");
+        ThreadCategory category2 = new ThreadCategory("cat2");
+        categories.add(category1);
+        categories.add(category2);
+
+        when(threadCategoryRepository.findByName("cat1")).thenReturn(Optional.of(category1));
+        when(threadCategoryRepository.findByName("cat2")).thenReturn(Optional.of(category2));
+
+        User dummyUser = new User();
+        dummyUser.setId(1L);
+        dummyUser.setEmail(userEmail);
+        when(userRepository.findByEmail(userEmail)).thenReturn(Optional.of(dummyUser));
+
+        when(threadRepository.save(any(Thread.class))).thenAnswer(invocation -> invocation.getArgument(0));
+
+        Thread createdThread = threadService.createThread(title, body, date, categoryNames, userEmail);
 
         assertNotNull(createdThread);
-        assertEquals("test thread", createdThread.getTitle());
-        verify(threadRepository, times(1)).save(thread);
+        assertEquals(title, createdThread.getTitle());
+        assertEquals(2, createdThread.getCategories().size());
+        verify(threadRepository, times(1)).save(any(Thread.class));
+        verify(threadCategoryRepository, times(1)).findByName("cat1");
+        verify(threadCategoryRepository, times(1)).findByName("cat2");
+        verify(userRepository, times(1)).findByEmail(userEmail);
     }
+
 
     @Test
     void testGetThreads() {
@@ -120,29 +159,51 @@ public class ThreadServiceTest {
 
     @Test
     void testCreateComment() {
-        ThreadComment comment = new ThreadComment();
-        comment.setBody("This is a comment");
 
+        String body = "This is a comment";
+        String date = "2024-12-15 00:01";
+        String email = "googoo@example.com";
+
+        User dummyUser = new User();
+        dummyUser.setId(1L);
+        dummyUser.setEmail(email);
+        when(userRepository.findByEmail(email)).thenReturn(Optional.of(dummyUser));
+
+        Thread thread = new Thread();
+        thread.setId(1L);
         when(threadRepository.findById(1L)).thenReturn(Optional.of(thread));
-        when(threadCommentRepository.save(comment)).thenReturn(comment);
 
-        ThreadComment createdComment = threadService.createComment(1L, comment);
+        ThreadComment comment = new ThreadComment();
+        comment.setBody(body);
+        comment.setDate(date);
+        comment.setUser(dummyUser);
+        comment.setThread(thread);
+        when(threadCommentRepository.save(any(ThreadComment.class))).thenReturn(comment);
+
+        ThreadComment createdComment = threadService.createComment(1L, body, date, email);
 
         assertNotNull(createdComment);
-        assertEquals("This is a comment", createdComment.getBody());
+        assertEquals(body, createdComment.getBody());
+        assertEquals(date, createdComment.getDate());
+        assertEquals(email, createdComment.getUser().getEmail());
         verify(threadRepository, times(1)).findById(1L);
-        verify(threadCommentRepository, times(1)).save(comment);
+        verify(threadCommentRepository, times(1)).save(any(ThreadComment.class));
+        verify(userRepository, times(1)).findByEmail(email);
     }
+
+
+
 
     @Test
     void testCreateComment_ThreadNotFound() {
-        ThreadComment comment = new ThreadComment();
-        comment.setBody("This is a comment");
+        String body = "This is a comment";
+        String date = "2024-12-15 00:01";
+        String email = "googoo@example.com";
 
         when(threadRepository.findById(1L)).thenReturn(Optional.empty());
 
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
-            threadService.createComment(1L, comment);
+            threadService.createComment(1L, body, date, email);
         });
 
         assertEquals("Thread not found with id: 1", exception.getMessage());
