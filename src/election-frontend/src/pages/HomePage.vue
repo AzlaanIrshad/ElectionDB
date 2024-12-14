@@ -1,5 +1,30 @@
 <template>
   <div class="homepage bg-gray-100 dark:bg-gray-900 font-sans text-gray-900 dark:text-gray-100">
+    <!-- Countdown Timer Section -->
+    <section class="countdown-section bg-blue-600 dark:bg-blue-800 text-white py-4 text-center">
+      <div class="countdown-container">
+        <h2 class="text-xl font-bold mb-2">Tijd tot de volgende verkiezingen</h2>
+        <div class="flex justify-center space-x-4">
+          <div class="countdown-item">
+            <span class="text-3xl font-bold">{{ countdown.days }}</span>
+            <p class="text-sm">Dagen</p>
+          </div>
+          <div class="countdown-item">
+            <span class="text-3xl font-bold">{{ countdown.hours }}</span>
+            <p class="text-sm">Uren</p>
+          </div>
+          <div class="countdown-item">
+            <span class="text-3xl font-bold">{{ countdown.minutes }}</span>
+            <p class="text-sm">Minuten</p>
+          </div>
+          <div class="countdown-item">
+            <span class="text-3xl font-bold">{{ countdown.seconds }}</span>
+            <p class="text-sm">Seconden</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Hero Sectie -->
     <section class="relative flex items-center justify-center" :style="{ height: `calc(100vh - 4rem)` }">
       <div
@@ -17,7 +42,6 @@
           <p class="text-sm sm:text-base text-white mb-6">
             Blijf op de hoogte met VerkiezingsDB 2024, jouw ultieme platform voor real-time verkiezingsupdates en deskundige analyses.
           </p>
-<!--    ദ്ദി(˵ •̀ ᴗ - ˵ ) ✧-->
           <a
               href="/dashboard"
               class="bg-blue-600 text-white dark:text-white px-4 py-2 rounded-full text-sm sm:text-base font-medium hover:bg-gray-900 transition duration-300 border border-gray-700"
@@ -77,35 +101,42 @@
       </div>
     </section>
 
+    <!-- Categorieën Sectie -->
+    <section class="categories py-10 mb-10 bg-white dark:bg-gray-800 rounded-lg shadow-lg mt-10 mx-2 lg:mx-5">
+      <h2 class="text-3xl lg:text-4xl text-center mb-8 font-extrabold text-gray-800 dark:text-gray-100">Verkiezingscategorieën</h2>
+      <div class="blocks flex flex-col md:flex-row justify-around gap-4 lg:gap-6 mx-4 sm:mx-6 lg:mx-10">
+        <div class="block w-full md:w-1/4 h-36 sm:h-44 flex justify-center items-center bg-blue-600 dark:bg-blue-700 text-center rounded-lg shadow-md cursor-pointer hover:bg-blue-800 dark:hover:bg-blue-600 transition-all text-white transform hover:scale-105">
+          <a href="/threads"><span class="font-bold text-xl lg:text-2xl">Election Discussies</span></a>
+        </div>
+        <div class="block w-full md:w-1/4 h-36 sm:h-44 flex justify-center items-center bg-blue-600 dark:bg-blue-700 text-center rounded-lg shadow-md cursor-pointer hover:bg-blue-800 dark:hover:bg-blue-600 transition-all text-white transform hover:scale-105">
+          <a href="/dashboard"><span class="font-bold text-xl lg:text-2xl">Resultaten per Staat</span></a>
+        </div>
+        <div class="block w-full md:w-1/4 h-36 sm:h-44 flex justify-center items-center bg-blue-600 dark:bg-blue-700 text-center rounded-lg shadow-md cursor-pointer hover:bg-blue-800 dark:hover:bg-blue-600 transition-all text-white transform hover:scale-105">
+          <a href="/"><span class="font-bold text-xl lg:text-2xl">Kandidatenprofielen</span></a>
+        </div>
+      </div>
+    </section>
 
-    <section>
-      <!-- Categorieën Sectie -->
-      <section class="categories py-10 mb-10 bg-white dark:bg-gray-800 rounded-lg shadow-lg mt-10 mx-2 lg:mx-5">
-        <h2 class="text-3xl lg:text-4xl text-center mb-8 font-extrabold text-gray-800 dark:text-gray-100">Verkiezingscategorieën</h2>
-        <div class="blocks flex flex-col md:flex-row justify-around gap-4 lg:gap-6 mx-4 sm:mx-6 lg:mx-10">
-          <div class="block w-full md:w-1/4 h-36 sm:h-44 flex justify-center items-center bg-blue-600 dark:bg-blue-700 text-center rounded-lg shadow-md cursor-pointer hover:bg-blue-800 dark:hover:bg-blue-600 transition-all text-white transform hover:scale-105">
-            <a href="/threads"><span class="font-bold text-xl lg:text-2xl">Election Discussies</span></a>
-          </div>
-          <div class="block w-full md:w-1/4 h-36 sm:h-44 flex justify-center items-center bg-blue-600 dark:bg-blue-700 text-center rounded-lg shadow-md cursor-pointer hover:bg-blue-800 dark:hover:bg-blue-600 transition-all text-white transform hover:scale-105">
-            <a href="/dashboard"><span class="font-bold text-xl lg:text-2xl">Resultaten per Staat</span></a>
-          </div>
-          <div class="block w-full md:w-1/4 h-36 sm:h-44 flex justify-center items-center bg-blue-600 dark:bg-blue-700 text-center rounded-lg shadow-md cursor-pointer hover:bg-blue-800 dark:hover:bg-blue-600 transition-all text-white transform hover:scale-105">
-            <a href="/"><span class="font-bold text-xl lg:text-2xl">Kandidatenprofielen</span></a>
+    <!-- Logo Carousel -->
+    <section class="logo py-12 bg-white dark:bg-gray-800 rounded-lg shadow-lg mx-2 lg:mx-5 mb-10">
+    <h2 class="text-3xl lg:text-4xl text-center mb-8 font-extrabold text-gray-800 dark:text-gray-100">Top Politieke Partijen</h2>
+    <section class="categories py-8 mb-10 bg-white dark:bg-gray-800 rounded-lg shadow-lg mt-10 mx-auto max-w-7xl relative">
+      <div class="logo-carousel overflow-hidden w-full h-28 sm:h-32">
+        <div class="logo-track flex items-center space-x-4">
+           <!-- azlaan freaky -->
+          <div
+              v-for="(image, index) in [...featuredImages, ...featuredImages]"
+              :key="index"
+              class="tile w-24 sm:w-32 h-24 sm:h-32 text-center flex-shrink-0 p-2"
+          >
+            <img :src="image" alt="Thumbnail" class="w-full h-full object-contain rounded-lg" />
           </div>
         </div>
-      </section>
-
-
-    <!-- Tegels Sectie -->
-    <div class="tiles flex justify-center mt-5 gap-2 sm:gap-4 pb-8">
-      <div
-          v-for="(image, index) in featuredImages"
-          :key="index"
-          class="tile w-1/4 sm:w-1/5 h-24 sm:h-32 lg:h-40 bg-gray-200 dark:bg-gray-700 text-center rounded-lg shadow-md transition-all cursor-pointer hover:bg-blue-500 dark:hover:bg-blue-600 transform hover:scale-105"
-      >
-        <img :src="image" alt="Thumbnail" class="w-full h-full object-cover rounded-lg" />
       </div>
-    </div>
+      <!-- Schaduw op de zijkanten -->
+      <div class="absolute top-0 left-0 w-8 h-full bg-gradient-to-r from-gray-300 via-transparent dark:from-gray-900"></div>
+      <div class="absolute top-0 right-0 w-8 h-full bg-gradient-to-l from-gray-300 via-transparent dark:from-gray-900"></div>
+    </section>
     </section>
 
     <!-- Nieuws Sectie -->
@@ -132,22 +163,51 @@
     </section>
   </div>
 </template>
+
 <script>
+import config from "../config";
+
+// Dynamisch importeren van alle logos
+const partyLogos = import.meta.glob('@/assets/partyLogo/*.webp', { eager: true });
+
 export default {
   data() {
     return {
-      featuredImages: [
-        "https://media.gettyimages.com/id/1327961273/nl/foto/the-hague-netherlands-general-interior-view-of-the-tweede-kamer-building-is-seen-during-the.jpg?s=612x612&w=0&k=20&c=FZv3KDWl4flKiXpm49-0QwZvXB9Sp2Cry3artg0Uw9o=",
-        "https://media.gettyimages.com/id/1793796325/nl/foto/the-hague-netherlands-a-woman-walks-past-campaign-posters-on-november-20-2023-in-the-hague.jpg?s=612x612&w=0&k=20&c=tyylwgIawxWevTh-6WcVutNA-yhlPcz9GLWkT6Lwzc8=",
-        "https://media.gettyimages.com/id/1165687569/nl/foto/voting-box-and-election-image-election.jpg?s=612x612&w=0&k=20&c=Xu3sE7U-wgcL-xWrS41yGXhMl6NLqw7xqsGNHIPzRbI=",
-      ],
+      featuredImages: Object.values(partyLogos).map(logo => logo.default),
 
+      countdown: {
+        days: 0,
+        hours: 0,
+        minutes: 0,
+        seconds: 0
+      }
     };
   },
   methods: {
-
+    async fetchCountdown() {
+      try {
+        const response = await fetch(`${config.apiBaseUrl}/api/countdown`);
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        this.countdown = {
+          days: data.days,
+          hours: data.hours,
+          minutes: data.minutes,
+          seconds: data.seconds
+        };
+      } catch (error) {
+        console.error('Error fetching countdown:', error);
+      }
+    },
+    startCountdown() {
+      this.fetchCountdown();
+      setInterval(this.fetchCountdown, 1000);
+    }
+  },
   mounted() {
-  },
-  },
+    this.startCountdown();
+  }
 };
 </script>

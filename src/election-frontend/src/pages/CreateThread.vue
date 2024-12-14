@@ -71,7 +71,7 @@
 </template>
 
 <script>
-import config from '../config';
+import { threadService } from '../services/threadService';
 
 export default {
   name: "CreateThreadPage",
@@ -122,10 +122,10 @@ export default {
           role: 'ADMIN'
         };
 
-        const now = new Date();
-        const formattedDate = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-`
-            + `${String(now.getDate()).padStart(2, '0')} ${String(now.getHours()).padStart(2, '0')}:`
-            + `${String(now.getMinutes()).padStart(2, '0')}`;
+      const now = new Date();
+      const formattedDate = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-`
+          + `${String(now.getDate()).padStart(2, '0')} ${String(now.getHours()).padStart(2, '0')}:`
+          + `${String(now.getMinutes()).padStart(2, '0')}`;
 
         // Convert categoryInput to array
         const categories = this.categoryInput.split(",").map((cat) => cat.trim());
@@ -138,13 +138,8 @@ export default {
           user: dummyUser,
         };
 
-        const response = await fetch(`${config.apiBaseUrl}/api/threads`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(threadData),
-        });
+      try {
+        const response = await threadService.createThread(threadData);
 
         if (response.ok) {
           this.$router.push('/threads');
@@ -157,7 +152,7 @@ export default {
     },
     goBack() {
       this.$router.go(-1);
-    }
+    },
   },
 };
 </script>
