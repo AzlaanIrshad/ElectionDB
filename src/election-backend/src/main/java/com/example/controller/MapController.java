@@ -266,10 +266,6 @@ private List<Map<String, Object>> calculateCityLeadingPartyVotes(JsonNode root) 
 
         partyVotes.sort((p1, p2) -> Integer.compare((int) p2.get("validVotes"), (int) p1.get("validVotes")));
 
-        if (!partyVotes.isEmpty()) {
-            partyVotes.removeFirst();
-        }
-
         String leadingParty = null;
         int maxVotes = 0;
 
