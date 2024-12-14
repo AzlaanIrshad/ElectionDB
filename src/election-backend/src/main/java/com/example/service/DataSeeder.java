@@ -6,6 +6,7 @@ import com.example.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
+import java.util.HashSet;
 
 import java.util.Arrays;
 
@@ -26,6 +27,9 @@ public class DataSeeder implements CommandLineRunner {
 
     @Autowired
     private PartyRepository partyRepository;
+
+    @Autowired
+    private ThreadCategoryRepository threadCategoryRepository;
 
     @Override
     public void run(String... args) {
@@ -56,17 +60,49 @@ public class DataSeeder implements CommandLineRunner {
             adminUser = userRepository.findByUsername("beheerder").orElseThrow();
         }
 
-        // Seed Threads if none exist
+// Seed Threads if none exist
         if (threadRepository.count() == 0) {
-            Thread thread1 = new Thread("Discussie over Verkiezingen 2024", "Wat is jouw mening over de uitslag?", "2024-11-20", "Politiek", regularUser);
-            Thread thread2 = new Thread("Klimaatbeleid en Toekomst", "Hoe belangrijk is klimaatverandering voor jou?", "2024-11-18", "Klimaat", modUser);
-            Thread thread3 = new Thread("Economie en Belastingen", "Wat vind je van de huidige belastingtarieven?", "2024-11-17", "Economie", adminUser);
-            Thread thread4 = new Thread("Onderwijs in Nederland", "Discussieer over de uitdagingen in het onderwijs", "2024-11-19", "Onderwijs", regularUser);
+            // Check if categories already exist, if not create them
+            ThreadCategory politicsCategory = threadCategoryRepository.findByName("Politiek").orElseGet(() -> {
+                ThreadCategory category = new ThreadCategory("Politiek");
+                return threadCategoryRepository.save(category);
+            });
 
+            ThreadCategory climateCategory = threadCategoryRepository.findByName("Klimaat").orElseGet(() -> {
+                ThreadCategory category = new ThreadCategory("Klimaat");
+                return threadCategoryRepository.save(category);
+            });
+
+            ThreadCategory economyCategory = threadCategoryRepository.findByName("Economie").orElseGet(() -> {
+                ThreadCategory category = new ThreadCategory("Economie");
+                return threadCategoryRepository.save(category);
+            });
+
+            ThreadCategory educationCategory = threadCategoryRepository.findByName("Onderwijs").orElseGet(() -> {
+                ThreadCategory category = new ThreadCategory("Onderwijs");
+                return threadCategoryRepository.save(category);
+            });
+
+            // Create Threads
+            Thread thread1 = new Thread("Discussie over Verkiezingen 2024", "Wat is jouw mening over de uitslag?", "2024-11-20", regularUser);
+            thread1.setCategories(new HashSet<>(Arrays.asList(politicsCategory)));
+
+            Thread thread2 = new Thread("Klimaatbeleid en Toekomst", "Hoe belangrijk is klimaatverandering voor jou?", "2024-11-18", modUser);
+            thread2.setCategories(new HashSet<>(Arrays.asList(climateCategory)));
+
+            Thread thread3 = new Thread("Economie en Belastingen", "Wat vind je van de huidige belastingtarieven?", "2024-11-17", adminUser);
+            thread3.setCategories(new HashSet<>(Arrays.asList(economyCategory)));
+
+            Thread thread4 = new Thread("Onderwijs in Nederland", "Discussieer over de uitdagingen in het onderwijs", "2024-11-19", regularUser);
+            thread4.setCategories(new HashSet<>(Arrays.asList(educationCategory)));
+
+            // Save Threads
             threadRepository.saveAll(Arrays.asList(thread1, thread2, thread3, thread4));
         } else {
             System.out.println("Threads bestaan al, overslaan.");
         }
+
+
 
         // Seed Thread Comments if none exist
         if (threadCommentRepository.count() == 0) {
