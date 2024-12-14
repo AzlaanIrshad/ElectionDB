@@ -9,7 +9,12 @@ import CreateThread from "@/pages/CreateThread.vue";
 import FaqPage from "@/pages/FaqPage.vue";
 import AboutPage from '@/pages/AboutPage.vue';
 import DashboardPage from '@/pages/DashboardPage.vue';
-
+import SinglePartyPage from "@/pages/SinglePartyPage.vue";
+import ElectionStatistiekPage from "@/pages/ElectionStatistiekPage.vue";
+import ElectionMap from "@/components/ElectionMap.vue";
+import ElectionDonutChart from "@/components/ElectionDonutChart.vue";
+import PartyBar from "@/components/PartyBar.vue";
+import PartyLine from "@/components/PartyLine.vue";
 
 // General authentication guard
 function authGuard(to, from, next) {
@@ -47,6 +52,35 @@ const routes = [
     { path: '/faq', name: 'faq', component: FaqPage },
     { path: '/about', name: 'about', component: AboutPage },
     { path: '/dashboard', name: 'dashboard', component: DashboardPage },
+    { path: '/parties/:id', name: 'single-party', component: SinglePartyPage },
+    {
+        path: '/election-statistiek',
+        name: 'election-statistiek',
+        component: ElectionStatistiekPage,
+        redirect: { name: 'per-stemlocatie' },
+        children: [
+            {
+                path: 'per-stemlocatie',
+                name: 'per-stemlocatie',
+                component: ElectionMap,
+            },
+            {
+                path: 'per-verkiezing',
+                name: 'per-verkiezing',
+                component: ElectionDonutChart,
+            },
+            {
+                path: 'zetels-per-jaar',
+                name: 'zetels-per-jaar',
+                component: PartyBar,
+            },
+            {
+                path: 'zetels-per-partij',
+                name: 'zetels-per-partij',
+                component: PartyLine,
+            }
+        ]
+    },
 ];
 
 const router = createRouter({

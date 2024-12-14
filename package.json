@@ -13,16 +13,16 @@
         "dev:db": "docker-compose -f docker-compose.yml up",
         "dev:api": "cd src/election-backend && (if exist mvnw.cmd (mvnw.cmd spring-boot:run) else (./mvnw spring-boot:run))",
         "dev:web": "cd src/election-frontend && npm run dev",
-        "build": "run-p build:web build:api",
+        "build": "run-p build:web build:api build:docker",
         "build:web": "npm run build -w src/election-frontend",
         "build:api": "cd src/election-backend && (if exist mvnw.cmd (mvnw.cmd clean install) else (./mvnw clean install))",
+        "build:docker": "npm run build:api && docker-compose -f docker-compose.yml build",
         "preview": "run-p preview:api preview:web",
         "preview:api": "cd src/election-backend && (if exist mvnw.cmd (mvnw.cmd spring-boot:run) else (./mvnw spring-boot:run))",
         "preview:web": "npm run preview -w src/election-frontend",
         "test": "npm run test -w src/tests",
         "typedoc": "typedoc"
     },
-
     "devDependencies": {
         "@types/node": "18.x",
         "@typescript-eslint/eslint-plugin": "6.20.0",
@@ -37,10 +37,13 @@
     "dependencies": {
         "axios": "^1.7.7",
         "bcryptjs": "^2.4.3",
+        "chart.js": "^4.4.6",
         "cors": "^2.8.5",
         "express": "^4.21.1",
         "jsonwebtoken": "^9.0.2",
         "mysql2": "^3.11.3",
+        "primeicons": "^7.0.0",
+        "primevue": "^4.2.2",
         "sequelize": "^6.37.4"
     }
 }

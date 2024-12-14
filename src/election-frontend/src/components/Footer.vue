@@ -1,26 +1,63 @@
 <template>
-  <footer class="text-white bg-gray-800 dark:bg-gray-900 dark:text-white py-8 mt-auto border-t border-gray-300 dark:border-gray-700">
-    <div class="container mx-auto text-center lg:text-left px-6">
-      <div class="flex flex-col lg:flex-row justify-between items-center lg:items-start">
-        <!-- Logo and About Section -->
-        <div class="mb-6 lg:mb-0">
-          <p class="text-xl font-semibold">Electiondb</p>
-          <p class="text-sm mt-2 text-white dark:text-gray-400">Your hub for real-time election results, updates, and discussions.</p>
-        </div>
-
-        <!-- Navigation Links -->
-        <div class="flex flex-col lg:flex-row items-center lg:items-start lg:space-x-8">
-          <router-link to="/" class="text-white dark:text-gray-300 hover:text-gray-900 dark:hover:text-white mb-4 lg:mb-0">Home</router-link>
-          <router-link to="/faq" class="text-white dark:text-gray-300 hover:text-gray-900 dark:hover:text-white mb-4 lg:mb-0">FAQ</router-link>
-          <router-link to="/about" class="text-white dark:text-gray-300 hover:text-gray-900 dark:hover:text-white mb-4 lg:mb-0">About Us</router-link>
-          <router-link to="/dashboard" class="text-white dark:text-gray-300 hover:text-gray-900 dark:hover:text-white mb-4 lg:mb-0">Dashboard</router-link>
-        </div>
+  <footer class="bg-gray-800 shadow dark:bg-gray-900 py-8 dark:border-t dark:border-gray-700">
+    <div class="w-full max-w-screen-xl mx-auto p-4">
+      <!-- Flex container voor logo en navigatie -->
+      <!-- Azlaan do be smelly -->
+      <div class="sm:flex sm:items-center sm:justify-between">
+        <!-- Logo en beschrijving -->
+        <a href="#" class="flex items-center mb-6 sm:mb-0">
+          <span class="self-center text-2xl font-semibold text-white">VerkiezingsDB</span>
+        </a>
+        <!-- Navigatielinks -->
+        <ul class="flex flex-col sm:flex-row sm:items-center sm:space-x-6 text-sm font-medium text-gray-400 text-center sm:text-left">
+          <li>
+            <router-link
+                to="/"
+                class="hover:underline mb-2 sm:mb-0 text-gray-400 hover:text-white"
+            >
+              Home
+            </router-link>
+          </li>
+          <li>
+            <router-link
+                to="/faq"
+                class="hover:underline mb-2 sm:mb-0 text-gray-400 hover:text-white"
+            >
+              FAQ
+            </router-link>
+          </li>
+          <li>
+            <router-link
+                to="/about"
+                class="hover:underline mb-2 sm:mb-0 text-gray-400 hover:text-white"
+            >
+              Over Ons
+            </router-link>
+          </li>
+          <li>
+            <router-link
+                to="/dashboard"
+                class="hover:underline mb-2 sm:mb-0 text-gray-400 hover:text-white"
+            >
+              Dashboard
+            </router-link>
+          </li>
+          <li>
+            <router-link
+                to="/election-statistiek"
+                class="hover:underline text-gray-400 hover:text-white"
+            >
+              Verkiezingsstatistiek
+            </router-link>
+          </li>
+        </ul>
       </div>
-
+      <!-- Horizontale lijn -->
+      <hr class="my-6 border-gray-700 sm:mx-auto" />
       <!-- Copyright -->
-      <div class="text-center text-white dark:text-gray-400 text-sm mt-6">
-        &copy; 2024 Electiondb. All rights reserved.
-      </div>
+      <span class="block text-sm text-gray-400 text-center">
+        &copy; 2024 <span class="font-semibold text-white">VerkiezingsDB</span>. Alle Rechten Voorbehouden.
+      </span>
     </div>
   </footer>
 </template>

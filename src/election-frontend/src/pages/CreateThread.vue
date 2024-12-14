@@ -3,7 +3,7 @@
     <section class="mx-4 sm:mx-6 lg:mx-10">
       <div class="threads py-12 bg-white dark:bg-gray-800 rounded-lg shadow-lg mx-auto mb-10 max-w-4xl">
         <h2 class="text-3xl lg:text-4xl text-center mb-8 font-extrabold text-gray-800 dark:text-gray-100">
-          Create a new election thread!
+          Maak een nieuwe verkiezingsdraad!
         </h2>
         <div class="threads-content flex flex-col md:flex-row items-center gap-8 px-4 sm:px-6 lg:px-8">
           <form class="w-full space-y-6" @submit.prevent="createThread">
@@ -12,7 +12,7 @@
                   type="text"
                   id="title"
                   v-model="title"
-                  placeholder="Thread Title"
+                  placeholder="Titel van de draad"
                   class="w-full p-4 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring focus:ring-blue-300 dark:focus:ring-blue-500 text-gray-700 dark:text-gray-200 dark:bg-gray-700"
                   :class="{ 'border-red-500 dark:border-red-500': titleError }"
               />
@@ -23,7 +23,7 @@
               <textarea
                   id="body"
                   v-model="body"
-                  placeholder="Thread Body"
+                  placeholder="Inhoud van de draad"
                   class="w-full p-4 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring focus:ring-blue-300 dark:focus:ring-blue-500 text-gray-700 dark:text-gray-200 dark:bg-gray-700 h-32 resize-none"
                   :class="{ 'border-red-500 dark:border-red-500': bodyError }"
               ></textarea>
@@ -43,7 +43,7 @@
             </div>
 
             <p v-if="titleError || bodyError || categoryError" class="text-red-500 text-sm mt-4">
-              Fill in all fields.
+              Vul alle velden in.
             </p>
           </form>
         </div>
@@ -57,13 +57,13 @@
             :disabled="!isFormValid"
             @click="createThread"
         >
-          Create Thread
+          Draad Aanmaken
         </button>
         <button
             class="cta-button px-8 py-4 text-white bg-gray-600 dark:bg-gray-700 hover:bg-gray-700 dark:hover:bg-gray-800 focus:ring focus:ring-gray-300 dark:focus:ring-gray-500 rounded-full transition-all shadow-lg transform hover:scale-105"
             @click="goBack"
         >
-          Go Back
+          Ga Terug
         </button>
       </div>
     </section>
@@ -71,6 +71,8 @@
 </template>
 
 <script>
+import config from '../config';
+
 export default {
   name: "CreateThreadPage",
   data() {
@@ -93,15 +95,15 @@ export default {
       this.titleError = this.bodyError = this.categoryError = '';
 
       if (this.title === '') {
-        this.titleError = 'Title is required.';
+        this.titleError = 'Titel is verplicht.';
       }
 
       if (this.body === '') {
-        this.bodyError = 'Body is required.';
+        this.bodyError = 'Inhoud is verplicht.';
       }
 
       if (this.categoryInput === '') {
-        this.categoryError = 'At least one category is required.';
+        this.categoryError = 'Categorie is verplicht.';
       }
 
       return !this.titleError && !this.bodyError && !this.categoryError;
@@ -136,7 +138,7 @@ export default {
           user: dummyUser,
         };
 
-        const response = await fetch('http://localhost:8080/api/threads', {
+        const response = await fetch(`${config.apiBaseUrl}/api/threads`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -147,10 +149,10 @@ export default {
         if (response.ok) {
           this.$router.push('/threads');
         } else {
-          console.error('Error creating thread:', response.statusText);
+          console.error('Fout bij het aanmaken van de draad:', response.statusText);
         }
       } catch (error) {
-        console.error('Error creating thread:', error);
+        console.error('Fout bij het aanmaken van de draad:', error);
       }
     },
     goBack() {

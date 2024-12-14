@@ -7,24 +7,17 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 
 @RestController
-@RequestMapping("/api")
 public class LoginController {
 
     @Autowired
     private UserService userService;
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody User loginRequest) {
-        if (loginRequest.getEmail() == null || loginRequest.getEmail().isEmpty()) {
-            return ResponseEntity.badRequest().body("Email is required");
-        }
-
-        if (loginRequest.getPassword() == null || loginRequest.getPassword().isEmpty()) {
-            return ResponseEntity.badRequest().body("Password is required");
-        }
-
+    public ResponseEntity<?> login(@RequestBody @Valid LoginRequest loginRequest) {
         String token = userService.authenticate(loginRequest.getEmail(), loginRequest.getPassword());
 
         if (token != null) {
@@ -32,5 +25,20 @@ public class LoginController {
         } else {
             return ResponseEntity.status(401).body("Invalid email or password");
         }
+    }
+
+    static class LoginRequest {
+        @NotBlank(message = "Email is required")
+        @Email(message = "Invalid email format")
+        private String email;
+
+        @NotBlank(message = "Password is required")
+        private String password;
+
+        public String getEmail() { return email; }
+        public void setEmail(String email) { this.email = email; }
+
+        public String getPassword() { return password; }
+        public void setPassword(String password) { this.password = password; }
     }
 }
