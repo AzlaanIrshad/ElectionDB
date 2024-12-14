@@ -34,6 +34,12 @@
       <h2 class="text-2xl font-semibold text-gray-700 dark:text-white">{{ partyData.partyName }}</h2>
       <p class="text-lg text-gray-600 dark:text-gray-300">Total Votes: {{ partyData.totalVotes }}</p>
 
+      <!-- Description Section -->
+      <div class="mt-4">
+        <h3 class="text-lg font-medium text-gray-700 dark:text-gray-200">Description</h3>
+        <p class="text-md text-gray-600 dark:text-gray-300">{{ partyData.description }}</p>
+      </div>
+
       <!-- Display Candidate Chart -->
       <div v-if="partyData.chartDataForCandidates" class="mt-6">
         <PartyCandidateHorizontalBarChart
@@ -83,7 +89,7 @@
 </template>
 
 <script>
-import config from "../config";
+import { partyService } from "../services/partyService";
 import PartyCandidateHorizontalBarChart from "../components/CandidateHorizontalBarChart.vue";
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
@@ -113,53 +119,13 @@ export default {
       this.error = null;
 
       try {
-        const response = await fetch(`${config.apiBaseUrl}/api/party-result/${this.partyId}?years=${this.selectedYear}`);
-        if (!response.ok) {
-          throw new Error("Failed to fetch party data");
-        }
-
-        const data = await response.json();
-        this.partyData = this.transformPartyData(data);
+        const data = await partyService.fetchPartyData(this.partyId, this.selectedYear);
+        this.partyData = data;
       } catch (err) {
         this.error = err.message;
       } finally {
         this.loading = false;
       }
-    },
-
-    transformPartyData(data) {
-      const years = Object.keys(data);
-      if (years.length === 0) return null;
-
-      const partyData = data[years[0]];
-      return {
-        partyName: partyData.partyName,
-        totalVotes: partyData.totalVotes,
-        candidates: partyData.candidates || [],
-        chartDataForCandidates: this.prepareChartData(partyData.candidates || []),
-      };
-    },
-
-    prepareChartData(candidates) {
-      if (!candidates || candidates.length === 0) return null;
-
-      const topCandidates = candidates
-          .sort((a, b) => b.validVotes - a.validVotes)
-          .slice(0, 10);
-
-      const chartLabels = topCandidates.map((candidate) => candidate.name);
-      const chartData = topCandidates.map((candidate) => candidate.validVotes);
-
-      return {
-        labels: chartLabels,
-        datasets: [
-          {
-            label: "Votes",
-            data: chartData,
-            backgroundColor: "#06b6d4",
-          },
-        ],
-      };
     },
 
     onYearChange() {
@@ -172,5 +138,3 @@ export default {
   },
 };
 </script>
-<style scoped>
-</style>
