@@ -57,19 +57,18 @@ export default {
   methods: {
     async fetchUserProfile() {
       try {
-        const response = await fetch('/api/users');
-        if (response.ok) {
-          const users = await response.json();
-          const userId = this.$route.params.id;
-          const user = users.find(u => u.id === userId);
+        const response = await fetch('/users');
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        const users = await response.json();
+        const userId = this.$route.params.id;
+        const user = users.find(u => u.id === parseInt(userId, 10));
 
-          if (user) {
-            this.user = user;
-          } else {
-            console.error(`User with ID ${userId} not found`);
-          }
+        if (user) {
+          this.user = user;
         } else {
-          console.error("Failed to fetch user list");
+          console.error(`User with ID ${userId} not found`);
         }
       } catch (error) {
         console.error("Error fetching user profile:", error);
