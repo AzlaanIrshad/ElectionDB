@@ -29,11 +29,58 @@ public class MapController {
             List<Map<String, Object>> results = processTransactions(root, parties);
 
             return ResponseEntity.ok(results);
+            } catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Error: resultatenbestand niet gevonden of een fout opgetreden.");
+            }
+        }
+
+    @GetMapping("/city-leading-party-votes")
+    public ResponseEntity<Object> getCityLeadingPartyVotes(
+            @RequestParam(value = "year", required = false, defaultValue = "2023") Integer year) {
+
+        String filePath = "ParsedJson/" + year + "/tellingen_results.json";
+
+        try (InputStream inputStream = new ClassPathResource(filePath).getInputStream()) {
+            ObjectMapper objectMapper = new ObjectMapper();
+            JsonNode root = objectMapper.readTree(inputStream);
+
+            List<Map<String, Object>> leadingPartyVotes = calculateCityLeadingPartyVotes(root);
+
+            Map<String, Object> response = new HashMap<>();
+            response.put("year", year);
+            response.put("cities", leadingPartyVotes);
+
+            return ResponseEntity.ok(response);
         } catch (IOException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Error: resultatenbestand niet gevonden of een fout opgetreden.");
         }
     }
 //dit is voor total votes per year voor mr manhattan
+
+private List<Map<String, Object>> calculateCityLeadingPartyVotes(JsonNode root) {
+    List<Map<String, Object>> cityLeadingPartyVotes = new ArrayList<>();
+
+    for (JsonNode transaction : root) {
+        String cityName = getCityName(transaction);
+        if (cityName != null && !cityName.isEmpty()) {
+            List<Map<String, Object>> partyVotes = getPartyVotes(transaction.path("count").path("election").path("contests").path("contests"));
+
+            // Zoek de leidende partij
+            if (!partyVotes.isEmpty()) {
+                Map<String, Object> leadingParty = partyVotes.getFirst();
+
+                Map<String, Object> cityResult = new HashMap<>();
+                cityResult.put("cityName", cityName);
+                cityResult.put("leadingParty", leadingParty.get("partyName"));
+                cityResult.put("votes", leadingParty.get("validVotes"));
+                cityLeadingPartyVotes.add(cityResult);
+            }
+        }
+    }
+
+    return cityLeadingPartyVotes;
+}
+
     @GetMapping("/total-votes")
     public ResponseEntity<Object> getTotalVotes(
             @RequestParam(value = "year", required = false, defaultValue = "2023") Integer year) {
