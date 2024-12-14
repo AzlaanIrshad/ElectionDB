@@ -29,11 +29,58 @@ public class MapController {
             List<Map<String, Object>> results = processTransactions(root, parties);
 
             return ResponseEntity.ok(results);
+            } catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Error: resultatenbestand niet gevonden of een fout opgetreden.");
+            }
+        }
+
+    @GetMapping("/city-leading-party-votes")
+    public ResponseEntity<Object> getCityLeadingPartyVotes(
+            @RequestParam(value = "year", required = false, defaultValue = "2023") Integer year) {
+
+        String filePath = "ParsedJson/" + year + "/tellingen_results.json";
+
+        try (InputStream inputStream = new ClassPathResource(filePath).getInputStream()) {
+            ObjectMapper objectMapper = new ObjectMapper();
+            JsonNode root = objectMapper.readTree(inputStream);
+
+            List<Map<String, Object>> leadingPartyVotes = calculateCityLeadingPartyVotes(root);
+
+            Map<String, Object> response = new HashMap<>();
+            response.put("year", year);
+            response.put("cities", leadingPartyVotes);
+
+            return ResponseEntity.ok(response);
         } catch (IOException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Error: resultatenbestand niet gevonden of een fout opgetreden.");
         }
     }
 //dit is voor total votes per year voor mr manhattan
+
+private List<Map<String, Object>> calculateCityLeadingPartyVotes(JsonNode root) {
+    List<Map<String, Object>> cityLeadingPartyVotes = new ArrayList<>();
+
+    for (JsonNode transaction : root) {
+        String cityName = getCityName(transaction);
+        if (cityName != null && !cityName.isEmpty()) {
+            List<Map<String, Object>> partyVotes = getPartyVotes(transaction.path("count").path("election").path("contests").path("contests"));
+
+            // Zoek de leidende partij
+            if (!partyVotes.isEmpty()) {
+                Map<String, Object> leadingParty = partyVotes.getFirst();
+
+                Map<String, Object> cityResult = new HashMap<>();
+                cityResult.put("cityName", cityName);
+                cityResult.put("leadingParty", leadingParty.get("partyName"));
+                cityResult.put("votes", leadingParty.get("validVotes"));
+                cityLeadingPartyVotes.add(cityResult);
+            }
+        }
+    }
+
+    return cityLeadingPartyVotes;
+}
+
     @GetMapping("/total-votes")
     public ResponseEntity<Object> getTotalVotes(
             @RequestParam(value = "year", required = false, defaultValue = "2023") Integer year) {
@@ -104,30 +151,18 @@ public class MapController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Error: resultatenbestand niet gevonden of een fout opgetreden.");
         }
     }
-
     private int calculateTotalVotes(JsonNode root) {
-        int totalVotes = 0;
+        List<Map<String, Object>> partyVotes = new ArrayList<>();
 
         for (JsonNode transaction : root) {
             JsonNode contests = transaction.path("count").path("election").path("contests").path("contests");
-            totalVotes += calculateVotesFromContests(contests);
+            partyVotes.addAll(getPartyVotes(contests));
         }
-
-        return totalVotes;
+        return partyVotes.stream()
+                .mapToInt(party -> (int) party.get("validVotes"))
+                .sum();
     }
 
-    private int calculateVotesFromContests(JsonNode contests) {
-        int totalVotes = 0;
-
-        for (JsonNode contest : contests) {
-            JsonNode selections = contest.path("totalVotes").path("selections");
-            for (JsonNode selection : selections) {
-                totalVotes += selection.path("validVotes").asInt(0);
-            }
-        }
-
-        return totalVotes;
-    }
 
     private List<Map<String, Object>> calculateCityTotalVotes(JsonNode root) {
         List<Map<String, Object>> cityVotes = new ArrayList<>();
@@ -135,7 +170,11 @@ public class MapController {
         for (JsonNode transaction : root) {
             String cityName = getCityName(transaction);
             if (cityName != null && !cityName.isEmpty()) {
-                int totalVotes = calculateVotesFromContests(transaction.path("count").path("election").path("contests").path("contests"));
+                List<Map<String, Object>> partyVotes = getPartyVotes(transaction.path("count").path("election").path("contests").path("contests"));
+
+                int totalVotes = partyVotes.stream()
+                        .mapToInt(party -> (int) party.get("validVotes"))
+                        .sum();
 
                 Map<String, Object> cityResult = new HashMap<>();
                 cityResult.put("cityName", cityName);
@@ -147,6 +186,27 @@ public class MapController {
         return cityVotes;
     }
 
+    private List<Map<String, Object>> getPartyVotes(JsonNode contests) {
+        List<Map<String, Object>> partyVotes = new ArrayList<>();
+
+        for (JsonNode contest : contests) {
+            JsonNode selections = contest.path("totalVotes").path("selections");
+            for (JsonNode selection : selections) {
+                String partyName = selection.path("affiliationIdentifier").path("registeredName").asText();
+                int validVotes = selection.path("validVotes").asInt(0);
+
+                if (!partyName.isEmpty()) {
+                    Map<String, Object> partyData = new HashMap<>();
+                    partyData.put("partyName", partyName);
+                    partyData.put("validVotes", validVotes);
+                    partyVotes.add(partyData);
+                }
+            }
+        }
+        partyVotes.sort((p1, p2) -> Integer.compare((int) p2.get("validVotes"), (int) p1.get("validVotes")));
+        return partyVotes;
+
+    }
     private List<Map<String, Object>> processTransactions(JsonNode root, List<String> parties) {
         List<Map<String, Object>> results = new ArrayList<>();
         for (JsonNode transaction : root) {
@@ -185,11 +245,10 @@ public class MapController {
 
         return buildCityResult(cityName, leadingParty, maxVotes);
     }
-
+    
     // Verwerkt de selectie van partijen binnen een contest
     private Map<String, Object> processSelections(JsonNode selections, List<String> parties) {
-        String leadingParty = null;
-        int maxVotes = 0;
+        List<Map<String, Object>> partyVotes = new ArrayList<>();
 
         for (JsonNode selection : selections) {
             String partyName = selection.path("affiliationIdentifier").path("registeredName").asText();
@@ -197,8 +256,23 @@ public class MapController {
 
             if (partyName.isEmpty()) continue;
 
-            if (validVotes > maxVotes && (parties == null || parties.contains(partyName))) {
-                leadingParty = partyName;
+            if (parties == null || parties.contains(partyName)) {
+                Map<String, Object> partyData = new HashMap<>();
+                partyData.put("partyName", partyName);
+                partyData.put("validVotes", validVotes);
+                partyVotes.add(partyData);
+            }
+        }
+
+        partyVotes.sort((p1, p2) -> Integer.compare((int) p2.get("validVotes"), (int) p1.get("validVotes")));
+
+        String leadingParty = null;
+        int maxVotes = 0;
+
+        for (Map<String, Object> partyData : partyVotes) {
+            int validVotes = (int) partyData.get("validVotes");
+            if (validVotes > maxVotes) {
+                leadingParty = (String) partyData.get("partyName");
                 maxVotes = validVotes;
             }
         }

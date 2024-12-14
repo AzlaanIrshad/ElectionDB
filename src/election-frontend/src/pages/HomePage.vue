@@ -1,30 +1,5 @@
 <template>
   <div class="homepage bg-gray-100 dark:bg-gray-900 font-sans text-gray-900 dark:text-gray-100">
-    <!-- Countdown Timer Section -->
-    <section class="countdown-section bg-blue-600 dark:bg-blue-800 text-white py-4 text-center">
-      <div class="countdown-container">
-        <h2 class="text-xl font-bold mb-2">Tijd tot de volgende verkiezingen</h2>
-        <div class="flex justify-center space-x-4">
-          <div class="countdown-item">
-            <span class="text-3xl font-bold">{{ countdown.days }}</span>
-            <p class="text-sm">Dagen</p>
-          </div>
-          <div class="countdown-item">
-            <span class="text-3xl font-bold">{{ countdown.hours }}</span>
-            <p class="text-sm">Uren</p>
-          </div>
-          <div class="countdown-item">
-            <span class="text-3xl font-bold">{{ countdown.minutes }}</span>
-            <p class="text-sm">Minuten</p>
-          </div>
-          <div class="countdown-item">
-            <span class="text-3xl font-bold">{{ countdown.seconds }}</span>
-            <p class="text-sm">Seconden</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
     <!-- Hero Sectie -->
     <section class="relative flex items-center justify-center" :style="{ height: `calc(100vh - 4rem)` }">
       <div
@@ -113,6 +88,41 @@
         </div>
         <div class="block w-full md:w-1/4 h-36 sm:h-44 flex justify-center items-center bg-blue-600 dark:bg-blue-700 text-center rounded-lg shadow-md cursor-pointer hover:bg-blue-800 dark:hover:bg-blue-600 transition-all text-white transform hover:scale-105">
           <a href="/"><span class="font-bold text-xl lg:text-2xl">Kandidatenprofielen</span></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Countdown Timer Section -->
+    <section class="countdown-section py-10 mb-10 bg-white dark:bg-gray-800 rounded-lg shadow-lg mt-10 mx-2 lg:mx-5">
+      <div class="countdown-container text-center px-4 sm:px-8 lg:px-16">
+        <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold mb-6 text-gray-800 dark:text-gray-100">
+          Tijd tot de volgende verkiezingen
+        </h2>
+        <div class="flex justify-center flex-wrap gap-6">
+          <div class="countdown-item bg-gray-100 dark:bg-gray-700 px-6 py-4 rounded-lg shadow-md">
+        <span class="text-4xl sm:text-5xl font-bold text-blue-600 dark:text-blue-400">
+          {{ countdown.days }}
+        </span>
+            <p class="text-sm sm:text-base font-medium text-gray-700 dark:text-gray-300">Dagen</p>
+          </div>
+          <div class="countdown-item bg-gray-100 dark:bg-gray-700 px-6 py-4 rounded-lg shadow-md">
+        <span class="text-4xl sm:text-5xl font-bold text-blue-600 dark:text-blue-400">
+          {{ countdown.hours }}
+        </span>
+            <p class="text-sm sm:text-base font-medium text-gray-700 dark:text-gray-300">Uren</p>
+          </div>
+          <div class="countdown-item bg-gray-100 dark:bg-gray-700 px-6 py-4   shadow-md">
+        <span class="text-4xl sm:text-5xl font-bold text-blue-600 dark:text-blue-400">
+          {{ countdown.minutes }}
+        </span>
+            <p class="text-sm sm:text-base font-medium text-gray-700 dark:text-gray-300">Minuten</p>
+          </div>
+          <div class="countdown-item bg-gray-100 dark:bg-gray-700 px-6 py-4 rounded-lg shadow-md">
+        <span class="text-4xl sm:text-5xl font-bold text-blue-600 dark:text-blue-400">
+          {{ countdown.seconds }}
+        </span>
+            <p class="text-sm sm:text-base font-medium text-gray-700 dark:text-gray-300">Seconden</p>
+          </div>
         </div>
       </div>
     </section>

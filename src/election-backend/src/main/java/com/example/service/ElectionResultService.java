@@ -92,6 +92,9 @@ public class ElectionResultService {
                     }
 
                     List<Map<String, Object>> parties = new ArrayList<>(partiesMap.values());
+                    if (!parties.isEmpty()) {
+                        parties.removeFirst();
+                    }
                     parties.sort((p1, p2) -> Integer.compare((int) p2.get("totalVotes"), (int) p1.get("totalVotes")));
 
                     Map<String, Object> chartData = prepareChartData(parties);
