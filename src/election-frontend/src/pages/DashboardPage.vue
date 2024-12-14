@@ -69,7 +69,7 @@
 
 <script>
 import TotalPartyVoteBarChart from '../components/TotalPartyVoteBarChart.vue';
-import config from '../config';
+import { electionService } from '../services/ElectionService.js';
 
 export default {
   name: "ElectionDashboard",
@@ -98,13 +98,7 @@ export default {
       this.loading = true;
       this.error = null;
       try {
-        const response = await fetch(`${config.apiBaseUrl}/api/election-results/all?years=${this.selectedYear}`);
-        if (!response.ok) {
-          throw new Error("Ophalen van verkiezingsresultaten mislukt");
-        }
-        const data = await response.json();
-        console.log("Election Data:", data);
-        this.electionData = data[this.selectedYear]; // Adjust for specific years if needed
+        this.electionData = await electionService.fetchElectionResults(this.selectedYear);
       } catch (err) {
         this.error = err.message;
       } finally {
@@ -121,4 +115,3 @@ export default {
   },
 };
 </script>
-
