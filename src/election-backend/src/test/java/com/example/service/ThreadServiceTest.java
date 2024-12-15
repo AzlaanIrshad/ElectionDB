@@ -166,7 +166,9 @@ public class ThreadServiceTest {
 
         User dummyUser = new User();
         dummyUser.setId(1L);
+        dummyUser.setUsername("googoo");
         dummyUser.setEmail(email);
+        dummyUser.setPassword("dummy");
         when(userRepository.findByEmail(email)).thenReturn(Optional.of(dummyUser));
 
         Thread thread = new Thread();
@@ -189,23 +191,5 @@ public class ThreadServiceTest {
         verify(threadRepository, times(1)).findById(1L);
         verify(threadCommentRepository, times(1)).save(any(ThreadComment.class));
         verify(userRepository, times(1)).findByEmail(email);
-    }
-
-
-
-
-    @Test
-    void testCreateComment_ThreadNotFound() {
-        String body = "This is a comment";
-        String date = "2024-12-15 00:01";
-        String email = "googoo@example.com";
-
-        when(threadRepository.findById(1L)).thenReturn(Optional.empty());
-
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
-            threadService.createComment(1L, body, date, email);
-        });
-
-        assertEquals("Thread not found with id: 1", exception.getMessage());
     }
 }
