@@ -71,7 +71,7 @@
 </template>
 
 <script>
-import { threadService } from "../services/threadService";
+import { threadService } from "../services/ThreadService";
 
 export default {
   name: "ThreadsPage",
