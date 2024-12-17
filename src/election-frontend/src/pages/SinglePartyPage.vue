@@ -89,7 +89,7 @@
 </template>
 
 <script>
-import { partyService } from "../services/partyService";
+import { partyService } from "../services/PartyService";
 import PartyCandidateHorizontalBarChart from "../components/CandidateHorizontalBarChart.vue";
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
