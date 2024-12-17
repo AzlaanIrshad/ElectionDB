@@ -1,37 +1,48 @@
 package com.example.controller;
 
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.http.MediaType;
+import com.example.service.ElectionResultService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
-import java.util.Scanner;
+import java.util.List;
 
-@RequestMapping("/api")
 @RestController
+@RequestMapping("/election-results")
 public class ElectionController {
 
-    @GetMapping("/election-results")
-    public String getElectionResults() {
-        try (InputStream inputStream = new ClassPathResource("election_results.json").getInputStream()) {
-            Scanner scanner = new Scanner(inputStream, StandardCharsets.UTF_8.name());
-            String content = scanner.useDelimiter("\\A").next();
-            return content;
+    private final ElectionResultService electionService;
+
+    @Autowired
+    public ElectionController(@Qualifier("electionResultService") ElectionResultService electionService) {
+        this.electionService = electionService;
+    }
+
+    @GetMapping
+    public ResponseEntity<Object> getTotalVotesPerYears(
+            @RequestParam(value = "years", required = false) List<Integer> years) {
+        try {
+            if (years == null || years.isEmpty()) {
+                years = List.of(2023);
+            }
+            return ResponseEntity.ok(electionService.getTotalVotesPerYears(years));
         } catch (IOException e) {
-            return "Error: election_results.json not found in classpath or another error occurred.";
+            return ResponseEntity.status(404).body("Error: resultatenbestand niet gevonden.");
         }
     }
 
-    @GetMapping("/parties/{id}")
-    public String getSingleParty(@PathVariable Long id) {
-        try (InputStream inputStream = new ClassPathResource("election_results.json").getInputStream()) {
-            Scanner scanner = new Scanner(inputStream, StandardCharsets.UTF_8.name());
-            String content = scanner.useDelimiter("\\A").next();
-            return content;
+    @GetMapping("/all")
+    public ResponseEntity<Object> getFilteredResults(
+            @RequestParam(value = "years", required = false) List<Integer> years) {
+        try {
+            if (years == null || years.isEmpty()) {
+                years = List.of(2023);
+            }
+            return ResponseEntity.ok(electionService.getFilteredResults(years));
         } catch (IOException e) {
-            return "Error: election_results.json not found in classpath or another error occurred.";
+            return ResponseEntity.status(404).body("Error: resultatenbestand niet gevonden.");
         }
     }
 }

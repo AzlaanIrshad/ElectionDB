@@ -34,8 +34,8 @@
               <input
                   type="text"
                   id="category"
-                  v-model="category"
-                  placeholder="Categorie"
+                  v-model="categoryInput"
+                  placeholder="Categories (comma-separated)"
                   class="w-full p-4 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring focus:ring-blue-300 dark:focus:ring-blue-500 text-gray-700 dark:text-gray-200 dark:bg-gray-700"
                   :class="{ 'border-red-500 dark:border-red-500': categoryError }"
               />
@@ -71,7 +71,7 @@
 </template>
 
 <script>
-import config from '../config';
+import { threadService } from '../services/ThreadService';
 
 export default {
   name: "CreateThreadPage",
@@ -79,18 +79,43 @@ export default {
     return {
       title: '',
       body: '',
-      category: '',
+      categoryInput: '',
       titleError: '',
       bodyError: '',
       categoryError: '',
+      isLoggedIn: false,
+      isAdmin: false,
+      userEmail: null,
     };
   },
   computed: {
     isFormValid() {
-      return this.title !== '' && this.body !== '' && this.category !== '';
+      return this.title !== '' && this.body !== '' && this.categoryInput !== '';
     },
   },
   methods: {
+    // Method to check authentication status
+    checkAuthStatus() {
+      const token = localStorage.getItem("token");
+      if (token) {
+        try {
+          const payload = JSON.parse(atob(token.split(".")[1]));
+          console.log("Decoded token payload:", payload);
+          this.isLoggedIn = true;
+          this.isAdmin = payload.role === "ADMIN";
+          this.userEmail = payload.sub;
+        } catch (error) {
+          console.error("Error decoding token payload:", error);
+          this.isLoggedIn = false;
+          this.isAdmin = false;
+        }
+      } else {
+        this.isLoggedIn = false;
+        this.isAdmin = false;
+      }
+    },
+
+    // Validate form inputs
     validateForm() {
       this.titleError = this.bodyError = this.categoryError = '';
 
@@ -102,46 +127,51 @@ export default {
         this.bodyError = 'Inhoud is verplicht.';
       }
 
-      if (this.category === '') {
+      if (this.categoryInput === '') {
         this.categoryError = 'Categorie is verplicht.';
       }
 
       return !this.titleError && !this.bodyError && !this.categoryError;
     },
+
+    // Method to create a thread
     async createThread() {
+      this.checkAuthStatus(); // Check authentication status
+
+      if (!this.isLoggedIn) {
+        console.error("User is not logged in");
+        return;
+      }
+
       if (!this.validateForm()) {
         return;
       }
 
       try {
-        const dummyUser = {
-          id: 1,
-          username: 'googoo',
-          email: 'googoo@example.com',
-          password: 'password',
-          role: 'ADMIN',
-        };
-
         const now = new Date();
         const formattedDate = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-`
             + `${String(now.getDate()).padStart(2, '0')} ${String(now.getHours()).padStart(2, '0')}:`
             + `${String(now.getMinutes()).padStart(2, '0')}`;
 
+        const categories = this.categoryInput
+            .split(",")
+            .map((cat) => cat.trim())
+            .filter((cat) => cat !== ""); // Remove empty categories
+
+        if (categories.length === 0) {
+          this.categoryError = 'Categorie is verplicht.';
+          return;
+        }
+
         const threadData = {
           title: this.title,
           body: this.body,
-          category: this.category,
+          categories: categories, // Send as array
           date: formattedDate,
-          user: dummyUser,
+          email: this.userEmail,
         };
 
-        const response = await fetch(`${config.apiBaseUrl}/api/threads`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(threadData),
-        });
+        const response = await threadService.createThread(threadData);
 
         if (response.ok) {
           this.$router.push('/threads');
@@ -152,9 +182,14 @@ export default {
         console.error('Fout bij het aanmaken van de draad:', error);
       }
     },
+
     goBack() {
       this.$router.go(-1);
-    },
+    }
   },
+  mounted() {
+    this.checkAuthStatus(); // Check auth status when the component is mounted
+  }
 };
+
 </script>

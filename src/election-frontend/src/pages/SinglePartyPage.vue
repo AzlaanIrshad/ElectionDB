@@ -1,83 +1,126 @@
 <template>
-  <div class="single-party-page">
-    <h1>Party Details</h1>
+  <div class="single-party-page p-5 dark:text-white">
+    <h1 class="text-3xl font-bold mb-6 text-gray-800 dark:text-white">Party Details</h1>
 
     <!-- Loading State -->
-    <div v-if="loading" class="loading">
+    <div v-if="loading" class="text-center text-blue-500 dark:text-blue-300">
       <p>Loading party data...</p>
     </div>
 
     <!-- Error State -->
-    <div v-if="error" class="error">
+    <div v-if="error" class="text-center text-red-500 dark:text-red-300">
       <p>{{ error }}</p>
     </div>
-
+    <!-- Year Selector -->
+    <div class="mb-4">
+      <label for="year" class="block font-bold mb-2 text-gray-800 dark:text-gray-100">Selecteer Jaar:</label>
+      <select
+          id="year"
+          v-model="selectedYear"
+          @change="onYearChange"
+          class="bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded px-2 py-1 w-full"
+      >
+        <option
+            v-for="year in availableYears"
+            :key="year"
+            :value="year"
+        >
+          {{ year }}
+        </option>
+      </select>
+    </div>
     <!-- Party Data -->
     <div v-if="partyData && !loading" class="party-data">
-      <h2>{{ partyData.partyName }}</h2>
-      <p>Total Votes: {{ partyData.totalVotes }}</p>
+      <h2 class="text-2xl font-semibold text-gray-700 dark:text-white">{{ partyData.partyName }}</h2>
+      <p class="text-lg text-gray-600 dark:text-gray-300">Total Votes: {{ partyData.totalVotes }}</p>
+
+      <!-- Description Section -->
+      <div class="mt-4">
+        <h3 class="text-lg font-medium text-gray-700 dark:text-gray-200">Description</h3>
+        <p class="text-md text-gray-600 dark:text-gray-300">{{ partyData.description }}</p>
+      </div>
 
       <!-- Display Candidate Chart -->
-      <div v-if="partyData.chartDataForCandidates">
-        <h3>Top Candidates</h3>
+      <div v-if="partyData.chartDataForCandidates" class="mt-6">
         <PartyCandidateHorizontalBarChart
             :chart-data="partyData.chartDataForCandidates"
         />
       </div>
 
       <!-- No Candidates -->
-      <div v-else>
+      <div v-else class="mt-4 text-gray-500 dark:text-gray-400">
         <p>No candidates found for this party.</p>
+      </div>
+
+      <!-- Candidate Table -->
+      <div class="candidate-table mt-8 flex justify-center flex-col items-center">
+        <h3 class="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-4">All Candidates</h3>
+        <div class="overflow-x-auto bg-white dark:bg-gray-800 rounded-lg shadow w-1/2 ">
+          <DataTable
+              :value="partyData.candidates"
+              :rows="5"
+              class="custom table-auto w-full text-sm text-gray-800 bg-white dark:text-white dark:bg-gray-800"
+              paginator
+              :paginatorTemplate="'FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown'"
+          >
+            <Column
+                field="candidateId"
+                header="ID"
+                sortable
+                class="tablecolumn px-0 py-0 text-center"
+            />
+            <Column
+                field="name"
+                header="Name"
+                sortable
+                class="tablecolumn px-0 py-0 text-left"
+            />
+            <Column
+                field="validVotes"
+                header="Votes"
+                sortable
+                class="tablecolumn px-0 py-0 text-right"
+            />
+          </DataTable>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import config from "../config";
+import { partyService } from "../services/PartyService";
 import PartyCandidateHorizontalBarChart from "../components/CandidateHorizontalBarChart.vue";
+import DataTable from 'primevue/datatable';
+import Column from 'primevue/column';
+import Row from 'primevue/row';
 
 export default {
   name: "SinglePartyPage",
   components: {
     PartyCandidateHorizontalBarChart,
+    DataTable,
+    Column,
+    Row,
   },
   data() {
     return {
-      partyName: "",
+      partyId: this.$route.params.id, // Use partyId directly from route
       partyData: null,
       loading: false,
       error: null,
+      selectedYear: 2023,
+      availableYears: [2023, 2021, 2017, 2012, 2010],
     };
   },
   methods: {
     async fetchPartyData() {
-      const partyId = this.$route.params.id;
       this.loading = true;
       this.error = null;
 
       try {
-        // Fetch election results
-        const response = await fetch(`${config.apiBaseUrl}/api/election-results`);
-        if (!response.ok) {
-          throw new Error("Failed to fetch election results");
-        }
-
-        // Fetch candidates data
-        const candidateResponse = await fetch(`${config.apiBaseUrl}/api/candidates`);
-        if (!candidateResponse.ok) {
-          throw new Error("Failed to fetch candidates");
-        }
-
-        const data = await response.json();
-        const candidateData = await candidateResponse.json();
-        console.log("Candidate Data:", candidateData);
-        const party = this.findPartyById(data, partyId, candidateData);
-        if (party) {
-          this.partyData = this.transformPartyData(party);
-        } else {
-          throw new Error("Party not found");
-        }
+        const data = await partyService.fetchPartyData(this.partyId, this.selectedYear);
+        this.partyData = data;
       } catch (err) {
         this.error = err.message;
       } finally {
@@ -85,107 +128,8 @@ export default {
       }
     },
 
-    findPartyById(data, partyId, candidateData) {
-      let party = null;
-      const candidateVotesMap = {};
-
-      for (const transaction of data) {
-        const contests = transaction?.count?.election?.contests?.contests || [];
-        contests.forEach((contest) => {
-          let currentPartyId = null;
-
-          contest.totalVotes.selections.forEach((selection) => {
-            if (selection.affiliationIdentifier?.id) {
-              currentPartyId = selection.affiliationIdentifier.id;
-
-              if (currentPartyId === partyId) {
-                if (!party) {
-                  party = {
-                    partyId,
-                    partyName: selection.affiliationIdentifier.registeredName || "Unknown Party",
-                    totalVotes: 0,
-                    candidates: [],
-                  };
-                }
-                party.totalVotes += selection.validVotes || 0;
-              }
-            }
-
-            if (currentPartyId === partyId && selection.candidate?.candidateIdentifier?.id) {
-              const candidateId = selection.candidate.candidateIdentifier.id;
-              const validVotes = selection.validVotes || 0;
-
-              if (candidateVotesMap[candidateId]) {
-                candidateVotesMap[candidateId].validVotes += validVotes;
-              } else {
-                candidateVotesMap[candidateId] = {
-                  id: candidateId,
-                  validVotes,
-                  name: `Candidate ${candidateId}`, // Default name for fallback
-                };
-              }
-            }
-          });
-        });
-      }
-
-      if (party) {
-        console.log("a", candidateData);
-        for (const biglist of candidateData) {
-          console.log("b", biglist.candidateList);
-            const affiliation = biglist?.candidateList?.election?.contests[0]?.affiliations?.find(
-                (aff) => aff.affiliationIdentifier?.id === partyId
-            );
-            console.log(affiliation);
-          if (affiliation) {
-            affiliation.candidates.forEach((candidate) => {
-              const candidateId = candidate.candidateIdentifier.id;
-              if (candidateVotesMap[candidateId]) {
-                const firstName = candidate.candidateFullName.personName.firstName;
-                const lastName = candidate.candidateFullName.personName.lastName;
-                candidateVotesMap[candidateId].name = `${firstName} ${lastName}`;
-              }
-            });
-           }
-          }
-        party.candidates = Object.values(candidateVotesMap);
-      }
-
-      console.log("Candidate Votes Map:", candidateVotesMap);
-      console.log("Accumulated Party Data:", party);
-
-      return party;
-    },
-
-    transformPartyData(party) {
-      return {
-        partyName: party.partyName,
-        totalVotes: party.totalVotes,
-        candidates: party.candidates || [],
-        chartDataForCandidates: this.prepareChartData(party.candidates || []),
-      };
-    },
-
-    prepareChartData(candidates) {
-      if (!candidates || candidates.length === 0) return null;
-
-      const topCandidates = candidates
-          .sort((a, b) => b.validVotes - a.validVotes)
-          .slice(0, 10);
-
-      const chartLabels = topCandidates.map((candidate) => candidate.name);
-      const chartData = topCandidates.map((candidate) => candidate.validVotes);
-
-      return {
-        labels: chartLabels,
-        datasets: [
-          {
-            label: "Votes",
-            data: chartData,
-            backgroundColor: "rgba(87,192,75,0.8)",
-          },
-        ],
-      };
+    onYearChange() {
+      this.fetchPartyData();
     },
   },
 
@@ -194,25 +138,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-.single-party-page {
-  padding: 20px;
-}
-
-.loading,
-.error {
-  color: red;
-  font-size: 18px;
-  margin: 10px 0;
-}
-
-.party-data h2 {
-  color: #333;
-}
-
-.party-data h3 {
-  margin-top: 20px;
-  color: #555;
-}
-</style>

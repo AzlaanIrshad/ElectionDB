@@ -20,12 +20,28 @@
         />
       </div>
     </div>
-
+    <div class="mb-4">
+      <label for="year" class="block font-bold mb-2 text-gray-800 dark:text-gray-100">Selecteer Jaar:</label>
+      <select
+          id="year"
+          v-model="selectedYear"
+          @change="onYearChange"
+          class="bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded px-2 py-1 w-full"
+      >
+        <option
+            v-for="year in availableYears"
+            :key="year"
+            :value="year"
+        >
+          {{ year }}
+        </option>
+      </select>
+    </div>
     <!-- Verkiezingsresultaten per Stad -->
     <div v-if="filteredResults.length" class="results-container">
       <div v-for="city in filteredResults" :key="city.cityId" class="city-item border-b border-gray-300 py-4 dark:border-gray-600">
         <details class="group">
-          <summary class="cursor-pointer font-semibold text-lg text-gray-800 dark:text-gray-100 group-open:mb-2">
+          <summary class=" font-semibold text-lg text-gray-800 dark:text-gray-100 group-open:mb-2">
             Stad: {{ city.cityName }} (Totaal Stemmen: {{ city.totalVotes }})
           </summary>
 
@@ -35,23 +51,13 @@
           <div class="parties mt-4">
             <ul>
               <li v-for="party in city.parties" :key="party.partyId" class="mb-4">
-                <details class="group">
-                  <summary class="cursor-pointer text-gray-800 dark:text-gray-300">
-                    Partij: {{ party.partyName }} (Stemmen: {{ party.totalVotes }})
-                  </summary>
-                  <ul class="kandidaten pl-4 mt-2">
-                    <li
-                        v-for="candidate in party.candidates"
-                        :key="candidate.id"
-                        class="text-sm text-gray-700 dark:text-gray-400"
-                    >
-                      Candidate {{ candidate.id }}: {{ candidate.validVotes }} votes
-                    </li>
-                  </ul>
-                </details>
+                <div class="text-gray-800 dark:text-gray-300">
+                  Partij: {{ party.partyName }} (Stemmen: {{ party.totalVotes }})
+                </div>
               </li>
             </ul>
           </div>
+
         </details>
       </div>
     </div>
@@ -63,7 +69,7 @@
 
 <script>
 import TotalPartyVoteBarChart from '../components/TotalPartyVoteBarChart.vue';
-import config from '../config';
+import { electionService } from '../services/ElectionService.js';
 
 export default {
   name: "ElectionDashboard",
@@ -73,14 +79,16 @@ export default {
   data() {
     return {
       searchQuery: '',
-      groupedResults: [],
+      electionData: [],
       loading: false,
       error: null,
+      selectedYear: 2023,
+      availableYears: [2023, 2021, 2017, 2012, 2010],
     };
   },
   computed: {
     filteredResults() {
-      return this.groupedResults.filter(city =>
+      return this.electionData.filter(city =>
           city.cityName.toLowerCase().includes(this.searchQuery.toLowerCase())
       );
     },
@@ -90,93 +98,20 @@ export default {
       this.loading = true;
       this.error = null;
       try {
-        const response = await fetch(`${config.apiBaseUrl}/api/election-results`);
-        if (!response.ok) {
-          throw new Error("Ophalen van verkiezingsresultaten mislukt");
-        }
-        const data = await response.json();
-        this.groupedResults = this.transformData(data);
+        this.electionData = await electionService.fetchElectionResults(this.selectedYear);
       } catch (err) {
         this.error = err.message;
       } finally {
         this.loading = false;
       }
     },
-
-    /**
-     * Transformeert de ruwe verkiezingsdata naar een gestructureerd formaat.
-     * Groepeert resultaten per stad en organiseert partijen met hun kandidaten.
-     *
-     * @param {Array} data - De ruwe verkiezingsdata van de API.
-     * @returns {Array} Getransformeerde data gegroepeerd per stad.
-     */
-    transformData(data) {
-      return data.map((transaction) => {
-        const cityName = transaction.managingAuthority.authorityIdentifier.value;
-        const cityId = transaction.managingAuthority.authorityIdentifier.id;
-
-        const partiesMap = {};
-        let currentPartyId = null;
-
-        transaction.count.election.contests.contests.forEach((contest) => {
-          contest.totalVotes.selections.forEach((selection) => {
-            if (selection.affiliationIdentifier) {
-              currentPartyId = selection.affiliationIdentifier.id;
-              const partyName = selection.affiliationIdentifier.registeredName || "Unknown Party";
-              if (!partiesMap[currentPartyId]) {
-                partiesMap[currentPartyId] = {
-                  partyId: currentPartyId,
-                  partyName,
-                  totalVotes: selection.validVotes || 0,
-                  candidates: [],
-                };
-              }
-            } else if (currentPartyId && selection.candidate?.candidateIdentifier?.id) {
-              partiesMap[currentPartyId].candidates.push({
-                id: selection.candidate.candidateIdentifier.id,
-                validVotes: selection.validVotes || 0,
-              });
-            }
-          });
-        });
-
-        const parties = Object.values(partiesMap);
-        const totalVotes = parties.reduce((sum, party) => sum + party.totalVotes, 0);
-
-        const chartData = this.prepareChartData(parties);
-
-        return {
-          cityId,
-          cityName,
-          totalVotes,
-          parties,
-          chartData,
-        };
-      });
-    },
-
-    /**
-     * Prepares the chart data for each city.
-     *
-     * @param {Array} parties - List of parties with vote data.
-     * @returns {Object} Chart data object.
-     */
-    prepareChartData(parties) {
-      return {
-        labels: parties.map(party => party.partyName),
-        datasets: [{
-          label: 'Totaal Stemmen',
-          data: parties.map(party => party.totalVotes),
-          backgroundColor: parties.map(() => 'rgba(87,192,75,0.8)'),
-          borderColor: parties.map(() => 'rgba(0,0,0,1)'),
-          borderWidth: 1,
-        }],
-      };
+    onYearChange() {
+      this.fetchElectionResults();
     },
   },
+
   mounted() {
     this.fetchElectionResults();
   },
 };
 </script>
-

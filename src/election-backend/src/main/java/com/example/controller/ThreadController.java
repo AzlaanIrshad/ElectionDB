@@ -1,5 +1,7 @@
 package com.example.controller;
 
+import com.example.dto.ThreadRequest;
+import com.example.dto.ThreadCommentRequest;
 import com.example.entity.Thread;
 import com.example.entity.ThreadComment;
 import com.example.service.ThreadService;
@@ -12,7 +14,6 @@ import jakarta.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
 public class ThreadController {
 
     @Autowired
@@ -35,8 +36,11 @@ public class ThreadController {
     }
 
     @PostMapping("/threads")
-    public ResponseEntity<Thread> createThread(@Valid @RequestBody Thread thread) {
-        Thread newThread = threadService.createThread(thread);
+    public ResponseEntity<Thread> createThread(@Valid @RequestBody ThreadRequest threadRequest) {
+        Thread newThread = threadService.createThread(
+                threadRequest.getTitle(), threadRequest.getBody(), threadRequest.getDate(),
+                threadRequest.getCategories(), threadRequest.getEmail()
+        );
         return ResponseEntity.ok(newThread);
     }
 
@@ -47,8 +51,8 @@ public class ThreadController {
     }
 
     @PostMapping("/threads/{id}/comments")
-    public ResponseEntity<ThreadComment> createComment(@PathVariable Long id, @Valid @RequestBody ThreadComment comment) {
-        ThreadComment newComment = threadService.createComment(id, comment);
+    public ResponseEntity<ThreadComment> createComment(@PathVariable Long id, @Valid @RequestBody ThreadCommentRequest threadCommentRequest) {
+        ThreadComment newComment = threadService.createComment(id, threadCommentRequest.getBody(), threadCommentRequest.getDate(), threadCommentRequest.getEmail());
         return ResponseEntity.ok(newComment);
     }
 }

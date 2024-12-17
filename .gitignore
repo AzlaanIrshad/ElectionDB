@@ -8,10 +8,8 @@ Thumbs.db
 **/.env.local
 
 # Dutch election data files
-**/EML_bestanden_TK2021/
-**/EML_bestanden_TK2023/
-**/resources/data/
-**/ElectionResults/
+**/resources/ElectionResults
+
 
 # IDE - Intellij
 **/.idea/

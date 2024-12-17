@@ -13,7 +13,7 @@
           </p>
         </div>
         <img
-            src="https://via.placeholder.com/400x250.png?text=Verkiezings+Draadjes"
+            src="https://r.mobirisesite.com/963736/assets/images/g84b669d2938ac3ebdc84de8e5a10-h_m48kfvnb.jpg"
             alt="Draadjes Placeholder"
             class="threads-image mt-8 lg:mt-0 w-full lg:w-1/2 rounded-lg shadow-md"
         />
@@ -71,7 +71,7 @@
 </template>
 
 <script>
-import config from '../config';
+import { threadService } from "../services/ThreadService";
 
 export default {
   name: "ThreadsPage",
@@ -83,21 +83,22 @@ export default {
   },
   computed: {
     paginatedThreads() {
-      // Toon alleen het zichtbare aantal draadjes
       return this.threads.slice(0, this.visibleThreadsCount);
     },
     hasMoreThreads() {
-      // Controleer of er meer draadjes beschikbaar zijn om te tonen
       return this.visibleThreadsCount < this.threads.length;
     },
   },
   methods: {
     async fetchThreads() {
-      const response = await fetch(`${config.apiBaseUrl}/api/threads`);
-      this.threads = await response.json();
+      try {
+        const data = await threadService.fetchThreads();
+        this.threads = data;
+      } catch (err) {
+        console.error(err);
+      }
     },
     loadMoreThreads() {
-      // Verhoog het aantal zichtbare draadjes
       this.visibleThreadsCount += 3;
     },
   },
@@ -106,3 +107,4 @@ export default {
   },
 };
 </script>
+

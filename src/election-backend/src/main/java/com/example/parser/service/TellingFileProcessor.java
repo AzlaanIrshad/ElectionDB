@@ -1,6 +1,5 @@
 package com.example.parser.service;
 
-import com.example.parser.model.tellingen.Selection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -8,24 +7,54 @@ import org.springframework.stereotype.Service;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class TellingFileProcessor extends FileProcessingService {
 
     private static final Logger logger = LoggerFactory.getLogger(TellingFileProcessor.class);
-    private static final String DIRECTORY_PATH = "src/election-backend/src/main/resources/ElectionResults/Verkiezingsuitslag Tweede Kamer 2023 (Deel 1)";
-    private static final String FILE_PREFIX = "Telling_TK2023_";
 
     @Override
-    protected List<File> getFiles() {
+    protected List<File> getFiles(int year) {
+        List<File> tellingFiles = new ArrayList<>();
+
+        // 2023/2021
+        String directoryPath1 = year == 2021
+                ? "src/election-backend/src/main/resources/ElectionResults/" + year + "/EML_bestanden_TK" + year + "_deel_1"
+                : "src/election-backend/src/main/resources/ElectionResults/" + year + "/Verkiezingsuitslag Tweede Kamer " + year + " (Deel 1)";
+
+        tellingFiles.addAll(getMatchingFiles(directoryPath1, year));
+
+        // 2017
+        String directoryPath2 = "src/election-backend/src/main/resources/ElectionResults/" + year + "/CSB_uitslag";
+        tellingFiles.addAll(getMatchingFiles(directoryPath2, year));
+
+        //2012
+        String directoryPath3 = "src/election-backend/src/main/resources/ElectionResults/" + year + "/EML_bestanden_TK2012";
+        tellingFiles.addAll(getMatchingFiles(directoryPath3, year));
+
+        // 2010
+        String directoryPath4 = "src/election-backend/src/main/resources/ElectionResults/" + year + "/EML_bestanden_TK2010";
+        tellingFiles.addAll(getMatchingFiles(directoryPath4, year));
+
+        // Logt het aantal gevonden bestanden
+        logger.info("Aantal tellingen bestanden gevonden voor verwerking: {}", tellingFiles.size());
+
+        return tellingFiles;
+    }
+
+    private List<File> getMatchingFiles(String directoryPath, int year) {
         List<File> files = new ArrayList<>();
-        File directory = new File(DIRECTORY_PATH);
+        File directory = new File(directoryPath);
 
         if (directory.exists() && directory.isDirectory()) {
-            File[] matchedFiles = directory.listFiles((dir, name) ->
-                    name.startsWith(FILE_PREFIX) && name.endsWith(".xml")
-            );
+            File[] matchedFiles = directory.listFiles((dir, name) -> {
+                if (year == 2021) {
+                    return name.startsWith("Telling_TK" + year + "_kieskring_") && name.endsWith(".eml.xml");
+                } else {
+                    return (name.startsWith("Telling_TK" + year) || name.startsWith("Telling_")) && name.endsWith(".xml");
+                }
+            });
+
             if (matchedFiles != null) {
                 for (File file : matchedFiles) {
                     files.add(file);
@@ -33,65 +62,10 @@ public class TellingFileProcessor extends FileProcessingService {
                 }
             }
         } else {
-            logger.warn("Directory niet gevonden: {}", DIRECTORY_PATH);
+            logger.warn("Directory niet gevonden: {}", directoryPath);
         }
 
-        logger.info("Aantal gevonden bestanden voor verwerking: {}", files.size());
         return files;
-    }
-
-    public void logPartiesWithCandidates() {
-        List<File> files = getFiles();
-        List<Selection> selections = parseSelectionsFromFiles(files);
-        StringBuilder output = new StringBuilder("Partijen en kandidaten met geldige stemmen:\n");
-
-        for (Selection selection : selections) {
-            if (selection.getCandidate() != null) {
-                String candidateId = selection.getCandidate().getCandidateIdentifier().getId();
-                int validVotes = selection.getValidVotes();
-                output.append(String.format("Kandidaat ID: %s, Geldige stemmen: %d\n", candidateId, validVotes));
-            } else if (selection.getAffiliationIdentifier() != null) {
-                String partyName = selection.getAffiliationIdentifier().getRegisteredName();
-                output.append(String.format("Partij: %s\n", partyName));
-            }
-        }
-
-        if (output.toString().trim().equals("Partijen en kandidaten met geldige stemmen:")) {
-            output.append("Geen partijen en kandidaten gevonden.\n");
-        }
-
-        System.out.println(output.toString());
-        logger.info(output.toString());
-    }
-
-    public List<Selection> getAllSelections() {
-        List<File> files = getFiles();
-        return parseSelectionsFromFiles(files);
-    }
-
-    public List<Selection> searchSelectionsByParty(String partyName) {
-        return getAllSelections().stream()
-                .filter(selection -> selection.getAffiliationIdentifier() != null
-                        && partyName.equalsIgnoreCase(selection.getAffiliationIdentifier().getRegisteredName()))
-                .collect(Collectors.toList());
-    }
-
-    private List<Selection> parseSelectionsFromFiles(List<File> files) {
-        List<Selection> selections = new ArrayList<>();
-
-        for (File file : files) {
-            Selection selection = parseSelection(file);
-            if (selection != null) {
-                selections.add(selection);
-                logger.info("Gevonden Selection: {}", selection);
-            }
-        }
-
-        return selections;
-    }
-
-    private Selection parseSelection(File file) {
-        return null;
     }
 
     @Override

@@ -22,7 +22,7 @@ public class User implements Serializable {
     private Long id;
 
     @NotBlank(message = "Username is required")
-    @Column(name = "username", length = 255, nullable = false)
+    @Column(name = "username", length = 255, nullable = false, unique = true)
     private String username;
 
     @NotBlank(message = "Email is required")
@@ -34,8 +34,8 @@ public class User implements Serializable {
     @Column(name = "password", length = 255, nullable = false)
     private String password;
 
-    @Column(name = "is_active")
-    private Boolean active = true; // Renamed to 'active'
+    @Column(name = "is_active", nullable = false)
+    private Boolean active = true;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "role", length = 50, nullable = false)
@@ -47,5 +47,14 @@ public class User implements Serializable {
         this.password = password;
         this.role = role;
         this.active = true;
+    }
+
+    /**
+     * Handige methode om wachtwoord te hashen.
+     *
+     * @param hashedPassword Het gehashte wachtwoord.
+     */
+    public void setHashedPassword(String hashedPassword) {
+        this.password = hashedPassword;
     }
 }
