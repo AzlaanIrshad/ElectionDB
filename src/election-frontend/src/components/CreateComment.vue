@@ -78,6 +78,7 @@ export default {
 
         if (response.ok) {
           console.log('Reactie aangemaakt:', commentData);
+          this.$router.go(0);
         } else {
           console.error('Fout bij het maken van de reactie:', response.statusText);
         }
