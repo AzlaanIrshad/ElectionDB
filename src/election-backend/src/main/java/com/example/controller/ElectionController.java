@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/election-results")
@@ -44,6 +45,18 @@ public class ElectionController {
                 years = List.of(2023);
             }
             return ResponseEntity.ok(electionService.getFilteredResults(years));
+        } catch (IOException e) {
+            return ResponseEntity.status(404).body("Error: resultatenbestand niet gevonden.");
+        }
+    }
+
+    @GetMapping("/compare-manhattan")
+    public ResponseEntity<Object> compareManhattanDistance(
+            @RequestParam(value = "year", required = true) int year) {
+        try {
+
+            Map<String, Object> comparisonResults = electionService.calculateManhattanDistance(year);
+            return ResponseEntity.ok(comparisonResults);
         } catch (IOException e) {
             return ResponseEntity.status(404).body("Error: resultatenbestand niet gevonden.");
         }
