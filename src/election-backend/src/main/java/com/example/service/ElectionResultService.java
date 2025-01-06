@@ -94,9 +94,6 @@ public class ElectionResultService {
                     }
 
                     List<Map<String, Object>> parties = new ArrayList<>(partiesMap.values());
-                    if (!parties.isEmpty()) {
-                        parties.removeFirst();
-                    }
                     parties.sort((p1, p2) -> Integer.compare((int) p2.get("totalVotes"), (int) p1.get("totalVotes")));
 
                     Map<String, Object> chartData = prepareChartData(parties);
@@ -114,6 +111,69 @@ public class ElectionResultService {
         }
 
         return resultsByYear;
+    }
+
+    public Map<String, Object> calculateManhattanDistance(int year) throws IOException {
+        String basePath = "ParsedJson/";
+        String filePath = basePath + year + "/tellingen_results.json";
+
+        try (InputStream inputStream = new ClassPathResource(filePath).getInputStream()) {
+            ObjectMapper objectMapper = new ObjectMapper();
+            JsonNode root = objectMapper.readTree(inputStream);
+
+            Map<String, Integer> overallResults = new HashMap<>();
+            Map<String, Map<String, Integer>> cityResults = new HashMap<>();
+
+            for (JsonNode transaction : root) {
+                String cityName = transaction.path("managingAuthority").path("authorityIdentifier").path("value").asText();
+
+                Map<String, Integer> cityPartyVotes = cityResults.computeIfAbsent(cityName, k -> new HashMap<>());
+
+                JsonNode contests = transaction.path("count").path("election").path("contests").path("contests");
+                for (JsonNode contest : contests) {
+                    JsonNode selections = contest.path("totalVotes").path("selections");
+                    for (JsonNode selection : selections) {
+                        String party = selection.path("affiliationIdentifier").path("registeredName").asText();
+                        int votes = selection.path("validVotes").asInt(0);
+
+                        if (party != null && !party.isEmpty()) {
+                            cityPartyVotes.put(party, cityPartyVotes.getOrDefault(party, 0) + votes);
+                            overallResults.put(party, overallResults.getOrDefault(party, 0) + votes);
+                        }
+                    }
+                }
+            }
+
+            Map<String, Integer> manhattanDistances = new HashMap<>();
+            for (Map.Entry<String, Map<String, Integer>> entry : cityResults.entrySet()) {
+                String cityName = entry.getKey();
+                Map<String, Integer> cityVotes = entry.getValue();
+
+                int distance = calculateManhattanDistance(overallResults, cityVotes);
+                manhattanDistances.put(cityName, distance);
+            }
+
+            return Map.of(
+                    "overallResults", overallResults,
+                    "cityDistances", manhattanDistances
+            );
+        }
+    }
+
+    private int calculateManhattanDistance(Map<String, Integer> overallResults, Map<String, Integer> cityResults) {
+        int distance = 0;
+
+        Set<String> allParties = new HashSet<>();
+        allParties.addAll(overallResults.keySet());
+        allParties.addAll(cityResults.keySet());
+
+        for (String party : allParties) {
+            int overallVotes = overallResults.getOrDefault(party, 0);
+            int cityVotes = cityResults.getOrDefault(party, 0);
+            distance += Math.abs(overallVotes - cityVotes);
+        }
+
+        return distance;
     }
 
     private Map<String, Object> prepareChartData(List<Map<String, Object>> parties) {
