@@ -24,3 +24,5 @@ To stop the project, run the following command in the terminal:
 ```bash
 docker compose down
 ```
+
+You can also find our documentation [here](https://yaadaasuuwii50-semester-3-hbo-ict-onderwijs-stud-a1e6aea9d517c6.dev.hihva.nl/). In the documentation you can find more information about the project and the ethical considerations we made.

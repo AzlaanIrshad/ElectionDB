@@ -1,4 +1,4 @@
-# **How to Run the Election Parser**
+# How to Run the Election Parser
 
 Volg deze stappen om de Election Parser te gebruiken en verkiezingsdata te verwerken.
 
