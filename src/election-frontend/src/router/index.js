@@ -18,6 +18,7 @@ import PartyBar from "@/components/PartyBar.vue";
 import PartyLine from "@/components/PartyLine.vue";
 import NotFoundPage from "@/pages/NotFoundPage.vue";
 import CityStatistiekPage from "@/components/CityStatistiekPage.vue";
+import BookmarkPage from "@/pages/BookmarkPage.vue";
 
 // General authentication guard
 function authGuard(to, from, next) {
@@ -75,6 +76,7 @@ const routes = [
     { path: '/faq', name: 'faq', component: FaqPage, meta: { breadcrumb: "FAQ" } },
     { path: '/about', name: 'about', component: AboutPage, meta: { breadcrumb: "Over Ons" } },
     { path: '/dashboard', name: 'dashboard', component: DashboardPage, meta: { breadcrumb: "Dashboard" } },
+    { path: '/bookmarks', name: 'bookmarks', component: BookmarkPage, meta: { breadcrumb: "Bookmarks" } },
     {
         path: '/parties/:id',
         name: 'single-party',

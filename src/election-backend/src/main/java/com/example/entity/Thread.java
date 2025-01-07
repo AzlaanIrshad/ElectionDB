@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -14,6 +15,9 @@ import java.util.Set;
 @Getter
 @Setter
 public class Thread implements Serializable {
+
+    @Column(name = "likes")
+    private Integer likes;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,6 +49,7 @@ public class Thread implements Serializable {
 
     public Thread() {
         // Default constructor
+        this.likes = 0;
     }
 
     public Thread(String title, String body, String date, User user) {
@@ -52,5 +57,14 @@ public class Thread implements Serializable {
         this.body = body;
         this.date = date;
         this.user = user;
+        this.likes = 0;
+    }
+
+    public Thread(String title, String body, String date, Integer likes, User user) {
+        this.title = title;
+        this.body = body;
+        this.date = date;
+        this.user = user;
+        this.likes = Objects.requireNonNullElse(likes, 0);
     }
 }

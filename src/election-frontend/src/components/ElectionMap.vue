@@ -143,7 +143,7 @@ export default {
       });
     },
     initMap() {
-      this.map = L.map("map").setView([52.3676, 4.9041], 7);
+      this.map = L.map("map").setView([52.230783823829086, 5.431316466285545,], 7);
       L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
       }).addTo(this.map);

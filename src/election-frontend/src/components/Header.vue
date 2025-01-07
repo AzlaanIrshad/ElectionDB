@@ -90,14 +90,21 @@
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 mr-1">
               <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15M12 9l3 3m0 0-3 3m3-3H2.25" />
             </svg>
-
-
             Uitloggen
           </button>
         </template>
-
+        <!-- Bookmark Icon -->
+        <button
+            class="text-white hover:text-gray-300 transition duration-200 ease-in-out flex items-center"
+            @click="handleBookmarkClick"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-6 w-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z" />
+          </svg>
+        </button>
         <DarkModeToggle />
       </div>
+
     </div>
 
     <!-- Mobile Menu (Conditional) -->
@@ -206,6 +213,10 @@ export default {
     },
     toggleMobileMenu() {
       this.isMobileMenuOpen = !this.isMobileMenuOpen;
+    },
+    handleBookmarkClick() {
+      this.$router.push("/bookmarks");
+      alert("Bookmark page");
     },
     logout() {
       localStorage.removeItem("token");
