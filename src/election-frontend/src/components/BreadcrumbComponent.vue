@@ -35,8 +35,8 @@
 
 <script>
 import Breadcrumb from "primevue/breadcrumb";
-import { useRoute } from "vue-router";
-import { reactive, watch } from "vue";
+import {useRoute} from "vue-router";
+import {reactive, watch} from "vue";
 
 export default {
   name: "BreadcrumbComponent",

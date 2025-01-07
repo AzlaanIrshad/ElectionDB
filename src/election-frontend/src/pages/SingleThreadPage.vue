@@ -44,7 +44,7 @@
 </template>
 
 <script>
-import { threadService } from "../services/ThreadService";
+import {threadService} from "../services/ThreadService";
 import CreateCommentComponent from "../components/CreateComment.vue";
 
 export default {
