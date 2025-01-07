@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import { threadService } from '../services/ThreadService.js';
+import {threadService} from '../services/ThreadService.js';
 
 export default {
   name: "CreateCommentComponent",

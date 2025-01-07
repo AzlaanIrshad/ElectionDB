@@ -1,14 +1,14 @@
 package com.example.service;
 
-import com.example.entity.*;
 import com.example.entity.Thread;
+import com.example.entity.*;
 import com.example.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
-import java.util.HashSet;
 
 import java.util.Arrays;
+import java.util.HashSet;
 
 @Component
 public class DataSeeder implements CommandLineRunner {
