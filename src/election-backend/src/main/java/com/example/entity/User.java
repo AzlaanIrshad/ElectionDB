@@ -18,6 +18,11 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class User implements Serializable {
 
+    public User(String gebruiker, String mail, String password, com.example.entity.Role role) {
+    }
+
+    public enum Role { USER, MODERATOR, ADMIN}
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
