@@ -2,20 +2,25 @@ package com.example.service;
 
 import com.example.entity.Thread;
 import com.example.entity.ThreadCategory;
-import com.example.entity.ThreadComment;
 import com.example.entity.User;
+import com.example.repository.ThreadRepository;
 import com.example.repository.ThreadCategoryRepository;
 import com.example.repository.ThreadCommentRepository;
-import com.example.repository.ThreadRepository;
 import com.example.repository.UserRepository;
+import com.example.util.JwtUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import com.example.entity.ThreadComment;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;

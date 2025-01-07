@@ -7,7 +7,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import java.io.Serializable;
 
 @Entity
@@ -17,11 +16,6 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 public class User implements Serializable {
-
-    public User(String gebruiker, String mail, String password, com.example.entity.Role role) {
-    }
-
-    public enum Role { USER, MODERATOR, ADMIN}
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

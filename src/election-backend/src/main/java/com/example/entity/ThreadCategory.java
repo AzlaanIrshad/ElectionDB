@@ -1,10 +1,12 @@
 package com.example.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 
 import java.util.HashSet;
 import java.util.Set;

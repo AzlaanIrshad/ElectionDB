@@ -1,22 +1,65 @@
 package com.example.controller;
 
-import com.example.service.CountdownService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.time.*;
 
 @RestController
 @RequestMapping("/countdown")
 public class CountdownController {
 
-    private final CountdownService countdownService;
-
-    public CountdownController(CountdownService countdownService) {
-        this.countdownService = countdownService;
-    }
+    private static final ZonedDateTime TARGET_DATE = ZonedDateTime.of(
+            2027, 11, 27, 0, 0, 0, 0,
+            ZoneId.of("Europe/Amsterdam")
+    );
 
     @GetMapping
-    public CountdownService.CountdownResponse getCountdownTime() {
-        return countdownService.getRemainingTime();
+    public CountdownResponse getCountdownTime() {
+        Instant now = Instant.now();
+        Instant targetInstant = TARGET_DATE.toInstant();
+        Duration remainingDuration = Duration.between(now, targetInstant);
+
+        long days = remainingDuration.toDays();
+        long hours = remainingDuration.toHours() % 24;
+        long minutes = remainingDuration.toMinutes() % 60;
+        long seconds = remainingDuration.getSeconds() % 60;
+
+        return new CountdownResponse(days, hours, minutes, seconds, targetInstant.toEpochMilli());
+    }
+
+    public static class CountdownResponse {
+        private long days;
+        private long hours;
+        private long minutes;
+        private long seconds;
+        private long targetTimestamp;
+
+        public CountdownResponse(long days, long hours, long minutes, long seconds, long targetTimestamp) {
+            this.days = days;
+            this.hours = hours;
+            this.minutes = minutes;
+            this.seconds = seconds;
+            this.targetTimestamp = targetTimestamp;
+        }
+
+        public long getDays() {
+            return days;
+        }
+
+        public long getHours() {
+            return hours;
+        }
+
+        public long getMinutes() {
+            return minutes;
+        }
+
+        public long getSeconds() {
+            return seconds;
+        }
+
+        public long getTargetTimestamp() {
+            return targetTimestamp;
+        }
     }
 }
