@@ -99,13 +99,13 @@ Identify and stop the process that's listening on port 8000 or configure this ap
 ✔️ **Hoe los je dit op?**
 1. Controleer welke processen de poorten 8000 of 8001 gebruiken:
    ```bash
-   sudo lsof -i :8000
-   sudo lsof -i :8001
+   lsof -i :8000
+   lsof -i :8001
    ```
 
 2. Stop het proces dat de poort blokkeert:
    ```bash
-   sudo kill -9 [PID]
+   kill -9 <PID>
    ```
 
 3. Start de server opnieuw.

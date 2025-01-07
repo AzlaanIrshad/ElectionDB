@@ -1,4 +1,4 @@
-# **Documentatie van JAXB Modellen**
+# Documentatie van JAXB Modellen
 
 1. **`com.example.parser.model.tellingen`**
 2. **`com.example.parser.model.kandidatenlijst`**
