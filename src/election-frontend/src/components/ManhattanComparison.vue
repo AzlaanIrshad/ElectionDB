@@ -39,7 +39,10 @@ export default {
   methods: {
     async compareManhattanDistance() {
       try {
-        const response = await fetch(`/election-results/compare-manhattan?year=${this.selectedYear}`);
+        const response = await fetch(`/api/election-results/compare-manhattan?year=${this.selectedYear}`);
+        if (!response.ok) {
+          throw new Error(`API Error: ${response.status} - ${response.statusText}`);
+        }
         this.comparisonResults = await response.json();
       } catch (error) {
         console.error("Error fetching Manhattan comparison results:", error);
