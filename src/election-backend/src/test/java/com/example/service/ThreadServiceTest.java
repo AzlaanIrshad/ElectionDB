@@ -61,11 +61,13 @@ public class ThreadServiceTest {
     @Test
     void testCreateThread() {
 
-        List<String> categoryNames = Arrays.asList("cat1", "cat2");
-        String title = "test thread";
-        String body = "This is a test thread";
-        String date = "2024-12-15 00:00";
-        String userEmail = "googoo@example.com";
+        // Create the ThreadRequest DTO with necessary data
+        ThreadRequest threadRequest = new ThreadRequest();
+        threadRequest.setTitle("test thread");
+        threadRequest.setBody("This is a test thread");
+        threadRequest.setDate("2024-12-15 00:00");
+        threadRequest.setEmail("googoo@example.com");
+        threadRequest.setCategories(Arrays.asList("cat1", "cat2"));
 
         Set<ThreadCategory> categories = new HashSet<>();
         ThreadCategory category1 = new ThreadCategory("cat1");
@@ -78,21 +80,23 @@ public class ThreadServiceTest {
 
         User dummyUser = new User();
         dummyUser.setId(1L);
-        dummyUser.setEmail(userEmail);
-        when(userRepository.findByEmail(userEmail)).thenReturn(Optional.of(dummyUser));
+        dummyUser.setEmail("googoo@example.com");
+        when(userRepository.findByEmail("googoo@example.com")).thenReturn(Optional.of(dummyUser));
 
         when(threadRepository.save(any(Thread.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
-        Thread createdThread = threadService.createThread(title, body, date, categoryNames, userEmail);
+        // Call the service method using the DTO
+        Thread createdThread = threadService.createThread(threadRequest);
 
         assertNotNull(createdThread);
-        assertEquals(title, createdThread.getTitle());
+        assertEquals(threadRequest.getTitle(), createdThread.getTitle());
         assertEquals(2, createdThread.getCategories().size());
         verify(threadRepository, times(1)).save(any(Thread.class));
         verify(threadCategoryRepository, times(1)).findByName("cat1");
         verify(threadCategoryRepository, times(1)).findByName("cat2");
-        verify(userRepository, times(1)).findByEmail(userEmail);
+        verify(userRepository, times(1)).findByEmail("googoo@example.com");
     }
+
 
 
     @Test
