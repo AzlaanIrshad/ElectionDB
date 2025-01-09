@@ -6,6 +6,7 @@ import com.example.entity.ThreadComment;
 import com.example.entity.User;
 import com.example.repository.ThreadCategoryRepository;
 import com.example.repository.ThreadCommentRepository;
+import com.example.dto.*;
 import com.example.repository.ThreadRepository;
 import com.example.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -159,6 +160,11 @@ public class ThreadServiceTest {
         String date = "2024-12-15 00:01";
         String email = "googoo@example.com";
 
+        ThreadCommentRequest commentRequest = new ThreadCommentRequest();
+        commentRequest.setBody(body);
+        commentRequest.setDate(date);
+        commentRequest.setEmail(email);
+
         User dummyUser = new User();
         dummyUser.setId(1L);
         dummyUser.setUsername("googoo");
@@ -177,7 +183,7 @@ public class ThreadServiceTest {
         comment.setThread(thread);
         when(threadCommentRepository.save(any(ThreadComment.class))).thenReturn(comment);
 
-        ThreadComment createdComment = threadService.createComment(1L, body, date, email);
+        ThreadComment createdComment = threadService.createComment(1L, commentRequest);
 
         assertNotNull(createdComment);
         assertEquals(body, createdComment.getBody());
