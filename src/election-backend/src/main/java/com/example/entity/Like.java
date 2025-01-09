@@ -27,10 +27,6 @@ public class Like implements Serializable {
     @Column(name = "vote_type", length = 20, nullable = false)
     private VoteType voteType;
 
-    @NotNull(message = "Created at is required")
-    @Column(name = "created_at", nullable = false)
-    private LocalDateTime createdAt = LocalDateTime.now();
-
     @ManyToOne
     @JoinColumn(name = "thread_id", referencedColumnName = "id", nullable = false)
     private Thread thread;
@@ -58,6 +54,5 @@ public class Like implements Serializable {
         this.user = user;
         this.voteType = voteType;
         this.thread = thread;
-        this.createdAt = LocalDateTime.now();
     }
 }
