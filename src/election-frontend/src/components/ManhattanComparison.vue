@@ -2,7 +2,7 @@
   <div class="p-8 max-w-4xl mx-auto bg-white dark:bg-gray-800 rounded-lg shadow-lg">
     <!-- Header -->
     <h1 class="text-3xl font-bold mb-6 text-center text-blue-600 dark:text-blue-400">
-      Manhattan Afstand: Dichtstbijzijnde en Verste Steden
+       Vergelijking van steden en verkiezingsresultaat
     </h1>
 
     <!-- Year Selector -->
