@@ -2,13 +2,13 @@
   <div class="p-8 max-w-4xl mx-auto bg-white dark:bg-gray-800 rounded-lg shadow-lg">
     <!-- Header -->
     <h1 class="text-3xl font-bold mb-6 text-center text-blue-600 dark:text-blue-400">
-      Manhattan Distance: Closest and Farthest Cities
+      Manhattan Afstand: Dichtstbijzijnde en Verste Steden
     </h1>
 
     <!-- Year Selector -->
     <div class="mb-6">
       <label for="year" class="block text-lg font-semibold mb-2 text-gray-700 dark:text-gray-300">
-        Select Year:
+        Selecteer Jaar:
       </label>
       <select
           id="year"
@@ -28,8 +28,8 @@
           :disabled="isLoading"
           class="bg-blue-500 text-white font-medium px-6 py-3 rounded-lg shadow-lg hover:bg-blue-600 dark:bg-blue-700 dark:hover:bg-blue-800 transition disabled:bg-gray-400 disabled:cursor-not-allowed"
       >
-        <span v-if="isLoading">Loading...</span>
-        <span v-else>Find Cities</span>
+        <span v-if="isLoading">Laden...</span>
+        <span v-else>Zoek Steden</span>
       </button>
     </div>
 
@@ -41,13 +41,13 @@
     <!-- Results Section -->
     <div v-if="closestCities.length || farthestCities.length || percentageDeviations.length" class="mt-8">
       <h2 class="text-2xl font-semibold text-gray-800 dark:text-gray-200 mb-4 text-center">
-        Results for Year {{ selectedYear }}
+        Resultaten voor Jaar {{ selectedYear }}
       </h2>
 
       <!-- Closest Cities -->
       <div>
         <h3 class="text-xl font-bold text-blue-500 dark:text-blue-400 mb-2">
-          Top 3 Closest Cities
+          Top 3 Dichtstbijzijnde Steden
         </h3>
         <ol class="bg-gray-100 dark:bg-gray-700 rounded-lg shadow-lg p-6">
           <li
@@ -59,7 +59,6 @@
               <span class="text-lg font-bold text-blue-500 dark:text-blue-400">
                 #{{ index + 1 }}: {{ city.cityName }}
               </span>
-
             </div>
           </li>
         </ol>
@@ -68,7 +67,7 @@
       <!-- Farthest Cities -->
       <div class="mt-8">
         <h3 class="text-xl font-bold text-red-500 dark:text-red-400 mb-2">
-          Top 3 Farthest Cities
+          Top 3 Verste Steden
         </h3>
         <ol class="bg-gray-100 dark:bg-gray-700 rounded-lg shadow-lg p-6">
           <li
@@ -80,7 +79,6 @@
               <span class="text-lg font-bold text-red-500 dark:text-red-400">
                 #{{ index + 1 }}: {{ city.cityName }}
               </span>
-
             </div>
           </li>
         </ol>
@@ -89,7 +87,7 @@
       <!-- Percentage Deviations -->
       <div class="mt-8">
         <h3 class="text-xl font-bold text-purple-500 dark:text-purple-400 mb-2">
-          Percentage Deviations
+          Percentage Afwijkingen
         </h3>
         <ol class="bg-gray-100 dark:bg-gray-700 rounded-lg shadow-lg p-6">
           <li
@@ -102,7 +100,7 @@
                 {{ city.cityName }}
               </span>
               <p class="text-sm text-gray-600 dark:text-gray-400">
-                Deviation: {{ city.percentageDeviation.toFixed(2) }}%
+                Afwijking: {{ city.percentageDeviation.toFixed(2) }}%
               </p>
             </div>
           </li>
