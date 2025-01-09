@@ -38,8 +38,7 @@ public class ThreadController {
     @PostMapping("/threads")
     public ResponseEntity<Thread> createThread(@Valid @RequestBody ThreadRequest threadRequest) {
         Thread newThread = threadService.createThread(
-                threadRequest.getTitle(), threadRequest.getBody(), threadRequest.getDate(),
-                threadRequest.getCategories(), threadRequest.getEmail()
+                threadRequest
         );
         return ResponseEntity.ok(newThread);
     }

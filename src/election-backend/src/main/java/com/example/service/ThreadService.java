@@ -1,6 +1,7 @@
 package com.example.service;
 
 import com.example.dto.ThreadCommentRequest;
+import com.example.dto.ThreadRequest;
 import com.example.entity.Thread;
 import com.example.entity.ThreadCategory;
 import com.example.entity.ThreadComment;
@@ -32,8 +33,9 @@ public class ThreadService {
     @Autowired
     private UserRepository userRepository;
 
-    public Thread createThread(String title, String body, String date, List<String> categoryNames, String userEmail) {
+    public Thread createThread(ThreadRequest threadRequest) {
 
+        List<String> categoryNames = threadRequest.getCategories();
         Set<ThreadCategory> categories = new HashSet<>();
 
         for (String categoryName : categoryNames) {
@@ -43,13 +45,12 @@ public class ThreadService {
             categories.add(category);
         }
 
-        Optional<User> userOptional = userRepository.findByEmail(userEmail);
-        if (userOptional.isEmpty()) {
-            throw new RuntimeException("User not found");
-        }
-        User user = userOptional.get();
+        String userEmail = threadRequest.getEmail();
+        User user = userRepository.findByEmail(userEmail)
+                .orElseThrow(() -> new RuntimeException("User not found"));
 
-        Thread thread = new Thread(title, body, date, user);
+        Thread thread = threadRequest.toEntity();
+        thread.setUser(user);
         thread.setCategories(categories);
 
         return threadRepository.save(thread);
