@@ -52,7 +52,7 @@ public class ThreadController {
 
     @PostMapping("/threads/{id}/comments")
     public ResponseEntity<ThreadComment> createComment(@PathVariable Long id, @Valid @RequestBody ThreadCommentRequest threadCommentRequest) {
-        ThreadComment newComment = threadService.createComment(id, threadCommentRequest.getBody(), threadCommentRequest.getDate(), threadCommentRequest.getEmail());
+        ThreadComment newComment = threadService.createComment(id, threadCommentRequest);
         return ResponseEntity.ok(newComment);
     }
 }

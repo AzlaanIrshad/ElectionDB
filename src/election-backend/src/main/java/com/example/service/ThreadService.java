@@ -1,5 +1,6 @@
 package com.example.service;
 
+import com.example.dto.ThreadCommentRequest;
 import com.example.entity.Thread;
 import com.example.entity.ThreadCategory;
 import com.example.entity.ThreadComment;
@@ -81,7 +82,9 @@ public class ThreadService {
         return threadCommentRepository.findByThreadId(threadId);
     }
 
-    public ThreadComment createComment(Long threadId, String body, String date, String email) {
+    public ThreadComment createComment(Long threadId, ThreadCommentRequest commentRequest) {
+        String email = commentRequest.getEmail();
+
         Optional<User> userOptional = userRepository.findByEmail(email);
         if (userOptional.isEmpty()) {
             System.out.println("User not found for email: " + email);
@@ -92,9 +95,7 @@ public class ThreadService {
         Thread thread = threadRepository.findById(threadId)
                 .orElseThrow(() -> new IllegalArgumentException("Thread not found with id: " + threadId));
 
-        ThreadComment comment = new ThreadComment();
-        comment.setBody(body);
-        comment.setDate(date);
+        ThreadComment comment = commentRequest.toEntity();
         comment.setUser(user);
         comment.setThread(thread);
 

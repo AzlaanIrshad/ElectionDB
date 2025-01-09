@@ -1,5 +1,6 @@
 package com.example.dto;
 
+import com.example.entity.ThreadComment;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,11 +13,10 @@ public class ThreadCommentRequest {
     private String email;
 
     public ThreadComment toEntity() {
-        Thread thread = new Thread();
-        thread.setBody(body);
-        thread.setDate(date);
-        thread.setEmail(email);
-        return ThreadComment;
+        ThreadComment threadComment = new ThreadComment();
+        threadComment.setBody(body);
+        threadComment.setDate(date);
+        return threadComment;
     }
 }
 
