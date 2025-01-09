@@ -17,12 +17,6 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 public class User implements Serializable {
-
-    public User(String gebruiker, String mail, String password, com.example.entity.Role role) {
-    }
-
-    public enum Role { USER, MODERATOR, ADMIN}
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -46,7 +40,17 @@ public class User implements Serializable {
     @Enumerated(EnumType.STRING)
     @Column(name = "role", length = 50, nullable = false)
     private Role role = Role.USER;
+    
+    public enum Role { USER, MODERATOR, ADMIN }
 
+    /**
+     * Constructor to create a new user with mandatory fields.
+     *
+     * @param username Username of the user.
+     * @param email    Email address of the user.
+     * @param password Encrypted password of the user.
+     * @param role     Role of the user.
+     */
     public User(String username, String email, String password, Role role) {
         this.username = username;
         this.email = email;
