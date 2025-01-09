@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -17,6 +18,7 @@ import java.util.Set;
 @Builder
 public class Thread implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     @Id

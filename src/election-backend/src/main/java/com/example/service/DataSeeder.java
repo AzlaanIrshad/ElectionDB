@@ -32,6 +32,9 @@ public class DataSeeder implements CommandLineRunner {
     @Autowired
     private ThreadCategoryRepository threadCategoryRepository;
 
+    @Autowired
+    private LikeRepository likeRepository;
+
     @Override
     public void run(String... args) {
         seedUsers();
@@ -40,6 +43,7 @@ public class DataSeeder implements CommandLineRunner {
         seedThreadComments();
         seedFaqs();
         seedParties();
+        seedLikes();
     }
 
     private void seedUsers() {
@@ -210,6 +214,28 @@ public class DataSeeder implements CommandLineRunner {
                             "veiligheid, rechtsstaat, en Europese samenwerking.")
             );
             partyRepository.saveAll(parties);
+        }
+    }
+
+    private void seedLikes() {
+        if (likeRepository.count() == 0) {
+            User regularUser = userRepository.findByUsername("gebruiker").orElseThrow();
+            User modUser = userRepository.findByUsername("moderator").orElseThrow();
+            User adminUser = userRepository.findByUsername("beheerder").orElseThrow();
+
+            Thread thread1 = threadRepository.findByTitle("Discussie over Verkiezingen 2024").orElseThrow();
+            Thread thread2 = threadRepository.findByTitle("Klimaatbeleid en Toekomst").orElseThrow();
+            Thread thread3 = threadRepository.findByTitle("Economie en Belastingen").orElseThrow();
+
+            List<Like> likes = Arrays.asList(
+                    new Like(regularUser, Like.VoteType.UPVOTE, thread1),
+                    new Like(modUser, Like.VoteType.DOWNVOTE, thread1),
+                    new Like(adminUser, Like.VoteType.UPVOTE, thread2),
+                    new Like(regularUser, Like.VoteType.DOWNVOTE, thread2),
+                    new Like(modUser, Like.VoteType.UPVOTE, thread3),
+                    new Like(adminUser, Like.VoteType.UPVOTE, thread3)
+            );
+            likeRepository.saveAll(likes);
         }
     }
 }
