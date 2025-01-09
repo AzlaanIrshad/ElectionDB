@@ -55,10 +55,8 @@ public class ComparisonController {
             Map<String, Integer> overallResults = calculateOverallVotes(root);
             List<Map<String, Object>> cityDistances = calculateCityDistances(root, overallResults);
 
-            // Sort cities by Manhattan distance in ascending order
             cityDistances.sort(Comparator.comparingDouble(city -> (double) city.get("distance")));
 
-            // Get the top 3 cities
             List<Map<String, Object>> topCities = cityDistances.stream().limit(3).toList();
 
             if (topCities.isEmpty()) {
@@ -66,6 +64,44 @@ public class ComparisonController {
             }
 
             return ResponseEntity.ok(topCities);
+        } catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Data for the year " + year + " is not available.");
+        }
+    }
+
+    @GetMapping("/city-percentage-deviation")
+    public ResponseEntity<Object> getCityPercentageDeviation(
+            @RequestParam(value = "year", required = false, defaultValue = "2023") Integer year) {
+
+        String filePath = "ParsedJson/" + year + "/tellingen_results.json";
+
+        try (InputStream inputStream = new ClassPathResource(filePath).getInputStream()) {
+            ObjectMapper objectMapper = new ObjectMapper();
+            JsonNode root = objectMapper.readTree(inputStream);
+
+            Map<String, Integer> overallResults = calculateOverallVotes(root);
+            Map<String, Double> overallPercentages = normalizeVotes(overallResults);
+
+            List<Map<String, Object>> cityDeviations = new ArrayList<>();
+
+            for (JsonNode transaction : root) {
+                String cityName = getCityName(transaction);
+                if (cityName != null && !cityName.isEmpty()) {
+                    Map<String, Integer> cityVotes = calculateCityVotes(transaction);
+                    Map<String, Double> cityPercentages = normalizeVotes(cityVotes);
+
+                    double deviation = calculateManhattanDistance(overallPercentages, cityPercentages);
+
+                    Map<String, Object> cityResult = new HashMap<>();
+                    cityResult.put("cityName", cityName);
+                    cityResult.put("percentageDeviation", deviation);
+                    cityDeviations.add(cityResult);
+                }
+            }
+
+            cityDeviations.sort(Comparator.comparingDouble(city -> (double) city.get("percentageDeviation")));
+
+            return ResponseEntity.ok(cityDeviations);
         } catch (IOException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Data for the year " + year + " is not available.");
         }
@@ -120,7 +156,6 @@ public class ComparisonController {
     private double calculateManhattanDistance(Map<String, Double> overallPercentages, Map<String, Double> cityPercentages) {
         double distance = 0.0;
 
-        // Combine all unique parties
         Set<String> allParties = new HashSet<>(overallPercentages.keySet());
         allParties.addAll(cityPercentages.keySet());
 
@@ -133,8 +168,11 @@ public class ComparisonController {
         return distance;
     }
 
+    private String getCityName(JsonNode transaction) {
+        return transaction.path("managingAuthority").path("authorityIdentifier").path("value").asText();
+    }
+
     private List<Map<String, Object>> calculateCityDistances(JsonNode root, Map<String, Integer> overallResults) {
-        // Normalize overall results to percentages
         Map<String, Double> overallPercentages = normalizeVotes(overallResults);
 
         List<Map<String, Object>> cityDistances = new ArrayList<>();
@@ -142,14 +180,11 @@ public class ComparisonController {
         for (JsonNode transaction : root) {
             String cityName = getCityName(transaction);
             if (cityName != null && !cityName.isEmpty()) {
-                // Calculate city votes and normalize to percentages
                 Map<String, Integer> cityVotes = calculateCityVotes(transaction);
                 Map<String, Double> cityPercentages = normalizeVotes(cityVotes);
 
-                // Calculate Manhattan distance using percentages
                 double distance = calculateManhattanDistance(overallPercentages, cityPercentages);
 
-                // Add city result
                 Map<String, Object> cityResult = new HashMap<>();
                 cityResult.put("cityName", cityName);
                 cityResult.put("distance", distance);
@@ -158,9 +193,5 @@ public class ComparisonController {
         }
 
         return cityDistances;
-    }
-
-    private String getCityName(JsonNode transaction) {
-        return transaction.path("managingAuthority").path("authorityIdentifier").path("value").asText();
     }
 }

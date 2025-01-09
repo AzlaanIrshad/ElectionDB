@@ -39,7 +39,7 @@
     </div>
 
     <!-- Results Section -->
-    <div v-if="closestCities.length || farthestCities.length" class="mt-8">
+    <div v-if="closestCities.length || farthestCities.length || percentageDeviations.length" class="mt-8">
       <h2 class="text-2xl font-semibold text-gray-800 dark:text-gray-200 mb-4 text-center">
         Results for Year {{ selectedYear }}
       </h2>
@@ -59,8 +59,8 @@
               <span class="text-lg font-bold text-blue-500 dark:text-blue-400">
                 #{{ index + 1 }}: {{ city.cityName }}
               </span>
-            </div>
 
+            </div>
           </li>
         </ol>
       </div>
@@ -80,8 +80,31 @@
               <span class="text-lg font-bold text-red-500 dark:text-red-400">
                 #{{ index + 1 }}: {{ city.cityName }}
               </span>
-            </div>
 
+            </div>
+          </li>
+        </ol>
+      </div>
+
+      <!-- Percentage Deviations -->
+      <div class="mt-8">
+        <h3 class="text-xl font-bold text-purple-500 dark:text-purple-400 mb-2">
+          Percentage Deviations
+        </h3>
+        <ol class="bg-gray-100 dark:bg-gray-700 rounded-lg shadow-lg p-6">
+          <li
+              v-for="(city, index) in percentageDeviations"
+              :key="index"
+              class="flex items-center justify-between bg-white dark:bg-gray-800 rounded-lg shadow-sm px-4 py-3 mb-4 border border-gray-200 dark:border-gray-600"
+          >
+            <div>
+              <span class="text-lg font-bold text-purple-500 dark:text-purple-400">
+                {{ city.cityName }}
+              </span>
+              <p class="text-sm text-gray-600 dark:text-gray-400">
+                Deviation: {{ city.percentageDeviation.toFixed(2) }}%
+              </p>
+            </div>
           </li>
         </ol>
       </div>
@@ -99,6 +122,7 @@ export default {
       selectedYear: 2023,
       closestCities: [],
       farthestCities: [],
+      percentageDeviations: [],
       isLoading: false,
       errorMessage: null,
     };
@@ -109,6 +133,7 @@ export default {
       this.errorMessage = null;
       this.closestCities = [];
       this.farthestCities = [];
+      this.percentageDeviations = [];
 
       try {
         const closestResponse = await fetch(
@@ -130,6 +155,16 @@ export default {
           );
         }
         this.farthestCities = await farthestResponse.json();
+
+        const deviationResponse = await fetch(
+            `${config.apiBaseUrl}/api/comparison/city-percentage-deviation?year=${this.selectedYear}`
+        );
+        if (!deviationResponse.ok) {
+          throw new Error(
+              `API Error: ${deviationResponse.status} - ${deviationResponse.statusText}`
+          );
+        }
+        this.percentageDeviations = await deviationResponse.json();
       } catch (error) {
         console.error("Error fetching cities:", error);
         this.errorMessage = "Failed to fetch cities. Please try again.";
