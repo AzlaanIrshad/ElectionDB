@@ -48,7 +48,7 @@ public class ThreadService {
         }
         User user = userOptional.get();
 
-        Thread thread = new Thread();
+        Thread thread = new Thread(title, body, date, user);
         thread.setCategories(categories);
 
         return threadRepository.save(thread);

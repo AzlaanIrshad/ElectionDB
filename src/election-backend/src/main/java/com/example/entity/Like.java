@@ -6,12 +6,13 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "likes")
+@Table(name = "likes", uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "thread_id"}))
 @Getter
 @Setter
 @AllArgsConstructor
@@ -34,6 +35,10 @@ public class Like implements Serializable {
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     private User user;
+
+    @Column(name = "created_at", nullable = false, updatable = false)
+    @CreationTimestamp
+    private LocalDateTime createdAt;
 
     /**
      * Enum for vote types (e.g., UPVOTE or DOWNVOTE).

@@ -77,12 +77,24 @@ public class DataSeeder implements CommandLineRunner {
             ThreadCategory educationCategory = threadCategoryRepository.findByName("Onderwijs").orElseThrow();
 
             List<Thread> threads = Arrays.asList(
-                    new Thread("Discussie over Verkiezingen 2024", "Wat is jouw mening over de uitslag?", "2024-11-20", regularUser, new HashSet<>(List.of(politicsCategory))),
-                    new Thread("Klimaatbeleid en Toekomst", "Hoe belangrijk is klimaatverandering voor jou?", "2024-11-18", modUser, new HashSet<>(List.of(climateCategory))),
-                    new Thread("Economie en Belastingen", "Wat vind je van de huidige belastingtarieven?", "2024-11-17", adminUser, new HashSet<>(List.of(economyCategory))),
-                    new Thread("Onderwijs in Nederland", "Discussieer over de uitdagingen in het onderwijs", "2024-11-19", regularUser, new HashSet<>(List.of(educationCategory)))
+                    new Thread("Discussie over Verkiezingen 2024", "Wat is jouw mening over de uitslag?", "2024-11-20", regularUser),
+                    new Thread("Klimaatbeleid en Toekomst", "Hoe belangrijk is klimaatverandering voor jou?", "2024-11-18", modUser),
+                    new Thread("Economie en Belastingen", "Wat vind je van de huidige belastingtarieven?", "2024-11-17", adminUser),
+                    new Thread("Onderwijs in Nederland", "Discussieer over de uitdagingen in het onderwijs", "2024-11-19", regularUser)
             );
             threadRepository.saveAll(threads);
+
+            Thread thread1 = threadRepository.findByTitle("Discussie over Verkiezingen 2024").orElseThrow();
+            Thread thread2 = threadRepository.findByTitle("Klimaatbeleid en Toekomst").orElseThrow();
+            Thread thread3 = threadRepository.findByTitle("Economie en Belastingen").orElseThrow();
+            Thread thread4 = threadRepository.findByTitle("Onderwijs in Nederland").orElseThrow();
+
+            thread1.setCategories(new HashSet<>(List.of(politicsCategory)));
+            thread2.setCategories(new HashSet<>(List.of(climateCategory)));
+            thread3.setCategories(new HashSet<>(List.of(economyCategory)));
+            thread4.setCategories(new HashSet<>(List.of(educationCategory)));
+
+            threadRepository.saveAll(Arrays.asList(thread1, thread2, thread3, thread4));
         }
     }
 
@@ -219,23 +231,41 @@ public class DataSeeder implements CommandLineRunner {
 
     private void seedLikes() {
         if (likeRepository.count() == 0) {
-            User regularUser = userRepository.findByUsername("gebruiker").orElseThrow();
-            User modUser = userRepository.findByUsername("moderator").orElseThrow();
-            User adminUser = userRepository.findByUsername("beheerder").orElseThrow();
+            Long regularUserId = 1L;
+            Long modUserId = 2L;
+            Long adminUserId = 3L;
 
             Thread thread1 = threadRepository.findByTitle("Discussie over Verkiezingen 2024").orElseThrow();
             Thread thread2 = threadRepository.findByTitle("Klimaatbeleid en Toekomst").orElseThrow();
             Thread thread3 = threadRepository.findByTitle("Economie en Belastingen").orElseThrow();
 
-            List<Like> likes = Arrays.asList(
-                    new Like(regularUser, Like.VoteType.UPVOTE, thread1),
-                    new Like(modUser, Like.VoteType.DOWNVOTE, thread1),
-                    new Like(adminUser, Like.VoteType.UPVOTE, thread2),
-                    new Like(regularUser, Like.VoteType.DOWNVOTE, thread2),
-                    new Like(modUser, Like.VoteType.UPVOTE, thread3),
-                    new Like(adminUser, Like.VoteType.UPVOTE, thread3)
-            );
-            likeRepository.saveAll(likes);
+            User regularUser = userRepository.findById(regularUserId).orElseThrow();
+            User modUser = userRepository.findById(modUserId).orElseThrow();
+            User adminUser = userRepository.findById(adminUserId).orElseThrow();
+
+            if (likeRepository.findByThreadAndUser(thread1, regularUser).isEmpty()) {
+                likeRepository.save(new Like(regularUser, Like.VoteType.DOWNVOTE, thread1));
+            }
+            if (likeRepository.findByThreadAndUser(thread1, modUser).isEmpty()) {
+                likeRepository.save(new Like(modUser, Like.VoteType.DOWNVOTE, thread1));
+            }
+
+            if (likeRepository.findByThreadAndUser(thread2, adminUser).isEmpty()) {
+                likeRepository.save(new Like(adminUser, Like.VoteType.UPVOTE, thread2));
+            }
+            if (likeRepository.findByThreadAndUser(thread2, regularUser).isEmpty()) {
+                likeRepository.save(new Like(regularUser, Like.VoteType.UPVOTE, thread2));
+            }
+
+            if (likeRepository.findByThreadAndUser(thread3, modUser).isEmpty()) {
+                likeRepository.save(new Like(modUser, Like.VoteType.UPVOTE, thread3));
+            }
+            if (likeRepository.findByThreadAndUser(thread3, adminUser).isEmpty()) {
+                likeRepository.save(new Like(adminUser, Like.VoteType.UPVOTE, thread3));
+            }
+            if (likeRepository.findByThreadAndUser(thread3, regularUser).isEmpty()) {
+                likeRepository.save(new Like(regularUser, Like.VoteType.UPVOTE, thread3));
+            }
         }
     }
 }

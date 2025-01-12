@@ -44,4 +44,20 @@ public class LikeController {
                 "downvotes", downvotes
         ));
     }
+
+
+    @PostMapping("/thread/{threadId}/vote")
+    public ResponseEntity<Like> createVote(@PathVariable Long threadId,
+                                           @RequestBody Map<String, Object> payload) {
+        String voteType = (String) payload.get("voteType");
+        Long userId = Long.valueOf((Integer) payload.get("userId"));
+
+        try {
+            Like like = likeService.createVote(threadId, Like.VoteType.valueOf(voteType), userId);
+            return ResponseEntity.ok(like);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(null);
+        }
+    }
+
 }

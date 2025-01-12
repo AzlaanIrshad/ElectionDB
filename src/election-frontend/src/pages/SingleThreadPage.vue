@@ -82,8 +82,7 @@ export default {
   methods: {
     async fetchThread() {
       try {
-        const data = await threadService.fetchThreadData(this.$route.params.id);
-        this.thread = data;
+        this.thread = await threadService.fetchThreadData(this.$route.params.id);
         await this.fetchLikeCount();
       } catch (err) {
         console.error(err);
@@ -93,8 +92,7 @@ export default {
     },
     async fetchComments() {
       try {
-        const data = await threadService.fetchComments(this.$route.params.id);
-        this.comments = data;
+        this.comments = await threadService.fetchComments(this.$route.params.id);
       } catch (err) {
         console.error(err);
       }
@@ -102,17 +100,67 @@ export default {
     async fetchLikeCount() {
       try {
         const summary = await likeService.fetchVoteSummary(this.thread.id);
+        summary.downvotes = summary.downvotes || 0;
+        summary.upvotes = summary.upvotes || 0;
         this.likeCount = summary.upvotes - summary.downvotes;
       } catch (err) {
         console.error(err);
       }
     },
-
+    // Voeg een upvote toe
     async likeThread() {
-      //likeThread
+      const userId = this.getUserIdFromToken();
+      if (!userId) {
+        return;
+      }
+
+      const likeData = {
+        threadId: this.thread.id,
+        voteType: "UPVOTE",
+        userId: Number(userId),
+      };
+
+      try {
+        console.log("Adding upvote with data:", likeData);
+        await likeService.addVote(this.thread.id, "UPVOTE", likeData.userId);
+        await this.fetchLikeCount();
+      } catch (err) {
+        console.error("Error liking thread:", err);
+      }
     },
     async dislikeThread() {
-      //dislikeThread
+      const userId = this.getUserIdFromToken();
+      if (!userId) {
+        console.error("User ID not found. User might not be logged in.");
+        return;
+      }
+
+      const dislikeData = {
+        threadId: this.thread.id,
+        voteType: "DOWNVOTE",
+        userId: Number(userId), // Converteer userId naar een integer
+      };
+      try {
+        console.log("Adding downvote with data:", dislikeData);
+        await likeService.addVote(this.thread.id, "DOWNVOTE", dislikeData.userId);
+        await this.fetchLikeCount();
+      } catch (err) {
+        console.error("Error disliking thread:", err);
+      }
+    },
+    // Haal userId uit het token
+    getUserIdFromToken() {
+      const token = localStorage.getItem("token");
+      if (token) {
+        try {
+          const payload = JSON.parse(atob(token.split(".")[1]));
+          return payload.userId || payload.sub;
+        } catch (error) {
+          console.error("Error decoding token payload:", error);
+          return null;
+        }
+      }
+      return null;
     },
   },
   created() {

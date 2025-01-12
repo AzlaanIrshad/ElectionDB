@@ -33,7 +33,9 @@ public class LoginService {
             User user = userOptional.get();
             if (passwordEncoder.matches(password, user.getPassword())) {
                 logger.info("Authentication successful for email: {}", email);
-                return jwtUtil.generateToken(user.getEmail(), user.getRole().name());
+
+                String userId = user.getId().toString();
+                return jwtUtil.generateToken(user.getEmail(), user.getRole().name(), userId);
             } else {
                 logger.warn("Authentication failed for email: {}. Incorrect password.", email);
             }

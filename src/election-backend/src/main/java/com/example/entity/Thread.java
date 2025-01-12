@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
-import java.io.Serial;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -13,13 +12,7 @@ import java.util.Set;
 @Table(name = "thread")
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
 public class Thread implements Serializable {
-
-    @Serial
-    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -47,18 +40,20 @@ public class Thread implements Serializable {
             joinColumns = @JoinColumn(name = "thread_id"), // Thread ID column
             inverseJoinColumns = @JoinColumn(name = "category_id") // Category ID column
     )
-    @Builder.Default
     private Set<ThreadCategory> categories = new HashSet<>();
 
-    public Thread(String title, String body, String date, User user, Set<ThreadCategory> categories) {
+    public Thread() {
+        // Default constructor
+    }
+
+    public Thread(String title, String body, String date, User user) {
         this.title = title;
         this.body = body;
         this.date = date;
         this.user = user;
-        this.categories = categories;
     }
-    // constructor for id only?
-    public Thread(Long id) {
-        this.id = id;
+
+    public Thread(Long threadId) {
+        this.id = threadId;
     }
 }
