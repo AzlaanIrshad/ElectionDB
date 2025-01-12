@@ -57,4 +57,8 @@ public class Thread implements Serializable {
         this.user = user;
         this.categories = categories;
     }
+    // constructor for id only?
+    public Thread(Long id) {
+        this.id = id;
+    }
 }
