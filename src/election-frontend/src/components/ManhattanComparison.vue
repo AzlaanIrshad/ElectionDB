@@ -111,7 +111,7 @@
 </template>
 
 <script>
-import config from "../config";
+import { ComparisonService } from "../services/ComparisonService";
 
 export default {
   data() {
@@ -134,35 +134,9 @@ export default {
       this.percentageDeviations = [];
 
       try {
-        const closestResponse = await fetch(
-            `${config.apiBaseUrl}/api/comparison/closest-cities?year=${this.selectedYear}`
-        );
-        if (!closestResponse.ok) {
-          throw new Error(
-              `API Error: ${closestResponse.status} - ${closestResponse.statusText}`
-          );
-        }
-        this.closestCities = await closestResponse.json();
-
-        const farthestResponse = await fetch(
-            `${config.apiBaseUrl}/api/comparison/farthest-cities?year=${this.selectedYear}`
-        );
-        if (!farthestResponse.ok) {
-          throw new Error(
-              `API Error: ${farthestResponse.status} - ${farthestResponse.statusText}`
-          );
-        }
-        this.farthestCities = await farthestResponse.json();
-
-        const deviationResponse = await fetch(
-            `${config.apiBaseUrl}/api/comparison/city-percentage-deviation?year=${this.selectedYear}`
-        );
-        if (!deviationResponse.ok) {
-          throw new Error(
-              `API Error: ${deviationResponse.status} - ${deviationResponse.statusText}`
-          );
-        }
-        this.percentageDeviations = await deviationResponse.json();
+        this.closestCities = await ComparisonService.fetchClosestCities(this.selectedYear);
+        this.farthestCities = await ComparisonService.fetchFarthestCities(this.selectedYear);
+        this.percentageDeviations = await ComparisonService.fetchPercentageDeviations(this.selectedYear);
       } catch (error) {
         console.error("Error fetching cities:", error);
         this.errorMessage = "Failed to fetch cities. Please try again.";
