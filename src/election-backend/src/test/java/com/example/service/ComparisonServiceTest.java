@@ -234,4 +234,103 @@ class ComparisonServiceTest {
         assertEquals("City 1", cityDeviations.get(0).get("cityName"));
         assertEquals(20.0, cityDeviations.get(0).get("percentageDeviation"));
     }
+    @Test
+    void testCalculateOverallVotesWithInvalidJson() throws Exception {
+        String invalidJson = """
+            [
+              {
+                "invalidField": {}
+              }
+            ]
+            """;
+
+        JsonNode root = objectMapper.readTree(invalidJson);
+        Map<String, Integer> overallVotes = comparisonService.calculateOverallVotes(root);
+
+        assertTrue(overallVotes.isEmpty());
+    }
+
+    @Test
+    void testNormalizeVotesWithEmptyVotes() {
+        Map<String, Integer> emptyVotes = new HashMap<>();
+
+        Map<String, Double> normalizedVotes = comparisonService.normalizeVotes(emptyVotes);
+
+        assertTrue(normalizedVotes.isEmpty());
+    }
+
+    @Test
+    void testNormalizeVotesWithZeroTotalVotes() {
+        Map<String, Integer> votes = Map.of("Party A", 0, "Party B", 0);
+
+        Map<String, Double> normalizedVotes = comparisonService.normalizeVotes(votes);
+
+        assertEquals(0.0, normalizedVotes.getOrDefault("Party A", 0.0));
+        assertEquals(0.0, normalizedVotes.getOrDefault("Party B", 0.0));
+    }
+
+    @Test
+    void testCalculateManhattanDistanceWithEmptyMaps() {
+        Map<String, Double> overallPercentages = new HashMap<>();
+        Map<String, Double> cityPercentages = new HashMap<>();
+
+        double distance = comparisonService.calculateManhattanDistance(overallPercentages, cityPercentages);
+
+        assertEquals(0.0, distance, 0.01);
+    }
+
+    @Test
+    void testCalculateCityDistancesWithEmptyJson() throws Exception {
+        String emptyJson = "[]";
+
+        JsonNode root = objectMapper.readTree(emptyJson);
+        Map<String, Integer> overallResults = Map.of("Party A", 100, "Party B", 50);
+
+        List<Map<String, Object>> cityDistances = comparisonService.calculateCityDistances(root, overallResults);
+
+        assertTrue(cityDistances.isEmpty());
+    }
+
+    @Test
+    void testCalculateCityPercentageDeviationsWithInvalidCityData() throws Exception {
+        String jsonWithInvalidCity = """
+            [
+              {
+                "managingAuthority": {
+                  "authorityIdentifier": {
+                    "value": ""
+                  }
+                },
+                "count": {
+                  "election": {
+                    "contests": {
+                      "contests": [
+                        {
+                          "totalVotes": {
+                            "selections": [
+                              {
+                                "affiliationIdentifier": {
+                                  "registeredName": "Party A"
+                                },
+                                "validVotes": 70
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            ]
+            """;
+
+        JsonNode root = objectMapper.readTree(jsonWithInvalidCity);
+        Map<String, Integer> overallResults = Map.of("Party A", 100);
+
+        List<Map<String, Object>> cityDeviations = comparisonService.calculateCityPercentageDeviations(root, overallResults);
+
+        assertTrue(cityDeviations.isEmpty());
+    }
+
 }
