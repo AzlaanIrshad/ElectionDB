@@ -67,4 +67,25 @@ public class ComparisonController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Data for the year " + year + " is not available.");
         }
     }
+    @GetMapping("/city-percentage-deviation")
+    public ResponseEntity<Object> getCityPercentageDeviation(
+            @RequestParam(value = "year", required = false, defaultValue = "2023") Integer year) {
+
+        String filePath = "ParsedJson/" + year + "/tellingen_results.json";
+
+        try {
+            JsonNode root = comparisonService.loadElectionData(filePath);
+
+            Map<String, Integer> overallResults = comparisonService.calculateOverallVotes(root);
+            List<Map<String, Object>> cityDeviations = comparisonService.calculateCityPercentageDeviations(root, overallResults);
+
+            if (cityDeviations.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No cities found for the specified year.");
+            }
+
+            return ResponseEntity.ok(cityDeviations);
+        } catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Data for the year " + year + " is not available.");
+        }
+    }
 }

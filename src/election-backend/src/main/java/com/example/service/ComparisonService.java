@@ -105,4 +105,28 @@ public class ComparisonService {
     public String getCityName(JsonNode transaction) {
         return transaction.path("managingAuthority").path("authorityIdentifier").path("value").asText();
     }
+    public List<Map<String, Object>> calculateCityPercentageDeviations(JsonNode root, Map<String, Integer> overallResults) {
+        Map<String, Double> overallPercentages = normalizeVotes(overallResults);
+
+        List<Map<String, Object>> cityDeviations = new ArrayList<>();
+
+        for (JsonNode transaction : root) {
+            String cityName = getCityName(transaction);
+            if (cityName != null && !cityName.isEmpty()) {
+                Map<String, Integer> cityVotes = calculateCityVotes(transaction);
+                Map<String, Double> cityPercentages = normalizeVotes(cityVotes);
+
+                double deviation = calculateManhattanDistance(overallPercentages, cityPercentages);
+
+                Map<String, Object> cityResult = new HashMap<>();
+                cityResult.put("cityName", cityName);
+                cityResult.put("percentageDeviation", deviation);
+                cityDeviations.add(cityResult);
+            }
+        }
+
+        cityDeviations.sort(Comparator.comparingDouble(city -> (double) city.get("percentageDeviation")));
+        return cityDeviations;
+    }
+
 }
