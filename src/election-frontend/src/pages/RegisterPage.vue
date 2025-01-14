@@ -174,9 +174,6 @@ export default {
       if (!/[0-9!@#$%^&*]/.test(this.password)) {
         this.fieldErrors.password.push('Wachtwoord moet minimaal één cijfer of speciaal teken bevatten.');
       }
-      if (!/[A-Z]/.test(this.password)) {
-        this.fieldErrors.password.push('Wachtwoord moet minimaal één hoofdletter bevatten.');
-      }
     },
     validateConfirmPassword() {
       this.fieldErrors.confirmPassword = [];

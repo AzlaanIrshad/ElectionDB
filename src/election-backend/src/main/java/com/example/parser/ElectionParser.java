@@ -20,6 +20,7 @@
 //    @Autowired
 //    private ApplicationContext context;
 //
+//    // Azlaan stinky
 //    private static final String BASE_PATH = "src/election-backend/src/main/resources/ElectionResults";
 //
 //    public static void main(String[] args) {

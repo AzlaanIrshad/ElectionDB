@@ -8,8 +8,8 @@
 </template>
 
 <script>
-import {Bar} from 'vue-chartjs';
-import {BarElement, CategoryScale, Chart, Legend, LinearScale, Title, Tooltip} from 'chart.js';
+import { Bar } from 'vue-chartjs';
+import { Chart, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js';
 
 Chart.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale);
 

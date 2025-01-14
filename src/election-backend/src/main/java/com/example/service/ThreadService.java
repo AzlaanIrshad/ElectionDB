@@ -1,12 +1,12 @@
 package com.example.service;
 
 import com.example.entity.Thread;
-import com.example.entity.ThreadCategory;
 import com.example.entity.ThreadComment;
+import com.example.entity.ThreadCategory;
 import com.example.entity.User;
-import com.example.repository.ThreadCategoryRepository;
-import com.example.repository.ThreadCommentRepository;
 import com.example.repository.ThreadRepository;
+import com.example.repository.ThreadCommentRepository;
+import com.example.repository.ThreadCategoryRepository;
 import com.example.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
