@@ -1,5 +1,6 @@
 package com.example.dto;
 
+import com.example.entity.Thread;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,5 +15,14 @@ public class ThreadRequest {
     private String date;
     private String email;
     private List<String> categories;  // List of category names
+
+    public Thread toEntity() {
+        Thread thread = new Thread();
+        thread.setTitle(title);
+        thread.setBody(body);
+        thread.setDate(date);
+        return thread;
+    }
+
 }
 
