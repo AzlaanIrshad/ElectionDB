@@ -21,7 +21,7 @@
       </div>
 
       <!-- Like/Dislike Sectie -->
-      <div class="like-section flex flex-col items-center ml-6">
+      <div v-if="isLoggedIn" class="like-section flex flex-col items-center ml-6">
         <button
             :class="{ 'text-green-500': isLiked, 'text-gray-400': !isLiked }"
             @click="toggleLike"
@@ -89,9 +89,13 @@ export default {
       likeCount: 0,
       isLiked: false,
       isDisliked: false,
+      isLoggedIn: !!localStorage.getItem("token"),
     };
   },
   methods: {
+    checkLoginStatus() {
+      this.isLoggedIn = !!localStorage.getItem("token");
+    },
     async fetchThread() {
       try {
         this.thread = await threadService.fetchThreadData(this.$route.params.id);
@@ -220,6 +224,7 @@ export default {
   created() {
     this.fetchThread();
     this.fetchComments();
+    this.checkLoginStatus();
   },
 };
 </script>
