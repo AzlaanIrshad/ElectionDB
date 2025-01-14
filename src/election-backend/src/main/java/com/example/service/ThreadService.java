@@ -1,12 +1,14 @@
 package com.example.service;
 
+import com.example.dto.ThreadCommentRequest;
+import com.example.dto.ThreadRequest;
 import com.example.entity.Thread;
 import com.example.entity.ThreadComment;
 import com.example.entity.ThreadCategory;
 import com.example.entity.User;
-import com.example.repository.ThreadRepository;
-import com.example.repository.ThreadCommentRepository;
 import com.example.repository.ThreadCategoryRepository;
+import com.example.repository.ThreadCommentRepository;
+import com.example.repository.ThreadRepository;
 import com.example.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,8 +33,9 @@ public class ThreadService {
     @Autowired
     private UserRepository userRepository;
 
-    public Thread createThread(String title, String body, String date, List<String> categoryNames, String userEmail) {
+    public Thread createThread(ThreadRequest threadRequest) {
 
+        List<String> categoryNames = threadRequest.getCategories();
         Set<ThreadCategory> categories = new HashSet<>();
 
         for (String categoryName : categoryNames) {
@@ -42,13 +45,12 @@ public class ThreadService {
             categories.add(category);
         }
 
-        Optional<User> userOptional = userRepository.findByEmail(userEmail);
-        if (userOptional.isEmpty()) {
-            throw new RuntimeException("User not found");
-        }
-        User user = userOptional.get();
+        String userEmail = threadRequest.getEmail();
+        User user = userRepository.findByEmail(userEmail)
+                .orElseThrow(() -> new RuntimeException("User not found"));
 
-        Thread thread = new Thread(title, body, date, user);
+        Thread thread = threadRequest.toEntity();
+        thread.setUser(user);
         thread.setCategories(categories);
 
         return threadRepository.save(thread);
@@ -81,7 +83,9 @@ public class ThreadService {
         return threadCommentRepository.findByThreadId(threadId);
     }
 
-    public ThreadComment createComment(Long threadId, String body, String date, String email) {
+    public ThreadComment createComment(Long threadId, ThreadCommentRequest commentRequest) {
+        String email = commentRequest.getEmail();
+
         Optional<User> userOptional = userRepository.findByEmail(email);
         if (userOptional.isEmpty()) {
             System.out.println("User not found for email: " + email);
@@ -92,9 +96,7 @@ public class ThreadService {
         Thread thread = threadRepository.findById(threadId)
                 .orElseThrow(() -> new IllegalArgumentException("Thread not found with id: " + threadId));
 
-        ThreadComment comment = new ThreadComment();
-        comment.setBody(body);
-        comment.setDate(date);
+        ThreadComment comment = commentRequest.toEntity();
         comment.setUser(user);
         comment.setThread(thread);
 

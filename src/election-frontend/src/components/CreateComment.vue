@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import { threadService } from '../services/ThreadService.js';
+import {threadService} from '../services/ThreadService.js';
 
 export default {
   name: "CreateCommentComponent",
@@ -45,7 +45,6 @@ export default {
       if (token) {
         try {
           const payload = JSON.parse(atob(token.split(".")[1]));
-          console.log("Decoded token payload:", payload);
           this.userEmail = payload.sub;
         } catch (error) {
           console.error("Error decoding token payload:", error);

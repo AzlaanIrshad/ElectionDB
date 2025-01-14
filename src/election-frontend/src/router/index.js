@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from 'vue-router';
+import {createRouter, createWebHistory} from 'vue-router';
 import HomePage from '@/pages/HomePage.vue';
 import LoginPage from '@/pages/LoginPage.vue';
 import RegisterPage from '@/pages/RegisterPage.vue';
@@ -18,6 +18,7 @@ import PartyBar from "@/components/PartyBar.vue";
 import PartyLine from "@/components/PartyLine.vue";
 import NotFoundPage from "@/pages/NotFoundPage.vue";
 import CityStatistiekPage from "@/components/CityStatistiekPage.vue";
+import ManhattanComparison from "@/components/ManhattanComparison.vue";
 
 // General authentication guard
 function authGuard(to, from, next) {
@@ -128,6 +129,12 @@ const routes = [
                 name: 'zetels-per-partij',
                 component: PartyLine,
                 meta: { breadcrumb: "Zetels Per Partij" }
+            },
+            {
+                path: 'manhattan-vergelijking',
+                name: 'manhattan-vergelijking',
+                component: ManhattanComparison,
+                meta: { breadcrumb: "Manhattan Vergelijking" },
             },
         ],
     },

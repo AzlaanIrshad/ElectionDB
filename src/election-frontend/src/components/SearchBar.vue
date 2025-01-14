@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import config from "../config";
+import {SearchService} from "../services/SearchService";
 
 export default {
   data() {
@@ -53,15 +53,7 @@ export default {
     async searchResults() {
       if (this.searchQuery.trim() !== "") {
         try {
-          const response = await fetch(
-              `${config.apiBaseUrl}/api/search/2023?query=${encodeURIComponent(this.searchQuery)}`
-          );
-
-          if (!response.ok) {
-            console.error("Failed to fetch results:", response.statusText);
-            return;
-          }
-          this.results = await response.json();
+          this.results = await SearchService.search(this.searchQuery);
           console.log("Filtered Results:", this.results);
         } catch (error) {
           console.error("Error fetching search results:", error);
@@ -74,8 +66,8 @@ export default {
     selectResult(result) {
       this.$router.push({
         name: "single-party",
-        params: { id: result.partyId },
-        query: { search: this.searchQuery },
+        params: {id: result.partyId},
+        query: {search: this.searchQuery},
       });
       this.searchQuery = "";
       this.results = [];

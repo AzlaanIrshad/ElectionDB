@@ -13,7 +13,7 @@
                   id="title"
                   v-model="title"
                   placeholder="Titel van de draad"
-                  class="w-full p-4 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring focus:ring-blue-300 dark:focus:ring-blue-500 text-gray-700 dark:text-gray-200 dark:bg-gray-700"
+                  class="w-full p-4 bg-white border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring focus:ring-blue-300 dark:focus:ring-blue-500 text-gray-700 dark:text-gray-200 dark:bg-gray-700"
                   :class="{ 'border-red-500 dark:border-red-500': titleError }"
               />
               <p v-if="titleError" class="text-red-500 text-sm mt-1">{{ titleError }}</p>
@@ -24,7 +24,7 @@
                   id="body"
                   v-model="body"
                   placeholder="Inhoud van de draad"
-                  class="w-full p-4 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring focus:ring-blue-300 dark:focus:ring-blue-500 text-gray-700 dark:text-gray-200 dark:bg-gray-700 h-32 resize-none"
+                  class="w-full bg-white p-4 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring focus:ring-blue-300 dark:focus:ring-blue-500 text-gray-700 dark:text-gray-200 dark:bg-gray-700 h-32 resize-none"
                   :class="{ 'border-red-500 dark:border-red-500': bodyError }"
               ></textarea>
               <p v-if="bodyError" class="text-red-500 text-sm mt-1">{{ bodyError }}</p>
@@ -36,7 +36,7 @@
                   id="category"
                   v-model="categoryInput"
                   placeholder="Categories (comma-separated)"
-                  class="w-full p-4 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring focus:ring-blue-300 dark:focus:ring-blue-500 text-gray-700 dark:text-gray-200 dark:bg-gray-700"
+                  class="w-full bg-white p-4 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring focus:ring-blue-300 dark:focus:ring-blue-500 text-gray-700 dark:text-gray-200 dark:bg-gray-700"
                   :class="{ 'border-red-500 dark:border-red-500': categoryError }"
               />
               <p v-if="categoryError" class="text-red-500 text-sm mt-1">{{ categoryError }}</p>
@@ -84,7 +84,6 @@ export default {
       bodyError: '',
       categoryError: '',
       isLoggedIn: false,
-      isAdmin: false,
       userEmail: null,
     };
   },
@@ -101,17 +100,14 @@ export default {
         try {
           const payload = JSON.parse(atob(token.split(".")[1]));
           console.log("Decoded token payload:", payload);
-          this.isLoggedIn = true;
-          this.isAdmin = payload.role === "ADMIN";
           this.userEmail = payload.sub;
+          this.isLoggedIn = true;
         } catch (error) {
           console.error("Error decoding token payload:", error);
           this.isLoggedIn = false;
-          this.isAdmin = false;
         }
       } else {
         this.isLoggedIn = false;
-        this.isAdmin = false;
       }
     },
 

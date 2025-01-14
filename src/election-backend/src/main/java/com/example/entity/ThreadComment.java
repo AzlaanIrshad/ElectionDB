@@ -2,10 +2,11 @@ package com.example.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import java.io.Serializable;
-import lombok.Getter;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.Setter;
+
+import java.io.Serializable;
 
 @Entity
 @Table(name = "threadComment")

@@ -2,25 +2,21 @@ package com.example.service;
 
 import com.example.entity.Thread;
 import com.example.entity.ThreadCategory;
+import com.example.entity.ThreadComment;
 import com.example.entity.User;
-import com.example.repository.ThreadRepository;
 import com.example.repository.ThreadCategoryRepository;
 import com.example.repository.ThreadCommentRepository;
+import com.example.dto.*;
+import com.example.repository.ThreadRepository;
 import com.example.repository.UserRepository;
-import com.example.util.JwtUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import com.example.entity.ThreadComment;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -65,11 +61,13 @@ public class ThreadServiceTest {
     @Test
     void testCreateThread() {
 
-        List<String> categoryNames = Arrays.asList("cat1", "cat2");
-        String title = "test thread";
-        String body = "This is a test thread";
-        String date = "2024-12-15 00:00";
-        String userEmail = "googoo@example.com";
+        // Create the ThreadRequest DTO with necessary data
+        ThreadRequest threadRequest = new ThreadRequest();
+        threadRequest.setTitle("test thread");
+        threadRequest.setBody("This is a test thread");
+        threadRequest.setDate("2024-12-15 00:00");
+        threadRequest.setEmail("googoo@example.com");
+        threadRequest.setCategories(Arrays.asList("cat1", "cat2"));
 
         Set<ThreadCategory> categories = new HashSet<>();
         ThreadCategory category1 = new ThreadCategory("cat1");
@@ -82,21 +80,23 @@ public class ThreadServiceTest {
 
         User dummyUser = new User();
         dummyUser.setId(1L);
-        dummyUser.setEmail(userEmail);
-        when(userRepository.findByEmail(userEmail)).thenReturn(Optional.of(dummyUser));
+        dummyUser.setEmail("googoo@example.com");
+        when(userRepository.findByEmail("googoo@example.com")).thenReturn(Optional.of(dummyUser));
 
         when(threadRepository.save(any(Thread.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
-        Thread createdThread = threadService.createThread(title, body, date, categoryNames, userEmail);
+        // Call the service method using the DTO
+        Thread createdThread = threadService.createThread(threadRequest);
 
         assertNotNull(createdThread);
-        assertEquals(title, createdThread.getTitle());
+        assertEquals(threadRequest.getTitle(), createdThread.getTitle());
         assertEquals(2, createdThread.getCategories().size());
         verify(threadRepository, times(1)).save(any(Thread.class));
         verify(threadCategoryRepository, times(1)).findByName("cat1");
         verify(threadCategoryRepository, times(1)).findByName("cat2");
-        verify(userRepository, times(1)).findByEmail(userEmail);
+        verify(userRepository, times(1)).findByEmail("googoo@example.com");
     }
+
 
 
     @Test
@@ -164,6 +164,11 @@ public class ThreadServiceTest {
         String date = "2024-12-15 00:01";
         String email = "googoo@example.com";
 
+        ThreadCommentRequest commentRequest = new ThreadCommentRequest();
+        commentRequest.setBody(body);
+        commentRequest.setDate(date);
+        commentRequest.setEmail(email);
+
         User dummyUser = new User();
         dummyUser.setId(1L);
         dummyUser.setUsername("googoo");
@@ -182,7 +187,7 @@ public class ThreadServiceTest {
         comment.setThread(thread);
         when(threadCommentRepository.save(any(ThreadComment.class))).thenReturn(comment);
 
-        ThreadComment createdComment = threadService.createComment(1L, body, date, email);
+        ThreadComment createdComment = threadService.createComment(1L, commentRequest);
 
         assertNotNull(createdComment);
         assertEquals(body, createdComment.getBody());

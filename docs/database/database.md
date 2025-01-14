@@ -1,118 +1,157 @@
 # Database
 
-## Overview
-Dit document beschrijft de database structuur van het systeem, inclusief de tabellen en hun relaties. Het datamodel wordt weergegeven met behulp van een Mermaid-diagram.
+## Overzicht
+Dit document beschrijft de database-structuur van het systeem, inclusief de tabellen en hun relaties. Het datamodel wordt weergegeven met behulp van een Mermaid-diagram.
 
 ## Tabellen
 
-### 1. FAQ
-De **FAQ**-tabel bevat veelgestelde vragen met bijbehorende antwoorden.
+### 1. USER
+De **USER**-tabel bevat informatie over de gebruikers van het systeem.
 
-- **id** (bigint, PK): Het unieke identificatienummer van de FAQ.
-- **question** (varchar): De vraag die wordt gesteld.
-- **answer** (text): Het antwoord op de vraag.
+| Kolomnaam  | Type     | Beschrijving                           |  
+|------------|----------|----------------------------------------|  
+| id         | Long     | Unieke ID van de gebruiker (PK).       |  
+| username   | String   | Gebruikersnaam van de gebruiker.       |  
+| email      | String   | E-mailadres van de gebruiker.          |  
+| password   | String   | Wachtwoord van de gebruiker.           |  
+| is_active  | Boolean  | Status of de gebruiker actief is.      |  
+| role       | String   | Rol van de gebruiker (bijv. USER, MODERATOR, ADMIN). |  
 
-### 2. PARTY
-De **PARTY**-tabel bevat informatie over politieke partijen.
-
-- **id** (bigint, PK): Het unieke identificatienummer van de partij.
-- **name** (varchar): De naam van de partij.
-- **description** (varchar): Een beschrijving van de partij.
-
-### 3. THREAD
+### 2. THREAD
 De **THREAD**-tabel bevat discussies of forums waar gebruikers berichten kunnen plaatsen.
 
-- **id** (bigint, PK): Het unieke identificatienummer van het bericht.
-- **title** (varchar): De titel van het bericht.
-- **body** (varchar): De inhoud van het bericht.
-- **date** (varchar): De datum waarop het bericht is geplaatst.
-- **user_id** (bigint): Het ID van de gebruiker die het bericht heeft geplaatst.
+| Kolomnaam  | Type     | Beschrijving                           |  
+|------------|----------|----------------------------------------|  
+| id         | Long     | Unieke ID van de thread (PK).          |  
+| title      | String   | Titel van de thread.                   |  
+| body       | String   | Inhoud van de thread.                  |  
+| date       | String   | Datum waarop de thread is gemaakt.     |  
 
-### 4. THREAD_CATEGORY
-De **THREAD_CATEGORY**-tabel bevat de verschillende categorieën waartoe een thread kan behoren.
+### 3. THREAD_CATEGORY
+De **THREAD_CATEGORY**-tabel bevat categorieën waaraan threads kunnen worden gekoppeld.
 
-- **id** (bigint, PK): Het unieke identificatienummer van de categorie.
-- **name** (varchar): De naam van de categorie.
+| Kolomnaam  | Type     | Beschrijving                           |  
+|------------|----------|----------------------------------------|  
+| id         | Long     | Unieke ID van de categorie (PK).       |  
+| name       | String   | Naam van de categorie.                 |  
 
-### 5. THREAD_CATEGORY_MAP
-De **THREAD_CATEGORY_MAP**-tabel vormt een veel-op-veel-relatie tussen threads en categorieën. Dit betekent dat een thread meerdere categorieën kan hebben en een categorie meerdere threads kan bevatten.
+### 4. THREAD_COMMENT
+De **THREAD_COMMENT**-tabel bevat reacties op threads.
 
-- **thread_id** (bigint, FK): Het ID van de thread.
-- **category_id** (bigint, FK): Het ID van de categorie.
+| Kolomnaam  | Type     | Beschrijving                           |  
+|------------|----------|----------------------------------------|  
+| id         | Long     | Unieke ID van de opmerking (PK).       |  
+| body       | String   | Inhoud van de opmerking.               |  
+| date       | String   | Datum waarop de opmerking is geplaatst.|  
+| threadId   | Long     | Verwijzing naar de bijbehorende thread (FK). |  
 
-### 6. THREAD_COMMENT
-De **THREAD_COMMENT**-tabel bevat de reacties op threads.
+### 5. FAQ
+De **FAQ**-tabel bevat veelgestelde vragen en antwoorden.
 
-- **id** (bigint, PK): Het unieke identificatienummer van de reactie.
-- **body** (varchar): De inhoud van de reactie.
-- **date** (varchar): De datum waarop de reactie is geplaatst.
-- **thread_id** (bigint, FK): Het ID van de thread waar de reactie op is geplaatst.
-- **user_id** (bigint, FK): Het ID van de gebruiker die de reactie heeft geplaatst.
+| Kolomnaam  | Type     | Beschrijving                           |  
+|------------|----------|----------------------------------------|  
+| id         | Long     | Unieke ID van de vraag (PK).           |  
+| question   | String   | De veelgestelde vraag.                 |  
+| answer     | String   | Het antwoord op de vraag.              |  
+
+### 6. LIKE
+De **LIKE**-tabel bevat informatie over stemmen (upvotes of downvotes) door gebruikers.
+
+| Kolomnaam  | Type     | Beschrijving                           |  
+|------------|----------|----------------------------------------|  
+| id         | Long     | Unieke ID van de stem (PK).            |  
+| voteType   | String   | Type stem ("UPVOTE", "DOWNVOTE").      |  
+| userId     | Long     | Verwijzing naar de gebruiker die heeft gestemd (FK). |  
+| threadId   | Long     | Verwijzing naar de thread waarop is gestemd (FK). |  
+
+### 7. PARTY
+De **PARTY**-tabel bevat informatie over politieke partijen.
+
+| Kolomnaam  | Type     | Beschrijving                           |  
+|------------|----------|----------------------------------------|  
+| id         | Long     | Unieke ID van de partij (PK).          |  
+| name       | String   | Naam van de partij.                    |  
+| description| String   | Beschrijving van de partij.            |  
+
+### 8. THREAD_CATEGORY_MAP
+De **THREAD_CATEGORY_MAP**-tabel bevat de mapping tussen threads en categorieën.
+
+| Kolomnaam     | Type     | Beschrijving                           |  
+|---------------|----------|----------------------------------------|  
+| thread_id     | bigint   | Verwijzing naar de thread (FK).        |  
+| category_id   | bigint   | Verwijzing naar de categorie (FK).     |  
 
 ## Relaties
 
 Het onderstaande Mermaid-diagram toont de relaties tussen de tabellen:
 
-```mermaid
-erDiagram
-    FAQ {
-        bigint id PK
-        text answer
-        varchar question
-    }
-    PARTY {
-        bigint id PK
-        varchar description
-        varchar name
-    }
-    THREAD {
-        bigint id PK
-        varchar body
-        varchar date
-        varchar title
-        bigint user_id
-    }
-    THREAD_CATEGORY {
-        bigint id PK
-        varchar name
-    }
-    THREAD_CATEGORY_MAP {
-        bigint thread_id FK
-        bigint category_id FK
-    }
-    THREAD_COMMENT {
-        bigint id PK
-        varchar body
-        varchar date
-        bigint thread_id FK
-        bigint user_id FK
-    }
+```mermaid  
+erDiagram  
+USER {  
+    Long id PK  
+    String username  
+    String email  
+    String password  
+    Boolean is_active  
+    String role "USER, MODERATOR, ADMIN"  
+}  
+THREAD {  
+    Long id PK  
+    String title  
+    String body  
+    String date  
+}  
+THREAD_CATEGORY {  
+    Long id PK  
+    String name  
+}  
+THREAD_COMMENT {  
+    Long id PK  
+    String body  
+    String date  
+    Long threadId FK  
+}  
+FAQ {  
+    Long id PK  
+    String question  
+    String answer  
+}  
+LIKE {  
+    Long id PK  
+    String voteType "UPVOTE, DOWNVOTE"  
+    Long userId FK  
+    Long threadId FK  
+}  
+PARTY {  
+    Long id PK  
+    String name  
+    String description  
+}  
+THREAD_CATEGORY_MAP {  
+    bigint thread_id FK  
+    bigint category_id FK  
+}  
 
-    FAQ ||--o| THREAD_COMMENT : has
-    THREAD ||--o| THREAD_COMMENT : has
-    THREAD ||--o| THREAD_CATEGORY_MAP : has
-    THREAD_CATEGORY ||--o| THREAD_CATEGORY_MAP : has
-    THREAD_CATEGORY_MAP ||--|| THREAD : references
-    THREAD_CATEGORY_MAP ||--|| THREAD_CATEGORY : references
-    PARTY ||--o| THREAD : references
-```
+USER ||--o| THREAD : "has"  
+USER ||--o| THREAD_COMMENT : "posts"  
+USER ||--o| LIKE : "likes"  
+THREAD ||--}o THREAD_COMMENT : "belongs to"  
+THREAD ||--}o LIKE : "has"  
+THREAD_CATEGORY ||--o| THREAD : "contains"  
+THREAD O{--}o THREAD_CATEGORY_MAP : has  
+THREAD_CATEGORY ||--|| THREAD_CATEGORY_MAP : has  
+```  
 
-### Relaties Uitleg:
+### Relaties Uitleg
 
-1. **FAQ - THREAD_COMMENT**:
-    - Een FAQ kan meerdere reacties hebben, en elke reactie kan naar één FAQ verwijzen.
-
-2. **THREAD - THREAD_COMMENT**:
-    - Een thread kan meerdere reacties hebben, en elke reactie behoort tot één thread.
-
-3. **THREAD - THREAD_CATEGORY_MAP**:
-    - Een thread kan meerdere categorieën hebben, en elke categorie kan meerdere threads bevatten.
-
-4. **THREAD_CATEGORY - THREAD_CATEGORY_MAP**:
-    - Een categorie kan meerdere threads bevatten, en een thread kan meerdere categorieën hebben.
-
-5. **PARTY - THREAD**:
-    - Een politieke partij kan verbonden zijn met meerdere threads.
+1. **USER en THREAD**: Een gebruiker kan meerdere threads hebben ("has").
+2. **USER en THREAD_COMMENT**: Een gebruiker kan meerdere reacties plaatsen ("posts").
+3. **USER en LIKE**: Een gebruiker kan stemmen (upvote of downvote) op meerdere threads ("likes").
+4. **THREAD en THREAD_COMMENT**: Een thread kan meerdere reacties bevatten ("belongs to").
+5. **THREAD en LIKE**: Een thread kan meerdere stemmen hebben ("has").
+6. **THREAD_CATEGORY en THREAD**: Een categorie kan meerdere threads bevatten ("contains").
+7. **THREAD en THREAD_CATEGORY_MAP**: Een thread kan deel uitmaken van meerdere categorieën via een mappingtabel.
+8. **THREAD_CATEGORY en THREAD_CATEGORY_MAP**: Een categorie kan meerdere threads bevatten via een mappingtabel.
 
 ### Conclusie
-Dit model zorgt ervoor dat we effectief informatie over threads, reacties, categorieën en politieke partijen kunnen beheren en de relaties tussen deze entiteiten vast kunnen leggen.
+Het datamodel biedt een uitgebreide en flexibele structuur om gebruikers, threads, reacties, categorieën, stemmen, politieke partijen en veelgestelde vragen te beheren. Het Mermaid-diagram visualiseert duidelijk de relaties tussen de tabellen.  
