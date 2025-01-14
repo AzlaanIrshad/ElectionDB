@@ -21,15 +21,17 @@ public class JwtUtil {
     /**
      * Genereert een JWT-token.
      *
-     * @param email Het e-mailadres van de gebruiker.
-     * @param role  De rol van de gebruiker.
+     * @param email   Het e-mailadres van de gebruiker.
+     * @param role    De rol van de gebruiker.
+     * @param userId  De unieke gebruikers-ID.
      * @return Een JWT-token als String.
      */
-    public String generateToken(String email, String role) {
-        logger.info("Genereren van JWT-token voor email: {}, met rol: {}", email, role);
+    public String generateToken(String email, String role, String userId) {
+        logger.info("Genereren van JWT-token voor email: {}, met rol: {}, en userId: {}", email, role, userId);
         return Jwts.builder()
                 .setSubject(email)
                 .claim("role", role)
+                .claim("userId", userId)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10)) // 10 uur
                 .signWith(key, SignatureAlgorithm.HS256)
@@ -69,6 +71,18 @@ public class JwtUtil {
         String role = extractClaims(token).get("role", String.class);
         logger.info("Extracted role from token: {}", role);
         return role;
+    }
+
+    /**
+     * Extraheert de userId van de gebruiker uit een JWT-token.
+     *
+     * @param token De JWT-token.
+     * @return De userId van de gebruiker als String.
+     */
+    public String extractUserId(String token) {
+        String userId = extractClaims(token).get("userId", String.class);
+        logger.info("Extracted userId from token: {}", userId);
+        return userId;
     }
 
     /**
