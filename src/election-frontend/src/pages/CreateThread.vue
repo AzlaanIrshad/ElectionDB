@@ -100,7 +100,6 @@ export default {
       if (token) {
         try {
           const payload = JSON.parse(atob(token.split(".")[1]));
-          console.log("Decoded token payload:", payload);
           this.isLoggedIn = true;
           this.isAdmin = payload.role === "ADMIN";
           this.userEmail = payload.sub;
