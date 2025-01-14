@@ -1,5 +1,6 @@
 package com.example.controller;
 
+import com.example.dto.LikeDTO;
 import com.example.entity.Like;
 import com.example.service.LikeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +24,8 @@ public class LikeController {
      * @return List of likes.
      */
     @GetMapping("/thread/{threadId}")
-    public ResponseEntity<List<Like>> getLikesByThread(@PathVariable Long threadId) {
-        List<Like> likes = likeService.getLikesByThread(threadId);
+    public ResponseEntity<List<LikeDTO>> getLikesByThread(@PathVariable Long threadId) {
+        List<LikeDTO> likes = likeService.getLikesByThread(threadId);
         return ResponseEntity.ok(likes);
     }
 

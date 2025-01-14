@@ -1,5 +1,6 @@
 package com.example.service;
 
+import com.example.dto.LikeDTO;
 import com.example.entity.Like;
 import com.example.entity.Thread;
 import com.example.entity.User;
@@ -30,8 +31,15 @@ public class LikeService {
      * @param threadId The ID of the thread.
      * @return List of likes.
      */
-    public List<Like> getLikesByThread(Long threadId) {
-        return likeRepository.findByThread(new Thread(threadId));
+    public List<LikeDTO> getLikesByThread(Long threadId) {
+        return likeRepository.findByThread(new Thread(threadId)).stream()
+                .map(like -> new LikeDTO(
+                        like.getVoteId(),
+                        like.getVoteType().toString(),
+                        like.getThread().getId(),
+                        like.getUser().getId()
+                ))
+                .toList();
     }
 
     /**
