@@ -2,8 +2,7 @@ package com.example.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.io.Serializable;
 import java.util.HashSet;
@@ -52,5 +51,9 @@ public class Thread implements Serializable {
         this.body = body;
         this.date = date;
         this.user = user;
+    }
+
+    public Thread(Long threadId) {
+        this.id = threadId;
     }
 }

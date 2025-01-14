@@ -38,19 +38,21 @@ public class LoginServiceTest {
         dummyUser.setEmail("test@example.com");
         dummyUser.setPassword(passwordEncoder.encode("password123"));
         dummyUser.setRole(User.Role.USER);
+        dummyUser.setId(1L);
     }
 
     @Test
     void testAuthenticate_Success() {
         when(userRepository.findByEmail(dummyUser.getEmail())).thenReturn(Optional.of(dummyUser));
-        when(jwtUtil.generateToken(dummyUser.getEmail(), dummyUser.getRole().name())).thenReturn("fake-jwt-token");
+        when(jwtUtil.generateToken(dummyUser.getEmail(), dummyUser.getRole().name(), String.valueOf(dummyUser.getId())))
+                .thenReturn("fake-jwt-token");
 
         String token = loginService.authenticate(dummyUser.getEmail(), "password123");
 
         assertNotNull(token);
         assertEquals("fake-jwt-token", token);
         verify(userRepository, times(1)).findByEmail(dummyUser.getEmail());
-        verify(jwtUtil, times(1)).generateToken(dummyUser.getEmail(), dummyUser.getRole().name());
+        verify(jwtUtil, times(1)).generateToken(dummyUser.getEmail(), dummyUser.getRole().name(), String.valueOf(dummyUser.getId()));
     }
 
     @Test
@@ -61,7 +63,7 @@ public class LoginServiceTest {
 
         assertNull(token);
         verify(userRepository, times(1)).findByEmail(dummyUser.getEmail());
-        verify(jwtUtil, times(0)).generateToken(anyString(), anyString());
+        verify(jwtUtil, times(0)).generateToken(anyString(), anyString(), anyString());
     }
 
     @Test
@@ -72,6 +74,6 @@ public class LoginServiceTest {
 
         assertNull(token);
         verify(userRepository, times(1)).findByEmail(dummyUser.getEmail());
-        verify(jwtUtil, times(0)).generateToken(anyString(), anyString());
+        verify(jwtUtil, times(0)).generateToken(anyString(), anyString(), anyString());
     }
 }
