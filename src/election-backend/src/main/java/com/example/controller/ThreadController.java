@@ -43,6 +43,11 @@ public class ThreadController {
         return ResponseEntity.ok(newThread);
     }
 
+    @GetMapping("/threads/{id}/delete")
+    public boolean deleteThread(@PathVariable Long id) {
+        return threadService.deleteThread(id);
+    }
+
     @GetMapping("/threads/{id}/comments")
     public ResponseEntity<List<ThreadComment>> getComments(@PathVariable Long id) {
         List<ThreadComment> comments = threadService.getComments(id);
