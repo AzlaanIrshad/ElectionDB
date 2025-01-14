@@ -87,4 +87,26 @@ public class LikeService {
         Like like = new Like(user, voteType, thread);
         return likeRepository.save(like);
     }
+
+    public void deleteVote(Long threadId, Like.VoteType voteType, Long userId) {
+        Optional<Thread> threadOpt = threadRepository.findById(threadId);
+        Optional<User> userOpt = userRepository.findById(userId);
+
+        if (threadOpt.isEmpty() || userOpt.isEmpty()) {
+            throw new IllegalArgumentException("Thread or user not found");
+        }
+
+        Thread thread = threadOpt.get();
+        User user = userOpt.get();
+
+        Optional<Like> existingLike = likeRepository.findByThreadAndUser(thread, user);
+        if (existingLike.isPresent()) {
+            Like like = existingLike.get();
+            if (like.getVoteType() == voteType) {
+                likeRepository.delete(like);
+            }
+        } else {
+            throw new IllegalArgumentException("Vote not found");
+        }
+    }
 }

@@ -12,6 +12,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/likes")
+@CrossOrigin(origins = "http://localhost:3000")
 public class LikeController {
 
     @Autowired
@@ -58,6 +59,18 @@ public class LikeController {
             return ResponseEntity.ok(like);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(null);
+        }
+    }
+
+    @DeleteMapping("/thread/{threadId}/vote")
+    public ResponseEntity<Void> removeVote(@PathVariable Long threadId,
+                                           @RequestParam String voteType,
+                                           @RequestParam Long userId) {
+        try {
+            likeService.deleteVote(threadId, Like.VoteType.valueOf(voteType), userId);
+            return ResponseEntity.noContent().build(); // 204 No Content
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().build(); // 400 Bad Request
         }
     }
 
