@@ -107,7 +107,6 @@ export default {
         }
       } else {
         this.isLoggedIn = false;
-        this.isAdmin = false;
       }
     },
 
