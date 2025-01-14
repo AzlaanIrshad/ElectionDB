@@ -1,5 +1,6 @@
 package com.example.service;
 
+import com.example.dto.LikeDTO;
 import com.example.entity.Like;
 import com.example.entity.Thread;
 import com.example.entity.User;
@@ -30,8 +31,15 @@ public class LikeService {
      * @param threadId The ID of the thread.
      * @return List of likes.
      */
-    public List<Like> getLikesByThread(Long threadId) {
-        return likeRepository.findByThread(new Thread(threadId));
+    public List<LikeDTO> getLikesByThread(Long threadId) {
+        return likeRepository.findByThread(new Thread(threadId)).stream()
+                .map(like -> new LikeDTO(
+                        like.getVoteId(),
+                        like.getVoteType().toString(),
+                        like.getThread().getId(),
+                        like.getUser().getId()
+                ))
+                .toList();
     }
 
     /**
@@ -78,5 +86,27 @@ public class LikeService {
 
         Like like = new Like(user, voteType, thread);
         return likeRepository.save(like);
+    }
+
+    public void deleteVote(Long threadId, Like.VoteType voteType, Long userId) {
+        Optional<Thread> threadOpt = threadRepository.findById(threadId);
+        Optional<User> userOpt = userRepository.findById(userId);
+
+        if (threadOpt.isEmpty() || userOpt.isEmpty()) {
+            throw new IllegalArgumentException("Thread or user not found");
+        }
+
+        Thread thread = threadOpt.get();
+        User user = userOpt.get();
+
+        Optional<Like> existingLike = likeRepository.findByThreadAndUser(thread, user);
+        if (existingLike.isPresent()) {
+            Like like = existingLike.get();
+            if (like.getVoteType() == voteType) {
+                likeRepository.delete(like);
+            }
+        } else {
+            throw new IllegalArgumentException("Vote not found");
+        }
     }
 }
