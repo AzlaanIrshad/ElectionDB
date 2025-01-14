@@ -69,7 +69,7 @@
 
 <script>
 import TotalPartyVoteBarChart from '../components/TotalPartyVoteBarChart.vue';
-import {electionService} from '../services/ElectionService.js';
+import { electionService } from '../services/ElectionService.js';
 
 export default {
   name: "ElectionDashboard",

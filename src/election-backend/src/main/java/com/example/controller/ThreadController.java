@@ -38,10 +38,14 @@ public class ThreadController {
     @PostMapping("/threads")
     public ResponseEntity<Thread> createThread(@Valid @RequestBody ThreadRequest threadRequest) {
         Thread newThread = threadService.createThread(
-                threadRequest.getTitle(), threadRequest.getBody(), threadRequest.getDate(),
-                threadRequest.getCategories(), threadRequest.getEmail()
+                threadRequest
         );
         return ResponseEntity.ok(newThread);
+    }
+
+    @GetMapping("/threads/{id}/delete")
+    public boolean deleteThread(@PathVariable Long id) {
+        return threadService.deleteThread(id);
     }
 
     @GetMapping("/threads/{id}/comments")
@@ -52,7 +56,7 @@ public class ThreadController {
 
     @PostMapping("/threads/{id}/comments")
     public ResponseEntity<ThreadComment> createComment(@PathVariable Long id, @Valid @RequestBody ThreadCommentRequest threadCommentRequest) {
-        ThreadComment newComment = threadService.createComment(id, threadCommentRequest.getBody(), threadCommentRequest.getDate(), threadCommentRequest.getEmail());
+        ThreadComment newComment = threadService.createComment(id, threadCommentRequest);
         return ResponseEntity.ok(newComment);
     }
 }

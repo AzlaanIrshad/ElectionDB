@@ -71,7 +71,7 @@
 </template>
 
 <script>
-import {threadService} from '../services/ThreadService';
+import { threadService } from '../services/ThreadService';
 
 export default {
   name: "CreateThreadPage",
@@ -84,7 +84,6 @@ export default {
       bodyError: '',
       categoryError: '',
       isLoggedIn: false,
-      isAdmin: false,
       userEmail: null,
     };
   },
@@ -100,17 +99,14 @@ export default {
       if (token) {
         try {
           const payload = JSON.parse(atob(token.split(".")[1]));
-          this.isLoggedIn = true;
-          this.isAdmin = payload.role === "ADMIN";
+          console.log("Decoded token payload:", payload);
           this.userEmail = payload.sub;
         } catch (error) {
           console.error("Error decoding token payload:", error);
           this.isLoggedIn = false;
-          this.isAdmin = false;
         }
       } else {
         this.isLoggedIn = false;
-        this.isAdmin = false;
       }
     },
 

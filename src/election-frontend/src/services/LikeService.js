@@ -34,14 +34,11 @@ export const likeService = {
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({
-                    voteType: voteType,
-                    userId: userId,
-                }),
+                body: JSON.stringify({ voteType, userId }),
             });
 
             if (!response.ok) {
-                const errorText = await response.text(); // Extra logging
+                const errorText = await response.text();
                 console.error("API Error:", errorText);
                 throw new Error(`API responded with status: ${response.status} - ${response.statusText}`);
             }
@@ -49,6 +46,27 @@ export const likeService = {
             return await response.json();
         } catch (err) {
             console.error("Error adding vote:", err);
+            throw err;
+        }
+    },
+    async removeVote(threadId, voteType, userId) {
+        try {
+            const response = await fetch(`${config.apiBaseUrl}/api/likes/thread/${threadId}/vote?voteType=${voteType}&userId=${userId}`, {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+
+            if (!response.ok) {
+                const errorText = await response.text();
+                console.error("API Error:", errorText);
+                throw new Error(`API responded with status: ${response.status} - ${response.statusText}`);
+            }
+
+            return await response.json();
+        } catch (err) {
+            console.error("Error removing vote:", err);
             throw err;
         }
     }
