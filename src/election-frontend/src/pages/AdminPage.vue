@@ -87,7 +87,7 @@
 </template>
 
 <script>
-import config from '../config';
+import { AdminPageService } from '../services/AdminPageService';
 
 export default {
   name: "AdminPage",
@@ -104,12 +104,10 @@ export default {
     async fetchUsers() {
       this.loading = true;
       try {
-        const response = await fetch(`${config.apiBaseUrl}/api/users`);
-        const data = await response.json();
-        this.users = data;
+        this.users = await AdminPageService.fetchUsers();
         this.displayedUsers = [...this.users];
       } catch (error) {
-        console.error('Fout bij het ophalen van gebruikers:', error);
+        console.error('Error fetching users:', error);
       } finally {
         this.loading = false;
       }
@@ -117,13 +115,10 @@ export default {
     async toggleActive(user) {
       user.active = !user.active;
       try {
-        await fetch(`${config.apiBaseUrl}/api/users/${user.id}`, {
-          method: 'POST',
-          headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify({active: user.active}),
-        });
+        await AdminPageService.toggleUserActive(user.id, user.active);
       } catch (error) {
-        console.error('Fout bij het bijwerken van de gebruikersstatus:', error);
+        console.error('Error updating user status:', error);
+        user.active = !user.active; // Revert state in case of error
       }
     },
     searchUsers(event) {
@@ -145,30 +140,23 @@ export default {
     async deleteUser() {
       if (this.userToDelete) {
         try {
-          const response = await fetch(`${config.apiBaseUrl}/api/users/delete/${this.userToDelete.id}`, {
-            method: 'GET',
-            headers: { 'Content-Type': 'application/json' },
-          });
+          await AdminPageService.deleteUser(this.userToDelete.id);
+          this.users = this.users.filter(user => user.id !== this.userToDelete.id);
+          this.displayedUsers = [...this.users];
 
-          if (response.ok) {
-            this.users = this.users.filter(user => user.id !== this.userToDelete.id);
-            this.displayedUsers = [...this.users];
-
-            this.showDeleteModal = false;
-            this.userToDelete = null;
-            alert('User deleted successfully!');
-          } else {
-            alert('Failed to delete the user');
-          }
+          this.showDeleteModal = false;
+          this.userToDelete = null;
+          alert('User deleted successfully!');
         } catch (error) {
           console.error('Error deleting user:', error);
+          alert('Failed to delete the user');
         }
       }
     },
     cancelDelete() {
       this.showDeleteModal = false;
       this.userToDelete = null;
-    }
+    },
   },
   mounted() {
     this.fetchUsers();
@@ -176,6 +164,7 @@ export default {
 };
 </script>
 
-<style scoped>
-/* Optional custom styles */
+
+
+<style>
 </style>
