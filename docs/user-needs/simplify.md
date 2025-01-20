@@ -1,5 +1,3 @@
-# Documentation: Purpose Behind the User Story
-
 ## Context
 
 The **Simplified Mode** user story was created to address specific challenges faced by a segment of users who need or prefer a streamlined interface. This includes users with cognitive disabilities, those using devices with limited performance, and users who simply want a distraction-free experience. The feature aligns with broader goals of usability, accessibility, and inclusivity in the product.
